@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java
 # Edit at https://www.toptal.com/developers/gitignore?templates=java
 
+context.xml
+
 ### Java ###
 # Compiled class file
 *.class
@@ -29,4 +31,3 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java
 
-context.xml
