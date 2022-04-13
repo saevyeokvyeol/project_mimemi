@@ -21,6 +21,12 @@ public interface NoticeBoardDAO {
 	int updateNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
+	 * 공지사항 이미지 수정
+	 * @param int noticeNo, String noticeAttach
+	 * */
+	int updateFaqImg(int noticeNo, String noticeAttach) throws SQLException;
+	
+	/**
 	 * 공지사항 삭제 -> 입력값 없음(프론트단에서 처리)
 	 * */
 	int deleteNotice() throws SQLException;

@@ -21,6 +21,12 @@ public interface ReviewBoardDAO {
 	int updateReview(ReviewDTO reviewDTO) throws SQLException;
 	
 	/**
+	 * 후기 이미지 수정
+	 * @param int reviewNo, String reviewAttach
+	 * */
+	int updateFaqImg(int reviewNo, String reviewAttach) throws SQLException;
+	
+	/**
 	 * 후기 삭제
 	 * */
 	int deleteReview(String reviewPwd) throws SQLException;
