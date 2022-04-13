@@ -8,22 +8,20 @@ import mimemi.mvc.dto.NoticeDTO;
 public interface NoticeBoardDAO {
 	/**
 	 * 공지사항 등록
-	 * @param NoticeDTO(int noticeNo, String noticeTitle, String noticeContent, String noticeAttach,
-			String noticeRegdate)
+	 * @param NoticeDTO(String noticeTitle, String noticeContent, String noticeAttach)
 	 * */
 	int insertNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
 	 * 공지사항 수정 
-	 * @param NoticeDTO(int noticeNo, String noticeTitle, String noticeContent, String noticeAttach,
-			String noticeRegdate)
+	 * @param NoticeDTO(int noticeNo, String noticeTitle, String noticeContent)
 	 * */
 	int updateNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
-	 * 공지사항 삭제 -> 입력값 없음(프론트단에서 처리)
+	 * 공지사항 삭제 
 	 * */
-	int deleteNotice() throws SQLException;
+	int deleteNotice(int noticeNo) throws SQLException;
 	
 	/**
 	 * 공지사항 전체 검색
@@ -33,11 +31,13 @@ public interface NoticeBoardDAO {
 	/**
 	 * 공지사항 전체 검색(페이지 처리)
 	 * */
-	List<NoticeDTO> getNoticeList(int pageNo) throws SQLException;
+	List<NoticeDTO> selectAllByPaging(int pageNo) throws SQLException;
 	
 	/**
-	 * 공지사항 키워드 검색(메소드 이름....)
+	 * 공지사항 키워드 검색
 	 * @param String noticeKeyword
+	 * 
+	 * 제목과 내용에서 키워드 검색
 	 * */
-	List<NoticeDTO> getNoticeListByKeyword(String noticeKeyword) throws SQLException;
+	List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException;
 }
