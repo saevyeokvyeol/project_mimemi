@@ -4,24 +4,32 @@ public class UserDTO {
 	private String userId;
 	private String userName;
 	private String userPwd;
-	private int userPhone;
+	private String userPhone;
 	private int userPoint;
 	private String userRegdate;
 	private boolean userQuit;
 	private String userBirth;
 	
 	public UserDTO() {}
-	public UserDTO(String userId, String userName, String userPwd, int userPhone, int userPoint, String userRegdate,
+	public UserDTO(String userId, String userPwd) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+	}
+	public UserDTO(String userPhone) {
+		this.userPhone = userPhone;
+	}
+	public UserDTO(String userId, String userName, String userPwd, String userPhone, int userPoint, String userRegdate,
 		boolean userQuit, String userBirth) {
-	super();
-	this.userId = userId;
-	this.userName = userName;
-	this.userPwd = userPwd;
-	this.userPhone = userPhone;	
-	this.userPoint = userPoint;
-	this.userRegdate = userRegdate;
-	this.userQuit = userQuit;
-	this.userBirth = userBirth;
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPwd = userPwd;
+		this.userPhone = userPhone;	
+		this.userPoint = userPoint;
+		this.userRegdate = userRegdate;
+		this.userQuit = userQuit;
+		this.userBirth = userBirth;
 	}
 
 	public String getUserId() {
@@ -48,11 +56,11 @@ public class UserDTO {
 		this.userPwd = userPwd;
 	}
 
-	public int getUserPhone() {
+	public String getUserPhone() {
 		return userPhone;
 	}
 
-	public void setUserPhone(int userPhone) {
+	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
 
