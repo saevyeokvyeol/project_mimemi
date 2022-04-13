@@ -14,16 +14,16 @@ public interface FAQBoardDAO {
 	
 	/**
 	 * FAQ 수정 
-	 * @param FaqDTO(int faqNo, String faqTitle, String faqContent, String faqAttach)
+	 * @param FaqDTO(int faqNo, String faqTitle, String faqContent)
 	 * 수정날짜는 자동으로 sysdate
 	 * */
 	int updateFaq(FaqDTO faqDTO) throws SQLException;
 	
 	/**
 	 * FAQ 이미지 수정
-	 * @param int faqNo, String faqImg
+	 * @param int faqNo, String faqAttach
 	 * */
-	int updateFaqImg(int faqNo, String faqImg) throws SQLException;
+	int updateFaqImg(int faqNo, String faqAttach) throws SQLException;
 	
 	/**
 	 * FAQ 삭제

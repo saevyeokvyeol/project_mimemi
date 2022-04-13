@@ -5,23 +5,29 @@ public class EventDTO {
 	private String eventTitle;
 	private String eventContent;
 	private String eventAttach;
+	private String eventImg;
 	private String eventRegdate;
-	private String eventModidate;
 	private String eventStartdate;
 	private String eventEnddate;
 	
 	public EventDTO() {}
-	public EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventRegdate,
-			String eventModidate, String eventStartdate, String eventEnddate) {
+	public EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach,  String eventImg, String eventRegdate,
+			String eventStartdate, String eventEnddate) {
 		super();
 		this.eventId = eventId;
 		this.eventTitle = eventTitle;
 		this.eventContent = eventContent;
 		this.eventAttach = eventAttach;
+		this.eventImg = eventImg;
 		this.eventRegdate = eventRegdate;
-		this.eventModidate = eventModidate;
 		this.eventStartdate = eventStartdate;
 		this.eventEnddate = eventEnddate;
+	}
+	public String getEventImg() {
+		return eventImg;
+	}
+	public void setEventImg(String eventImg) {
+		this.eventImg = eventImg;
 	}
 	public int getEventId() {
 		return eventId;
@@ -52,12 +58,6 @@ public class EventDTO {
 	}
 	public void setEventRegdate(String eventRegdate) {
 		this.eventRegdate = eventRegdate;
-	}
-	public String getEventModidate() {
-		return eventModidate;
-	}
-	public void setEventModidate(String eventModidate) {
-		this.eventModidate = eventModidate;
 	}
 	public String getEventStartdate() {
 		return eventStartdate;

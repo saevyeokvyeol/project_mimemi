@@ -9,7 +9,7 @@ public interface GoodsDAO {
 	/**
 	 * 상품 등록
 	 * @param: GoodsDTO(String goodsId, String goodsName, String goodsDetail, String goodsThumbnail,
-	 * 		   int goodsPrice, boolean goodsSale, String goodsDetailImg)
+	 * 		   int goodsPrice, String goodsDetailImg)
 	 * @return: int(등록된 데이터 수)
 	 * */
 	int insert(GoodsDTO goods) throws SQLException;
@@ -22,18 +22,25 @@ public interface GoodsDAO {
 	int update(GoodsDTO goods) throws SQLException;
 	
 	/**
-	 * 상품 썸네일 수정
-	 * @param: GoodsDTO(String goodsId, String goodsThumbnail)
+	 * 상품 판매 여부 수정
+	 * @param: String goodsId, String goodsSale
 	 * @return: int(수정된 데이터 수)
 	 * */
-	int updateThumbnail(GoodsDTO goods) throws SQLException;
+	int updateForSale(String goodsId, String goodsSale) throws SQLException;
+	
+	/**
+	 * 상품 썸네일 수정
+	 * @param: String goodsId, String goodsThumbnail
+	 * @return: int(수정된 데이터 수)
+	 * */
+	int updateThumbnail(String goodsId, String goodsThumbnail) throws SQLException;
 	
 	/**
 	 * 상품 상세이미지 수정
-	 * @param: GoodsDTO(String goodsId, String goodsDetailImg)
+	 * @param: String goodsId, String goodsDetailImg
 	 * @return: int(수정된 데이터 수)
 	 * */
-	int updateDetailImg(GoodsDTO goods) throws SQLException;
+	int updateDetailImg(String goodsId, String goodsDetailImg) throws SQLException;
 	
 	/**
 	 * 상품 썸네일 삭제
@@ -50,24 +57,21 @@ public interface GoodsDAO {
 	int deleteDetailImg(String goodsId) throws SQLException;
 	
 	/**
-	 * 상품 삭제
-	 * : 실제 삭제하는 것이 아니라 판매 여부 컬럼을 수정해 메인 사이트에서 보이지 않도록 처리함
-	 * @param: GoodsDTO(String goodsId, boolean goodsSale)
-	 * @return: int(수정된 데이터 수)
-	 * */
-	int delete(GoodsDTO goods) throws SQLException;
-	
-	/**
 	 * 전체 상품 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<GoodsDTO>(전체 상품의 모든 데이터를 가지고 옴)
+	 * 
+	 * 높은가격순, 낮은가격순
+	 * if(String.equals("높은 가격순")){
+	 * 	sql = "높은 가격순 쿼리 불러오는... properties..."
+	 * }
 	 * */
 	List<GoodsDTO> selectAll(String sort) throws SQLException;
 	
 	/**
 	 * 판매 중인 상품 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
-	 * @return: List<GoodsDTO>(goodsSale이 true인 상품)
+	 * @return: List<GoodsDTO>(goodsSale이 Y인 상품)
 	 * */
 	List<GoodsDTO> selectForSale(String sort) throws SQLException;
 	
@@ -83,7 +87,6 @@ public interface GoodsDAO {
 	 * @param: 조회할 상품 코드
 	 * @return: GoodsDTO(인수로 받은 ID와 상품 아이디가 동일한 상품)
 	 * */
-	GoodsDTO selectByㅇoodsId(String goodsId) throws SQLException;
-	
+	GoodsDTO selectByGoodsId(String goodsId) throws SQLException;
 	
 }

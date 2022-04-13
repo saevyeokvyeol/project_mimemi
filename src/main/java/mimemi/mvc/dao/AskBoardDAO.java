@@ -15,10 +15,17 @@ public interface AskBoardDAO {
 
 	/**
 	 * 1:1 문의 수정 
-	 * @param AskDTO(int askNo, String userId, String askTitle, String askContent, String askAttach,
+	 * @param AskDTO(int askNo, String userId, String askTitle, String askContent, 
 			String askCategory)
 	 * */
 	int updateAsk(AskDTO askDTO) throws SQLException;
+	
+	/**
+	 * 1:1 문의 게시글 첨부파일 수정
+	 * @param: int askNo, String askAttach
+	 * @return: int(수정 성공한 레코드 수)
+	 * */
+	int updateAskAttach(int askNo, String askAttach) throws SQLException;
 	
 	/**
 	 * 1:1 문의 삭제

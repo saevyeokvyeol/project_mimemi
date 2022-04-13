@@ -5,21 +5,29 @@ public class MealDTO {
 	private String goodsId;
 	private String mealName;
 	private int mealWeight;
+	private int mealKcal;
 	private int mealCarbo;
 	private int mealProtein;
 	private int mealFat;
 	
 	public MealDTO() {}	
-	public MealDTO(String mealId, String goodsId, String mealName, int mealWeight, int mealCarbo, int mealProtein,
+	public MealDTO(String mealId, String goodsId, String mealName, int mealWeight, int mealKcal, int mealCarbo, int mealProtein,
 			int mealFat) {
 		super();
 		this.mealId = mealId;
 		this.goodsId = goodsId;
 		this.mealName = mealName;
 		this.mealWeight = mealWeight;
+		this.mealKcal = mealKcal;
 		this.mealCarbo = mealCarbo;
 		this.mealProtein = mealProtein;
 		this.mealFat = mealFat;
+	}
+	public int getMealKcal() {
+		return mealKcal;
+	}
+	public void setMealKcal(int mealKcal) {
+		this.mealKcal = mealKcal;
 	}
 	public String getMealId() {
 		return mealId;

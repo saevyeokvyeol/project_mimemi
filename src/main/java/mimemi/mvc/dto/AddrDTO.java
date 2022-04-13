@@ -8,12 +8,12 @@ public class AddrDTO {
 	private String addrAddr;
 	private String addrDetailAddr;
 	private String receiverName;
-	private int receiverPhone;
+	private String receiverPhone;
 	
 	public AddrDTO() {}
 
 	public AddrDTO(int addrId, String userId, String addrName, int zipcode, String addrAddr, String addrDetailAddr,
-			String receiverName, int receiverPhone) {
+			String receiverName, String receiverPhone) {
 		super();
 		this.addrId = addrId;
 		this.userId = userId;
@@ -81,11 +81,11 @@ public class AddrDTO {
 		this.receiverName = receiverName;
 	}
 
-	public int getReceiverPhone() {
+	public String getReceiverPhone() {
 		return receiverPhone;
 	}
 
-	public void setReceiverPhone(int receiverPhone) {
+	public void setReceiverPhone(String receiverPhone) {
 		this.receiverPhone = receiverPhone;
 	}
 	

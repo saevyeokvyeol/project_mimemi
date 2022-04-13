@@ -19,6 +19,13 @@ public interface NoticeBoardDAO {
 	int updateNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
+
+	 * 공지사항 이미지 수정
+	 * @param int noticeNo, String noticeAttach
+	 * */
+	int updateNoticeAttach(int noticeNo, String noticeAttach) throws SQLException;
+	
+	/**
 	 * 공지사항 삭제 
 	 * */
 	int deleteNotice(int noticeNo) throws SQLException;
