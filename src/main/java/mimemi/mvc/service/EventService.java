@@ -8,7 +8,7 @@ import mimemi.mvc.dto.EventDTO;
 public interface EventService {
 	/**
 	 * 이벤트 게시글 등록
-	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach,
+	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventImg,
 	 * 			String eventStartdate, String eventEnddate)
 	 * */
 	void insert(EventDTO event) throws SQLException;
@@ -23,13 +23,13 @@ public interface EventService {
 	
 	/**
 	 * 이벤트 게시글 썸네일 이미지 수정
-	 * @param: EventDTO(int eventId, String eventThumbnail)
+	 * @param: int eventId, String eventImg
 	 * */
-	void updateThumbnail(int eventId, String eventThumbnail) throws SQLException;
+	void updateEventImg(int eventId, String eventImg) throws SQLException;
 	
 	/**
 	 * 이벤트 게시글 상세 이미지 수정
-	 * @param: EventDTO(int eventId, String eventAttach)
+	 * @param: int eventId, String eventAttach
 	 * */
 	void updateEventAttach(int eventId, String eventAttach) throws SQLException;
 	
@@ -48,18 +48,17 @@ public interface EventService {
 	List<EventDTO> selectByDate(String state) throws SQLException;
 	
 	/**
-	 * 이벤트 게시글 키워드 조회
-	 * 제목에 키워드가 있는 게시글만 조회
-	 * @param: String keyword
-	 * @return: List<EventDTO>
-	 * */
-	List<EventDTO> selectByKeyword(String keyword) throws SQLException;
-	
-	/**
 	 * 이벤트 게시글 상세 조회
 	 * 글번호 기준으로 게시글 상세 조회
 	 * @param: int eventNo
 	 * @return: EventDTO
 	 * */
 	EventDTO selectByEventNo(int eventNo) throws SQLException;
+
+	/**
+	 * 이벤트 전체 검색(페이지 처리)
+	 * @param int pageNo
+	 * 특정 페이지를 클릭했을 때 그 페이지로 넘어간다.
+	 * */
+	List<EventDTO> getEventList(int pageNo) throws SQLException;
 }
