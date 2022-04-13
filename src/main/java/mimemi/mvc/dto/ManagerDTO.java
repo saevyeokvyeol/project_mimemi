@@ -6,6 +6,13 @@ public class ManagerDTO {
 	private String managerName;
 	
 	public ManagerDTO() {}
+	
+	public ManagerDTO(String managerId, String managerPwd) {
+		super();
+		this.managerId = managerId;
+		this.managerPwd = managerPwd;
+	}
+
 	public ManagerDTO(String managerId, String managerPwd, String managerName) {
 		super();
 		this.managerId = managerId;

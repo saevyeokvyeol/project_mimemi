@@ -8,11 +8,15 @@ import mimemi.mvc.dto.EventDTO;
 public interface EventBoardService {
 	/**
 	 * 이벤트 등록
+	 * @param EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventRegdate,
+			String eventModidate, String eventStartdate, String eventEnddate)
 	 * */
 	void insertEvent(EventDTO eventDTO) throws SQLException;
 
 	/**
-	 * 이벤트 수정 
+	 * 이벤트 수정
+	 * @param EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventRegdate,
+			String eventModidate, String eventStartdate, String eventEnddate)
 	 * */
 	void updateEvent(EventDTO eventDTO) throws SQLException;
 
@@ -20,6 +24,7 @@ public interface EventBoardService {
 	 * 이벤트 삭제
 	 * */
 	void deleteEvent() throws SQLException;
+	
 	/**
 	 * 이벤트 전체 검색
 	 * */

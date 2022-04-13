@@ -12,7 +12,7 @@ public class ReviewDTO {
 	private int reviewViews;
 	
 	public ReviewDTO() {}
-
+	
 	public ReviewDTO(int reviewNo, String userId, String reviewTitle, String reviewAttach, String reviewContent,
 			String reviewRegdate, int reviewRate, boolean reviewBlind, int reviewViews) {
 		super();

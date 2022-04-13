@@ -2,22 +2,24 @@ package mimemi.mvc.dao;
 
 import java.sql.SQLException;
 
-import mimemi.mvc.dto.ReviewReplyDTO;
+import mimemi.mvc.dto.AnswerDTO;
 
 public interface AnswerBoardDAO {
 	/**
 	 * ´ñ±Û µî·Ï
+	 * @param AnswerDTO(int askNo, String answerContent)
 	 * */
-	int insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
+	int insertAnswerReply(AnswerDTO answerDTO) throws SQLException;
 
 	/**
 	 * ´ñ±Û ¼öÁ¤ 
+	 * @param AnswerDTO(int answerNo, String answerContent)
 	 * */
-	int updateReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
+	int updateAnswerReply(AnswerDTO answerDTO) throws SQLException;
 	
 	/**
 	 * ´ñ±Û »èÁ¦
 	 * */
-	int deleteReviewReply() throws SQLException;
+	int deleteAnswerReply(int answerNo) throws SQLException;
 	
 }
