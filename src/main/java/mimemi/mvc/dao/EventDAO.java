@@ -66,5 +66,12 @@ public interface EventDAO {
 	 * @return: EventDTO
 	 * */
 	EventDTO selectByEventNo(int eventNo) throws SQLException;
+
+	/**
+	 * 이벤트 전체 검색(페이지 처리)
+	 * @param int pageNo
+	 * 특정 페이지를 클릭했을 때 그 페이지로 넘어간다.
+	 * */
+	List<EventDTO> getEventList(int pageNo) throws SQLException;
 	
 }

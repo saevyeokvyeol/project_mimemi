@@ -7,11 +7,13 @@ import mimemi.mvc.dto.ReviewReplyDTO;
 public interface AnswerBoardService {
 	/**
 	 * ´ñ±Û µî·Ï
+	 * @param reviewreplyDTO
 	 * */
 	void insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
 
 	/**
 	 * ´ñ±Û ¼öÁ¤ 
+	 * @param reviewreplyDTO
 	 * */
 	void updateReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
 	
