@@ -8,7 +8,7 @@ import mimemi.mvc.dto.EventDTO;
 public interface EventDAO {
 	/**
 	 * 이벤트 게시글 등록
-	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach,
+	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventImg,
 	 * 			String eventStartdate, String eventEnddate)
 	 * @return: int(등록 성공한 레코드 수)
 	 * */
@@ -25,14 +25,14 @@ public interface EventDAO {
 	
 	/**
 	 * 이벤트 게시글 썸네일 이미지 수정
-	 * @param: EventDTO(int eventId, String eventThumbnail)
+	 * @param: int eventId, String eventImg
 	 * @return: int(수정 성공한 레코드 수)
 	 * */
-	int updateThumbnail(int eventId, String eventThumbnail) throws SQLException;
+	int updateEventImg(int eventId, String eventImg) throws SQLException;
 	
 	/**
 	 * 이벤트 게시글 상세 이미지 수정
-	 * @param: EventDTO(int eventId, String eventAttach)
+	 * @param: int eventId, String eventAttach
 	 * @return: int(수정 성공한 레코드 수)
 	 * */
 	int updateEventAttach(int eventId, String eventAttach) throws SQLException;
@@ -50,14 +50,6 @@ public interface EventDAO {
 	 * @return: List<EventDTO>
 	 * */
 	List<EventDTO> selectByDate(String state) throws SQLException;
-	
-	/**
-	 * 이벤트 게시글 키워드 조회
-	 * 제목에 키워드가 있는 게시글만 조회
-	 * @param: String keyword
-	 * @return: List<EventDTO>
-	 * */
-	List<EventDTO> selectByKeyword(String keyword) throws SQLException;
 	
 	/**
 	 * 이벤트 게시글 상세 조회
