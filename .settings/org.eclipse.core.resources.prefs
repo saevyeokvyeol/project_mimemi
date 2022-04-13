@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/java/mimemi/mvc/dao/CartDAO.java=UTF-8
+encoding//src/main/java/mimemi/mvc/dao/OrderDAO.java=UTF-8
+encoding//src/main/java/mimemi/mvc/dao/OrderDeliDAO.java=UTF-8
+encoding//src/main/java/mimemi/mvc/dao/OrderLineDAO.java=UTF-8
+encoding//src/main/java/mimemi/mvc/service/CartService.java=UTF-8

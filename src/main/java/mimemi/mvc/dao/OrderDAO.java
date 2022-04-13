@@ -2,28 +2,52 @@ package mimemi.mvc.dao;
 
 import java.sql.SQLException;
 
+import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
+import java.util.List;
 
 public interface OrderDAO {
 	
 	/**
-	 * ¹è¼Û ½ºÄÉÁÙ »ı¼º
+	 * ë°°ì†¡ ìŠ¤ì¼€ì¤„ ìƒì„±
 	 * @param: OrderDeliDTO(int orderDeliId, int orderLineCode, int orderStateId, String orderDeliDate)
-	 * @return: int(µî·ÏµÈ ½ºÄÉÁÙ ¼ö)
+	 * @return: int(ë“±ë¡ëœ ìŠ¤ì¼€ì¤„ ìˆ˜)
 	 * */
 	int insertDeli(OrderDeliDTO orderDeli) throws SQLException;
 	
 	/**
-	 * ¹è¼Û ÀÏÀÚ ¼öÁ¤
+	 * ë°°ì†¡ ì¼ì ìˆ˜ì •
 	 * @param: OrderDeliDTO(int orderDeliId, String orderDeliDate)
-	 * @return: int(¼öÁ¤µÈ ½ºÄÉÁÙ ¼ö)
+	 * @return: int(ìˆ˜ì •ëœ ìŠ¤ì¼€ì¤„ ìˆ˜)
 	 * */
 	int updateDeliDate(OrderDeliDTO orderDeli) throws SQLException;
 	
 	/**
-	 * ¹è¼Û ÁÖ¹® »óÅÂ º¯°æ
+	 * ë°°ì†¡ ì£¼ë¬¸ ìƒíƒœ ë³€ê²½
 	 * @param: OrderDeliDTO(int orderDeliId, int orderStateId)
-	 * @return: int(¼öÁ¤µÈ ½ºÄÉÁÙ ¼ö)
+	 * @return: int(ìˆ˜ì •ëœ ìŠ¤ì¼€ì¤„ ìˆ˜)
 	 * */
 	int updateDeliState(OrderDeliDTO orderDeli) throws SQLException;
+	
+	 /* ï¿½ìŸ¾ï§£ï¿½ äºŒì‡°Ğ¦ è­°ê³ ì‰¶
+	 * @return
+	 * @throws SQLException
+	 */
+	List<OrderDTO> selectAll() throws SQLException;
+	
+	/**
+	 * äºŒì‡°Ğ¦ï¿½ë¸¯æ¹²ï¿½
+	 * @param order
+	 * @return
+	 * @throws SQLException
+	 */
+	int insert(OrderDTO order) throws SQLException;
+	
+	/**
+	 * orderIdï¿½ë¿‰ ï¿½ë¹ï¿½ë–¦ï¿½ë¸¯ï¿½ë’— äºŒì‡°Ğ¦ï¿½ì“£ ç—â‘¥ëƒ¼ï¿½ë¸· ï¿½ë¸£, ï¿½ë–ï¿½ì £æ¿¡ï¿½ ç—â‘¥ëƒ¼ï¿½ë§‚ äºŒì‡°Ğ¦ï¿½ë£„ è­°ê³ ì‰¶åª›ï¿½ åª›ï¿½ï¿½ë’«ï¿½ë¹ï¿½ë¹ ï¿½ë¸¯èª˜ï¿½æ¿¡ï¿½ ç—â‘¥ëƒ¼ ï¿½ë¿¬éºï¿½ï¿½ë¿‰ ï¿½ï¿½ï¿½ë¸³ è€ŒÑ‰ì†ï¿½ì”  ç•°ë¶½ï¿½æ¿¡ï¿½ ï¿½ë¸˜ï¿½ìŠ‚ï¿½ë¸¿
+	 * @param orderId
+	 * @return
+	 * @throws SQLException
+	 */
+	int cancel(int orderId) throws SQLException;
 }
