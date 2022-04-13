@@ -5,7 +5,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.AskDTO;
 
-public interface AskBoardDAO {
+public interface AskDAO {
 	/**
 	 * 1:1 문의 등록
 	 * @param AskDTO(String userId, String askTitle, String askContent, String askAttach,

@@ -5,7 +5,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.FaqDTO;
 
-public interface FAQBoardDAO {
+public interface FAQDAO {
 	/**
 	 * FAQ µî·Ï
 	 * @param FaqDTO(String faqTitle, String faqContent, String faqAttach)

@@ -5,7 +5,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.NoticeDTO;
 
-public interface NoticeBoardDAO {
+public interface NoticeDAO {
 	/**
 	 * 공지사항 등록
 	 * @param NoticeDTO(String noticeTitle, String noticeContent, String noticeAttach)

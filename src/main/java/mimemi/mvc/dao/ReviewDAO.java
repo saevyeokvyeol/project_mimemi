@@ -5,7 +5,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.ReviewDTO;
 
-public interface ReviewBoardDAO {
+public interface ReviewDAO {
 	/**
 	 * 후기 등록
 	 * @param ReviewDTO(String goodsId, String userId, String reviewTitle, String reviewAttach, String reviewContent,
