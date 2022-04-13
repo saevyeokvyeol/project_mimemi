@@ -2,15 +2,15 @@ package mimemi.mvc.dto;
 
 public class OrderDeliDTO {
 	private int orderDeliId;
-	private int orderLineCode;
+	private int orderLineId;
 	private int orderStateId;
 	private String orderDeliDate;
 	
 	public OrderDeliDTO() {}
-	public OrderDeliDTO(int orderDeliId, int orderLineCode, int orderStateId, String orderDeliDate) {
+	public OrderDeliDTO(int orderDeliId, int orderLineId, int orderStateId, String orderDeliDate) {
 		super();
 		this.orderDeliId = orderDeliId;
-		this.orderLineCode = orderLineCode;
+		this.orderLineId = orderLineId;
 		this.orderStateId = orderStateId;
 		this.orderDeliDate = orderDeliDate;
 	}
@@ -20,11 +20,11 @@ public class OrderDeliDTO {
 	public void setOrderDeliId(int orderDeliId) {
 		this.orderDeliId = orderDeliId;
 	}
-	public int getOrderLineCode() {
-		return orderLineCode;
+	public int getOrderLineId() {
+		return orderLineId;
 	}
-	public void setOrderLineCode(int orderLineCode) {
-		this.orderLineCode = orderLineCode;
+	public void setOrderLineId(int orderLineId) {
+		this.orderLineId = orderLineId;
 	}
 	public int getOrderStateId() {
 		return orderStateId;
