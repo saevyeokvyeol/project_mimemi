@@ -79,8 +79,8 @@
 				</table>
 				<a href="#">전체 삭제</a>
 				<a href="#">선택 삭제</a>
-				<a href="#">선택 상품 주문</a>
-				<a href="#">전체 주문</a>
+				<a href="${path}/order/order.jsp">선택 상품 주문</a>
+				<a href="${path}/order/order.jsp">전체 주문</a>
 			</form>
 		</div>
 	</body>
