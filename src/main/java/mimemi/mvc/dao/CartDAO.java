@@ -7,14 +7,13 @@ import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 
 public interface CartDAO {
-	
 	/**
 	 * 장바구니 조회
 	 * @param CartId
 	 * @return
 	 * @throws SQLException
 	 */
-	List<CartDTO> selectByCartId(int cartId) throws SQLException;
+	List<CartDTO> selectByCartId(String userId) throws SQLException;
 
 	/**
 	 * 장바구니 수정
