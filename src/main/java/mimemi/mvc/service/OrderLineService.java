@@ -1,11 +1,15 @@
-package mimemi.mvc.dao;
+package mimemi.mvc.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
+import mimemi.mvc.dto.MealDTO;
+import mimemi.mvc.dto.OrderDTO;
+import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
+import mimemi.mvc.dto.MealDTO;
 
-public interface OrderLineDAO {
+public interface OrderLineService {
 	/**
 	 * 주문 상세 등록
 	 * @param OrderLineDTO(int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
@@ -27,5 +31,4 @@ public interface OrderLineDAO {
 	 * @return List<OrderLineDTO>
 	 */
 	List<OrderLineDTO> selectLineByOrderId(int orderId) throws SQLException;
-
 }
