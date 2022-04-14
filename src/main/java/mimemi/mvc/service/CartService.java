@@ -39,4 +39,5 @@ public interface CartService {
 	 * @throws SQLException
 	 */
 	int deleteCart(int cartId) throws SQLException;
+	
 }
