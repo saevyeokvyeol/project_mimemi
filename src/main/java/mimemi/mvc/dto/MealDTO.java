@@ -9,10 +9,13 @@ public class MealDTO {
 	private int mealCarbo;
 	private int mealProtein;
 	private int mealFat;
+	private String mealImg;
+	private String mealSale;
+	
 	
 	public MealDTO() {}	
 	public MealDTO(String mealId, String goodsId, String mealName, int mealWeight, int mealKcal, int mealCarbo, int mealProtein,
-			int mealFat) {
+			int mealFat, String mealImg, String mealSale ) {
 		super();
 		this.mealId = mealId;
 		this.goodsId = goodsId;
@@ -22,6 +25,8 @@ public class MealDTO {
 		this.mealCarbo = mealCarbo;
 		this.mealProtein = mealProtein;
 		this.mealFat = mealFat;
+		this.mealImg = mealImg;
+		this.mealSale = mealSale;
 	}
 	public int getMealKcal() {
 		return mealKcal;
@@ -70,6 +75,18 @@ public class MealDTO {
 	}
 	public void setMealFat(int mealFat) {
 		this.mealFat = mealFat;
+	}
+	public String getMealImg() {
+		return mealImg;
+	}
+	public void setMealImg(String mealImg) {
+		this.mealImg = mealImg;
+	}
+	public String getMealSale() {
+		return mealSale;
+	}
+	public void setMealSale(String mealSale) {
+		this.mealSale = mealSale;
 	}
 	
 	

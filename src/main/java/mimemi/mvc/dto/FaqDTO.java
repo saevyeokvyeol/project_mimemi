@@ -7,11 +7,12 @@ public class FaqDTO {
 	private String faqAttach;
 	private String faqRegdate;
 	private String faqModidate;
+	private String faqCategory;
 	
 	public FaqDTO() {}
 
 	public FaqDTO(int faqNo, String faqTitle, String faqContent, String faqAttach, String faqRegdate,
-			String faqModidate) {
+			String faqModidate, String faqCategory) {
 		super();
 		this.faqNo = faqNo;
 		this.faqTitle = faqTitle;
@@ -19,6 +20,7 @@ public class FaqDTO {
 		this.faqAttach = faqAttach;
 		this.faqRegdate = faqRegdate;
 		this.faqModidate = faqModidate;
+		this.faqCategory = faqCategory;
 	}
 
 	public int getFaqNo() {
@@ -67,6 +69,14 @@ public class FaqDTO {
 
 	public void setFaqModidate(String faqModidate) {
 		this.faqModidate = faqModidate;
+	}
+
+	public String getFaqCategory() {
+		return faqCategory;
+	}
+
+	public void setFaqCategory(String faqCategory) {
+		this.faqCategory = faqCategory;
 	}	
 	
 }
