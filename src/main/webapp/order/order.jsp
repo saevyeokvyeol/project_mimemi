@@ -2,13 +2,12 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>order</title>
-</head>
-<body>
-<h3>order.jsp 페이지 입니다.</h3>
-<img src="../front_img/oder_oder.jpg" alt="주문/결제 화면 이미지입니다."/>
-
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>주문/결제 :: 미미미</title>
+	</head>
+	<body>
+		<h3>주문/결제</h3>
+		
+	</body>
 </html>
