@@ -4,22 +4,21 @@ import java.sql.SQLException;
 
 import mimemi.mvc.dto.ReviewReplyDTO;
 
-public interface AnswerBoardService {
+public interface ReviewReplyService {
 	/**
 	 * ´ñ±Û µî·Ï
-	 * @param reviewreplyDTO
+	 * @param AnswerDTO(int askNo, String userId, String answerContent)
 	 * */
 	void insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
 
 	/**
 	 * ´ñ±Û ¼öÁ¤ 
-	 * @param reviewreplyDTO
+	 * @param AnswerDTO(int answerNo, String answerContent)
 	 * */
 	void updateReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
 	
 	/**
 	 * ´ñ±Û »èÁ¦
 	 * */
-	void deleteReviewReply() throws SQLException;
-	
+	void deleteReviewReply(int answerNo) throws SQLException;
 }

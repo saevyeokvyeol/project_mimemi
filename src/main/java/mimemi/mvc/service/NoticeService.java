@@ -1,34 +1,34 @@
-package mimemi.mvc.dao;
+package mimemi.mvc.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import mimemi.mvc.dto.NoticeDTO;
 
-public interface NoticeDAO {
+public interface NoticeService {
 	/**
 	 * 공지사항 등록
 	 * @param NoticeDTO(String noticeTitle, String noticeContent, String noticeAttach)
 	 * */
-	int insertNotice(NoticeDTO noticeDTO) throws SQLException;
+	void insertNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
 	 * 공지사항 수정 
 	 * @param NoticeDTO(int noticeNo, String noticeTitle, String noticeContent)
 	 * */
-	int updateNotice(NoticeDTO noticeDTO) throws SQLException;
+	void updateNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
 
 	 * 공지사항 이미지 수정
 	 * @param int noticeNo, String noticeAttach
 	 * */
-	int updateNoticeAttach(int noticeNo, String noticeAttach) throws SQLException;
+	void updateNoticeAttach(int noticeNo, String noticeAttach) throws SQLException;
 	
 	/**
 	 * 공지사항 삭제 
 	 * */
-	int deleteNotice(int noticeNo) throws SQLException;
+	void deleteNotice(int noticeNo) throws SQLException;
 	
 	/**
 	 * 공지사항 전체 검색
