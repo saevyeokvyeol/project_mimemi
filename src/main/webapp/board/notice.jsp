@@ -15,6 +15,7 @@
          height : 50px; 
          text-align:center;
          vertical-align:middle;}
+  
  
  table {width:1200px;}
  th, td {border : 1px solid white;}
@@ -59,38 +60,22 @@
 		</div>
 		</form>
 	<hr>
-<table class="table">
+<table class="table" style="text-align:center">
   <thead>
     <tr>
-      <th scope="col">순서</th>
-      <th scope="col">제목</th>
-      <th scope="col">내용</th>
-      <th scope="col">작성일</th>
+      <th>순서</th> 
+      <th>제목</th>
+      <th>날짜</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2"></td>
-      <td></td>
+      <th>notice_no불러오기</th>
+      <td><a href="a">notice_title불러오기</a></td>
+      <td>notice_regdate</td>
     </tr>
   </tbody>
 </table>
-</div>
-</td>
-</tr>
 </table>
 </body>
 </html>
