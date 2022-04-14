@@ -83,7 +83,7 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="review_contents" cols="50" rows="10" ></textarea>
+                                <textarea name="review_contents" cols="50" rows="10" placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다."></textarea>
                             </td>
                         </tr>
                         <tr>
