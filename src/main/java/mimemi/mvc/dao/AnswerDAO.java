@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import mimemi.mvc.dto.AnswerDTO;
 
-public interface AnswerBoardDAO {
+public interface AnswerDAO {
 	/**
 	 * ´ñ±Û µî·Ï
 	 * @param AnswerDTO(int askNo, String answerContent)

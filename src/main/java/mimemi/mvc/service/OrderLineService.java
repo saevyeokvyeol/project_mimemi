@@ -1,15 +1,16 @@
-package mimemi.mvc.dao;
+package mimemi.mvc.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 
-public interface OrderLineDAO {
-
+public interface OrderLineService {
+	
+	
 	/**
 	 * 주문상세 조회
+	 * @param orderId
 	 * @return
 	 * @throws SQLException
 	 */
@@ -18,20 +19,25 @@ public interface OrderLineDAO {
 	/**
 	 * 주문상세 추가
 	 * @param orderLine
-	 * @return
+	 * @throws SQLException
 	 */
-	int insert(OrderLineDTO orderLine) throws SQLException;
+	void insert(OrderLineDTO orderLine) throws SQLException;
 	
 	/**
 	 * 주문상세 삭제
 	 * @param orderLineId
-	 * @return
 	 * @throws SQLException
 	 */
-	int delete(int orderLineId) throws SQLException;
+	void delete(int orderLineId) throws SQLException;
 	
 	/**
 	 * 주문상세 수정
+	 * @param orderLine
+	 * @throws SQLException
 	 */
-	int updatOrderLine (OrderLineDTO orderLine) throws SQLException;
+	
+	void updatOrderLine (OrderLineDTO orderLine) throws SQLException;
+	
+	
+
 }

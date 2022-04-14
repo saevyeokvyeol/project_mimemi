@@ -5,7 +5,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.AskDTO;
 
-public interface AskBoardDAO {
+public interface AskDAO {
 	/**
 	 * 1:1 문의 등록
 	 * @param AskDTO(String userId, String askTitle, String askContent, String askAttach,
@@ -42,7 +42,7 @@ public interface AskBoardDAO {
 	 * 1:1 문의 전체 검색(페이지 처리)
 	 * @param int pageNo
 	 * */
-	List<AskDTO> getAskList(int pageNo) throws SQLException;
+	List<AskDTO> selectAllByPaging(int pageNo) throws SQLException;
 	
 	/**
 	 * 1:1 문의 답변 여부 수정 기능
