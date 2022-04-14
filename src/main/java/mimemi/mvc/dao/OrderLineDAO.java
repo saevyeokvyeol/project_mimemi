@@ -7,7 +7,6 @@ import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 
 public interface OrderLineDAO {
-
 	/**
 	 * 주문 상세 등록
 	 * @param OrderLineDTO(int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
