@@ -1,40 +1,39 @@
-package mimemi.mvc.dao;
+package mimemi.mvc.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import mimemi.mvc.dto.ReviewDTO;
-import mimemi.mvc.dto.ReviewReplyDTO;
 
-public interface ReviewDAO {
+public interface ReviewService {
 	/**
 	 * 후기 등록
 	 * @param ReviewDTO(String goodsId, String userId, String reviewTitle, String reviewAttach, String reviewContent,
 			int reviewRate)
 	 * */
-	int insertReview(ReviewDTO reviewDTO) throws SQLException;
+	void insertReview(ReviewDTO reviewDTO) throws SQLException;
 	
 	/**
 	 * 후기 수정 
 	 * @param ReviewDTO(int reviewNo, String reviewTitle, String reviewContent, int reviewRate)
 	 * */
-	int updateReview(ReviewDTO reviewDTO) throws SQLException;
+	void updateReview(ReviewDTO reviewDTO) throws SQLException;
 	
 	/**
 	 * 후기 이미지 수정
 	 * @param int reviewNo, String reviewAttach
 	 * */
-	int updateFaqImg(int reviewNo, String reviewAttach) throws SQLException;
+	void updateFaqImg(int reviewNo, String reviewAttach) throws SQLException;
 	
 	/**
 	 * 후기 삭제
 	 * */
-	int deleteReview(int reviewNo) throws SQLException;
+	void deleteReview(int reviewNo) throws SQLException;
 	
 	/**
 	 * 블라인드 여부 변경 기능
 	 * */
-	int updateBlind(int reviewNo, String blind) throws SQLException;
+	void updateBlind(int reviewNo, String blind) throws SQLException;
 	
 	/**
 	 * 후기 전체 검색
@@ -56,19 +55,9 @@ public interface ReviewDAO {
 	
 	/**
 	 * 후기번호로 검색하기
-	 * @param int reviewNo
+	 * @param int reviewNo, int flag(조회수 증가 여부를 판별하는 매개변수. true면 조회수 증가, false면 조회수 그대로)
 	 * @return ReviewDTO
 	 * */
-	ReviewDTO selectByReviewNo(int reviewNo) throws SQLException;
+	ReviewDTO selectByReviewNo(int reviewNo, boolean flag) throws SQLException;
 	
-	/**
-	 * 조회수 증가 기능
-	 * @param reviewNo
-	 * */
-	int increamentByReadnum(int reviewNo) throws SQLException;
-	
-	/**
-	 * 각 후기에 해당하는 댓글 정보 가져오기
-	 * */
-	List<ReviewReplyDTO> selectReplyByReviewNo(int reviewNo) throws SQLException;
 }

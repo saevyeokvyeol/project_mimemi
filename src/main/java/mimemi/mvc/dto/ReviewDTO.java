@@ -3,6 +3,7 @@ package mimemi.mvc.dto;
 public class ReviewDTO {
 	private int reviewNo;
 	private String userId;
+	private String  goodsId;
 	private String reviewTitle;
 	private String reviewAttach;
 	private String reviewContent;
@@ -13,11 +14,12 @@ public class ReviewDTO {
 	
 	public ReviewDTO() {}
 	
-	public ReviewDTO(int reviewNo, String userId, String reviewTitle, String reviewAttach, String reviewContent,
+	public ReviewDTO(int reviewNo, String userId, String  goodsId, String reviewTitle, String reviewAttach, String reviewContent,
 			String reviewRegdate, int reviewRate, boolean reviewBlind, int reviewViews) {
 		super();
 		this.reviewNo = reviewNo;
 		this.userId = userId;
+		this.goodsId = goodsId;
 		this.reviewTitle = reviewTitle;
 		this.reviewAttach = reviewAttach;
 		this.reviewContent = reviewContent;
@@ -41,6 +43,14 @@ public class ReviewDTO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	
+	public String getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 
 	public String getReviewTitle() {
@@ -98,5 +108,7 @@ public class ReviewDTO {
 	public void setReviewViews(int reviewViews) {
 		this.reviewViews = reviewViews;
 	}
+
+	
 	
 }

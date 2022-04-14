@@ -1,7 +1,7 @@
 package mimemi.mvc.dto;
 
 public class EventDTO {
-	private int eventId;
+	private int eventNo;
 	private String eventTitle;
 	private String eventContent;
 	private String eventAttach;
@@ -11,10 +11,10 @@ public class EventDTO {
 	private String eventEnddate;
 	
 	public EventDTO() {}
-	public EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach,  String eventImg, String eventRegdate,
+	public EventDTO(int eventNo, String eventTitle, String eventContent, String eventAttach,  String eventImg, String eventRegdate,
 			String eventStartdate, String eventEnddate) {
 		super();
-		this.eventId = eventId;
+		this.eventNo = eventNo;
 		this.eventTitle = eventTitle;
 		this.eventContent = eventContent;
 		this.eventAttach = eventAttach;
@@ -29,11 +29,11 @@ public class EventDTO {
 	public void setEventImg(String eventImg) {
 		this.eventImg = eventImg;
 	}
-	public int getEventId() {
-		return eventId;
+	public int getEventNo() {
+		return eventNo;
 	}
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
+	public void setEventNo(int eventNo) {
+		this.eventNo = eventNo;
 	}
 	public String getEventTitle() {
 		return eventTitle;

@@ -1,7 +1,7 @@
 package mimemi.mvc.dto;
 
 public class UserCouponDTO {
-	private String usercouId;
+	private int usercouId;
 	private String userId;
 	private String livecouId;
 	private String rgcouId;
@@ -11,7 +11,7 @@ public class UserCouponDTO {
 	
 	public UserCouponDTO() {}
 
-	public UserCouponDTO(String usercouId, String userId, String livecouId, String rgcouId, String usercouUsable,
+	public UserCouponDTO(int usercouId, String userId, String livecouId, String rgcouId, String usercouUsable,
 			String usercouPubdate, String usercouEnddate) {
 		super();
 		this.usercouId = usercouId;
@@ -23,11 +23,11 @@ public class UserCouponDTO {
 		this.usercouEnddate = usercouEnddate;
 	}
 
-	public String getUsercouId() {
+	public int getUsercouId() {
 		return usercouId;
 	}
 
-	public void setUsercouId(String usercouId) {
+	public void setUsercouId(int usercouId) {
 		this.usercouId = usercouId;
 	}
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.FaqDTO;
 
-public interface FAQDAO {
+public interface FaqDAO {
 	/**
 	 * FAQ 등록
 	 * @param FaqDTO(String faqTitle, String faqContent, String faqAttach)
@@ -50,6 +50,12 @@ public interface FAQDAO {
 	 * 제목과 내용에서 검색한다.
 	 * */
 	List<FaqDTO> selectByKeyword(String faqKeyword, String field) throws SQLException;
+	
+	/**
+	 * FAQ 번호로 검색
+	 * @param int faqNo
+	 * */
+	FaqDTO selectByFaqNo(int faqNo) throws SQLException;
 	
 	/**
 	 * FAQ 카테고리별 검색 (카테고리)
