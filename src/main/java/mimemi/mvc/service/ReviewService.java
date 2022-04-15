@@ -54,7 +54,7 @@ public interface ReviewService {
 	List<ReviewDTO> selectByKeyword(String reviewKeyword, String field) throws SQLException;
 	
 	/**
-	 * 후기번호로 검색하기
+	 * 후기번호로 검색하기(제목클릭하면 리뷰 상세보기로 이동)
 	 * @param int reviewNo, int flag(조회수 증가 여부를 판별하는 매개변수. true면 조회수 증가, false면 조회수 그대로)
 	 * @return ReviewDTO
 	 * */
