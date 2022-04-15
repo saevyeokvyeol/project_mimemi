@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FAQ</title>
+<title>공지사항 상세페이지</title>
 </head>
 <style type="text/css">
  .left side {width : 300px;
@@ -46,39 +46,31 @@
 </div>
 </td>
 <td>
-<!-- body -->
+
+<div> 
 <div class="body"> 
-	<div><h1>공지사항</h1></div>
-		<form>
-		<div class="search">
-			<select>
-				<option value="TITLE">제목</option>
-				<option value="CONTENT">내용</option>
-			</select>
-			<input type="text" class="ipt" name="keyword" maxlength="30" value="" />
-			<button type="submit" class="btn btn-success">검색</button>
+	<div><h1>공지사항</h1></div><hr>
+	<div>
+		<div>
+			<div>{tile}</div>
+			<div>{date}</div>
 		</div>
-		</form>
-	<hr>
-<table class="table" style="text-align:center">
-  <thead>
-    <tr>
-      <th>순서</th> 
-      <th>제목</th>
-      <th>날짜</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>notice_no불러오기</th>
-      <td><a href="a">notice_title불러오기</a></td>
-      <td>notice_regdate</td>
-    </tr>
-  </tbody>
-</table>
+<hr>
+ <div> 
+    <h3> 공지사항내용입니다</h3>
+ </div><hr>
+     
+			<div>
+				<div>
+					<button type="button" onclick="location.href='notice.jsp';">목록보기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</td>
+</tr>
 </table>
 </body>
 </html>
-
- 
-
