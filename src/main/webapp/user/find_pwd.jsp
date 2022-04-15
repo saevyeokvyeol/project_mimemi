@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>find_pwd</title>
+<style type="text/css">
+
+</style>
 </head>
 <body>
 <h1>비밀번호 찾기</h1>
@@ -14,7 +17,7 @@
    <input type="text" class="insertPhone" name="insertPhone" placeholder="가입 시 작성한 휴대폰 번호를 입력해주세요">
    
    <div class="btnGroup">
-     <a href="" class="insertNewPwd">비밀번호 재설정하기</a>
+     <button class="Btn" id="updatePwd">비밀번호 재설정하기</button>
    </div>
 
  </form>
