@@ -26,7 +26,7 @@
 					placeholder="비밀번호를 입력해주세요" autocomplete="off">
 			</div>
 		</div>
-		<button class="loginBtn">로그인</button>
+		<button class="loginBtn" id="login">로그인</button>
 		<div class="loginOpt">
 			<table>
 				<tr>
