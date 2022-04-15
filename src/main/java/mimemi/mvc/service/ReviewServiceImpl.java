@@ -3,9 +3,12 @@ package mimemi.mvc.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import mimemi.mvc.dao.ReviewDAO;
+import mimemi.mvc.dao.ReviewDAOImpl;
 import mimemi.mvc.dto.ReviewDTO;
 
 public class ReviewServiceImpl implements ReviewService {
+	private ReviewDAO reviewDAO = new ReviewDAOImpl();
 
 	@Override
 	public void insertReview(ReviewDTO reviewDTO) throws SQLException {
@@ -45,8 +48,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<ReviewDTO> selectAllByPaging(int pageNo, String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<ReviewDTO> list =reviewDAO.selectAllByPaging(pageNo, field);
+		
+		return list;
 	}
 
 	@Override
