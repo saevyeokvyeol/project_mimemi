@@ -4,26 +4,28 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>쿠폰조회 - 미미미</title>
-		
+		<title>관리자 쿠폰조회  - 미미미</title>
 		<style type="text/css">
-			div {width: 1200px; margin: auto;}
+			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
 			th, td {border: 1px solid black;}
 		</style>
 		
+		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+		
+		<!-- JavaScript Bundle with Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-			
 		
 	</head>
 	<body>
-		<div>
+		<section>
 			<form action="">
-				<h1>쿠폰조회</h1>
-				
+        <input type="hidden" name="" id="">
+				<h1>쿠폰조회 </h1>
 				<div style="text-align: right;">
-					<form name="search" action="" method="post">
+					<form name="sort" action="" method="post">
 						<select name="keyField">
 							<option value="0">--정렬선택--</option>
 							<option value="couponId">쿠폰번호</option>
@@ -34,7 +36,7 @@
 				
 				<p>
 				
-				<table >
+				<table class="table">
 					<thead>
 						<tr>
 							<th>쿠폰번호</th>
@@ -42,21 +44,30 @@
 							<th>쿠폰발행일</th>
 							<th>쿠폰만료일</th>
 							<th>쿠폰금액</th>
-							<th>수정</th>
+							<th>수정하기</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>쿠폰번호</td>
-							<td>쿠폰명</td>
-							<td>쿠폰발행일</td>
-							<td>쿠폰만료일</td>
-							<td>쿠폰금액</td>
-							<td>수정</td>
+							<td>A01</td>
+							<td>생일쿠폰</td>
+							<td>2022-04-14</td>
+							<td>2022-05-14</td>
+							<td>10000원</td>
+							<td><input type="submit" onclick="location.href='couponUpdate.jsp'" value="수정하기"></td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							
+						</tr>
+					</tfoot>
 					
 				</table>
+				
+				<div style="text-align: right;">
+					<input type="submit" onclick="location.href='couponInsert.jsp'" value="등록하기">
+				</div>
 				
 				<p>
 				
@@ -74,8 +85,7 @@
 					</form>
 				</div>
 				
-				
 			</form>
-		</div>
+		</section>
 	</body>
 </html>

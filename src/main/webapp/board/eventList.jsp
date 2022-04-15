@@ -9,6 +9,8 @@
 	table{width: 1000px; height:300px; border: double 3px gray; border-collapse: collapse;}
 	th,td{border: 1px solid gray;}
 	td{text-align: center;}
+	tr th{width: 1000px; height:50px;}
+	img{width: 500px; height:200px;}
 </style>
 </head>
 <body>
@@ -22,8 +24,16 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><a href="eventView.jsp?id=638&amp;st=&amp;pgsize=10" class="img" style="background-image: url(a.jpg);"></a></td>
-			<td><a href="eventView.jsp?id=635&amp;st=&amp;pgsize=10" class="img" style="background-image: url(/data/promotion/event_38581220330113743.jpg);"></a></td>				
+			<td>
+				<a href="eventView.jsp" target="_blank">
+				<img alt="신규회원 이벤트 #최대30000원할인" src="../front_img/board_eventList.jpg" title="신규회원 이벤트 #최대30000원할인">
+				</a>
+			</td>
+			<td>
+				<a href="eventView.jsp" target="_blank">
+				<img alt="4월궁중요리이벤트" src="../front_img/board_eventList.jpg" title="4월궁중요리이벤트">
+				</a>
+			</td>				
 		</tr>
 		<tr>
 			<td>
@@ -38,6 +48,7 @@
 	</tbody>
 					
 </table>
+
 
 </body>
 </html>

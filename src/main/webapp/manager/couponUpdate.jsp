@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쿠폰 등록 - 미미미</title>
+<title>쿠폰 수정 - 미미미</title>
 
 <style>
   table {border: double 5px gray; width:500px}
@@ -22,7 +22,7 @@
 
 <form method="post" action="insert">
 <table>
-   <caption><h2> 쿠폰등록 Form</h2></caption>
+   <caption><h2> 쿠폰수정 Form</h2></caption>
   <tr>
 	<td>쿠폰번호</td>
 	<td><input type="text" name="id" /></td>
@@ -45,7 +45,7 @@
   </tr>
   <tr>
 	<td colspan="2" >
-	<input type="submit" value="등록" />
+	<input type="submit" value="수정" />
 	<input type="reset" value="취소" />
 	</td>
 	
@@ -53,7 +53,7 @@
   </table> 
 </form>
 
-<p>
+<pr>
 <div>
 	<a href="selectCouponAll.jsp">&lt;리스트로 돌아가기&gt;</a>
 </div>
