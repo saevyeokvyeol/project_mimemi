@@ -2,7 +2,9 @@ package mimemi.mvc.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -119,8 +121,30 @@ public class CartDAOImpl implements CartDAO {
 	 */
 	@Override
 	public List<CartDTO> selectCartByUserId(String userId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("cart.selectCartByUserId");
+		// select * from cart where user_id = ? order by cart_id desc
+		
+		List<CartDTO> list = new ArrayList<CartDTO>();
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, userId);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				CartDTO cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7));
+				list.add(cart);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return list;
 	}
 
 }
