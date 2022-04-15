@@ -37,7 +37,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><img  class="poster" src="${path}/front_img/board_eventView.jpg" alt="진행중인이벤트"/></td>	
+							<td><img  class="poster" src="${path}/front_img/progressEvent1.jpg" alt="진행중인이벤트"/></td>	
 						</tr>
 						
 					</tbody>
