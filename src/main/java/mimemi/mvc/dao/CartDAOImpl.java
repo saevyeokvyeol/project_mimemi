@@ -66,30 +66,98 @@ public class CartDAOImpl implements CartDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
-		String sql = proFile.getProperty("");
-		return 0;
+		String sql = proFile.getProperty("cart.updateCartQty");
+		// update cart set cart_qty = ? where cart_id = ?
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, cartQty);
+			ps.setInt(2, cartId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	/**
-	 * 장바구니 수량 변경
+	 * 장바구니 요일 변경
 	 * @param: int cartId, String cartWeekday
 	 * @return: int(수정한 레코드 수)
 	 * */
 	@Override
 	public int updateCartWeekday(int cartId, String cartWeekday) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("cart.updateCartWeekday");
+		// update cart set cart_weekday=? where cart_id=?
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, cartWeekday);
+			ps.setInt(2, cartId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	/**
-	 * 장바구니 수량 변경
+	 * 장바구니 기간 변경
 	 * @param: int cartId, String cartPeriod
 	 * @return: int(수정한 레코드 수)
 	 * */
 	@Override
 	public int updateCartPeriod(int cartId, String cartPeriod) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("cart.updateCartPeriod");
+		// update cart set cart_period = ? where cart_id = ?
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, cartPeriod);
+			ps.setInt(2, cartId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * 장바구니 첫 배송일 변경
+	 * @param: int cartId, String cartStart
+	 * @return: int(수정한 레코드 수)
+	 * */
+	@Override
+	public int updateCartStart(int cartId, String cartStart) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("cart.updateCartStart");
+		// update cart set cart_period = ? where cart_id = ?
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, cartStart);
+			ps.setInt(2, cartId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	/**
@@ -98,9 +166,25 @@ public class CartDAOImpl implements CartDAO {
 	 * @return int(삭제한 레코드 수)
 	 */
 	@Override
-	public int deleteSelectedCart(int[] cartId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteSelectedCart(List<Integer> cartId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("cart.deleteSelectedCart");
+		// delete cart where cart_id=?
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			for(int i : cartId) {
+				ps.setInt(1, i);
+				result += ps.executeUpdate();
+			}
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	/**
@@ -110,8 +194,22 @@ public class CartDAOImpl implements CartDAO {
 	 */
 	@Override
 	public int deleteAllCart(String userId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("cart.deleteAllCart");
+		// delete cart where user_id=?
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, userId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	/**
