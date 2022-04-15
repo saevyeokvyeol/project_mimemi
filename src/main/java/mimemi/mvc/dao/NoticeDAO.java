@@ -19,7 +19,6 @@ public interface NoticeDAO {
 	int updateNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
-
 	 * 공지사항 이미지 수정
 	 * @param int noticeNo, String noticeAttach
 	 * */

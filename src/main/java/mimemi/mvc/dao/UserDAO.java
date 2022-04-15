@@ -37,7 +37,7 @@ public interface UserDAO {
 	 * 
 	 * : 비밀번호찾기 클릭 시 userId, userName, userPhone을 입력받고
 	 * 	 DB와 비교하고 일치하면 비밀번호 변경 메소드 호출
-	 * 	 ture면 비밀번호 변경 페이지로 이동
+	 * 	 true면 비밀번호 변경 페이지로 이동
 	 * */
 	boolean selectUserPwd(String userId, String userName, String userPhone) throws SQLException;
 	

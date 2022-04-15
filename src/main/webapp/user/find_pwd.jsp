@@ -5,10 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>find_pwd</title>
+<style type="text/css">
+
+</style>
 </head>
 <body>
-<h3>find_pwd.jsp 페이지 입니다.</h3>
-<img src="../front_img/user_find_pwd_jsp.jpg" alt="비밀번호찾기화면 이미지입니다."/>
+<h1>비밀번호 찾기</h1>
+ <form>
+   <input type="text" class="insertId" name="insertId" placeholder="아이디를 입력해주세요"><br>
+   <input type="text" class="insertName" name="insertName" placeholder="가입 시 작성한 이름을 입력해주세요"><br>
+   <input type="text" class="insertPhone" name="insertPhone" placeholder="가입 시 작성한 휴대폰 번호를 입력해주세요">
+   
+   <div class="btnGroup">
+     <button class="Btn" id="updatePwd">비밀번호 재설정하기</button>
+   </div>
 
+ </form>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트등록 - 미미미</title>
+<title>이벤트수정 - 미미미</title>
 <style>
   table {border: double 5px gray; width:500px}
   td,th{border:1px black solid ;  padding:10px}
@@ -20,6 +20,9 @@
 <body>
 <form name="writeForm" method="post" action="${path}/front?key=event&methodName=insert" 
   onSubmit='return checkValid()' enctype="multipart/form-data">
+	<input type="hidden" name="key" value="event" >
+    <input type="hidden" name="methodName" value="update" >
+    <input type='hidden' name="eventNo" value="${event.eventNo}">
 <!-- 
      아래 문장으로 전송하면 post방식으로 전송이되고 현재 파일업로드때문에 enctype="multipart/form-data" 설정되어 있기때문에 
      request로 값을 받을수가 없다. ( MulitpartRequest로 받아야한다.) 그런데 Controller로 가기전에 Controller를 찾기위해서 
@@ -33,7 +36,7 @@
 
     <tr>
         <td colspan="2">
-            <p><font><b> 이벤트 등록 </b></font></p>
+            <p><font><b> 이벤트 수정 </b></font></p>
         </td>
     </tr>
     <tr>
@@ -41,35 +44,35 @@
             <p><b><span>제목</span></b></p>
         </td>
         <td><b><span>
-		<input type=text name="event_title" size="50"></span></b></td>
+		<input type=text name="event_title" size="50" value="${event.eventTitle}"></span></b></td>
     </tr>
     <tr>
         <td>
             <p><b><span>내용</span></b></p>
         </td>
         <td><b><span>
-		<textarea name="event_content" cols="50" rows="10"></textarea></span></b></td>
+		<textarea name="event_content" cols="50" rows="10">${event.eventContent}</textarea></span></b></td>
     </tr>
     <tr>
         <td>
             <p><b><span>*첨부파일</span></b></p>
         </td>
         <td><b><span>
-		<input type="file" name="file" maxlength="60" size="40"></span></b></td>
+		<input type="file" name="file" maxlength="60" size="40" value="${event.eventAttach}"></span></b></td>
     </tr>
     <tr>
         <td>
             <p><b><span>썸네일이미지</span></b></p>
         </td>
         <td><b><span>
-		<input type="file" name="file" maxlength="60" size="40"></span></b></td>
+		<input type="file" name="file" maxlength="60" size="40" value="${event.eventImg}"></span></b></td>
     </tr>
     <tr>
         <td>
             <p><b><span>이벤트 시작일</span></b></p>
         </td>
         <td><b><span>
-		<input type=text name="event_startdate" size="50"></span></b></td>
+		<input type="text" name="event_startdate" size="50" value="${event.eventStartdate}"></span></b></td>
     </tr>
     
      <tr>
@@ -78,13 +81,13 @@
         </td>
         <td>
         	<b><span>
-        		 <input type=text name="event_enddate" size="50">
+        		 <input type="text" name="event_enddate" size="50" value="${event.eventEnddate}">
         	   </span></b>
         </td>
     </tr>
     <tr>
-        <td colspan="2"><b><span><input type=submit value=글쓰기> 
-        <input type=reset value=다시쓰기></span></b></td>
+        <td colspan="2"><b><span><input type="submit" value="글쓰기"> 
+        <input type="reset" value="다시쓰기"></span></b></td>
     </tr>
 </table>
 

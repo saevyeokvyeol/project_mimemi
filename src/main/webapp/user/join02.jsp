@@ -4,11 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>join02</title>
+<title>join01</title>
 </head>
 <body>
-<h3>join02.jsp 페이지 입니다.</h3>
-<img src="../front_img/user_join2_jsp.jpg" alt="회원가입 form 화면 이미지입니다."/>
+<h1>회원가입</h1><br>
+<div class="agreement_head">
+	<div class="title">약관동의</div>
+</div>
+<br>
+<div></div>
+
+<a href="" class="cancel">취소</a>
+<a href="" class="next">다음단계</a>
 
 </body>
 </html>
