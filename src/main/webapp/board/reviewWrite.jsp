@@ -67,7 +67,10 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>상품</th>
                             <td>
-                                <input type="text" name="review_goods" placeholder="상품명">
+                                <select name="" id="">
+                                	<option name="reivew_goods" value="0">--상품 이름--</option>
+                                	<option name="reivew_goods" value="goodsid">정성한상</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
