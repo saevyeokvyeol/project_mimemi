@@ -1,7 +1,4 @@
-import javax.servlet.http.HttpServletResponse;
-
 package mimemi.mvc.controller;
-
 
 import java.util.List;
 
