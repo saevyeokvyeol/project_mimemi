@@ -31,3 +31,4 @@ replay_pid*
 
 context.xml
 /build/
+.tern-project

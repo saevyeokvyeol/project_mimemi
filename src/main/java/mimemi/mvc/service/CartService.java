@@ -7,37 +7,48 @@ import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.GoodsDTO;
 
 public interface CartService {
+	/**
+	 * 장바구니 등록
+	 * @param CartDTO(String userId, String goodsId, int cartQty, String cartWeekday, String cartPeriod,
+			String cartStart)
+	 */
+	void insert(CartDTO cart) throws SQLException;
 
 	/**
+	 * 장바구니 수량 변경
+	 * @param: int cartId, int cartQty
+	 * */
+	void updateCartQty(int cartId, int cartQty) throws SQLException;
+
+	/**
+	 * 장바구니 수량 변경
+	 * @param: int cartId, String cartWeekday
+	 * */
+	void updateCartWeekday(int cartId, String cartWeekday) throws SQLException;
+
+	/**
+	 * 장바구니 수량 변경
+	 * @param: int cartId, String cartPeriod
+	 * */
+	void updateCartPeriod(int cartId, String cartPeriod) throws SQLException;
+	
+	/**
+	 * 장바구니 부분 삭제
+	 * @param int[] cartId
+	 */
+	void deleteSelectedCart(int[] cartId) throws SQLException;
+	
+	/**
+	 * 장바구니 전체 삭제
+	 * @param String userId
+	 */
+	void deleteAllCart(String userId) throws SQLException;
+	
+	/**
 	 * 장바구니 조회
-	 * @param cartId
-	 * @return
-	 * @throws SQLException
+	 * @param userId(유저 아이디가 들어간 모든 장바구니 가져오기)
+	 * @return List<CartDTO>
 	 */
-	List<CartDTO> selectByCartId(int cartId) throws SQLException;
-	
-	/**
-	 * 장바구니 추가
-	 * @param cartId
-	 * @param goods
-	 * @throws SQLException
-	 */
-	void insertCart(int cartId, GoodsDTO goods) throws SQLException;
-	
-	
-	/**
-	 * 장바구니 수정
-	 * @param cart
-	 * @throws SQLException
-	 */
-	void updateCart(CartDTO cart) throws SQLException;
-	
-	/**
-	 * 장바구니 삭제하기
-	 * @param cartId
-	 * @return
-	 * @throws SQLException
-	 */
-	int deleteCart(int cartId) throws SQLException;
+	List<CartDTO> selectCartByUserId(String userId) throws SQLException;
 	
 }
