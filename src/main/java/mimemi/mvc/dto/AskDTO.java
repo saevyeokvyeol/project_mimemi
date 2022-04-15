@@ -1,17 +1,23 @@
 package mimemi.mvc.dto;
 
 public class AskDTO {
-	private int askNo;
-	private String userId;
-	private String askTitle;
-	private String askContent;
-	private String askAttach;
-	private String askRegdate;
-	private String askCategory;
-	private String askComplete;
+	private int askNo;//글번호
+	private String userId;//회원아이디
+	private String askTitle;//제목
+	private String askContent;//내용
+	private String askAttach;//첨부파일명
+	private String askRegdate;//작성날짜
+	private String askCategory;//카테고리명
+	private String askComplete;//답변완료
 	
 	public AskDTO() {}
 
+	public AskDTO(String askTitle, String askContent, String askAttach) {
+		this.askTitle=askTitle;
+		this.askContent=askContent;
+		this.askAttach=askAttach;
+	}
+	
 	public AskDTO(int askNo, String userId, String askTitle, String askContent, String askAttach, String askRegdate,
 			String askCategory, String askComplete) {
 		super();
