@@ -5,10 +5,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>관리자 쿠폰조회  - 미미미</title>
+		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
 			th, td {border: 1px solid black;}
+			table tr:first-child {border: 1px solid black;}
 		</style>
 		
 		<!-- CSS only -->
@@ -39,8 +41,9 @@
 								text += `<td><a href='#'>\${item.livecouId}</a></td>`;
 								text += `<td>\${item.livecouName}</td>`;
 								text += `<td>\${item.livecouPrice}</td>`;
-								text += `<td>\${item.livecouPubdate}</td>`;
-								text += `<td>\${item.livecouUseperiod}</td>`;
+								text += `<td>\${item.livecouPubdate.substr(0,10)}</td>`;
+								//text += `<td>\${item.livecouUseperiod}</td>`;
+								text += `<td>\${item.livecouPubdate.substr(0,8)}\${parseInt(item.livecouPubdate.substr(8,2)) + item.livecouUseperiod}</td>`;
 								text +=`<td><input type='button' value='수정하기' name='\${item.livecouId}'/></td>`;
 								text += "</tr>";
 								
@@ -72,8 +75,8 @@
 								text += `<td><a href='#'>\${item.rgcouId}</a></td>`;
 								text += `<td>\${item.rgcouName}</td>`;
 								text += `<td>\${item.rgcouPrice}</td>`;
-								text += `<td>\${item.rgcouPubdate}</td>`;
-								text += `<td>\${item.rgcouEnddate}</td>`;
+								text += `<td>\${item.rgcouPubdate.substr(0,10)}</td>`;
+								text += `<td>\${item.rgcouEnddate.substr(0,10)}</td>`;
 								text +=`<td><input type='button' value='수정하기' name='\${item.rgcouId}'/></td>`;
 								text += "</tr>";
 								
@@ -137,7 +140,7 @@
 				</table>
 				
 				<div style="text-align: right;">
-					<input type="submit" onclick="location.href='couponInsert.jsp'" value="등록하기">
+					<input type="submit" onclick="location.href='couponInsert.jsp'" value="쿠폰등록">
 				</div>
 				
 				<p>
