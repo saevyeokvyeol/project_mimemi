@@ -27,8 +27,11 @@ pageEncoding="UTF-8"%>
             div.review-writeForm{
                 text-align: left;
             }
-            div.review-button{
+            div.review-submit-button{
                 text-align: center;
+            }
+            div.review-write-foot-area{
+                text-align: right;
             }
             
         </style>
@@ -55,8 +58,8 @@ pageEncoding="UTF-8"%>
                 <hr>
             </div>
             <div class="review-writeForm">
-                <form name="writeReview" method="post" action=""
-                onsubmit="checkValid()" enctype="multipart/form-data">
+                <form name="writeReview" method="post" action="${path}/front?key=review&methodName=insert"
+                onsubmit='return checkValid()' enctype="multipart/form-data">
                     <table>
                         <tr>
                             <th>제목</th>
@@ -99,8 +102,11 @@ pageEncoding="UTF-8"%>
 
                 </form>
             </div>
-            <div class="review-button">
+            <div class="review-submit-button">
                 <input type="button" value="후기 등록하기">
+            </div>
+            <div class="review-write-foot-area">
+                <span class="back-review-list"><a href="${path}/front?key=review&methodName=selectAll">목록으로 돌아가기</a></span>
             </div>
         </div>
     </body>

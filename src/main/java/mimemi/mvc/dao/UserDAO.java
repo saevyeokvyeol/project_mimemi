@@ -73,14 +73,13 @@ public interface UserDAO {
 	int deleteUser(String userId, String userPwd) throws SQLException;
 	
 	/**
-	
 	 * 아이디 중복 체크
-	 
+	 */
 	boolean idCheck(String userId) throws SQLException;
 	
 	/**
 	 * 휴대폰 번호 중복 체크
-	  
+	*/  
 	boolean phoneCheck(String userPhone) throws SQLException;
-	*/
+	
 }
