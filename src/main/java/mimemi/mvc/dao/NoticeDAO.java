@@ -32,7 +32,7 @@ public interface NoticeDAO {
 	/**
 	 * 공지사항 전체 검색
 	 * */
-	List<NoticeDTO> selectAllNotice() throws SQLException;
+	List<NoticeDTO> selectAllNotice(int pageNum, String filed) throws SQLException;
 	
 	/**
 	 * 공지사항 전체 검색(페이지 처리)
