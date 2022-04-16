@@ -18,9 +18,10 @@
 		<!-- JavaScript Bundle with Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	 <script type="text/javascript">
+	 
 	 $(function() {
-		 
 		 function selectAllNotice() {
+	
 			 $.ajax({
 				url: "${path}/ajax",
 				type: "post",
@@ -30,22 +31,22 @@
 				 let str="";
 				 $.each(result, function(index, item){
 					 str+="<tr>"
-					 str+=`<td>${item.noticeNo}</td>`;
-				     str+=`<td>${item.noticeTitle}</td>`;
-				     str+=`<td>${item.noticeContent}</td>`;
-				     str+=`<td>${item.noticeAttach}</td>`;
-				     str+=`<td>${item.noticeRegdate}</td>`;
+					 str+=`<td>\${item.noticeNo}</td>`;
+				     str+=`<td>\${item.noticeTitle}</td>`;
+				     str+=`<td>\${item.noticeContent}</td>`;
+				     str+=`<td>\${item.noticeAttach}</td>`;
+				     str+=`<td>\${item.noticeRegdate}</td>`;
 				     str+="</tr>";
 				});		
 					$("#listTable tr:gt(0)").remove();
-					$("#listTable tr:eq(0)").after(str);
+					$("#listTable tbody").append(str);
 			   }
 			 })	
 		  }	
 		 selectAllNotice();
 	})
 	 
-	 
+
 	 
 	 
 	 </script>

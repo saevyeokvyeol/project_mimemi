@@ -1,14 +1,19 @@
 package mimemi.mvc.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import mimemi.mvc.dto.NoticeDTO;
+import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.service.NoticeService;
 import mimemi.mvc.service.NoticeServiceImpl;
+import net.sf.json.JSONArray;
 
 public class NoticeController implements Controller {
     private NoticeService noticeService = new NoticeServiceImpl(); 
@@ -21,9 +26,10 @@ public class NoticeController implements Controller {
 	
 	/**
 	 * 공지사항 등록
+	 * @throws SQLException 
 	 **/
-    
-	public ModelAndView insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+  /*  
+	public void insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		String saveDir=request.getServletContext().getRealPath("/save");
 		int maxSize =1024*1024*100;
@@ -46,11 +52,56 @@ public class NoticeController implements Controller {
 	
 		
 		
+	
+	
+*/
+
+/*	
+	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String curPageNo = request.getParameter("pageNo");
+		if(curPageNo ==null||curPageNo.equals("")) {
+			curPageNo="1";
+		}
+		String field =request.getParameter("field");
+		if(field==null||field.equals("")) {
+			field="reg";
+		}
+		
+		System.out.println(field+" 페이지 번호: "+curPageNo);
+		List<NoticeDTO> noticeList = noticeService.selectAllNotice();
+		
+		request.setAttribute("list", noticeList);
+		request.setAttribute("pageNo", curPageNo);
+		
+		System.out.println("서비스에서 돌아온 후.."+curPageNo);
+		
+		return new ModelAndView("/board/reviewList.jsp");
+		
 	}
 	
-	/**
-	 *  전체검색하기
-	 **/
+	*/
+	
+	public void selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+        List<NoticeDTO> list = noticeService.selectAllNotice();
+        
+        JSONArray noticeArr = JSONArray.fromObject(list);
+        
+        PrintWriter out = response.getWriter();
+        out.print(noticeArr);
+        
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -68,4 +119,4 @@ public class NoticeController implements Controller {
 	/**
 	 * 삭제하기
 	 **/
-}
+	}

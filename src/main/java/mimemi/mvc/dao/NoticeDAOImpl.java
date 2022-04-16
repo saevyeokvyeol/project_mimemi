@@ -72,7 +72,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 		ResultSet rs=null;
 		
 		List<NoticeDTO> NoticeDtoList = new ArrayList<NoticeDTO>();
-		String sql = proFile.getProperty("notice.insertNotice");
+		String sql = proFile.getProperty("notice.selectAllNotice");
 		
 		try {
 			con = DbUtil.getConnection();
