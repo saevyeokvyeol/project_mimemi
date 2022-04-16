@@ -87,7 +87,7 @@ public interface OrderDAO {
 	 * @param String field(정렬 기준)
 	 * @return List<OrderDTO>
 	 * */
-	List<OrderDTO> selectAll(String field) throws SQLException;
+	List<OrderDTO> selectAll(int pageNum, String field) throws SQLException;
 	
 	/**
 	 * 아이디로 특정 주문 조회

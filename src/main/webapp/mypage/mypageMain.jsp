@@ -30,7 +30,7 @@
 <div class="bottomBox">
   <div class="noticeTitle">공지사항</div>
   <div class="noticeList">
-    <a href></a>
+    <!-- 아작스 -->
   </div>
 </div>
 

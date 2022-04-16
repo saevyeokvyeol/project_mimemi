@@ -3,14 +3,17 @@ package mimemi.mvc.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.security.sasl.AuthenticationException;
+
 import mimemi.mvc.dto.UserDTO;
 
 public interface UserService {
 	/**
 	 * 로그인기능
 	 * @param UserDTO(String userId, String userPwd)
+	 * @throws AuthenticationException 
 	 * */
-	UserDTO loginUser(UserDTO user) throws SQLException;
+	UserDTO loginUser(UserDTO user) throws SQLException, AuthenticationException;
 	
 	/**
 	 * 회원가입기능
@@ -72,14 +75,13 @@ public interface UserService {
 	void deleteUser(String userId, String userPwd) throws SQLException;
 	
 	/**
-	
 	 * 아이디 중복 체크
-	 
+	 */
 	boolean idCheck(String userId) throws SQLException;
 	
 	/**
 	 * 휴대폰 번호 중복 체크
-	  
+	 */
 	boolean phoneCheck(String userPhone) throws SQLException;
-	*/
+	
 }

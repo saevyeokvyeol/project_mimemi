@@ -81,6 +81,7 @@ public interface GoodsDAO {
 	 * @return: List<GoodsDTO>(상품명에 키워드가 들어가는 상품)
 	 * */
 
+
 	List<GoodsDTO> selectByKeyword(String keyword) throws SQLException;
 
 	
