@@ -47,7 +47,7 @@ public class AjaxDispatcherServlet extends HttpServlet {
 			// 키 값에 해당하는 컨트롤러를 가져옴
 			Controller controller = map.get(key);
 			
-			// 컨트롤러에서 메소드를 호출한 뒤 리턴값을 ModelAndView에 저장
+			// 컨트롤러에서 메소드를 호출
 			method.invoke(controller, request, response);
 			
 		} catch (Exception e) {

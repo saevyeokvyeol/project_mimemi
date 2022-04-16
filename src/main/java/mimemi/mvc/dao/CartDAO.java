@@ -35,13 +35,20 @@ public interface CartDAO {
 	 * @return: int(수정한 레코드 수)
 	 * */
 	int updateCartPeriod(int cartId, String cartPeriod) throws SQLException;
+
+	/**
+	 * 장바구니 첫 배송일 변경
+	 * @param: int cartId, String cartStart
+	 * @return: int(수정한 레코드 수)
+	 * */
+	int updateCartStart(int cartId, String cartStart) throws SQLException;
 	
 	/**
 	 * 장바구니 부분 삭제
 	 * @param int[] cartId
 	 * @return int(삭제한 레코드 수)
 	 */
-	int deleteSelectedCart(int[] cartId) throws SQLException;
+	int deleteSelectedCart(List<Integer> cartId) throws SQLException;
 	
 	/**
 	 * 장바구니 전체 삭제

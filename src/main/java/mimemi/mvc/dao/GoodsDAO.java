@@ -80,7 +80,14 @@ public interface GoodsDAO {
 	 * @param: 이름에 해당 키워드가 들어가는지 체크할 키워드를 받음
 	 * @return: List<GoodsDTO>(상품명에 키워드가 들어가는 상품)
 	 * */
+<<<<<<< HEAD
 	List<GoodsDTO> selectByKeyword(String keyword) throws SQLException;
+=======
+
+
+	List<GoodsDTO> selectByKeyword(String keyword) throws SQLException;
+
+>>>>>>> main
 	
 	/**
 	 * 상품코드로 상품 조회

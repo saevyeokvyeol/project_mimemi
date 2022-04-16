@@ -3,12 +3,9 @@ package mimemi.mvc.paging;
 
 public class PageCnt {
 	private static int pageCnt; //총페이지 수Math.ceil(전체레코드수 /pagesize) 
-	public static  int pagesize = 5;// 한 페이지 당 5개 출력물
-	public static int pageNo=1;
-	
-	public  int blockcount=2;
-	
-	//String keyField;
+	public static  int pagesize  = 10;// 한 페이지 당 5개 출력물
+	public static int pageNo = 1;
+	public int blockcount = 2;
 	
 	public PageCnt() {
 		super();

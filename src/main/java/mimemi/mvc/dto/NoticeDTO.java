@@ -1,4 +1,4 @@
-package mimemi.mvc.dto;
+ package mimemi.mvc.dto;
 
 public class NoticeDTO {
 	private int noticeNo;
@@ -6,6 +6,7 @@ public class NoticeDTO {
 	private String noticeContent;
 	private String noticeAttach;
 	private String noticeRegdate;
+	
 	
 	public NoticeDTO() {}
 

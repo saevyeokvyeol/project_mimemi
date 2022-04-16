@@ -10,12 +10,13 @@
 <h1>회원가입</h1><br>
 <div class="agreement_head">
 	<div class="title">약관동의</div>
+	
 </div>
 <br>
 <div></div>
 
 <a href="" class="cancel">취소</a>
-<a href="" class="next">다음단계</a>
+<a href="join03.jsp" class="next">다음단계</a>
 
 </body>
 </html>
