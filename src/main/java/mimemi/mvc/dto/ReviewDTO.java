@@ -5,28 +5,47 @@ public class ReviewDTO {
 	private String userId;
 	private String  goodsId;
 	private String reviewTitle;
-	private String reviewAttach;
 	private String reviewContent;
+	private String reviewAttach;
 	private String reviewRegdate;
 	private int reviewRate;
-	private boolean reviewBlind;
+	private String reviewBlind;
 	private int reviewViews;
+	
+	private GoodsDTO goodsDTO = new GoodsDTO();
+	private UserDTO userDTO = new UserDTO();
 	
 	public ReviewDTO() {}
 	
-	public ReviewDTO(int reviewNo, String userId, String  goodsId, String reviewTitle, String reviewAttach, String reviewContent,
-			String reviewRegdate, int reviewRate, boolean reviewBlind, int reviewViews) {
+	public ReviewDTO(int reviewNo, String userId, String  goodsId, String reviewTitle, String reviewContent, String reviewAttach, 
+			String reviewRegdate, int reviewRate, String reviewBlind, int reviewViews) {
 		super();
 		this.reviewNo = reviewNo;
 		this.userId = userId;
 		this.goodsId = goodsId;
 		this.reviewTitle = reviewTitle;
-		this.reviewAttach = reviewAttach;
 		this.reviewContent = reviewContent;
+		this.reviewAttach = reviewAttach;
 		this.reviewRegdate = reviewRegdate;
 		this.reviewRate = reviewRate;
 		this.reviewBlind = reviewBlind;
 		this.reviewViews = reviewViews;
+	}
+
+	public GoodsDTO getGoodsDTO() {
+		return goodsDTO;
+	}
+
+	public void setGoodsDTO(GoodsDTO goodsDTO) {
+		this.goodsDTO = goodsDTO;
+	}
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
 	public int getReviewNo() {
@@ -93,11 +112,11 @@ public class ReviewDTO {
 		this.reviewRate = reviewRate;
 	}
 
-	public boolean isReviewBlind() {
+	public String isReviewBlind() {
 		return reviewBlind;
 	}
 
-	public void setReviewBlind(boolean reviewBlind) {
+	public void setReviewBlind(String reviewBlind) {
 		this.reviewBlind = reviewBlind;
 	}
 
