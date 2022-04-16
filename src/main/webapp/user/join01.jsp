@@ -13,7 +13,7 @@
 	  <div class="box-Text">
 	    <div class="txt1">미미미에 오신 것을 환영합니다.</div>
 	    <div class="txt2">미미미의 회원이 되시면 회원만의 다양한 혜택을 받으면서 맛있고 건강한 식단을 편하게 즐기실 수 있습니다.</div>
-	    <a href="" class="normalBtn">일반회원으로 가입하기</a>
+	    <a href="join02.jsp" class="normalBtn">일반회원으로 가입하기</a>
 	  </div>
 	</div>
 	
