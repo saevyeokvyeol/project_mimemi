@@ -130,8 +130,11 @@
 				// 수량 감소 시 DB 업데이트
 				$(document).on("click", "button[name=minus]", function() {
 					let updateNum = parseInt($(this).next().val()) - 1;
+					if(updateNum <= 0){
+						alert("수량을 하나 이상 입력해주세요.");
+						updateNum = 1;
+					}
 					$(this).next().val(updateNum);
-					alert($(this).parent().parent().attr("name"));
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
@@ -149,15 +152,13 @@
 				
 				// 수량 증가 시 DB 업데이트
 				$(document).on("click", "button[name=plus]", function() {
-					let updateNum = parseInt($(this).next().val()) + 1;
-					$(this).next().val(updateNum);
-					alert($(this).parent().parent().attr("name"));
+					let updateNum = parseInt($(this).prev().val()) + 1;
+					$(this).prev().val(updateNum);
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
-						traditional: true,
 						dataType : "text",
-						data: {key: "cart", methodName: "deleteSelectedCart", cartId: updateNum},
+						data: {key: "cart", methodName: "updateCartQty", cartId: $(this).parent().parent().attr("name"), cartQty: $(this).prev().val()},
 						success: function(result) {
 							calGoodsTotalPrice();
 							calTotalPrice();

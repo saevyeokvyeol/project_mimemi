@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mimemi.mvc.dto.LiveCouponDTO;
 import mimemi.mvc.dto.RgCouponDTO;
+import mimemi.mvc.dto.UserCouponDTO;
 import mimemi.mvc.service.CouponService;
 import mimemi.mvc.service.CouponServiceImpl;
 import net.sf.json.JSONArray;
@@ -21,7 +22,10 @@ public class CouponController implements Controller {
 		return null;
 	}
 	
-	
+	/**
+	 * 실시간 쿠폰 조회
+	 * @return: LiveCouponDTO
+	 * */
 	public void selectAllLiveCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		List<LiveCouponDTO> list = couponService.selectAllLiveCp();
@@ -34,6 +38,10 @@ public class CouponController implements Controller {
 		
 	}
 	
+	/**
+	 * 정기 쿠폰 조회
+	 * @return: RgCouponDTO
+	 * */
 	public void selectAllRgCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		List<RgCouponDTO> list = couponService.selectAllRgCp();
@@ -43,6 +51,44 @@ public class CouponController implements Controller {
 		
 		PrintWriter out = response.getWriter();
 		out.println(arr);
+		
+	}
+	
+	/**
+	 * 사용자별 쿠폰 조회
+	 * @param: String userId
+	 * @return: UserCouponDTO(회원 아이디로 검색된 전체 레코드)
+	 * */
+	public void selectCpByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String userId = request.getParameter("userId");
+		List<UserCouponDTO> list = couponService.selectCpByUserId(userId);
+		
+		JSONArray arr = JSONArray.fromObject(list);
+		
+		PrintWriter out = response.getWriter();
+		out.print(arr);
+		
+	}
+	
+	/**
+	 * 실시간 쿠폰 등록
+	 * @param: LiveCouponDTO(String livecouId, String livecouName, int livecouPrice, int livecouUseperiod)
+	 * */
+	public ModelAndView insertLiveCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String livecouId = request.getParameter("id");
+		String livecouName = request.getParameter("name");
+		String livecouPrice = request.getParameter("price");
+		String livecouPubdate = request.getParameter("pubDate");
+		String livecouUseperiod = request.getParameter("endDate");
+		
+		LiveCouponDTO dto = new LiveCouponDTO(livecouId, livecouName, Integer.parseInt(livecouPrice), livecouPubdate, Integer.parseInt(livecouUseperiod) );
+		couponService.insertLiveCp(dto);
+		
+		return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
 		
 	}
 

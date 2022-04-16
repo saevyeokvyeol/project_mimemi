@@ -1,5 +1,7 @@
 package mimemi.mvc.dto;
 
+import java.util.Date;
+
 public class ReviewDTO {
 	private int reviewNo;
 	private String userId;
@@ -17,17 +19,21 @@ public class ReviewDTO {
 	
 	public ReviewDTO() {}
 	
-	public ReviewDTO(int reviewNo, String userId, String  goodsId, String reviewTitle, String reviewContent, String reviewAttach, 
-			String reviewRegdate, int reviewRate, String reviewBlind, int reviewViews) {
+	public ReviewDTO(String userId, String  goodsId, String reviewTitle, String reviewContent, int reviewRate) {
 		super();
-		this.reviewNo = reviewNo;
 		this.userId = userId;
 		this.goodsId = goodsId;
 		this.reviewTitle = reviewTitle;
 		this.reviewContent = reviewContent;
+		this.reviewRate = reviewRate;
+	}
+	
+	public ReviewDTO(int reviewNo, String userId, String  goodsId, String reviewTitle, String reviewContent, String reviewAttach, 
+			String reviewRegdate, int reviewRate, String reviewBlind, int reviewViews) {
+		this(userId,goodsId,reviewTitle,reviewContent,reviewRate);
+		this.reviewNo = reviewNo;
 		this.reviewAttach = reviewAttach;
 		this.reviewRegdate = reviewRegdate;
-		this.reviewRate = reviewRate;
 		this.reviewBlind = reviewBlind;
 		this.reviewViews = reviewViews;
 	}

@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>쿠폰 등록 - 미미미</title>
 
+
 <style>
   table {border: double 5px gray; width:500px}
   td,th{border:1px black solid ;  padding:10px}
@@ -16,36 +17,46 @@
   a{text-decoration: none}
   
 </style>
+<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+function checkValid() {
+   
+}
+	
+</script>
 
 </head>
 <body>
 
-<form method="post" action="insert">
+<form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=insertLiveCp">
 <table>
    <caption><h2> 쿠폰등록 Form</h2></caption>
   <tr>
 	<td>쿠폰번호</td>
-	<td><input type="text" name="id" /></td>
+	<td><input type="text" name="id" id="id"/></td>
   </tr>
   <tr>
 	<td>쿠폰명</td>
-	<td><input type="text" name="name" /></td>
+	<td><input type="text" name="name" id="name"/></td>
   </tr>
   <tr>
 	<td>쿠폰금액</td>
-	<td><input type="text" name="price" /></td>
+	<td><input type="text" name="price" id="price"/></td>
   </tr>
   <tr>
 	<td>쿠폰발행일</td>
-	<td><input type="text" name="pubDate" /></td>
+	<td><input type="text" name="pubDate" id="pubDate"/></td>
   </tr>
   <tr>
 	<td>쿠폰만료일</td>
-	<td><input type="text" name="endDate" /></td>
+	<td><input type="text" name="endDate" id="endDate"/></td>
   </tr>
   <tr>
 	<td colspan="2" >
-	<input type="submit" value="등록" />
+	<input type="hidden" name="key" value="coupon">
+	<input type="hidden" name="methodName" value="insertLiveCp">
+	<input type="submit" value="등록" id="btn"/>
 	<input type="reset" value="취소" />
 	</td>
 	

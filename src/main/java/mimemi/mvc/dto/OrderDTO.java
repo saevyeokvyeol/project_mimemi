@@ -11,11 +11,11 @@ public class OrderDTO {
 	private String orderMemo;
 	private String takeMethod;
 	private String enterPwd;
-	private String usercouId;
+	private int usercouId;
 	
 	public OrderDTO() {}
 	public OrderDTO(int orderId, String userId, int addrId, String payMethod, int payPoint, int totalPrice,
-			String orderDate, String orderMemo, String takeMethod, String enterPwd, String usercouId) {
+			String orderDate, String orderMemo, String takeMethod, String enterPwd, int usercouId) {
 		super();
 		this.orderId = orderId;
 		this.userId = userId;
@@ -89,10 +89,10 @@ public class OrderDTO {
 	public void setEnterPwd(String enterPwd) {
 		this.enterPwd = enterPwd;
 	}
-	public String getUsercouId() {
+	public int getUsercouId() {
 		return usercouId;
 	}
-	public void setUsercouId(String usercouId) {
+	public void setUsercouId(int usercouId) {
 		this.usercouId = usercouId;
 	}
 	

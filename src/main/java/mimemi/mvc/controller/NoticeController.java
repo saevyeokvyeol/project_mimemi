@@ -1,14 +1,20 @@
 package mimemi.mvc.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import mimemi.mvc.dto.NoticeDTO;
+import mimemi.mvc.dto.OrderDTO;
+import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.service.NoticeService;
 import mimemi.mvc.service.NoticeServiceImpl;
+import net.sf.json.JSONArray;
 
 public class NoticeController implements Controller {
     private NoticeService noticeService = new NoticeServiceImpl(); 
@@ -21,9 +27,11 @@ public class NoticeController implements Controller {
 	
 	/**
 	 * 공지사항 등록
+	 * @return 
+	 * @throws SQLException 
 	 **/
-    
-	public ModelAndView insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+  /*  
+	public void insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		String saveDir=request.getServletContext().getRealPath("/save");
 		int maxSize =1024*1024*100;
@@ -46,13 +54,60 @@ public class NoticeController implements Controller {
 	
 		
 		
+	
+	
+*/
+
+/*	
+	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String curPageNo = request.getParameter("pageNo");
+		if(curPageNo ==null||curPageNo.equals("")) {
+			curPageNo="1";
+		}
+		String field =request.getParameter("field");
+		if(field==null||field.equals("")) {
+			field="reg";
+		}
+		
+		System.out.println(field+" 페이지 번호: "+curPageNo);
+		List<NoticeDTO> noticeList = noticeService.selectAllNotice();
+		
+		request.setAttribute("list", noticeList);
+		request.setAttribute("pageNo", curPageNo);
+		
+		System.out.println("서비스에서 돌아온 후.."+curPageNo);
+		
+		return new ModelAndView("/board/reviewList.jsp");
+		
 	}
 	
+	*/
+	
 	/**
-	 *  전체검색하기
+	 *  공지사항 전체보기
 	 **/
 	
+	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<NoticeDTO> noticeList = noticeService.selectAllNotice(Integer.parseInt(pageNum), field);
+		
+		request.setAttribute("NoticeList", noticeList);
+		request.setAttribute("pageNum", pageNum); 
+		ModelAndView mv = new ModelAndView("manager/selectNoticeAll.jsp");
+		
+		return mv;
+	}
 	
+		
 	/**
 	 *  상세보기 
 	 **/
@@ -68,4 +123,5 @@ public class NoticeController implements Controller {
 	/**
 	 * 삭제하기
 	 **/
+	
 }
