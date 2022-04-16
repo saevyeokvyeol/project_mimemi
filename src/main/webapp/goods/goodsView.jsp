@@ -71,17 +71,17 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="top-img clearfix">
+                <div class="goodsthumbnail">
                     <img src="/Users/egg/kosta/Project2/img/1.png">
                 </div>
             </div>
             <div class="col">
-                <div class="card-body">
-                    <a class="card-title">정성한상</a>
-                    <p class="card-text">집밥 느낌 그대로, 정성껏 차린 가정식 한상</p>
+                <div class="goodsinformation">
+                    <a class="goodsname">정성한상</a>
+                    <p class="goodsdetail">집밥 느낌 그대로, 정성껏 차린 가정식 한상</p>
 
                 </div>
-                <div class="posting-box">
+                <div class="order-box">
                     <div class="form-group">
                         <label for="exampleInputEmail1">배송요일</label>
                         <select class="selectpicker">
@@ -89,7 +89,7 @@
                             <option>주 3회 (월/수/금)</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="order-box">
                         <label for="exampleInputPassword1">배송기간</label>
                         <select class="selectpicker">
                             <option>1주</option>
@@ -98,7 +98,7 @@
                             <option>8주</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="order-box">
                         <label for="exampleInputPassword1">수량</label>
 
                         <div class="spiner-form-container clearfix">
@@ -107,7 +107,7 @@
                             <button class="spiner-plus"><i class="material-icons" id="plus">add</i></button>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="order-box">
                         <label for="exampleInputPassword1">첫 배송일</label>
                         <input type="password" id="datePicker" class="form-control" placeholder="">
                     </div>
@@ -157,5 +157,4 @@
     });
 </script> -->
 
-</html>
 </html>

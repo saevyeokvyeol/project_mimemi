@@ -28,28 +28,50 @@ public class CartServiceImpl implements CartService {
 	 * */
 	@Override
 	public void updateCartQty(int cartId, int cartQty) throws SQLException {
-		// TODO Auto-generated method stub
-
+		int result = cartDao.updateCartQty(cartId, cartQty);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
-	 * 장바구니 수량 변경
+	 * 장바구니 요일 변경
 	 * @param: int cartId, String cartWeekday
 	 * */
 	@Override
 	public void updateCartWeekday(int cartId, String cartWeekday) throws SQLException {
-		// TODO Auto-generated method stub
-
+		int result = cartDao.updateCartWeekday(cartId, cartWeekday);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
-	 * 장바구니 수량 변경
+	 * 장바구니 기간 변경
 	 * @param: int cartId, String cartPeriod
 	 * */
 	@Override
 	public void updateCartPeriod(int cartId, String cartPeriod) throws SQLException {
-		// TODO Auto-generated method stub
+		int result = cartDao.updateCartPeriod(cartId, cartPeriod);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
+	}
 
+	/**
+	 * 장바구니 첫 배송일 변경
+	 * @param: int cartId, String cartStart
+	 * */
+	@Override
+	public void updateCartStart(int cartId, String cartStart) throws SQLException {
+		int result = cartDao.updateCartStart(cartId, cartStart);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
@@ -57,9 +79,12 @@ public class CartServiceImpl implements CartService {
 	 * @param int[] cartId
 	 */
 	@Override
-	public void deleteSelectedCart(int[] cartId) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void deleteSelectedCart(List<Integer> cartId) throws SQLException {
+		int result = cartDao.deleteSelectedCart(cartId);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
@@ -68,8 +93,11 @@ public class CartServiceImpl implements CartService {
 	 */
 	@Override
 	public void deleteAllCart(String userId) throws SQLException {
-		// TODO Auto-generated method stub
-
+		int result = cartDao.deleteAllCart(userId);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
