@@ -1,17 +1,17 @@
 package mimemi.mvc.paging;
 
 
-public class PageCnt {
-	private static int pageCnt; //총페이지 수Math.ceil(전체레코드수 /pagesize) 
-	public static  int pagesize  = 10;// 한 페이지 당 5개 출력물
-	public static int pageNo = 1;
-	public int blockcount = 2;
+public class OrderListPageCnt {
+	private static int pageCnt; // 총 페이지 수
+	public static  int pagesize = 10;// 한 페이지 당 출력할 게시글의 수
+	public static int pageNo = 1; // 페이지 넘버
+	public int blockcount = 5; // 한 번에 보여줄 게시글 목록 수
 	
-	public PageCnt() {
+	public OrderListPageCnt() {
 		super();
 	}
 
-	public PageCnt(int pageCnt) {
+	public OrderListPageCnt(int pageCnt) {
 		super();
 		this.pageCnt = pageCnt;
 	}
@@ -29,7 +29,7 @@ public class PageCnt {
 	}
 
 	public static void setPagesize(int pagesize) {
-		PageCnt.pagesize = pagesize;
+		OrderListPageCnt.pagesize = pagesize;
 	}
 
 	public static int getPageNo() {
@@ -37,7 +37,7 @@ public class PageCnt {
 	}
 
 	public static void setPageNo(int pageNo) {
-		PageCnt.pageNo = pageNo;
+		OrderListPageCnt.pageNo = pageNo;
 	}
 
 	public int getBlockcount() {
