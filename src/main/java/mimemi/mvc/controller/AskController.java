@@ -22,13 +22,16 @@ public class AskController implements Controller {
 		return null;
 	}
 	
-	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	/**
+	 * 1:1문의 전체검색
+	 * */
+	public void selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		List<AskDTO> askList = askService.selectAllAsk();
 		
 		request.setAttribute("askList", askList);
 		
-		return new ModelAndView("board/ask.jsp");
+		request.getRequestDispatcher("ask.jsp").forward(request, response);
 		
 	}
 	
@@ -69,8 +72,21 @@ public class AskController implements Controller {
 	/**
 	 * 1:1 문의 수정
 	 * */
-	public int updateAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return 0;
+	public ModelAndView updateAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String askTitle = request.getParameter("askTitle");
+		String askContent = request.getParameter("askContent");
+		//비밀번호
+		
+		//인수값 설정
+		AskDTO askDto=new AskDTO();
+		
+		askService.updateAsk(askDto);
+		
+		//상세보기 페이지로 이동
+		
+		
+		
+		return null;
 	}
 	
 	/**
@@ -84,27 +100,27 @@ public class AskController implements Controller {
 	/**
 	 * 1:1문의 삭제
 	 * */
-	public int deleAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView deleAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String askNo=request.getParameter(null);
+		String pwd = request.getParameter(null);//비밀번호
 		
-		return 0;
-	}
-	
-	/**
-	 * 1:1 문의 전체 검색
-	 * */
-	public ModelAndView selectAllAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//askService.deleteAsk(0);
 		
-		//List<AskDTO> list = askService.selectAllAsk();
+		String path=request.getServletContext().getRealPath("/save");
+		
+		askService.deleteAsk(Integer.parseInt(askNo), pwd, path);
 		
 		
 		
-		return null;
+		return new ModelAndView("board/ask.jsp",true);
 	}
 	
 	/**
 	 * 문의 번호로 불러오기
 	 * */
 	public AskDTO selectByAskNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
 		
 		return null;
 	}

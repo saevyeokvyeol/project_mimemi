@@ -14,28 +14,29 @@ public class AnswerController implements Controller {
 	/**
 	 * ´ñ±Û µî·Ï
 	 * */
-	public int insertAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView insertAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		
 		
-		return 0;
+		
+		return null;
 	}
 	
 	/**
 	 * ´ñ±Û ¼öÁ¤
 	 * */
-	public int updateAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView updateAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		return 0;
+		return null;
 	}
 	
 	/**
 	 * ´ñ±Û »èÁ¦
 	 * */
 	
-	public int deleteAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView deleteAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		return 0;
+		return null;
 	}
 	
 }

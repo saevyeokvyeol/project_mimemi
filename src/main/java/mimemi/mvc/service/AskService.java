@@ -32,7 +32,7 @@ public interface AskService {
 	 * 1:1 문의 삭제
 	 * @param int askNo
 	 * */
-	void deleteAsk(int askNo) throws SQLException;
+	void deleteAsk(int askNo, String password, String path) throws SQLException;
 	
 	/**
 	 * 1:1 문의 전체 검색

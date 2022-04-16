@@ -6,6 +6,7 @@ import java.util.List;
 import mimemi.mvc.dao.AskDAO;
 import mimemi.mvc.dao.AskDAOImpl;
 import mimemi.mvc.dto.AskDTO;
+import mimemi.mvc.dto.UserDTO;
 
 public class AskServiceImpl implements AskService {
 
@@ -32,9 +33,11 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public void deleteAsk(int askNo) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void deleteAsk(int askNo, String password, String path) throws SQLException {
+		//비밀번호 일치 여부 체크
+			askDao.selectAnsByAskNo(askNo);
+		
+		
 	}
 
 	@Override

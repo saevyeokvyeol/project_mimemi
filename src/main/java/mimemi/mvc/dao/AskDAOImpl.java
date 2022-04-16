@@ -20,10 +20,12 @@ public class AskDAOImpl implements AskDAO {
 		Connection con=null;
 		PreparedStatement ps=null;
 		int result=0;
+		String sql = "INSERT INTO ASK(ASK_NO,USER_ID,ASK_TITLE,ASK_CONTENT,ASK_ATTACH,ASK_REGDATE,ASK_CATEGORY,ASK_COMPLETE)VALUES(ASK_NO_SEQ.NEXTVAL,?,?,?,?,SYSDATE,?,?";
 		
 		
 		
-		return 0;
+		
+		return result;
 	}
 
 	@Override
