@@ -28,11 +28,11 @@ pageEncoding="UTF-8"%>
             div.review-title{
                 text-align: left;
             }
-            div.review-sort{
+            div.review-sort-area{
                 text-align: right;
                 
             }
-            div.reivew-wirte{
+            div.reivew-wirte-bnt{
                 text-align: right;
             }
            
@@ -43,11 +43,7 @@ pageEncoding="UTF-8"%>
         <!--부트스트랩 JS CDN-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
-        <!--JQgrid CDN-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.0/css/ui.jqgrid.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.0/jquery.jqgrid.min.js"></script>
-    
+        
     </head>
     <body>
         <div class="container">
@@ -56,27 +52,26 @@ pageEncoding="UTF-8"%>
                 <hr>
             </div>
 
-            <div class="review-sort">
+            <div class="review-sort-area">
                  <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
-                <select name="" id="">
-                    <option name="review_sort" value="0">--정렬방식--</option>
-                    <option name="review_sort" value="reg">등록순</option>
-                    <option name="review_sort" value="higirate">별점 높은순</option>
-                    <option name="review_sort" value="rowrate">별점 낮은순</option>
-                    <option name="review_sort" value="view">조회순</option>
-                    <option name="review_sort" value="reply">댓글순</option>
+                <select name="review_sort_select" id="review_sort_select">
+                    <option name="review_sort" value="reg" selected='selected'>등록순</option>
+                    <option name="review_sort" value="higirate"<c:if test="${requestScope.field == 'higirate'}">selected='selected'</c:if>>별점 높은순</option>
+                    <option name="review_sort" value="rowrate"<c:if test="${requestScope.field == 'rowrate'}">selected='selected'</c:if>>별점 낮은순</option>
+                    <option name="review_sort" value="view"<c:if test="${requestScope.field == 'view'}">selected='selected'</c:if>>조회순</option>
+                    <option name="review_sort" value="reply"<c:if test="${requestScope.field == 'reply'}">selected='selected'</c:if>>댓글순</option>
                 </select>
             </div>
            
             <div class="review-list">
-                <table>
+                <table id ="review-list-table">
                     <thead>
                         <tr>
                             <th>
                                 <span>번호</span> 
                             </th>
                             <th>
-                                <span>이미지</span>
+                                <span>리뷰이미지</span>
                             </th>
                             <th>
                                 <span>상품</span>
@@ -88,43 +83,55 @@ pageEncoding="UTF-8"%>
                                 <span>글쓴이</span>
                             </th>
                             <th>
-                                <span>별점</span>
+                                <span>날짜</span>
                             </th>
                             <th>
-                                <span>날짜</span>
+                                <span>별점</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>
-                                <span>번호역순</span>
-                            </th>  
-                            <th>
-                                <span>이미지</span>
-                            </th>  
-
-                            <th>
-                                <span>상품</span>
-                            </th>  
-                            <th>
-                                <span><a href="#">제목</a></span>
-                            </th>  
-                            <th>
-                                <span>글쓴이</span>
-                            </th>  
-                            <th>
-                                <span>별점</span>
-                            </th>  
-                            <th>
-                                <span>날짜</span>
-                            </th>  
-                        </tr>
+                        <c:choose>
+                            <c:when test ="${empty requestScope.list}">
+                                <tr>
+                                    <th colspan="7">
+                                        <span class="review-result-empty"> 등록된 후기가 없습니다.</span>
+                                    </th>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${requestScope.list}" var="review">
+                                    <tr>
+                                        <td>
+                                            <span>${review.reviewNo}</span>
+                                        </td>
+                                        <td>
+                                            <span><img src="${review.reviewAttach}" alt="후기 이미지입니다.">${review.reviewAttach}</span>
+                                        </td>
+                                        <td>
+                                            <span>${review.goodsDTO.goodsName}</span>
+                                        </td>
+                                        <td>
+                                            <span><a href="${path}/front?key=review&methodName=insert">${review.reviewTitle}</a></span>
+                                        </td>
+                                        <td>
+                                            <span>${review.userDTO.userName}</span>
+                                        </td>
+                                        <td>
+                                            <span>${review.reviewRegdate}</span>
+                                        </td>
+                                        <td>
+                                            <span>${review.reviewRate}</span>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
              </div>
-            <div class="reivew-wirte">
-                <input type="button" value="리뷰쓰기">
+            <div class="reivew-wirte-bnt">
+                <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp">리뷰쓰기</a></span>
             </div>
             <div class="reivew-search">
                 <select name="" id="">
@@ -134,13 +141,30 @@ pageEncoding="UTF-8"%>
                 <input type="text" name="review_search">
                 <input type="button" value="검색하기" id="btn">
             </div>
-            <div class="reivew-pagination">
-                <a class="pagination-newer" href="#">이전</a>
-                <span>
-                    <a class="page_number" href="#">1</a>
-
-                </span>
-                <a class="pagination-older" href="#">다음</a>
+            <jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/>
+            <div class="reivew-pagination-container">
+                <div class="reivew-pagination-area">
+                    <c:set var="doneLoop" value="false"/>
+                    <c:set var="temp" value="${(pageNo-1)% p.blockcount}"/>
+                    <c:set var="startPage" value="${pageNo-temp}"/>
+                    <c:if test="${(startPage-p.blockcount)>0}">
+                        <a class="pagination-newer" href="${path}/front?key=review&methodName=selectAll&pageNo=${startPage-1}">이전</a>
+                    </c:if>
+                    <span class="paginateion-inner">
+                        <c:forEach var="i" begin="${startPage}" end="${(startPage-1)+p.blockcount}">
+                            <c:if test="${(i-1)>=p.pageCnt}">
+                                <c:set var="doneLoop" value="true"/>
+                            </c:if>
+                            <c:if test="${not doneLoop}">
+                                <a class="${i==pageNo?'pagination-active':page}" href="${path}/ajax?key=review&methodName=selectAll&pageNo=${i}">${i}</a>
+                            </c:if>
+                        </c:forEach>
+                    </span>
+                    <c:if test="${(startPage+p.blockcount)<=p.pageCnt}">
+                        <a class="pagination-older" href="${path}/front?key=review&methodName=selectall&pageNo=${startPage+p.blockcount}">다음</a>
+                    </c:if>
+                </div>
+                
             </div>
         </div>
     </body>

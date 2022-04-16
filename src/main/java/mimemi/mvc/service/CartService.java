@@ -21,22 +21,28 @@ public interface CartService {
 	void updateCartQty(int cartId, int cartQty) throws SQLException;
 
 	/**
-	 * 장바구니 수량 변경
+	 * 장바구니 요일 변경
 	 * @param: int cartId, String cartWeekday
 	 * */
 	void updateCartWeekday(int cartId, String cartWeekday) throws SQLException;
 
 	/**
-	 * 장바구니 수량 변경
+	 * 장바구니 기간 변경
 	 * @param: int cartId, String cartPeriod
 	 * */
 	void updateCartPeriod(int cartId, String cartPeriod) throws SQLException;
+
+	/**
+	 * 장바구니 첫 배송일 변경
+	 * @param: int cartId, String cartStart
+	 * */
+	void updateCartStart(int cartId, String cartStart) throws SQLException;
 	
 	/**
 	 * 장바구니 부분 삭제
 	 * @param int[] cartId
 	 */
-	void deleteSelectedCart(int[] cartId) throws SQLException;
+	void deleteSelectedCart(List<Integer> cartId) throws SQLException;
 	
 	/**
 	 * 장바구니 전체 삭제

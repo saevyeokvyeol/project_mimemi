@@ -26,12 +26,12 @@
 		<tr>
 			<td>
 				<a href="eventView.jsp" target="_blank">
-				<img alt="신규회원 이벤트 #최대30000원할인" src="../front_img/board_eventList.jpg" title="신규회원 이벤트 #최대30000원할인">
+				<img alt="신규회원 이벤트 #최대30000원할인" src="../front_img/progressEventThumb1.jpg" title="신규회원 이벤트 #최대30000원할인">
 				</a>
 			</td>
 			<td>
 				<a href="eventView.jsp" target="_blank">
-				<img alt="4월궁중요리이벤트" src="../front_img/board_eventList.jpg" title="4월궁중요리이벤트">
+				<img alt="4월궁중요리이벤트" src="../front_img/progressEventThumb2.jpg" title="4월궁중요리이벤트">
 				</a>
 			</td>				
 		</tr>
