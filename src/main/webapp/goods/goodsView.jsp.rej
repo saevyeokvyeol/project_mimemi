@@ -1,0 +1,24 @@
+diff a/src/main/webapp/goods/goodsView.jsp b/src/main/webapp/goods/goodsView.jsp	(rejected hunks)
+@@ -71,17 +71,17 @@
+     <div class="container">
+         <div class="row">
+             <div class="col">
+-                <div class="top-img clearfix">
++                <div class="goodsthumbnail">
+                     <img src="/Users/egg/kosta/Project2/img/1.png">
+                 </div>
+             </div>
+             <div class="col">
+-                <div class="card-body">
+-                    <a class="card-title">정성한상</a>
+-                    <p class="card-text">집밥 느낌 그대로, 정성껏 차린 가정식 한상</p>
++                <div class="goodsinformation">
++                    <a class="goodsname">정성한상</a>
++                    <p class="goodsdetail">집밥 느낌 그대로, 정성껏 차린 가정식 한상</p>
+ 
+                 </div>
+-                <div class="posting-box">
++                <div class="order-box">
+                     <div class="form-group">
+                         <label for="exampleInputEmail1">배송요일</label>
+                         <select class="selectpicker">
