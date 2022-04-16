@@ -1,5 +1,6 @@
 package mimemi.mvc.service;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,7 +13,19 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public void insertReview(ReviewDTO reviewDTO) throws SQLException {
-		// TODO Auto-generated method stub
+		int result= reviewDAO.insertReview(reviewDTO);
+		if(result==0) {
+			
+			//첨부파일 삭제하기
+			File savedfile = new File("/img/save/"+reviewDTO.getReviewAttach());
+			if(savedfile.exists()) {
+				savedfile.delete();
+				
+			}
+			
+			throw new SQLException("후기가 등록되지 않았습니다.");
+			
+		}
 
 	}
 
@@ -61,8 +74,19 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public ReviewDTO selectByReviewNo(int reviewNo, boolean flag) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		//조회수 증가
+		if(flag) {
+			if(reviewDAO.increamentByReadnum(reviewNo)==0) {
+				throw new SQLException("조회수 증가를 하는 도중 오류가 생겼습니다.");
+			}
+		}
+		ReviewDTO reviewDetail = reviewDAO.selectByReviewNo(reviewNo);
+			if(reviewDetail==null) {
+				throw new SQLException("상세보기를 불러올 수 없습니다.");
+			}
+		//댓글정보 가져오기
+		
+		return reviewDetail;
 	}
 
 }
