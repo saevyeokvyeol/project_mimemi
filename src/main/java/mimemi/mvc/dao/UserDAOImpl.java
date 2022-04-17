@@ -115,29 +115,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		return result;
 	}
-
-	@Override
-	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		List<UserDTO> userList = new ArrayList<UserDTO>();
-		String sql = proFile.getProperty("user.selectByKeyword");
-		//select * from users where user_name=?
-		//select * from users where user_id=?
-		//select * from users where user_regdate=?
-		//select * from users where user_birth=?
-		
-		try {
-			con=DbUtil.getConnection();
-			ps=con.prepareStatement(sql);
-			ps.setString(1, keyword);
-		}finally {
-			DbUtil.dbClose(rs, ps, con);
-		}
-		return userList;
-	}
-
+	
 	@Override
 	public UserDTO selectByID(String userId) throws SQLException {
 		Connection con = null;
@@ -156,7 +134,33 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return user;
 	}
+	
+	@Override
+	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<UserDTO> userList = new ArrayList<UserDTO>();
+		String sql = proFile.getProperty("user.selectByKeyword");
+		String column = null;
+		if (field == "이름") {
+			column = "user_name";
+		}
+		if (field == "생일") {
+			column = "user_birth";
+		}
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, column);
+			ps.setString(2, keyword);
+			//select * from users where ?=?
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return userList;
+	}
 
+		
 	@Override
 	public int updateUser(UserDTO user) throws SQLException {
 		Connection con = null;
@@ -216,7 +220,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return result;
 	}
-
+/***
 	@Override
 	public boolean idCheck(String userId) throws SQLException {
 		PreparedStatement ps = null;
@@ -263,5 +267,5 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return result;
 	}
-
+*/
 }

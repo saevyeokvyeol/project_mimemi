@@ -19,8 +19,11 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void insertLiveCp(LiveCouponDTO liveCoupon) throws SQLException {
-		// TODO Auto-generated method stub
-
+		int result = couponDAO.insertLiveCp(liveCoupon);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**

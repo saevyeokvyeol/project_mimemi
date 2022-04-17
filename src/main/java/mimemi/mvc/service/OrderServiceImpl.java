@@ -16,8 +16,11 @@ public class OrderServiceImpl implements OrderService {
 	 * 			String takeMethod, String doorPwd, String usercouId)
 	 */
 	@Override
-	public void insertOrder(OrderDTO order) throws SQLException {
-		// TODO Auto-generated method stub
+	public void insertOrder(OrderDTO order, String mode) throws Exception {
+		int result = orderDao.insertOrder(order, mode);
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
@@ -41,14 +44,25 @@ public class OrderServiceImpl implements OrderService {
 			
 		return orderList;
 	}
-
+	
 	/**
-	 * 아이디로 특정 주문 조회
+	 * 유저 아이디로 주문 조회
 	 * @param int orderId(정렬 기준)
 	 * @return OrderDTO
 	 * */
 	@Override
-	public OrderDTO selectById(int orderId) throws SQLException {
+	public List<OrderDTO> selectByUserId(String userId) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 주문 아이디로 특정 주문 조회
+	 * @param int orderId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	@Override
+	public OrderDTO selectByOrderId(int orderId) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

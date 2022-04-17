@@ -28,8 +28,7 @@
 			$(function(){
 				$("select").change(function() {
 					if($(this).val() != "0"){
-						let url = `${path}/front?key=order&methodName=selectAll&field=` + $(this).val();
-						location.replace(url);
+						location.href = "${path}/front?key=order&methodName=selectAll&field=" + $(this).val();
 					}
 				})
 			})
@@ -95,7 +94,7 @@
 							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=order&methodName=selectAll&pageNum=${i}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
-					<c:if test="${(startPage + p.blockcount) > 0}">
+					<c:if test="${(startPage + p.blockcount) <= p.pageCnt}">
 						<li class="page-item"><a class="page-link" href="${path}/front?key=order&methodName=selectAll&pageNum=${startPage+p.blockcount}">이후</a></li>
 					</c:if>
 				</ul>
