@@ -30,6 +30,61 @@
             margin: 10px auto;
         }
     </style>
+    
+    <script>
+    	function selectGoodsList() {
+    		$.ajax({
+    			url: "${path}/ajax",
+    			data: {
+    				"key": "GoodsController",
+    				"method": "getGoodsList"
+    			}
+    			type: "get"
+    			dataType: "json"
+    			success: function(res) {
+    				return res
+    			}
+    		})
+    		/* return [
+    			{
+    				"name": "정성한상",
+    				"price": 3000,
+    			},
+    			{
+    				"name": "비건 식당",
+    				"price": 4000,
+    			}
+    		 */]s
+    	}
+    	
+    	function fillCards() {
+    		data = selectGoodsList()
+    		let text = "";
+    		for goods in data {
+    			text += "<div class=\"card\">"
+    			text += "<img class=\"card-img-top\""
+    			text += "src=\"" + goods.goods_thumbnail + "\""
+    			text += "alt=\"Card image cap\">"
+    			text += "<div class=\"card-body\">"
+    			text += "<h5 class=\"card-title\">" + goods.goods_name + "</h5>"
+    			text += "<p class=\"card-text\">1일 1식/ 1주 (월~금, 총 5회)</p>"
+    			text += "<span>" + goods.good_price + "</span> 원"
+    			text += "</div>"
+    			text += "</div>"
+    		}
+    		$("goodsTable").remove()
+    		$("#goodsTable").append(text)
+    	}
+    	
+    	function initialize() {
+    		fillCards()
+    	}
+    	
+    	$(function()) {
+    		initialize()
+    	}
+    </script>	
+    
 </head>
 <body>
 <div class="wrap">
