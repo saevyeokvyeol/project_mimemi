@@ -2,9 +2,9 @@ package mimemi.mvc.service;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-import mimemi.mvc.dao.*;
+
 import mimemi.mvc.dao.GoodsDAO;
+import mimemi.mvc.dao.GoodsDAOImpl;
 import mimemi.mvc.dto.GoodsDTO;
 
 public class GoodsServiceImpl implements GoodsService {

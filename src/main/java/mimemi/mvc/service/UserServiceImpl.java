@@ -39,13 +39,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean selectUserPwd(String userId, String userName, String userPhone) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = userDAO.selectUserPwd(userId, userName, userPhone);
+		
+		if(result == false) {throw new SQLException("해당 정보가 존재하지 않습니다.");
+
+		}else {
+			return true;
+		}
 	}
+		
+	
 
 	@Override
 	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
+		//
 		return null;
 	}
 
@@ -62,7 +69,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserPwd(String userId, String userPwd) throws SQLException {
+	public void updateUserPwd(String userId, String userPwd, String userPhone) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}

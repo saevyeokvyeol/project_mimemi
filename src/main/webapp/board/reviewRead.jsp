@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,10 +22,10 @@ pageEncoding="UTF-8"%>
                 box-sizing: border-box;
                 width: 400px;
                 height: 100%;
-                border: solid 1px gray;
                 align-items: center;
                 display: flex;
                 justify-content: center;
+                background-color: rgb(241, 241, 241);
                 float: left;
             }
             .review-userInfo{
@@ -36,12 +37,18 @@ pageEncoding="UTF-8"%>
                 
             }
             
-            #reviewImg{
+            #reviewImg, #reveiwImg-when-empty{
                 width: 400px;
             }
             .reivew-writer{
                 box-sizing: border-box;
                 height: 60px;
+            }
+            img.starRateImg{
+            	box-sizing: border-box;
+                width:130px;
+                height: auto;
+                padding-bottom: 5px;                
             }
             .review-contentTitle{
                 box-sizing: border-box;
@@ -53,6 +60,14 @@ pageEncoding="UTF-8"%>
                 box-sizing: border-box;
                 overflow-y: auto;
                 height: 300px;
+            }
+            .review-goods{
+                box-sizing: border-box;
+                height: auto;
+            }
+            #goodsImg{
+                width: 20px;
+                height: auto;
             }
             .bLeft{
                 float: left;
@@ -85,9 +100,22 @@ pageEncoding="UTF-8"%>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
         <!--JQgrid CDN-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.0/css/ui.jqgrid.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.0/jquery.jqgrid.min.js"></script>
+        <script>
+        	var methodName = "${methodName}"
+            function returnList(){
+
+            }
+        	function sendDelete(){
+        		//session에 로그인된 사용자 id가 현재 게시글의 사용자 id와 일치하는지 체크하기
+        	}
+            function sendUpdate(){
+            	//session에 로그인된 사용자 id가 현재 게시글의 사용자 id와 일치하는지 체크하기
+            	if(true){
+            		location.replace("${path}")
+            	}
+            
+            }
+        </script>
         
 
     </head>
@@ -99,45 +127,79 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="review-view">
                 <div class="review-Image">
-                    <img src="../front_img/ddd.jpg" alt="회원이 올린 후기 사진입니다." name="reviewImg" id="reviewImg">
+                    <c:choose>
+                        <c:when test ="${not empty reviewDetail.reviewAttach}">
+                            <span>
+                            	<img src="${path}/img/save/${reviewDetail.reviewAttach}" alt="회원이 올린 후기 사진입니다." name="reviewImg" id="reviewImg">
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="review-Image-isEmpty">
+                                <img src="${path}/img/goods/${reviewDetail.goodsDTO.goodsThumbnail}" alt="후기를 작성한 상품의 썸네일 이미지입니다." name="reveiwImg-when-empty" id="reveiwImg-when-empty">
+                            </span>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="review-userInfo">
                     <div class="reivew-writer">
                         <div class="review-rate">
-                            <span>★★★★☆</span>
+                            <c:choose>
+                                <c:when test="${reviewDetail.reviewRate==1}">
+                                    <span>
+                                        <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
+                                    </span>
+                                </c:when>
+                                <c:when test="${reviewDetail.reviewRate==2}">
+                                    <span>
+                                        <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
+                                    </span>
+                                </c:when>
+                                <c:when test="${reviewDetail.reviewRate==3}">
+                                    <span>
+                                        <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
+                                    </span>
+                                </c:when>
+                                <c:when test="${reviewDetail.reviewRate==4}">
+                                    <span>
+                                        <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
+                                    </span>
+                                </c:when>
+                                <c:when test="${reviewDetail.reviewRate==5}">
+                                    <span>
+                                        <img src="${path}/img/ui/starRate5.jpg" class="starRateImg">
+                                    </span>
+                                </c:when>
+                            </c:choose>
                         </div>
                         <div>
-                            <strong class="userName">홍*동</strong>
-                            <span>2022-04-13</span>
+                            <strong class="userName">${reviewDetail.userDTO.userName}</strong>
+                            <span>${reviewDetail.reviewRegdate}</span>
                         </div>
                     </div>
                     <div class="review-contentTitle">
-                        <p>상품이...</p>
+                        <p>${reviewDetail.reviewTitle}</p>
                     </div>
                     <div class="review-content">
-                        <p>정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                            정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                            정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                            정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                            정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                            정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                            정말 맛있어요 ~~ 추천 ~~^^!상품후기입니다상품후기입니다상품후기입니다상품후기입니다상품후기입니다
-                        </p>
+                        <pre>${reviewDetail.reviewContent}</pre>
                     </div>
                     <div>
                         <span>조회수</span>
-                        <span>3</span>
+                        <span>${reviewDetail.reviewViews}</span>
                     </div>
                     <div class="review-goods">
-                            <img src="#" alt="상품 이미지입니다." name="goodsImg" id="goodsImg">
-                            <a href="#">정성한상</a>
+                            <img src="${path}/img/goods/${reviewDetail.goodsDTO.goodsThumbnail}" alt="상품 이미지입니다." name="goodsImg" id="goodsImg">
+                            <a href="#">${reviewDetail.goodsDTO.goodsName}</a>
                     </div>
                 </div>
             </div>
             <div class="base-btn">
-                <span class="bLeft"><a href="#">목록으로 돌아가기<img src="목록아이콘"></a></span>
-                <span class="bRight"><a href="#">삭제<img src="삭제아이콘"></a></span>
-                <span class="bRight"><a href="#">수정<img src="수정아이콘"></a></span>
+                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()">목록으로 돌아가기<img src="목록아이콘"></a></span>
+                <span class="bRight">
+                	<a href="javascript:void(0);">삭제<img src="삭제아이콘"></a>
+                </span>
+                <span class="bRight">
+                	<a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" >수정<img src="수정아이콘"></a>
+                </span>
             </div>
             <div class="review-reply">
                 <div class="user-write-wrap">

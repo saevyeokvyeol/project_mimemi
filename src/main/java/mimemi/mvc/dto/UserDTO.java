@@ -16,6 +16,7 @@ public class UserDTO {
 		this.userId = userId;
 		this.userPwd = userPwd;
 	}
+	
 	public UserDTO(String userPhone) {
 		this.userPhone = userPhone;
 	}
