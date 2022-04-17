@@ -32,8 +32,16 @@ pageEncoding="UTF-8"%>
                 text-align: right;
                 
             }
+            #review-list-img-preview{
+                width: 50px;
+                height: auto;
+            }
             div.reivew-wirte-bnt{
                 text-align: right;
+            }
+            span.review-list-img-preview-empty-area{
+                width: 50px;
+                height: auto;
             }
            
         </style>
@@ -106,13 +114,17 @@ pageEncoding="UTF-8"%>
                                             <span>${review.reviewNo}</span>
                                         </td>
                                         <td>
-                                            <span><img src="${review.reviewAttach}" alt="후기 이미지입니다.">${review.reviewAttach}</span>
+                                            <c:if test="${not empty review.reviewAttach}">
+                                                <span class="review-list-img-preview-area">
+                                                    <img src="${path}/img/save/${review.reviewAttach}" alt="후기 이미지입니다." id="review-list-img-preview"></span>
+                                            </c:if>
+                                            <span class="review-list-img-preview-empty-area"></span>
                                         </td>
                                         <td>
                                             <span>${review.goodsDTO.goodsName}</span>
                                         </td>
                                         <td>
-                                            <span><a href="${path}/front?key=review&methodName=insert">${review.reviewTitle}</a></span>
+                                            <span><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></span>
                                         </td>
                                         <td>
                                             <span>${review.userDTO.userName}</span>
@@ -147,6 +159,7 @@ pageEncoding="UTF-8"%>
                     <c:set var="doneLoop" value="false"/>
                     <c:set var="temp" value="${(pageNo-1)% p.blockcount}"/>
                     <c:set var="startPage" value="${pageNo-temp}"/>
+
                     <c:if test="${(startPage-p.blockcount)>0}">
                         <a class="pagination-newer" href="${path}/front?key=review&methodName=selectAll&pageNo=${startPage-1}">이전</a>
                     </c:if>
@@ -156,7 +169,7 @@ pageEncoding="UTF-8"%>
                                 <c:set var="doneLoop" value="true"/>
                             </c:if>
                             <c:if test="${not doneLoop}">
-                                <a class="${i==pageNo?'pagination-active':page}" href="${path}/ajax?key=review&methodName=selectAll&pageNo=${i}">${i}</a>
+                                <a class="${i==pageNo?'pagination-active':page}" href="${path}/front?key=review&methodName=selectAll&pageNo=${i}">${i}</a>
                             </c:if>
                         </c:forEach>
                     </span>

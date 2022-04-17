@@ -24,13 +24,13 @@ pageEncoding="UTF-8"%>
                 background-color: gainsboro;
                 font-weight: bold;
             }
-            div.review-writeForm{
+            div.review-updateForm{
                 text-align: left;
             }
             div.review-submit-button{
                 text-align: center;
             }
-            div.review-write-foot-area{
+            div.review-update-foot-area{
                 text-align: right;
             }
             
@@ -44,8 +44,18 @@ pageEncoding="UTF-8"%>
         <!--JQgrid CDN-->
         <script src="../util/js/jquery-3.6.0.min.js"></script>
         <script>
+            function updateLoad(){
+                //alert("${review.goodsDTO.goodsName}")
+                
+                var goodsName ="${review.goodsDTO.goodsName}"
+                //alert(goodsName)
+                //console.log(goodsName)
+                var goodsName=$('#review_select-goods').attr('goodsName')
+                console.log(goodsName)
+                //$('select.review_select-goods option[value='+goodsName+']').attr('selected','selected')
+            }
             function checkValid(){
-                var form = window.document.writeReview;
+                var form = window.document.updateReview;
                 var selectCheck=$('#review_select-goods > option:selected').val();
                 var radioCheck =$('input[name=rate]').is(":checked");
                 
@@ -73,20 +83,20 @@ pageEncoding="UTF-8"%>
             }
         </script>
     </head>
-    <body>
+    <body onload="updateLoad()">
         <div class="container">
             <div class="review-title">
-                <h1>후기 게시판 등록</h1>
+                <h1>후기 수정하기</h1>
                 <hr>
             </div>
-            <div class="review-writeForm">
-                <form name="writeReview" method="post" action="${path}/front?key=review&methodName=insert"
+            <div class="review-updateForm">
+                <form name="updateReview" method="post" action="${path}/front?key=review&methodName=update"
                 onSubmit='return checkValid()' enctype="multipart/form-data">
                     <table>
                         <tr>
                             <th>제목</th>
                             <td>
-                            	<span><input type="text" name="review_title" placeholder="제목"></span>
+                            	<span><input type="text" name="review_title" value="${review.reviewTitle}"></span>
                             </td>
                         </tr>
                         <tr>
@@ -129,7 +139,7 @@ pageEncoding="UTF-8"%>
                 </form>
             </div>
            
-            <div class="review-write-foot-area">
+            <div class="review-update-foot-area">
                 <span class="back-review-list"><a href="${path}/front?key=review&methodName=selectAll">목록으로 돌아가기</a></span>
             </div>
         </div>

@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>마이페이지 쿠폰조회  - 미미미</title>
+		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
@@ -20,39 +21,52 @@
 		
 		<script type="text/javascript">
 			$(function() {
-				
-				// USERCOUPON 전체 검색
-				function selectAllLiveCp(){
+				//alert(1);
+				// USERCOUPON id로 전체 검색
+				function selectCpByUserId(){
+					//alert(1);
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "json",
-						data: {key: "coupon", methodName: "selectAllLiveCp", userId: "happy01"},
+						data: {key: "coupon", methodName: "selectCpByUserId", userId: "happy01"},
 						success: function(result) {
+							//alert(result);
+								let text = "";
+								$.each(result, function(index, item) {
+									
+									if(item.livecouId==null || item.livecouId==""){
+										text += "<tr>";
+										text += `<td>\${item.userCouId}</td>`;
+										text += `<td>\${item.rgcouId}</td>`;
+										text += `<td>\${item.usercouUsable}</td>`;
+										text += `<td>\${item.usercouPubdate.substr(0,10)}</td>`;
+										text += `<td>\${item.usercouEnddate.substr(0,10)}</td>`;
+										text += "</tr>"; 
+									}else if(item.rgcouId==null || item.rgcouId==""){
+										text += "<tr>";
+										text += `<td>\${item.userCouId}</td>`;
+										text += `<td>\${item.livecouId}</td>`;
+										text += `<td>\${item.usercouUsable}</td>`;
+										text += `<td>\${item.usercouPubdate.substr(0,10)}</td>`;
+										text += `<td>\${item.usercouEnddate.substr(0,10)}</td>`;
+										text += "</tr>"; 
+									}
+									
+								});
+								$("#couponTalbe thead tr:eq(0)").after(text);
 							
-							let text = "";
-							$.each(result, function(index, item) {
-								text += "<tr>";
-								text += `<td><a href='#'>\${item.livecouId}</a></td>`;
-								text += `<td>\${item.livecouName}</td>`;
-								text += `<td>\${item.livecouPrice}</td>`;
-								text += `<td>\${item.livecouPubdate}</td>`;
-								text += `<td>\${item.livecouUseperiod}</td>`;
-								text +=`<td><input type='button' value='수정하기' name='\${item.livecouId}'/></td>`;
-								text += "</tr>";
-								
-							});//each함수 끝
 							
 							//$("#couponTalbe thead tr:gt(0)").remove(); //0번지 보다 큰거는 지우고 뿌려주기
-							$("#couponTalbe thead tr:eq(0)").after(text);
+							//$("#couponTalbe thead tr:eq(0)").after(text);
 							
 						}, // 성공 메소드
 						error : function(result) {
 							alert(err + " 에러 발생!");
 						} // 에러 메소드
 					}); // ajax 종료
-				} // selectAllLiveCp() 메소드 종료
-				//selectAllLiveCp();
+				} // selectCpByUserId() 메소드 종료
+				selectCpByUserId();
 				
 				
 				
@@ -65,9 +79,9 @@
 		<section>
 			<form action="">
         <input type="hidden" name="" id="">
-				<h1>\${userId}쿠폰조회 </h1>
+				<h1>쿠폰조회 </h1>
 				
-				<table class="table">
+				<table class="table" id="couponTalbe">
 					<thead>
 						<tr>
 							<th>쿠폰번호</th>
@@ -79,13 +93,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>A01</td>
-							<td>생일쿠폰</td>
-							<td>사용X</td>
-							<td>2022-04-14</td>
-							<td>2022-05-14</td>
-						</tr>
+						
 					</tbody>
 					<tfoot>
 						<tr>
