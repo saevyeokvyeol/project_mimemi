@@ -82,7 +82,7 @@ public class UserController implements Controller {
 		
 		UserDTO userDTO = new UserDTO(userId, userPwd);
 		
-		userService.updateUserPwd(userId, userPwd);
+		userService.updateUserPwd(userId, userPwd, userPwd);
 		
 		logoutUser(request, response); //??????
 		
@@ -92,19 +92,37 @@ public class UserController implements Controller {
 	 * id찾기
 	 * */
 	public ModelAndView selectId(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return null;
+		String userName=request.getParameter("userName");
+		String userPhone=request.getParameter("userPhone");
+		
+		userService.selectUserId(userName, userPhone);
+		
+		return new ModelAndView("user/login.jsp");
+		
 	}
 	/**
 	 * 비밀번호찾기
 	 * */
 	public ModelAndView selectPwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return null;
+		String userId=request.getParameter("userId");
+		String userName = request.getParameter("userName");
+		String userPhone = request.getParameter("userPhone");
+		
+		userService.updateUserPwd(userId, userPhone, userPhone);
+		
+		return new ModelAndView("user/login.jsp");
 	}
+	
 	/**
 	 * 탈퇴하기 기능
 	 * */
 	public ModelAndView deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return null;
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		
+		userService.deleteUser(userId, userPwd);
+		
+		return new ModelAndView("index.jsp", true);
 	}
 
 }
