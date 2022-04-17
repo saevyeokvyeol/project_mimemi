@@ -31,16 +31,18 @@ public class NoticeDAOImpl implements NoticeDAO {
 		PreparedStatement ps=null;
 		String sql = proFile.getProperty("notice.insertNotice"); 
 		int result = 0;
+		
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, noticeDTO.getNoticeNo());
-			ps.setString(2, noticeDTO.getNoticeTitle());
-			ps.setString(3, noticeDTO.getNoticeContent());
-			ps.setString(4, noticeDTO.getNoticeAttach());
-			ps.setString(5, noticeDTO.getNoticeRegdate());
-			
+			ps.setString(1, noticeDTO.getNoticeTitle());
+			ps.setString(2, noticeDTO.getNoticeContent());
+			ps.setString(3, noticeDTO.getNoticeAttach());
+
+		System.out.println("ddd");	
 			result = ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}finally {
 			DbUtil.dbClose(ps, con);
 		}

@@ -76,6 +76,9 @@
 					</c:choose>
 				</tbody>
 			</table>
+			<div style="float:right;">
+				 <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a>
+		    </div>
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>

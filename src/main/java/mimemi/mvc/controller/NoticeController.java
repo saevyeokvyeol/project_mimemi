@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import mimemi.mvc.dto.NoticeDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.ReviewDTO;
@@ -27,36 +30,36 @@ public class NoticeController implements Controller {
 	
 	/**
 	 * 공지사항 등록
-	 * @return 
-	 * @throws SQLException 
 	 **/
-  /*  
-	public void insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
-		String saveDir=request.getServletContext().getRealPath("/save");
-		int maxSize =1024*1024*100;
-	    String encoding="UTF-8";
-	    
-		MultipartRequest m = 
-				new MultipartRequest(request, saveDir,maxSize,encoding , new DefaultFileRenamePolicy());
-	    
+		String saveDir = request.getServletContext().getRealPath("/img");
+		int maxSize = 1024*1024*100;
+		String encoding= "UTF-8";
+		System.out.println(saveDir);
+		
+		MultipartRequest m = new MultipartRequest(request, saveDir,maxSize, encoding, new DefaultFileRenamePolicy());
+		
+		System.out.println("아마2");
 
 		String noticeTitle = m.getParameter("notice_title"); 
-		String noticeContent = m.getParameter("notice_cotent"); 
+		String noticeContent = m.getParameter("notice_content"); 
 		String noticeAttach = m.getParameter("notice_attach"); 
+
 		
-		NoticeDTO noticeDto = new NoticeDTO(maxSize, noticeTitle, noticeContent, noticeAttach, noticeAttach);
+		NoticeDTO noticeDto = new NoticeDTO(noticeTitle, noticeContent, noticeAttach);
+		System.out.println("아마");
+		
 		if(m.getFilesystemName("noticeAttach") != null) {
 			noticeDto. setNoticeAttach(m.getFilesystemName("noticeAttach"));	
 		}	
-		noticeService.insertNotice(noticeDto);	
-		return new ModelAndView("front", true);
-	
+		noticeService.insertNotice(noticeDto);
 		
 		
-	
-	
-*/
+		return new ModelAndView("front?key=notice&methodName=selectAllNotice", true);
+		
+		
+	}
 
 /*	
 	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {

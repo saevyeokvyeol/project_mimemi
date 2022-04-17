@@ -19,6 +19,14 @@ public class NoticeDTO {
 		this.noticeAttach = noticeAttach;
 		this.noticeRegdate = noticeRegdate;
 	}
+	
+	public NoticeDTO(String noticeTitle, String noticeContent, String noticeAttach) {
+		super();
+		
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+		this.noticeAttach = noticeAttach;
+	}
 
 	public int getNoticeNo() {
 		return noticeNo;
