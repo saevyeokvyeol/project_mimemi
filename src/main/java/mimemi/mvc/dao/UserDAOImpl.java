@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement ps = null;
 		Connection con = null;
 		int result=0;
-		String sql = proFile.getProperty("user.insertUser");//insert into users values(?,?,?,?,user_point,sysdate,user_quit,?)
+		String sql = proFile.getProperty("user.insertUser"); //insert into users values(?,?,?,?,user_point,sysdate,user_quit,?)
 		try {
 			con=DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
@@ -143,6 +143,7 @@ public class UserDAOImpl implements UserDAO {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		String sql = proFile.getProperty("user.selectByKeyword");
 		String column = null;
+		
 		if (field == "¿Ã∏ß") {
 			column = "user_name";
 		}
@@ -153,7 +154,7 @@ public class UserDAOImpl implements UserDAO {
 			ps=con.prepareStatement(sql);
 			ps.setString(1, column);
 			ps.setString(2, keyword);
-			//select * from users where ?=?
+			//select * from users where ?=%?%
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}

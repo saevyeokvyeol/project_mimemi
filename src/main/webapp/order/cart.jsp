@@ -257,6 +257,7 @@
 				
 				// 장바구니 전체 상품 가지고 주문창으로 이동
 				$("#orderAll").click(function() {
+					
 					location.href = "${path}/front?key=cart&methodName=viewOrderForm&mode=C";
 				})
 				

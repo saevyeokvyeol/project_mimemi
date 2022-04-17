@@ -4,6 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<jsp:include page="../common/header.jsp"/>
 		<title>Insert title here</title>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
@@ -29,10 +30,10 @@
 					<tr>
 						<th></th>
 						<th>상품명</th>
-						<th>배송일 변경</th>
 						<th>첫 배송일</th>
 						<th>수량</th>
-						<th>금액</th>
+						<th>가격</th>
+						<th>총 가격</th>
 					</tr>
 				</thead>
 				<tbody>

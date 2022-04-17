@@ -1,5 +1,6 @@
 package mimemi.mvc.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
+import mimemi.mvc.dto.OrderLineDTO;
 import mimemi.mvc.service.OrderService;
 import mimemi.mvc.service.OrderServiceImpl;
+import net.sf.json.JSONArray;
 
 public class OrderController implements Controller {
 	private OrderService orderService = new OrderServiceImpl();
@@ -20,6 +23,7 @@ public class OrderController implements Controller {
 		return null;
 	}
 
+	// 주문 등록
 	public ModelAndView insertOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		
@@ -48,6 +52,7 @@ public class OrderController implements Controller {
 		return mv;
 	}
 	
+	// 주문 전체 가져오기(페이징 처리)
 	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum == null || pageNum.equals("")) {
@@ -63,6 +68,55 @@ public class OrderController implements Controller {
 		ModelAndView mv = new ModelAndView("manager/orderList.jsp");
 		
 		return mv;
+	}
+	
+	// 특정 유저가 구매한 내역 가져오기
+	public void selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String userId = request.getParameter("userId");
+		List<OrderDTO> orderList = orderService.selectByUserId(userId);
+		
+		JSONArray orderArr = JSONArray.fromObject(orderList);
+		
+		PrintWriter out = response.getWriter();
+		out.print(orderArr);
+	}
+
+	// 주문아이디로 상세 주문 내역 가져오기
+	public void selectLineByOrderId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String orderId = request.getParameter("orderId");
+		List<OrderLineDTO> orderLineList = orderService.selectLineByOrderId(Integer.parseInt(orderId));
+		
+		JSONArray orderLineArr = JSONArray.fromObject(orderLineList);
+		
+		PrintWriter out = response.getWriter();
+		out.print(orderLineArr);
+	}
+	
+	public ModelAndView selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<OrderDTO> orderList = orderService.selectAll(Integer.parseInt(pageNum), field);
+		
+		request.setAttribute("orderList", orderList);
+		request.setAttribute("pageNum", pageNum); // 뷰에서 사용하기 위해 저장
+		ModelAndView mv = new ModelAndView("manager/orderList.jsp");
+		
+		return mv;
+	}
+
+	public void deleteOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderId = request.getParameter("orderId");
+
+		orderService.deleteOrder(Integer.parseInt(orderId));
 	}
 
 }

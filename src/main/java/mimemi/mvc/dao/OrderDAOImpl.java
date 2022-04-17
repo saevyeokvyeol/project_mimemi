@@ -335,8 +335,78 @@ public class OrderDAOImpl implements OrderDAO {
 	 */
 	@Override
 	public int deleteOrder(int orderId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.deleteOrder");
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, orderId);
+			result = ps.executeUpdate();
+			
+			int[] re = deleteOrderLine(con, orderId);
+			for(int r : re) {
+				if(r == 0) {
+					throw new SQLException();
+				}
+			}
+			
+			re = deleteOrderDeil(con, orderId);
+			for(int r : re) {
+				if(r == 0) {
+					throw new SQLException();
+				}
+			}
+			con.commit();
+		} finally {
+			con.rollback();
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
+	}
+	
+	/**
+	 * 주문을 취소했을 때 주문 상세까지 전부 취소
+	 * */
+	public int[] deleteOrderLine(Connection con, int orderId) throws SQLException {
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.deleteOrderLine");
+		int[] result = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, orderId);
+			
+			result = ps.executeBatch();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 배송 정보까지 취소
+	 * */
+	public int[] deleteOrderDeil(Connection con, int orderId) throws SQLException {
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.deleteOrderDeil");
+		int[] result = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, orderId);
+			
+			result = ps.executeBatch();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		
+		return result;
 	}
 
 	/**
@@ -384,7 +454,8 @@ public class OrderDAOImpl implements OrderDAO {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				orderList.add(new OrderDTO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5),
-						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getInt(11)));
+						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getInt(11),
+						rs.getString(12)));
 			}
 		} finally {
 			DbUtil.dbClose(rs, ps, con);
@@ -429,8 +500,24 @@ public class OrderDAOImpl implements OrderDAO {
 		ResultSet rs = null;
 		
 		String sql = proFile.getProperty("order.selectByUserId");
-		List<OrderDTO> orderList = null;
-		return orderList;
+		List<OrderDTO> list = new ArrayList<OrderDTO>();
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, userId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				OrderDTO order = new OrderDTO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5),
+						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getInt(11),
+						rs.getString(12));
+				list.add(order);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return list;
 	}
 
 	/**
@@ -440,6 +527,27 @@ public class OrderDAOImpl implements OrderDAO {
 	 * */
 	@Override
 	public OrderDTO selectByOrderId(int orderId) throws SQLException {
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("order.selectByOrderId");
+		OrderDTO order = null;
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, orderId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				order = new OrderDTO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5),
+						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getInt(11),
+						rs.getString(12));
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return order;
 	}
 }

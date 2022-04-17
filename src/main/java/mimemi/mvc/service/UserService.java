@@ -66,7 +66,7 @@ public interface UserService {
 	 * ºñ¹Ð¹øÈ£ º¯°æ
 	 * @param userId, userPwd
 	 * */
-	void updateUserPwd(String userId, String userPwd) throws SQLException;
+	void updateUserPwd(String userId, String userPwd, String userPhone) throws SQLException;
 	
 	/**
 	 * È¸¿ø Å»Åð

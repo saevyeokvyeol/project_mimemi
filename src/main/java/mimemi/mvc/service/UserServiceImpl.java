@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserPwd(String userId, String userPwd) throws SQLException {
+	public void updateUserPwd(String userId, String userPwd, String userPhone) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}
