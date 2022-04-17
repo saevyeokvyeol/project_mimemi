@@ -47,7 +47,7 @@ function sendDelete(){
             <p align="right"><b><span>±Û¹øÈ£</span></b></p>
         </td>
         <td width="450" height="20" colspan="3">
-        	<span><b>${elec.modelNum}</b></span>
+        	<span><b>${ask.modelNum}</b></span>
         </td>
     </tr>
     <tr>

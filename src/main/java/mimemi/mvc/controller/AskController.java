@@ -91,7 +91,7 @@ public class AskController implements Controller {
 		
 		askService.insertAsk(askDto);
 		
-		return new ModelAndView("board/ask2.jsp",true);
+		return new ModelAndView("board/ask2.jsp");
 	}
 	/**
 	 * 1:1 문의 수정

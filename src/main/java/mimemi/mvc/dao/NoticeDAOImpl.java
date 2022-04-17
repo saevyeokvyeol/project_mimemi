@@ -89,6 +89,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 		try {
 			// 전체 레코드 수를 반환하는 메소드로 db에 저장된 총 레코드 수를 구함
 			int totalCount = this.getTotalCount();
+			
 			// 구한 전체 레코드 수로 전체 페이지 수를 구함
 			int totalPage = totalCount % NoticeListPageCnt.getPagesize() == 0 ? totalCount / NoticeListPageCnt.getPagesize() : (totalCount / NoticeListPageCnt.getPagesize()) + 1;
 			
