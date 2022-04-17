@@ -2,6 +2,7 @@ package mimemi.mvc.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import mimemi.mvc.dto.AddrDTO;
@@ -27,12 +28,11 @@ public interface OrderDAO {
 	 * 			String takeMethod, String doorPwd, String usercouId)
 	 * @return int(등록된 데이터 수)
 	 */
-	int insertOrder(OrderDTO order) throws SQLException;
+	int insertOrder(OrderDTO order, String mode) throws SQLException, ParseException;
 	
 	/**
 	 * 2. 새 주소로 구매한 경우 addr insert
-	 * @param AddrDTO(String userId, String addrName, int zipcode, String addrAddr, String addrDetailAddr,
-				String receiverName, String receiverPhone)
+	 * @param Connection con, AddrDTO addr
 	 * @return int(등록된 데이터 수)
 	 * */
 	int insertAddr(Connection con, AddrDTO addr) throws SQLException;
@@ -53,26 +53,24 @@ public interface OrderDAO {
 	
 	/**
 	 * 5. 주문 상세 insert
-	 * @param OrderLineDTO(int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
-	 *			String deliPeriod, String deliStart)
+	 * @param Connection con, List<OrderLineDTO> OrderLineDTO
 	 * @return int(등록된 데이터 수)
 	 * */
-	int insertOrderLine(Connection con, OrderLineDTO orderLine) throws SQLException;
+	int[] insertOrderLine(Connection con, List<OrderLineDTO> OrderLineDTO) throws SQLException, ParseException;
 	
 	/**
 	 * 6. 쿠폰 사용한 경우 쿠폰 사용 여부 변경(update)
-	 * @param OrderDTO(String userId, int addrId, String payMethod, int payPoint, String orderMemo,
-	 * 			String takeMethod, String doorPwd, String usercouId)
+	 * @param Connection con, int userCouId
 	 * @return int(수정된 데이터 수)
 	 * */
 	int updateUserCoupon(Connection con, int userCouId) throws SQLException;
 	
 	/**
 	 * 7. 장바구니에 담겨있었을 경우 해당 장바구니 삭제
-	 * @param int userId, String goodsId
+	 * @param String userId, String goodsId
 	 * @return int(삭제한 레코드 수)
 	 * */
-	int deleteSelectedCart(Connection con, int userId, String goodsId) throws SQLException;
+	int deleteSelectedCart(Connection con, String userId, String goodsId) throws SQLException;
 	
 	/**
 	 * 주문 취소
@@ -90,9 +88,16 @@ public interface OrderDAO {
 	List<OrderDTO> selectAll(int pageNum, String field) throws SQLException;
 	
 	/**
-	 * 아이디로 특정 주문 조회
+	 * 유저 아이디로 주문 조회
 	 * @param int orderId(정렬 기준)
 	 * @return OrderDTO
 	 * */
-	OrderDTO selectById(int orderId) throws SQLException;
+	List<OrderDTO> selectByUserId(String userId) throws SQLException;
+	
+	/**
+	 * 주문 아이디로 특정 주문 조회
+	 * @param int orderId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	OrderDTO selectByOrderId(int orderId) throws SQLException;
 }

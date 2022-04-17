@@ -34,6 +34,42 @@
             height: 70px;
         }
     </style>
+    
+    <script type = "text/javascript">
+    	$(function()) {
+    		function goodsSellectAll(){
+    			$.ajax({
+    				url: "${path}/ajax",
+    				type: "post"
+    				dataType: "json",
+    				data: {key: "goods", methodName: "goodsSelectAll"},
+    				success: function(result) {
+    					let text = "";
+    					$.each(result, function(index, item){
+    						text+="<tr>"
+    						text+='<td>\${item.goodsId}</td>';
+    						text+='<td>\${item.goodsThumbnail}</td>';
+    						text+='<td>\${item.goodsName}</td>';
+    						text+='<td>\${item.goodsPrice}</td>';
+    						text+='<td>\${item.goodsSale}</td>';
+    						text+='<td>\${item.goodsDetail}</td>';
+    						text+='</tr>';
+    					});
+    						$("#goodsTable tr:gt(0)").remove();
+    						$("#goodsTable tbody").append(str);
+    						
+    					}
+    				})
+    			
+    		}
+    		goodsSellectAll();
+    	}
+    				
+    					
+    							
+    		
+    	
+    </script>
 </head>
 
 <body>
@@ -58,7 +94,7 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm" id="goodsTable">
                     <thead>
                         <tr>
                             <th scope="col">상품번호</th>

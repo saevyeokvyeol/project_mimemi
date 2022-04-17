@@ -63,6 +63,11 @@ public class DbUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public static Properties getProFile() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 

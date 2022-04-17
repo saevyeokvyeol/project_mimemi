@@ -245,4 +245,36 @@ public class CartDAOImpl implements CartDAO {
 		return list;
 	}
 
+	/**
+	 * 장바구니 조회
+	 * @param cartId
+	 * @return CartDTO
+	 */
+	@Override
+	public CartDTO selectCartByCartId(int cartId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("cart.selectCartByCartId");
+		// select * from cart where cart_id = ?
+		
+		CartDTO cart = null;
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, cartId);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7));
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return cart;
+	}
+
 }

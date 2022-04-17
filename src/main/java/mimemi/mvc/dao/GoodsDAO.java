@@ -8,30 +8,25 @@ import mimemi.mvc.dto.GoodsDTO;
 public interface GoodsDAO {
 	/**
 	 * 상품 등록
-	 * @param: GoodsDTO(String goodsId, String goodsName, String goodsDetail, String goodsThumbnail,
-	 * 		   int goodsPrice, String goodsDetailImg)
-	 * @return: int(등록된 데이터 수)
+	 *
 	 * */
 	int goodsInsert(GoodsDTO goods) throws SQLException;
 	
 	/**
 	 * 상품 수정
-	 * @param: GoodsDTO(String goodsId, String goodsName, String goodsDetail, int goodsPrice)
-	 * @return: int(수정된 데이터 수)
+	
 	 * */
 	int goodsUpdate(GoodsDTO goods) throws SQLException;
 	
 	/**
 	 * 상품 판매 여부 수정
-	 * @param: String goodsId, String goodsSale
-	 * @return: int(수정된 데이터 수)
+
 	 * */
 	int goodsUpdateForSale(String goodsId, String goodsSale) throws SQLException;
 	
 	/**
 	 * 상품 썸네일 수정
-	 * @param: String goodsId, String goodsThumbnail
-	 * @return: int(수정된 데이터 수)
+	
 	 * */
 	int goodsUpdateThumbnail(String goodsId, String goodsThumbnail) throws SQLException;
 	
@@ -54,7 +49,7 @@ public interface GoodsDAO {
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<GoodsDTO>(goodsSale이 Y인 상품)
 	 * */
-	List<GoodsDTO> goodsSelectForSale(String sort) throws SQLException;
+	List<GoodsDTO> goodsSelectForSale() throws SQLException;
 	
 	/**
 	 * 상품명으로 상품 조회
