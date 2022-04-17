@@ -110,7 +110,7 @@
 	</head>
 	<body></a>
 		<section>
-			<h1><a href="${path}/mypage/orderList.jsp">주문/배송 조회</a></h1>
+			<h1>주문/배송 조회</h1>
 			<table class="table table-hover" id="orderTable">
 				<thead>
 					<tr>

@@ -71,7 +71,7 @@ public class OrderController implements Controller {
 	}
 	
 	// 특정 유저가 구매한 내역 가져오기
-	public void selectOrderByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		String userId = request.getParameter("userId");
@@ -96,7 +96,7 @@ public class OrderController implements Controller {
 		out.print(orderLineArr);
 	}
 	
-	public ModelAndView selectOrderByOrderId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum == null || pageNum.equals("")) {
 			pageNum = "1";
