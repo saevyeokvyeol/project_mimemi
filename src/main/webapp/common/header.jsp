@@ -40,7 +40,7 @@
 				<ul>
 						<li><a href="#">검색</a></li>
 						<li><a href="#">배달가능지역</a></li>
-						<li><a href="#">카트</a></li>
+						<li><a href="${path}/order/cart.jsp">카트</a></li>
 				</ul>
 		</div>
 	</nav>

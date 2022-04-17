@@ -26,7 +26,6 @@
 						success: function(result) {
 							let text = "";
 							$("#cartTable > tbody").children().remove();
-							console.log(JSON.stringify(result));
 							if(JSON.stringify(result) == "[]"){
 								text += `<tr>`;
 								text += `<td class="cart-main-empty" colspan="8">장바구니에 담긴 상품이 없습니다.</td>`;
@@ -36,7 +35,7 @@
 								$.each(result, function(index, item) {
 									text = "";
 									text += `<tr name="\${item.cartId}">`;
-									text += `<td><input type="checkbox" name="cartSelect"></td>`;
+									text += `<td><input type="checkbox" name="cartSelect" value="\${item.cartId}"></td>`;
 									text += `<td name="goodsId">\${item.goodsId}</td>`;
 									text += `<td><select name="cartWeekday" id="\${index}Weekday"><option value="T">주 3회</option><option value="F">주 5회</option></select></td>`;
 									text += `<td><select name="cartPeriod" id="\${index}Period"><option value="1W">1주</option><option value="2W">2주</option><option value="4W">4주</option><option value="8W">8주</option></select></td>`;
@@ -189,9 +188,15 @@
 				// 부분 삭제
 				$("#deleteSelected").click(function() {
 					let arr = [];
+					let check = false;
 					$("[name=cartSelect]:checked").each(function() {
 						arr.push($(this).parent().parent().attr("name"));
+						check = true;
 					})
+					if(!check){
+						alert("삭제할 상품을 선택해주세요");
+						return;
+					}
 					
 					$.ajax({
 						url: "${path}/ajax",
@@ -224,6 +229,37 @@
 					}) // ajax 종료
 				}) // 전체 삭제
 				
+				// 선택 구매 시 체크박스 체크
+				$("form[name=cartForm]").submit(function() {
+					let check = false;
+					
+
+					$("[name=cartSelect]:checked").each(function() {
+						check = true;
+					})
+					
+					if(!check){
+						alert("상품을 하나 이상 선택해주세요.");
+						return check;
+					}
+					
+					return check;
+				})
+				
+				// 전체 선택
+				$("#checkAll").click(function() {
+					if($(this).is(":checked")) {
+						$("[name=cartSelect]").prop("checked", true);
+					} else {
+						$("[name=cartSelect]").prop("checked", false);
+					}
+				})
+				
+				// 장바구니 전체 상품 가지고 주문창으로 이동
+				$("#orderAll").click(function() {
+					location.href = "${path}/front?key=cart&methodName=viewOrderForm&mode=C";
+				})
+				
 				// datepicker 설정
 				$.datepicker.setDefaults({
 					dateFormat: 'yy-mm-dd',
@@ -244,13 +280,13 @@
 	</head>
 	<body>
 		<section class="cart-main">
-			<form action="">
-        <input type="hidden" name="" id="">
+			<form action="${path}/front?key=cart&methodName=viewOrderForm&mode=S" name="cartForm" method="post">
+        		<input type="hidden" name="" id="">
 				<h1>장바구니</h1>
 				<table class="table" id="cartTable">
 					<thead>
 						<tr>
-							<th><input type="checkbox"></th>
+							<th><input type="checkbox" id="checkAll"></th>
 							<th>상품명</th>
 							<th>배송요일</th>
 							<th>배송기간</th>
@@ -274,7 +310,7 @@
 						<button type="button" class="btn btn-outline-dark shadow-none" id="deleteAll">전체 삭제</button>
 					</span>
 					<span>
-					<button type="button" class="btn btn-outline-dark btn-lg shadow-none" id="orderSelected">선택 주문</button>
+					<button type="submit" class="btn btn-outline-dark btn-lg shadow-none" id="orderSelected">선택 주문</button>
 					<button type="button" class="btn btn-outline-dark btn-lg shadow-none" id="orderAll">전체 주문</button>
 					</span>
 				</section>

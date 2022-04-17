@@ -1,5 +1,7 @@
 package mimemi.mvc.dto;
 
+import java.util.List;
+
 public class OrderDTO {
 	private int orderId;
 	private String userId;
@@ -13,7 +15,24 @@ public class OrderDTO {
 	private String enterPwd;
 	private int usercouId;
 	
+	private List<OrderLineDTO> orderLineList;
+	private List<CartDTO> cartList;
+	private AddrDTO addr;
+	
 	public OrderDTO() {}
+	public OrderDTO(String userId, int addrId, String payMethod, int payPoint, int totalPrice,
+			String orderMemo, String takeMethod, String enterPwd, int usercouId) {
+		super();
+		this.userId = userId;
+		this.addrId = addrId;
+		this.payMethod = payMethod;
+		this.payPoint = payPoint;
+		this.totalPrice = totalPrice;
+		this.orderMemo = orderMemo;
+		this.takeMethod = takeMethod;
+		this.enterPwd = enterPwd;
+		this.usercouId = usercouId;
+	}
 	public OrderDTO(int orderId, String userId, int addrId, String payMethod, int payPoint, int totalPrice,
 			String orderDate, String orderMemo, String takeMethod, String enterPwd, int usercouId) {
 		super();
@@ -94,6 +113,24 @@ public class OrderDTO {
 	}
 	public void setUsercouId(int usercouId) {
 		this.usercouId = usercouId;
+	}
+	public List<OrderLineDTO> getOrderLineList() {
+		return orderLineList;
+	}
+	public void setOrderLineList(List<OrderLineDTO> orderLineList) {
+		this.orderLineList = orderLineList;
+	}
+	public AddrDTO getAddr() {
+		return addr;
+	}
+	public void setAddr(AddrDTO addr) {
+		this.addr = addr;
+	}
+	public List<CartDTO> getCartList() {
+		return cartList;
+	}
+	public void setCartList(List<CartDTO> cartList) {
+		this.cartList = cartList;
 	}
 	
 	

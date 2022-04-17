@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -30,7 +35,6 @@ public class OrderDAOImpl implements OrderDAO {
 	
 	/**
 	 * 주문 등록
-	 * 
 	 * 0. OrderDTO 안의 OrderLineDTO를 통해 상품의 총 구매 금액 구하기
 	 * 1. 주문 테이블 insert
 	 * 2. 새 주소로 구매한 경우 addr insert
@@ -45,22 +49,102 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @param OrderDTO(String userId, int addrId, String payMethod, int payPoint, String orderMemo,
 	 * 			String takeMethod, String doorPwd, String usercouId)
 	 * @return int(등록된 데이터 수)
+	 * @throws ParseException 
 	 */
 	@Override
-	public int insertOrder(OrderDTO order) throws SQLException {
+	public int insertOrder(OrderDTO order, String mode) throws SQLException, ParseException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		String sql = proFile.getProperty("order.insertOrder");
-		// insert into orders values(ORDERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		// insert into orders values(ORDERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		// userId, addId, payMethod, payPoint, totalPrice, orderMemo, takeMethod, enderPwd,
+		// usercouId
 		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			con.setAutoCommit(false); // 자동 커밋 해제
+			
+			// 주문 등록
+			ps = con.prepareStatement(sql);
+			ps.setString(1, order.getUserId());
+			ps.setInt(2, order.getAddrId());
+			ps.setString(3, order.getPayMethod());
+			ps.setInt(3, order.getPayPoint());
+			
+			int totalPrice = calTotalPrice(order.getOrderLineList());
+			ps.setInt(5, totalPrice);
+			ps.setString(6, order.getOrderMemo());
+			ps.setString(7, order.getTakeMethod());
+			ps.setString(8, order.getEnterPwd());
+			ps.setInt(9, order.getUsercouId());
+			
+			result = ps.executeUpdate();
+			
+			// 주소 저장: 나중에 주소 체크 메소드랑 비교~~
+			if(this.insertAddr(con, order.getAddr()) == 0) {
+				throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+			}
+			
+			// 적립금 차감
+			if(order.getPayPoint() > 0) {
+				if(this.decreamentUserPoint(con, order.getUserId(), order.getPayPoint()) == 0) {
+					throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+				}
+			}
+			
+			// 적립금 적립
+			int pointPlus = totalPrice / 100;
+			if(this.increamentUserPoint(con, order.getUserId(), pointPlus) == 0) {
+				throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+			}
+			
+			// 주문 상세 인서트
+			int[] re = this.insertOrderLine(con, order.getOrderLineList());
+			for(int r : re) {
+				if(r == 0) {
+					throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+				}
+			}
+			
+			// 쿠폰 사용 여부 변경
+			if(order.getUsercouId() != 0) {
+				if(this.updateUserCoupon(con, order.getUsercouId()) == 0) {
+					throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+				}
+			}
+			
+			// 해당 장바구니 삭제
+			if(mode.equals("C") || mode.equals("S")) {
+				for(OrderLineDTO ol : order.getOrderLineList()) {
+					if(this.deleteSelectedCart(con, order.getUserId(), ol.getGoodsId()) == 0) {
+						throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+					}
+				}
+			}
+			
+			con.commit();
+		} finally {
+			con.rollback();
+			DbUtil.dbClose(ps, con);
+		}
 		return result;
+	}
+	
+	/**
+	 * 총 금액 계산
+	 * */
+	private int calTotalPrice(List<OrderLineDTO> list) {
+		int totalPrice = 0;
+		for(OrderLineDTO ol : list) {
+			totalPrice += ol.getPriceQty();
+		}
+		return totalPrice;
 	}
 
 	/**
 	 * 2. 새 주소로 구매한 경우 addr insert
-	 * @param AddrDTO(String userId, String addrName, int zipcode, String addrAddr, String addrDetailAddr,
-				String receiverName, String receiverPhone)
+	 * @param Connection con, AddrDTO addr
 	 * @return int(등록된 데이터 수)
 	 * */
 	@Override
@@ -82,10 +166,18 @@ public class OrderDAOImpl implements OrderDAO {
 	public int decreamentUserPoint(Connection con, String userId, int usedPoint) throws SQLException {
 		PreparedStatement ps = null;
 		
-		String sql = proFile.getProperty("order.insertOrder");
-		// insert into orders values(ORDERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		String sql = proFile.getProperty("order.decreamentUserPoint");
+		// update users set user_point = user_point - ? where USER_ID = ?
 		int result = 0;
-		return 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, usedPoint);
+			ps.setString(2, userId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
 	}
 
 	/**
@@ -98,37 +190,119 @@ public class OrderDAOImpl implements OrderDAO {
 		PreparedStatement ps = null;
 		
 		String sql = proFile.getProperty("order.insertOrder");
-		// insert into orders values(ORDERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		// update users set user_point = user_point + ? where USER_ID = ?
 		int result = 0;
-		return 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, addedPoint);
+			ps.setString(2, userId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
 	}
 
 	/**
 	 * 5. 주문 상세 insert
-	 * @param OrderLineDTO(int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
-	 *			String deliPeriod, String deliStart)
+	 * @param Connection con, OrderLineDTO orderLine
 	 * @return int(등록된 데이터 수)
+	 * @throws ParseException 
 	 * */
 	@Override
-	public int insertOrderLine(Connection con, OrderLineDTO orderLine) throws SQLException {
+	public int[] insertOrderLine(Connection con, List<OrderLineDTO> list) throws SQLException, ParseException {
 		PreparedStatement ps = null;
 		
 		String sql = proFile.getProperty("order.insertOrder");
-		// insert into orders values(ORDERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		// insert into order values(ORDER_LINE_ID_SEQ.NEXTVAL, orders_seq.currval, ?, ?, ?, ?, ?, ?)
+		int[] result = null;
+		try {
+			ps = con.prepareStatement(sql);
+			for(OrderLineDTO ol : list) {
+				ps.setString(1, ol.getGoodsId());
+				ps.setInt(2, ol.getOrderQty());
+				ps.setInt(3, ol.getPriceQty());
+				ps.setString(4, ol.getDeliWeekday());
+				ps.setString(5, ol.getDeliPeriod());
+				ps.setString(6, ol.getDeliStart());
+				
+				ps.addBatch();
+				ps.clearParameters();
+				
+				int weekday = 0;
+				if(ol.getDeliWeekday().equals("T")) {
+					weekday = 3;
+				} else {
+					weekday = 5;
+				}
+				int totalDeli = Integer.parseInt(ol.getDeliPeriod().substring(0, 1)) * weekday;
+
+				Calendar cal = Calendar.getInstance();
+		        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		        cal.setTime(df.parse(ol.getDeliStart()));
+		        int wd = 0;
+				while(totalDeli > 0){
+					wd = cal.get(Calendar.DAY_OF_WEEK);
+					if(wd == 2 || wd == 4 || wd == 6) {
+						if(this.insertOrderDeli(con, df.format(cal.getTime())) == 0) {
+							throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+						}
+						if(ol.getDeliWeekday().equals("F") && (wd == 3 || wd == 5)) {
+							if(this.insertOrderDeli(con, df.format(cal.getTime())) == 0) {
+								throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
+							}
+						}
+					}
+					cal.add(Calendar.DATE, 1);
+					totalDeli--;
+				}
+			}
+			
+			result = ps.executeBatch();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	}
+	
+	/**
+	 * 주문 상세 배송 등록
+	 * */
+	private int insertOrderDeli(Connection con, String orderDeliDate) throws SQLException {
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.insertOrder");
+		// insert into order values(ORDER_LINE_ID_SEQ.NEXTVAL, orders_seq.currval, ?, ?, ?, ?, ?, ?)
 		int result = 0;
-		return 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, orderDeliDate);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
 	}
 
 	/**
 	 * 6. 쿠폰 사용한 경우 쿠폰 사용 여부 변경(update)
-	 * @param OrderDTO(String userId, int addrId, String payMethod, int payPoint, String orderMemo,
-	 * 			String takeMethod, String doorPwd, String usercouId)
+	 * @param Connection con, int userCouId
 	 * @return int(수정된 데이터 수)
 	 * */
 	@Override
 	public int updateUserCoupon(Connection con, int userCouId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.updateUserCoupon");
+		int result = 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, userCouId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
 	}
 
 	/**
@@ -137,9 +311,20 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @return int(삭제한 레코드 수)
 	 * */
 	@Override
-	public int deleteSelectedCart(Connection con, int userId, String goodsId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteSelectedCart(Connection con, String userId, String goodsId) throws SQLException {
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.deleteSelectedCart");
+		int result = 0;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, goodsId);
+			ps.setString(2, userId);
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
 	}
 
 	/**
@@ -233,14 +418,28 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	/**
-	 * 아이디로 특정 주문 조회
+	 * 유저 아이디로 주문 조회
 	 * @param int orderId(정렬 기준)
 	 * @return OrderDTO
 	 * */
 	@Override
-	public OrderDTO selectById(int orderId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderDTO> selectByUserId(String userId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("order.selectByUserId");
+		List<OrderDTO> orderList = null;
+		return orderList;
 	}
 
+	/**
+	 * 주문 아이디로 특정 주문 조회
+	 * @param int orderId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	@Override
+	public OrderDTO selectByOrderId(int orderId) throws SQLException {
+		return null;
+	}
 }

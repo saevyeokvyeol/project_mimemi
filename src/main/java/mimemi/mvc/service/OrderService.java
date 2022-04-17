@@ -3,11 +3,7 @@ package mimemi.mvc.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import mimemi.mvc.dto.MealDTO;
 import mimemi.mvc.dto.OrderDTO;
-import mimemi.mvc.dto.OrderDeliDTO;
-import mimemi.mvc.dto.OrderLineDTO;
-import mimemi.mvc.dto.MealDTO;
 
 public interface OrderService {
 	/**
@@ -15,7 +11,7 @@ public interface OrderService {
 	 * @param OrderDTO(String userId, int addrId, String payMethod, int payPoint, String orderMemo,
 	 * 			String takeMethod, String doorPwd, String usercouId)
 	 */
-	void insertOrder(OrderDTO order) throws SQLException;
+	void insertOrder(OrderDTO order, String mode) throws Exception;
 	
 	/**
 	 * 주문 취소
@@ -32,9 +28,16 @@ public interface OrderService {
 	List<OrderDTO> selectAll(int pageNum, String field) throws SQLException;
 	
 	/**
-	 * 아이디로 특정 주문 조회
+	 * 유저 아이디로 주문 조회
+	 * @param String userId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	List<OrderDTO> selectByUserId(String userId) throws SQLException;
+	
+	/**
+	 * 주문 아이디로 특정 주문 조회
 	 * @param int orderId(정렬 기준)
 	 * @return OrderDTO
 	 * */
-	OrderDTO selectById(int orderId) throws SQLException;
+	OrderDTO selectByOrderId(int orderId) throws SQLException;
 }
