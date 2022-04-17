@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mimemi.mvc.dto.NoticeDTO;
+import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.service.NoticeService;
 import mimemi.mvc.service.NoticeServiceImpl;
@@ -26,6 +27,7 @@ public class NoticeController implements Controller {
 	
 	/**
 	 * 공지사항 등록
+	 * @return 
 	 * @throws SQLException 
 	 **/
   /*  
@@ -82,28 +84,30 @@ public class NoticeController implements Controller {
 	
 	*/
 	
-	public void selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	/**
+	 *  공지사항 전체보기
+	 **/
+	
+	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html;charset=UTF-8"); 
         
-        List<NoticeDTO> list = noticeService.selectAllNotice();
-        
-        JSONArray noticeArr = JSONArray.fromObject(list);
-        
-        PrintWriter out = response.getWriter();
-        out.print(noticeArr);
-        
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
 		
+		String field = request.getParameter("field");
 		
+		List<NoticeDTO> noticeList = noticeService.selectAllNotice(Integer.parseInt(pageNum), field);
 		
+		request.setAttribute("NoticeList", noticeList);
+		request.setAttribute("pageNum", pageNum); 
+		ModelAndView mv = new ModelAndView("manager/selectNoticeAll.jsp");
+		
+		return mv;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+		
 	/**
 	 *  상세보기 
 	 **/
@@ -119,4 +123,5 @@ public class NoticeController implements Controller {
 	/**
 	 * 삭제하기
 	 **/
-	}
+	
+}

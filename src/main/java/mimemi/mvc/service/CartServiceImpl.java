@@ -112,4 +112,15 @@ public class CartServiceImpl implements CartService {
 		return list;
 	}
 
+	/**
+	 * 장바구니 조회
+	 * @param userId(유저 아이디가 들어간 모든 장바구니 가져오기)
+	 * @return List<CartDTO>
+	 */
+	@Override
+	public CartDTO selectCartByCartId(int cartId) throws SQLException {
+		CartDTO cart = cartDao.selectCartByCartId(cartId);
+		
+		return cart;
+	}
 }
