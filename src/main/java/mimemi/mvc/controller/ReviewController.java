@@ -30,7 +30,7 @@ public class ReviewController implements Controller {
 	 * 리뷰 전체 조회하기(+페이지처리)
 	 * */
 	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String curPageNo = request.getParameter("pageNo");
+		String curPageNo = request.getParameter("pageNum");
 		if(curPageNo ==null||curPageNo.equals("")) {
 			curPageNo="1";
 		}
@@ -43,7 +43,7 @@ public class ReviewController implements Controller {
 		List<ReviewDTO> reviewList = reviewService.selectAllByPaging(Integer.parseInt(curPageNo), field);
 		
 		request.setAttribute("list", reviewList);
-		request.setAttribute("pageNo", curPageNo);
+		request.setAttribute("pageNum", curPageNo);
 		
 		System.out.println("서비스에서 돌아온 후.."+curPageNo);
 		
@@ -59,10 +59,10 @@ public class ReviewController implements Controller {
 	 * 리뷰 번호로 상세조회하기
 	 * */
 	public ModelAndView selectByReviewNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String curPageNo= request.getParameter("PageNo");
+		String curPageNo= request.getParameter("pageNum");
 		
 		ReviewDTO review = reviewService.selectByReviewNo(Integer.parseInt(request.getParameter("reviewNo")), true);
-		request.setAttribute("pageNo", curPageNo);
+		request.setAttribute("pageNum", curPageNo);
 		request.setAttribute("reviewDetail", review);
 		return new ModelAndView("/board/reviewRead.jsp");
 	}
@@ -86,7 +86,7 @@ public class ReviewController implements Controller {
 		request.setAttribute("review", review);
 		System.out.println(review.getReviewContent());
 		
-		return new ModelAndView("board/reviewUpdate.jsp");
+		return new ModelAndView("board/reviewUpdate2.jsp");
 	}
 	
 	/**

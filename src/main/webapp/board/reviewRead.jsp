@@ -19,14 +19,11 @@ pageEncoding="UTF-8"%>
             }
             
             .review-Image{
-                box-sizing: border-box;
+            	box-sizing: border-box;
                 width: 400px;
                 height: 100%;
-                align-items: center;
-                display: flex;
-                justify-content: center;
-                background-color: rgb(241, 241, 241);
                 float: left;
+                
             }
             .review-userInfo{
                 box-sizing: border-box;
@@ -38,7 +35,12 @@ pageEncoding="UTF-8"%>
             }
             
             #reviewImg, #reveiwImg-when-empty{
-                width: 400px;
+            	box-sizing: border-box;
+                width:400px;
+                height: 100%;
+                object-fit:contain;
+                background-color: rgb(241, 241, 241);
+                float: left;
             }
             .reivew-writer{
                 box-sizing: border-box;

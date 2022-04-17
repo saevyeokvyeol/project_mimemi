@@ -184,7 +184,7 @@ pageEncoding="UTF-8"%>
 							<c:set var="isLoop" value="true"/>
 						</c:if> 
 						<c:if test="${not isLoop}" >
-							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=review&methodName=selectAll&pageNum=${i}">${i}</a></li> 
+							<li class="page-item ${i == pageNum ? ' active' : page}"><a class="page-link page_num" href="${path}/front?key=review&methodName=selectAll&pageNum=${i}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
 					<c:if test="${(startPage + p.blockcount) <= p.pageCnt}">

@@ -117,7 +117,8 @@ pageEncoding="UTF-8"%>
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
         <script> 
-        $("#review-update-button").on('submit','form.remember',function(){
+        //폼 전송 전 입력확인메소드
+        $("form").on('submit',function(){
         	var reviewTitle = $("#review_title").val();
         	alert(reviewTitle)
         	if(reviewTitle==""){
@@ -146,7 +147,7 @@ pageEncoding="UTF-8"%>
                             후기 제목
                         </div>
                         <div class="review-title-insert-Container">
-                            <span><input type="text" name="review_title" id="review_title" value="${review.reviewTitle}"></span>
+                            <span><input type="text" name="review_title" id="review_title" value="${review.reviewTitle}"  maxlength='16'></span>
                         </div>
                     </div>
                     <!--후기 작성할 상품 선택 영역-->
@@ -197,7 +198,7 @@ pageEncoding="UTF-8"%>
                                 후기 내용
                         </div>
                         <div class="review-content-Container">
-                            <textarea name="review_contents" id="review_contents" cols="130" rows="10">${review.reviewContent}</textarea>
+                            <textarea name="review_contents" id="review_contents" cols="130" rows="10" maxlength='333'>${review.reviewContent}</textarea>
                         </div>
                     </div>
                     <!--첨부파일 영역-->
