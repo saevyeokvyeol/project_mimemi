@@ -17,6 +17,7 @@ import mimemi.mvc.util.DbUtil;
 
 public class ReviewDAOImpl implements ReviewDAO {
 	private Properties proFile = new Properties();
+	private ReviewReplyDAO reviewReplyDAO = new ReviewReplyDAOImpl();
 
 	@Override
 	public int insertReview(ReviewDTO reviewDTO) throws SQLException {
@@ -111,8 +112,25 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 	@Override
 	public int deleteReview(int reviewNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql="delete from review where REVIEW_NO=?";
+		//String sql=proFile.getProperty("");
+		int result=0;
+		
+		try {
+			con =DbUtil.getConnection();
+			int re = reviewReplyDAO.deleteReviewReplyByReviewNo(con, reviewNo);
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reviewNo);
+			
+			result= ps.executeUpdate();
+			System.out.println("dao: 삭제한 리뷰번호 "+reviewNo);
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	@Override
@@ -186,7 +204,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 		PreparedStatement ps=null;
 		ResultSet rs =null;
 		int totalCount=0;
-		String sql="select*from review order by review_regdate desc";
+		String sql="select count(*) from review";
+		 //select count(*) from review
 		//String sql=proFile.getProperty("");
 		//나중에 카테고리별 if문 이용해서 다른 sql문 사용하기
 		

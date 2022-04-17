@@ -28,7 +28,7 @@ public interface ReviewService {
 	/**
 	 * 후기 삭제
 	 * */
-	void deleteReview(int reviewNo,String path) throws SQLException;
+	void deleteReview(ReviewDTO review,String path) throws SQLException;
 	
 	/**
 	 * 블라인드 여부 변경 기능

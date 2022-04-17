@@ -54,8 +54,17 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void deleteReview(int reviewNo, String path) throws SQLException {
-		// TODO Auto-generated method stub
+	public void deleteReview(ReviewDTO review, String path) throws SQLException {
+		//db에서 삭제한다.
+		int result =reviewDAO.deleteReview(review.getReviewNo());
+		if(result==0) {
+			throw new SQLException("삭제에 오류가 생겨 삭제되지 않았습니다.");
+		}
+		//게시물을 삭제했다면 save 폴더에서 삭제한다.
+		if(review.getReviewAttach()!=null) {
+			new java.io.File(path+"/"+review.getReviewAttach()).delete();
+		}
+		System.out.println("폴더에서 삭제완료");
 
 	}
 

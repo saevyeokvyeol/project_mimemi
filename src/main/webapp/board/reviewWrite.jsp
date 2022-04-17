@@ -112,7 +112,7 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>상품</th>
                             <td>
-                                <select name="review_select_goods" id="review_select-goods">
+                                <select name="review_select_goods" id="review_select_goods">
                                 	<option name="reivew_goods" value="">--상품 이름--</option>
                                 	<option name="reivew_goods" value="JUNG01">정성한상</option>
                                     <option name="reivew_goods" value="VEGAN01">비건 식단</option>
@@ -140,7 +140,7 @@ pageEncoding="UTF-8"%>
                             <th>첨부파일</th>
                             <td>
                                 <div class="review-image-insert-area">
-                                	<input type="file" id="review-image-selector" multiple accept=".jpg, .jpeg, .png">
+                                	<input type="file" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
                                 	<p id="file-status"></p>
                                     <div class="review-image-preview">
                                         <img id="review-image-output">

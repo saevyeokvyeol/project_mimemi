@@ -114,42 +114,19 @@ pageEncoding="UTF-8"%>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
         <!--JQgrid CDN-->
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
         <script> 
-        console.log("12")
-            var checkUpdateValid = function(){
-                var form = window.document.updateReview;
-                var selectCheck=$('#review_select_goods > option:selected').val();
-                var radioCheck =$('input[name=rate]').is(":checked");
-                console.log(form)
-                alert(11)
-                
-                if(someBug()){
-                	return false;
-                }
-
-                if(form.review_title.value==""){
-                    alert("후기 제목을 입력해 주십시오.")
-                    form.review_title.focus();
-                    return false;
-                }
-                if(!selectCheck){
-                	alert("후기를 쓸 상품을 선택해주십시오.")
-                	return false;
-                }
-                if(!radioCheck){
-                    alert("상품의 별점을 선택해주십시오.")
-                    return false;
-                }
-                if(form.review_contents.value==""){
-                    alert("후기 내용을 입력해 주십시오.")
-                    form.review_contents.focus();
-                    return false;
-                }
-                
-                return true;
-                
-            }
+        $("#review-update-button").on('submit','form.remember',function(){
+        	var reviewTitle = $("#review_title").val();
+        	alert(reviewTitle)
+        	if(reviewTitle==""){
+        		alert("후기 제목을 입력해 주십시오.")
+        		$("#review_title").focus()
+        		return;
+        	}
+        })
+        
         </script>
     </head>
     <!-- 첨부파일을 삭제하는 걸 front단에서 처리하는걸 아직 구현안했다. -->
@@ -161,7 +138,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="review-updateForm">
                 <form name="updateReview" method="post" action="${path}/front?key=review&methodName=update"
-                			onSubmit="return checkUpdateValid();" enctype="multipart/form-data">
+                			 enctype="multipart/form-data">
 						<input type="hidden" name="reviewNo" value="${review.reviewNo}">
                     <!--후기제목 작성 영역-->
                     <div class="review-title-insert-area">
@@ -282,7 +259,7 @@ pageEncoding="UTF-8"%>
                     <!--후기 등록하기 버튼-->
 					<div class="review-submit-button">
 					
-                		<input type="submit" value="후기 등록하기">
+                		<input type="submit" id="review-update-button" value="후기 등록하기">
             		</div>
                 </form>
                <form name="updateReview" method="post" action="${path}/front?key=review&methodName=update"

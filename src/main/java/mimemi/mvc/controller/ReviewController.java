@@ -193,8 +193,9 @@ public class ReviewController implements Controller {
 		
 		//첨부파일도 삭제할 경로를 구한다.
 		String path =request.getServletContext().getRealPath("/img/save");
-		System.out.println("삭제할 후기 게시물 번호: "+reviewNo);
-		reviewService.deleteReview(Integer.parseInt(reviewNo),path);
+		//삭제할 첨부파일이름을 구한다.
+		System.out.println("삭제할 후기 게시물 번호: "+review.getReviewNo());
+		reviewService.deleteReview(review,path);
 		
 		//삭제를 마치면 게시물 list로 돌아간다.
 		return new ModelAndView("front?key=review&methodName=selectAll",true);

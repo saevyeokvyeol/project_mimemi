@@ -1,5 +1,6 @@
 package mimemi.mvc.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import mimemi.mvc.dto.ReviewReplyDTO;
@@ -22,4 +23,9 @@ public interface ReviewReplyDAO {
 	 * 댓글 삭제
 	 * */
 	int deleteReviewReply(int answerNo) throws SQLException;
+	
+	/**
+	 * 후기 게시물 삭제할 때, 댓글 삭제
+	 * */
+	public int deleteReviewReplyByReviewNo(Connection con,int reviewNo) throws SQLException;
 }
