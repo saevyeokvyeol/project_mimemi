@@ -31,18 +31,30 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public void updateReview(ReviewDTO reviewDTO) throws SQLException {
-		// TODO Auto-generated method stub
+		ReviewDTO dbreview = reviewDAO.selectByReviewNo(reviewDTO.getReviewNo());
+			if(dbreview==null) {
+				throw new SQLException("리뷰 번호에 해당하는 리뷰를 찾을 수 없습니다.");
+			}else if(!dbreview.getUserId().equals(reviewDTO.getUserId())||dbreview.getUserId()==reviewDTO.getUserId()) {
+				throw new SQLException("아이디가 일치하지 않습니다.게시물 수정 권한이 없습니다.");
+			}
+		int result = reviewDAO.updateReview(reviewDTO);
+			if(result==0) {
+				throw new SQLException("수정되지 않았습니다.");
+			}
 
 	}
 
 	@Override
 	public void updateFaqImg(int reviewNo, String reviewAttach) throws SQLException {
-		// TODO Auto-generated method stub
+		/*ReviewDTO dbreview = reviewDAO.selectByReviewNo(reviewNo);
+		if(dbreview==null) {
+			throw new SQLException("리뷰 번호에 해당하는 리뷰를 찾을 수 없습니다.");
+		}*/
 
 	}
 
 	@Override
-	public void deleteReview(int reviewNo) throws SQLException {
+	public void deleteReview(int reviewNo, String path) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}

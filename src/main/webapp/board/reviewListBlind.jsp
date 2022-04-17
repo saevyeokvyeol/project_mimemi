@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
+        <title>관리자용 후기게시판 블라인드처리</title>
         <style>
             div{
                 width: 1000px;
@@ -43,7 +41,7 @@ pageEncoding="UTF-8"%>
                 width: 50px;
                 height: auto;
             }
-           
+        
         </style>
         <!--부트스트랩 CSS CDN-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -61,7 +59,7 @@ pageEncoding="UTF-8"%>
             </div>
 
             <div class="review-sort-area">
-                 <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
+                <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
                 <select name="review_sort_select" id="review_sort_select">
                     <option name="review_sort" value="reg" selected='selected'>등록순</option>
                     <option name="review_sort" value="higirate"<c:if test="${requestScope.field == 'higirate'}">selected='selected'</c:if>>별점 높은순</option>
@@ -70,7 +68,7 @@ pageEncoding="UTF-8"%>
                     <option name="review_sort" value="reply"<c:if test="${requestScope.field == 'reply'}">selected='selected'</c:if>>댓글순</option>
                 </select>
             </div>
-           
+        
             <div class="review-list">
                 <table id ="review-list-table">
                     <thead>
@@ -141,10 +139,6 @@ pageEncoding="UTF-8"%>
                         </c:choose>
                     </tbody>
                 </table>
-             </div>
-             <!-- 관리자 아이디면 작성불가 메세지 띄워주기 처리해야함-->
-            <div class="reivew-wirte-bnt">
-                <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp">리뷰쓰기</a></span>
             </div>
             <div class="reivew-search">
                 <select name="" id="">
@@ -182,4 +176,5 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </body>
+
 </html>

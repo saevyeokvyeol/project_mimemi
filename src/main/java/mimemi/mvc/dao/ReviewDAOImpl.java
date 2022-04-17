@@ -46,10 +46,63 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 	@Override
 	public int updateReview(ReviewDTO reviewDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql ="update review set GOODS_ID=?, REVIEW_TITLE=?,REVIEW_CONTENT=?,REVIEW_RATE=? where REVIEW_NO =?";
+		//String sql=proFile.getProperty("");
+		int result = 0;
+		try {
+			con= DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps =con.prepareStatement(sql);
+			ps.setString(1, reviewDTO.getGoodsId());
+			ps.setString(2, reviewDTO.getReviewTitle());
+			ps.setString(3, reviewDTO.getReviewContent());
+			ps.setInt(4, reviewDTO.getReviewRate());
+			ps.setInt(5, reviewDTO.getReviewNo());
+			
+			result = ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("후기 수정에 실패했습니다.");
+			}else {
+				//수정한 파일이 값이 있다면, 파일 수정한다.
+				if(reviewDTO.getReviewAttach()!=null) {
+					int re = updateFaqImgCon(con,reviewDTO.getReviewNo(),reviewDTO.getReviewAttach());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("후기 파일 수정에 실패했습니다.");
+						}
+				}
+				con.commit();
+			}
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
-
+	
+	/*후기 게시글 수정할 때, 이미지만 수정하는 메소드*/
+	public int updateFaqImgCon(Connection con,int reviewNo, String reviewAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql ="update review set REVIEW_ATTACH=? where REVIEW_NO =?";
+		//String sql=proFile.getProperty("");
+		int result =0;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, reviewAttach);
+			ps.setInt(2, reviewNo);
+			
+			result=ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	} 
+	
 	@Override
 	public int updateFaqImg(int reviewNo, String reviewAttach) throws SQLException {
 		// TODO Auto-generated method stub

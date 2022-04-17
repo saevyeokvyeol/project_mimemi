@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
                 margin: auto;
             }
             table {
-                width: 700px;
+                width: 1000px;
                 margin-left: auto;
                 margin-right: auto;
                 border-collapse: collapse;
@@ -24,13 +24,33 @@ pageEncoding="UTF-8"%>
                 background-color: gainsboro;
                 font-weight: bold;
             }
-            div.review-writeForm{
+            div.review-updateForm{
                 text-align: left;
+            }
+            img.starRateImg{
+            	box-sizing: border-box;
+                width:90px;
+                height: auto;
+                padding-bottom: 5px;                
+            }
+            div.review-image-insert-area{
+            	width: 500px;
+            }
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+
+            }
+            #review-image-output{
+                width: 100px;
+                height: auto;
             }
             div.review-submit-button{
                 text-align: center;
             }
-            div.review-write-foot-area{
+            div.review-update-foot-area{
                 text-align: right;
             }
             
@@ -46,7 +66,7 @@ pageEncoding="UTF-8"%>
         <script>
             function checkValid(){
                 var form = window.document.writeReview;
-                var selectCheck=$('#review_select-goods > option:selected').val();
+                var selectCheck=$('#review_select_goods > option:selected').val();
                 var radioCheck =$('input[name=rate]').is(":checked");
                 
 
@@ -92,7 +112,7 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>상품</th>
                             <td>
-                                <select name="review_select-goods" id="review_select-goods">
+                                <select name="review_select_goods" id="review_select-goods">
                                 	<option name="reivew_goods" value="">--상품 이름--</option>
                                 	<option name="reivew_goods" value="JUNG01">정성한상</option>
                                     <option name="reivew_goods" value="VEGAN01">비건 식단</option>
@@ -119,7 +139,35 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>첨부파일</th>
                             <td>
-                                <input type="file" name="review_image" maxlength="60" size="" >
+                                <div class="review-image-insert-area">
+                                	<input type="file" id="review-image-selector" multiple accept=".jpg, .jpeg, .png">
+                                	<p id="file-status"></p>
+                                    <div class="review-image-preview">
+                                        <img id="review-image-output">
+                                    </div>
+                                    <script>
+                                        const status = document.getElementById('file-status')
+                                        //const fileSelector =document.getElementById('review-image-selector')
+                                        const output = document.getElementById('review-image-output')
+                                        
+                                        if(window.FileList && window.File && window.FileReader){
+                                            document.getElementById('review-image-selector').addEventListener('change', event =>{
+                                                output.src='';
+                                                status.textContent='';
+                                                const file = event.target.files[0];
+                                                if(!file.type){
+                                                    status.textContent = "첨부한 파일 타입이 현재 브라우저에서 지원하지 않습니다."
+                                                    return;
+                                                }
+                                                const reader = new FileReader();
+                                                reader.addEventListener('load', event =>{
+                                                    output.src = event.target.result;
+                                                })
+                                                reader.readAsDataURL(file);
+                                            })
+                                        }
+                                    </script>
+                                </div>
                             </td>
                         </tr>
                     </table>
