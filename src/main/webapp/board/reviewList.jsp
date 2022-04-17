@@ -51,6 +51,18 @@ pageEncoding="UTF-8"%>
         <!--부트스트랩 JS CDN-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
         </script>
+        <!-- jQuery -->
+		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+        <script>
+        	$(function(){
+        		$("#review_sort_select").change(function(){
+        			if($(this).val() != "0"){
+        				let url =`${path}/front?key=review&methodName=selectAll&field=` + $(this).val();
+        				location.replace(url);
+        			}
+        		})
+        	})
+        </script>
         
         
         
@@ -65,11 +77,11 @@ pageEncoding="UTF-8"%>
             <div class="review-sort-area">
                  <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
                 <select name="review_sort_select" id="review_sort_select">
+                	<option name="review_sort" value="0">--정렬방식--</option>
                     <option name="review_sort" value="reg" selected='selected'>등록순</option>
-                    <option name="review_sort" value="higirate"<c:if test="${requestScope.field == 'higirate'}">selected='selected'</c:if>>별점 높은순</option>
-                    <option name="review_sort" value="rowrate"<c:if test="${requestScope.field == 'rowrate'}">selected='selected'</c:if>>별점 낮은순</option>
-                    <option name="review_sort" value="view"<c:if test="${requestScope.field == 'view'}">selected='selected'</c:if>>조회순</option>
-                    <option name="review_sort" value="reply"<c:if test="${requestScope.field == 'reply'}">selected='selected'</c:if>>댓글순</option>
+                    <option name="review_sort" value="higirate">별점 높은순</option>
+                    <option name="review_sort" value="rowrate">별점 낮은순</option>
+                    <option name="review_sort" value="view">조회순</option>
                 </select>
             </div>
            

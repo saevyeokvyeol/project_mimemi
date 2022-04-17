@@ -150,12 +150,26 @@ public class ReviewDAOImpl implements ReviewDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql="select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
+		String sql= null;
 		//String sql=proFile.getProperty("");
 		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
 		SimpleDateFormat reviewFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		
+		if (field != null) {
+			if (field.equals("reg")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
+				//sql = proFile.getProperty("review.selectAllReg");
+			} else if (field.equals("higirate")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE desc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllHigirate");
+			} else if (field.equals("rowrate")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE asc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllRowrate");
+			} else if (field.equals("view")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_VIEWS desc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllView");
+			} 
+		}
 		try {
 			int totalCount =this.getTotalCount(field);
 			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
