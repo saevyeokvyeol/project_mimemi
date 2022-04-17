@@ -88,7 +88,7 @@ public class NoticeController implements Controller {
 	*/
 	
 	/**
-	 *  공지사항 전체보기
+	 *  공지사항 관리자 전체보기
 	 **/
 	
 	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -112,16 +112,54 @@ public class NoticeController implements Controller {
 	
 		
 	/**
+	 *  공지사항 고객 전체보기
+	 **/
+	
+	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<NoticeDTO> noticeList = noticeService.selectAllNotice(Integer.parseInt(pageNum), field);
+		
+		request.setAttribute("NoticeList", noticeList);
+		request.setAttribute("pageNum", pageNum); 
+		ModelAndView mv = new ModelAndView("board/notice.jsp");
+		
+		return mv;
+	}	
+	
+	
+	
+	
+	
+	
+	/**
 	 *  상세보기 
 	 **/
 	
 	/**
 	 * 수정폼 
 	 **/
+	public ModelAndView updateFrom(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String noticeNo = request.getParameter("noticeNo");
+		NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
+		request.setAttribute("notice", notice);
+		return new ModelAndView("");
+	}
+	
 	
 	/**
 	 * 수정하기
 	 **/
+
+	
+	
 	
 	/**
 	 * 삭제하기

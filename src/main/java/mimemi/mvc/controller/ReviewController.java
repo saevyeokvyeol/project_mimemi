@@ -59,7 +59,7 @@ public class ReviewController implements Controller {
 		return new ModelAndView("/board/reviewRead.jsp");
 	}
 	public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String reviewNo= request.getParameter("reviewNo");
+		String reviewNo= request.getParameter("revireewNo");
 		ReviewDTO review = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
 		request.setAttribute("review", review);
 		return new ModelAndView("board/reviewUpdate.jsp");
