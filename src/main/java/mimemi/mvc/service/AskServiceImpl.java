@@ -19,6 +19,8 @@ public class AskServiceImpl implements AskService {
 		if(result==0)throw new SQLException("등록되지 않았습니다");
 
 	}
+	
+
 
 	@Override
 	public void updateAsk(AskDTO askDTO) throws SQLException {
@@ -41,9 +43,9 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public List<AskDTO> selectAllAsk() throws SQLException {
+	public List<AskDTO> selectAllAsk(int pageNum, String field) throws SQLException {
 		
-		List<AskDTO> list = askDao.selectAllAsk();
+		List<AskDTO> list = askDao.selectAllAsk(pageNum, field);
 		
 		return list;
 	}

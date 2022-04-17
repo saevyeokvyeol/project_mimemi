@@ -9,6 +9,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.AnswerDTO;
 import mimemi.mvc.dto.AskDTO;
+import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.util.DbUtil;
 import oracle.jdbc.driver.DBConversion;
 
@@ -47,7 +48,7 @@ public class AskDAOImpl implements AskDAO {
 	}
 
 	@Override
-	public List<AskDTO> selectAllAsk() throws SQLException {
+	public List<AskDTO> selectAllAsk(int pageNum, String field) throws SQLException {
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -56,23 +57,23 @@ public class AskDAOImpl implements AskDAO {
 		
 		String sql ="select * from ask";
 		
+		String orderBy = "order_id";
+//		if(field != null) {
+//			if (field.equals("user_id")) {
+//				sql = "select * from"
+//			}
+//		}
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			rs=ps.executeQuery();
-			
+			rs = ps.executeQuery();
 			while(rs.next()) {
-				AskDTO ad = new AskDTO(rs.getInt(1),rs.getString(2),rs.getString(3), 
-						rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
-				
-				askList.add(ad);
-				
+				askList.add(new AskDTO(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4),
+						rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)));
 			}
-		
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}
-		
 		
 		return askList;
 	}

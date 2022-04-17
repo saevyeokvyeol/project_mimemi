@@ -25,13 +25,24 @@ public class AskController implements Controller {
 	/**
 	 * 1:1문의 전체검색
 	 * */
-	public void selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		List<AskDTO> askList = askService.selectAllAsk();
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<AskDTO> askList = askService.selectAllAsk(Integer.parseInt(pageNum), field);
 		
 		request.setAttribute("askList", askList);
+		request.setAttribute("pageNum", pageNum);
 		
-		request.getRequestDispatcher("ask.jsp").forward(request, response);
+		
+		return new ModelAndView("board/ask2.jsp");
 		
 	}
 	
@@ -44,15 +55,22 @@ public class AskController implements Controller {
 		int maxSize =1024*1024*100;//100M
 	    String encoding="UTF-8";
 		
+	    String errMsg="등록되지 않았습니다.";
+	    
 		MultipartRequest m = 
 			new MultipartRequest(request, saveDir,maxSize,encoding , new DefaultFileRenamePolicy());
-
-		String askTitle = request.getParameter("askTitle");
-		String askContent = request.getParameter("askContent");
-		String askAttach = request.getParameter("askAttach");
 		
-		AskDTO askDto = new AskDTO(askTitle, askContent, askAttach);
+		String userId =request.getParameter("userId");
+		String askTitle=request.getParameter("askTitle");
+		String askContent=request.getParameter("askContent");
+		String askAttach=request.getParameter("askAttach");
+		String askCategory=request.getParameter("askCategory");
+		String askComplete=request.getParameter("askComplete");
 		
+		AskDTO askDto = new AskDTO(userId, askTitle, askContent,askAttach,askCategory, askComplete);
+		
+		
+		//파일첨부가 되었다면..
 		if(m.getFilesystemName("askAttach") != null) {
 			//파일이름
 			askDto.setAskAttach(m.getFilesystemName("askAttach"));
@@ -64,10 +82,16 @@ public class AskController implements Controller {
 			//askDto.setFsize( (int)m.getFile("askAttach").length() );
 			
 		}
+		if(askTitle==null|| askTitle.equals("") || askContent==null || askContent.equals("") || askAttach==null || askAttach.equals("")) {
+			errMsg="입력값이 충분하지 않습니다.\\n다시 확인해주세요.";
+		}
+		
+		
+		
 		
 		askService.insertAsk(askDto);
 		
-		return new ModelAndView("front",true);
+		return new ModelAndView("board/ask2.jsp",true);
 	}
 	/**
 	 * 1:1 문의 수정

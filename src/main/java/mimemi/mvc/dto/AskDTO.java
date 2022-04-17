@@ -12,10 +12,13 @@ public class AskDTO {
 	
 	public AskDTO() {}
 
-	public AskDTO(String askTitle, String askContent, String askAttach) {
+	public AskDTO(String userId, String askTitle,String askContent,String askAttach,String askCategory,String askComplete) {
+		this.userId=userId;
 		this.askTitle=askTitle;
 		this.askContent=askContent;
 		this.askAttach=askAttach;
+		this.askCategory=askCategory;
+		this.askComplete=askComplete;
 	}
 	
 	public AskDTO(int askNo, String userId, String askTitle, String askContent, String askAttach, String askRegdate,

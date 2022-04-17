@@ -57,7 +57,7 @@
         <td >
             <b><span >답변완료</span></b>
         </td>
-     
+    	
     </tr>
    
     <tr>
