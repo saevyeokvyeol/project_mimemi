@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<jsp:include page="../common/header.jsp"/>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>주문/결제 :: 미미미</title>
+		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 100%; caption-side: top;}

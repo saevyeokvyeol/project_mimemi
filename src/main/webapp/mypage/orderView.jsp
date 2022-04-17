@@ -4,6 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<jsp:include page="../common/header.jsp"/>
 		<title>Insert title here</title>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
