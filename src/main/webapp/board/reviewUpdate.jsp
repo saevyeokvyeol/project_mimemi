@@ -118,16 +118,32 @@ pageEncoding="UTF-8"%>
         
         <script> 
         //폼 전송 전 입력확인메소드
-        $("form").on('submit',function(){
-        	var reviewTitle = $("#review_title").val();
-        	alert(reviewTitle)
-        	if(reviewTitle==""){
-        		alert("후기 제목을 입력해 주십시오.")
-        		$("#review_title").focus()
-        		return;
-        	}
-        })
-        
+        function checkValid(){
+                var title = document.updateReview.review_title;
+                var contents = document.updateReview.review_contents;
+                
+                if(title.value==""){
+                	alert("후기 제목을 입력해 주십시오.");
+                	title.focus();
+                	return false;
+                }
+                if(contents.value==""){
+                	alert("후기 내용을 입력해 주십시오.");
+                	contents.focus();
+                	return false;
+                }
+                if($("select[name=review_select_goods]").val()==""){
+                	alert("후기를 쓸 상품을 선택해주십시오.");
+                	$("#review_select_goods").focus();
+                	return false;
+                }
+                if($("input[name=rate]:radio:checked").length<1){
+                	alert("상품의 별점을 선택해주십시오.")
+                    return false;
+                }
+                
+                return true;
+            }
         </script>
     </head>
     <!-- 첨부파일을 삭제하는 걸 front단에서 처리하는걸 아직 구현안했다. -->
@@ -139,7 +155,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="review-updateForm">
                 <form name="updateReview" method="post" action="${path}/front?key=review&methodName=update"
-                			 enctype="multipart/form-data">
+                			 onSubmit='return checkValid()' enctype="multipart/form-data">
 						<input type="hidden" name="reviewNo" value="${review.reviewNo}">
                     <!--후기제목 작성 영역-->
                     <div class="review-title-insert-area">
@@ -228,8 +244,8 @@ pageEncoding="UTF-8"%>
                                     const status = document.getElementById('file-status')
                                     //const fileSelector =document.getElementById('review-image-selector')
                                     const output = document.getElementById('review-image-output')
-                                    console.log(status)
-                                    console.log(output)
+                                    //console.log(status)
+                                    //console.log(output)
                                         if(window.FileList && window.File && window.FileReader){
                                                 
                                             document.getElementById('review-image-selector').addEventListener('change', event =>{
@@ -240,8 +256,8 @@ pageEncoding="UTF-8"%>
                                                 status.textContent = "첨부가능한 파일 형식이 아닙니다."
                                                 return;
                                              }
-                                            var name = document.getElementById('review-fileName');
-                                            name.textContent = file.name;
+                                            var name = document.getElementById('review-fileName');//
+                                            name.textContent = file.name;//
                                             const reader = new FileReader();
                                             reader.addEventListener('load', event =>{
                                                 output.src = event.target.result;
