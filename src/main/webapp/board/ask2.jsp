@@ -78,9 +78,11 @@
 								<td>${ask.askNo}</td>
 								
 								<td>
-								<a href="${path}/board/askdetail.jsp?key=ask&methodName=selectByAskNo&modelNum=${AskDTO.userId}">
+								<span>
+								<a href="${path}/front?key=ask&methodName=selectByUserId&userId=${AskDTO.userId}">
 								${ask.userId}
 								</a>
+								</span>
 								</td>
 								<td>${ask.askTitle}</td>
 								<td>${ask.askContent}</td>

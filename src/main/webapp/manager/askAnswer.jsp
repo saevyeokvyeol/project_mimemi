@@ -10,16 +10,9 @@
 	span{font-size:9pt;}
 
 </style>
-<script type="text/javascript">
-
-function sendUpdate(){
-	document.requestForm.methodName.value ="updateForm";
-	document.requestForm.submit();
-}
-
-
-</script>
 </head>
+<body>
+<h1> 관리자 페이지(1:1문의 답변)</h1>
 <body>
 <h1>상세보기 페이지입니다.</h1>
 
@@ -74,7 +67,7 @@ function sendUpdate(){
     
    
    
-    <form name="requestForm" method=post action="${path}/manager/askAnswer2.jsp">
+    <form name="requestForm" method=post action="${path}/board/askupdate.jsp">
  
     
     <tr>
@@ -84,9 +77,12 @@ function sendUpdate(){
 				<input type=hidden name="key" value="ask">
 				<input type=hidden name="methodName" >
 				<input type=hidden name="pageNo" value="${pageNo}" >
-				<input type=button value="답글달기" onClick="sendUpdate()">
+				<input type=button value="수정하기" onClick="sendUpdate()">
 				<input type=button value="삭제하기" onClick="sendDelete()">
 				
+				<span class="bRight">
+               	<a href="${path}/front?key=ask&methodName=updateAsk&userId=${askDto.userId}" >수정</a>
+                </span>
     </form>
 			
 		</td>

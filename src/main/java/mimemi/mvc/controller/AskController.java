@@ -50,6 +50,9 @@ public class AskController implements Controller {
 	 * */
 	
 	public ModelAndView selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8"); 
+		
+		
 		String userId = request.getParameter("userId");
 		String pageNo = request.getParameter("pageNo");
 		
@@ -58,7 +61,7 @@ public class AskController implements Controller {
 		request.setAttribute("pageNo", pageNo);
 		
 		
-		return new ModelAndView("board/askdetail.jsp");
+		return new ModelAndView("/board/askdetail.jsp");
 	}
 	
 	/**
@@ -66,29 +69,26 @@ public class AskController implements Controller {
 	 * */
 	public ModelAndView insertAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-/*		String saveDir= request.getServletContext().getRealPath("/save");
+		String saveDir= request.getServletContext().getRealPath("/save");
 		int maxSize =1024*1024*100;//100M
 	    String encoding="UTF-8";
-		
-	    String errMsg="등록되지 않았습니다.";
+		System.out.println(saveDir);
 	    
 		MultipartRequest m = 
 			new MultipartRequest(request, saveDir,maxSize,encoding , new DefaultFileRenamePolicy());
 		
-		String userId =request.getParameter("userId");
-		String askTitle=request.getParameter("askTitle");
-		String askContent=request.getParameter("askContent");
-		String askAttach=request.getParameter("askAttach");
-		String askCategory=request.getParameter("askCategory");
-		String askComplete=request.getParameter("askComplete");
+		String userId ="happy01";
+		String askTitle=m.getParameter("ask_title");
+		String askContent=m.getParameter("ask_content");
+		String askCategory=m.getParameter("ask_category");
 		
-		AskDTO askDto = new AskDTO(userId, askTitle, askContent,askAttach,askCategory, askComplete);
-		
+		System.out.println(askTitle);
+		AskDTO askDto = new AskDTO(userId, askTitle, askContent,askCategory);
 		
 		//파일첨부가 되었다면..
-		if(m.getFilesystemName("askAttach") != null) {
+		if(m.getFilesystemName("notice_attach") != null) {
 			//파일이름
-			askDto.setAskAttach(m.getFilesystemName("askAttach"));
+			askDto.setAskAttach(m.getFilesystemName("notice_attach"));
 			
 			
 			//파일크기 저장
@@ -97,16 +97,10 @@ public class AskController implements Controller {
 			//askDto.setFsize( (int)m.getFile("askAttach").length() );
 			
 		}
-		if(askTitle==null|| askTitle.equals("") || askContent==null || askContent.equals("") || askAttach==null || askAttach.equals("")) {
-			errMsg="입력값이 충분하지 않습니다.\\n다시 확인해주세요.";
-		}
-		
-		
-		
-		
 		askService.insertAsk(askDto);
-	*/	
-		return new ModelAndView("board/ask2.jsp");
+		
+		
+		return new ModelAndView("front?key=ask&methodName=selectAll", true);
 	}
 	/**
 	 * 1:1 문의 수정
@@ -118,9 +112,9 @@ public class AskController implements Controller {
 		
 		
 		//인수값 설정
-		AskDTO askDto=new AskDTO(userId, askTitle, askContent);
+		//AskDTO askDto=new AskDTO(userId, askTitle, askContent);
 		
-		askService.updateAsk(askDto);
+		//askService.updateAsk(askDto);
 		
 		//상세보기 페이지로 이동
 		

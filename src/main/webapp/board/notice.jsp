@@ -94,6 +94,7 @@
 	</div>
 	</table>
 	</body>
+	
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>

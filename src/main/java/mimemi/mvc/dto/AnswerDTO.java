@@ -1,13 +1,18 @@
 package mimemi.mvc.dto;
 
 public class AnswerDTO {
-	private int answerNo;
-	private int askNo;
-	private String answerContent;
-	private String answerRegdate;
+	private int answerNo;//댓글번호(시퀀스)
+	private int askNo;//글번호(시퀀스)
+	private String answerContent;//댓글내용
+	private String answerRegdate;//작성날짜
 	
 	public AnswerDTO() {}
 
+	public AnswerDTO(String answerContent) {
+		super();
+		this.answerContent=answerContent;
+	}
+	
 	public AnswerDTO(int answerNo, int askNo, String answerContent, String answerRegdate) {
 		super();
 		this.answerNo = answerNo;

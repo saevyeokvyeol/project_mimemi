@@ -53,7 +53,7 @@ function checkValid() {
         </td>
         <td width="450" height="20"><b><span style="font-size:9pt;">
 		<input type=text name="askTitle" size="30"
-		 value="${ask.askTitle}"></span></b></td>
+		 value="${askDto.askTitle}"></span></b></td>
     </tr>
     
     <tr>
@@ -72,6 +72,6 @@ function checkValid() {
 
 </form>
 <hr>
-<div align=right><span >&lt;<a href="${path}/board/ask.jsp">리스트로 돌아가기</a>&gt;</span></div>
+<div align=right><span >&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>
 </html>

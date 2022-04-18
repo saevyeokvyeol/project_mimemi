@@ -8,11 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-<<<<<<< HEAD
 
-=======
-import kosta.mvc.dto.Electronics;
->>>>>>> main
 import mimemi.mvc.dto.AnswerDTO;
 import mimemi.mvc.dto.AskDTO;
 import mimemi.mvc.paging.AskListPageCnt;
@@ -39,8 +35,25 @@ public class AskDAOImpl implements AskDAO {
 		Connection con=null;
 		PreparedStatement ps=null;
 		int result=0;
-		String sql = "INSERT INTO ASK(ASK_NO,USER_ID,ASK_TITLE,ASK_CONTENT,ASK_ATTACH,ASK_REGDATE,ASK_CATEGORY,ASK_COMPLETE)VALUES(ASK_NO_SEQ.NEXTVAL,?,?,?,?,SYSDATE,?,?";
+		String sql = proFile.getProperty("ask.insert");	
 		
+		try {
+			con = DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+		
+		System.out.println(askDTO.getAskTitle());
+			ps.setString(1, askDTO.getUserId());
+			ps.setString(2, askDTO.getAskTitle());
+			ps.setString(3, askDTO.getAskContent());
+			
+			ps.setString(4, askDTO.getAskAttach());
+			ps.setString(5, askDTO.getAskCategory());
+			
+			
+			result= ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
 		
 		
 		
@@ -184,24 +197,27 @@ public class AskDAOImpl implements AskDAO {
 		ResultSet rs=null;
 		AskDTO askDto=null;
 		String sql = proFile.getProperty("ask.detail");
-<<<<<<< HEAD
+
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
-			ps.setString(1, userId);
+			ps.setString(1, "happy01");
 			
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				askDto = new AskDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4));
+				askDto = new AskDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4));
 			}
 			
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}
-=======
->>>>>>> main
+
 		
-		return null;
+		return askDto;
 	}
 
 	

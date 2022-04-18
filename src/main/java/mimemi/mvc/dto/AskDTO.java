@@ -17,12 +17,18 @@ public class AskDTO {
 	List<AskDTO> askDtoList;
 	
 	public AskDTO() {}
-
+	
 	public AskDTO(int askNo, String userId, String askTitle,String askContent) {
 		this.askNo=askNo;
 		this.userId=userId;
 		this.askTitle=askTitle;
 		this.askContent=askContent;
+	}
+	public AskDTO(String userId, String askTitle,String askContent, String askCategory) {
+		this.userId=userId;
+		this.askTitle=askTitle;
+		this.askContent=askContent;
+		this.askCategory=askCategory;
 	}
 	
 	public AskDTO(int askNo, String userId, String askTitle, String askContent, String askAttach, String askRegdate,
