@@ -98,6 +98,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 			ps.setInt(2, reviewNo);
 			
 			result=ps.executeUpdate();
+			System.out.println("이미지수정 ...dao");
 		}finally {
 			DbUtil.dbClose(ps, null);
 		}

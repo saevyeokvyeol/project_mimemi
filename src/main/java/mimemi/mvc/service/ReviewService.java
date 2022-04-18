@@ -11,13 +11,13 @@ public interface ReviewService {
 	 * @param ReviewDTO(String goodsId, String userId, String reviewTitle, String reviewAttach, String reviewContent,
 			int reviewRate)
 	 * */
-	void insertReview(ReviewDTO reviewDTO) throws SQLException;
+	void insertReview(ReviewDTO reviewDTO, String path) throws SQLException;
 	
 	/**
 	 * 후기 수정 
 	 * @param ReviewDTO(int reviewNo, String reviewTitle, String reviewContent, int reviewRate)
 	 * */
-	void updateReview(ReviewDTO reviewDTO) throws SQLException;
+	void updateReview(ReviewDTO reviewDTO, String path) throws SQLException;
 	
 	/**
 	 * 후기 이미지 수정

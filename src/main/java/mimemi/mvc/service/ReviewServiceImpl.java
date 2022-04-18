@@ -12,35 +12,48 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewDAO reviewDAO = new ReviewDAOImpl();
 
 	@Override
-	public void insertReview(ReviewDTO reviewDTO) throws SQLException {
+	public void insertReview(ReviewDTO reviewDTO, String path) throws SQLException {
 		int result= reviewDAO.insertReview(reviewDTO);
+		
+		//등록에 오류가 난다면
 		if(result==0) {
-			
-			//첨부파일 삭제하기
-			File savedfile = new File("/img/save/"+reviewDTO.getReviewAttach());
-			if(savedfile.exists()) {
-				savedfile.delete();
-				
+			//첨부파일이 있다면 save폴더에 저장한 첨부파일 삭제하기
+			if(reviewDTO.getReviewAttach()!=null) {
+				new java.io.File(path+"/"+reviewDTO.getReviewAttach()).delete(); //경로확인하기
 			}
-			
 			throw new SQLException("후기가 등록되지 않았습니다.");
-			
 		}
 
 	}
 
 	@Override
-	public void updateReview(ReviewDTO reviewDTO) throws SQLException {
+	public void updateReview(ReviewDTO reviewDTO, String path) throws SQLException {
 		ReviewDTO dbreview = reviewDAO.selectByReviewNo(reviewDTO.getReviewNo());
 			if(dbreview==null) {
 				throw new SQLException("리뷰 번호에 해당하는 리뷰를 찾을 수 없습니다.");
 			}else if(!dbreview.getUserId().equals(reviewDTO.getUserId())||dbreview.getUserId()==reviewDTO.getUserId()) {
 				throw new SQLException("아이디가 일치하지 않습니다.게시물 수정 권한이 없습니다.");
 			}
+		//db저장한 기존 리뷰의 첨부파일명을 미리 구한다.
+		String dbAttach =dbreview.getReviewAttach();
+		
+		//dao로 게시물 수정한다.
 		int result = reviewDAO.updateReview(reviewDTO);
+			
 			if(result==0) {
+				//첨부파일이 있다면 save폴더에 예전에 첨부한 첨부파일 삭제하기
+				if(dbAttach!=null) {
+					new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
+				}
 				throw new SQLException("수정되지 않았습니다.");
+			}else {
+				//첨부파일이 있다면 save폴더에 예전에 첨부한 첨부파일 삭제하기
+				if(dbAttach!=null) {
+					new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
+				}
+				System.out.println("삭제되야할 기존 파일이름:"+dbAttach);
 			}
+			
 
 	}
 

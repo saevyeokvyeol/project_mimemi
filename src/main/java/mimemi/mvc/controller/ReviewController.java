@@ -106,7 +106,7 @@ public class ReviewController implements Controller {
 		String reviewRate = m.getParameter("rate");
 		String reviewContent =m.getParameter("review_contents");
 		
-		//HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();s
 		//String reviewUser = session.getAttribute("loginUser");
 		String reviewUser = "happy01";
 		
@@ -115,17 +115,22 @@ public class ReviewController implements Controller {
 		ReviewDTO review = new ReviewDTO(Integer.parseInt(reviewNo),reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일첨부를 했다면(파일을 수정했다면)
-			if(m.getFilesystemName("review-image-selector")!=null) {
-				String reviewAttach =m.getFilesystemName("review-image-selector");
+			if(m.getFilesystemName("review_image")!=null) {
+				//기존에 등록한 첨부파일을 삭제한다.
+				
+				
+				String reviewAttach =m.getFilesystemName("review_image");
 				//파일 이름을 reviewDTO에 저장한다.
 				review.setReviewAttach(reviewAttach);
 				//데이터베이스에 이미지와 함께 수정한다.
 				//connection을 유지하기 위해 reviewService.updateFaqImg 작성안했다. 
 				//나중에 필요하면 만들기
 				//reviewService.updateFaqImg(Integer.parseInt(reviewNo), reviewAttach);
+				System.out.println("수정하려는 첨부파일이름: "+reviewAttach);
 			}
 		//나머지 입력값을 수정한다.
-		reviewService.updateReview(review);
+		//saveDir: 오류를 대비해서 첨부파일을 삭제할 save 경로도 보낸다.
+		reviewService.updateReview(review,saveDir);
 		
 		//수정완료하면 조회수 증가 없이 상세보기 페이지로 이동한다.
 		ReviewDTO dbreview = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
@@ -170,7 +175,8 @@ public class ReviewController implements Controller {
 				review.setReviewAttach(m.getFilesystemName("review_image"));
 				
 			}
-		reviewService.insertReview(review);
+		//saveDir: 오류를 대비해서 첨부파일을 삭제할 save 경로도 보낸다.
+		reviewService.insertReview(review,saveDir);
 		return new ModelAndView("front?key=review&methodName=selectAll",true);
 	}
 	
