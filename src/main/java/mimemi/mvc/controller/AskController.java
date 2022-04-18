@@ -45,13 +45,26 @@ public class AskController implements Controller {
 		return new ModelAndView("board/ask2.jsp");
 		
 	}
+	/**
+	 * 1:1문의 상세보기
+	 * */
+	
+	public ModelAndView selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userId = request.getParameter("userId");
+		String pageNo = request.getParameter("pageNo");
+		
+		AskDTO askDto = askService.selectByUserId(userId);
+		
+		
+		return new ModelAndView("board/askdetail.jsp");
+	}
 	
 	/**
 	 * 1:1 문의 등록
 	 * */
 	public ModelAndView insertAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-		String saveDir= request.getServletContext().getRealPath("/save");
+/*		String saveDir= request.getServletContext().getRealPath("/save");
 		int maxSize =1024*1024*100;//100M
 	    String encoding="UTF-8";
 		
@@ -90,19 +103,20 @@ public class AskController implements Controller {
 		
 		
 		askService.insertAsk(askDto);
-		
+	*/	
 		return new ModelAndView("board/ask2.jsp");
 	}
 	/**
 	 * 1:1 문의 수정
 	 * */
 	public ModelAndView updateAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userId = request.getParameter("userId");
 		String askTitle = request.getParameter("askTitle");
 		String askContent = request.getParameter("askContent");
-		//비밀번호
+		
 		
 		//인수값 설정
-		AskDTO askDto=new AskDTO();
+		AskDTO askDto=new AskDTO(userId, askTitle, askContent);
 		
 		askService.updateAsk(askDto);
 		
@@ -124,19 +138,15 @@ public class AskController implements Controller {
 	/**
 	 * 1:1문의 삭제
 	 * */
-	public ModelAndView deleAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void deleAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String askNo=request.getParameter(null);
-		String pwd = request.getParameter(null);//비밀번호
 		
 		//askService.deleteAsk(0);
 		
 		String path=request.getServletContext().getRealPath("/save");
 		
-		askService.deleteAsk(Integer.parseInt(askNo), pwd, path);
+		askService.deleteAsk(Integer.parseInt(askNo), path);
 		
-		
-		
-		return new ModelAndView("board/ask.jsp",true);
 	}
 	
 	/**

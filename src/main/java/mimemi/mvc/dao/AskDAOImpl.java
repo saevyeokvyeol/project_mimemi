@@ -56,8 +56,23 @@ public class AskDAOImpl implements AskDAO {
 
 	@Override
 	public int deleteAsk(int askNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps=null;
+		
+		String sql = proFile.getProperty("ask.delete");
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, askNo);
+			result = ps.executeUpdate();
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		
+		return result;
 	}
 
 	@Override
@@ -155,5 +170,15 @@ public class AskDAOImpl implements AskDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	//1:1상세보기(userId)
+	@Override
+	public AskDTO selectByuserId(String userId) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 
 }

@@ -63,13 +63,7 @@ function checkValid() {
         <td width="450" height="20" ><b><span style="font-size:9pt;">
 		<textarea name="askContent" cols="50" rows="10">${ask.askContent}</textarea></span></b></td>
     </tr>
-    <tr>
-        <td width="150" height="20" >
-            <b><span >비밀번호</span></b>
-        </td>
-        <td width="450" height="20"><b><span style="font-size:9pt;"><input type=password name="password" size="12"> 
-            (비밀번호가 맞아야 수정이 가능합니다.)</span></b></td>
-    </tr>
+    
     <tr>
         <td width="450" height="20" colspan="2" align="center"><b><span>
 		<input type="submit" value="수정하기"> <input type="reset" value="다시쓰기"></span></b></td>

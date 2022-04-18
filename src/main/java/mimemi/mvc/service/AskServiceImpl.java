@@ -35,11 +35,12 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public void deleteAsk(int askNo, String password, String path) throws SQLException {
-		//비밀번호 일치 여부 체크
-			askDao.selectAnsByAskNo(askNo);
+	public void deleteAsk(int askNo, String path) throws SQLException {
 		
-		
+			int result = askDao.deleteAsk(askNo);
+			if(result == 0) throw new SQLException("삭제되지 않았습니다");
+			
+			
 	}
 
 	@Override
@@ -49,6 +50,8 @@ public class AskServiceImpl implements AskService {
 		
 		return list;
 	}
+	
+	
 
 	@Override
 	public List<AskDTO> selectAllByPaging(int pageNo) throws SQLException {
@@ -66,6 +69,21 @@ public class AskServiceImpl implements AskService {
 	public void updateState(int askNo, String state) throws SQLException {
 		// TODO Auto-generated method stub
 
+	}
+
+
+	/**
+	 * 1:1 상세보기
+	 * */
+	@Override
+	public AskDTO selectByUserId(String userId) throws SQLException {
+		
+		AskDTO askDto = askDao.selectByuserId(userId);
+		
+		if(askDto==null)throw new SQLException("상세보기에 오류가 발생했습니다");
+		
+		
+		return askDto;
 	}
 
 }
