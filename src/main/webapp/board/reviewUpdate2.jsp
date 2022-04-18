@@ -62,31 +62,30 @@ pageEncoding="UTF-8"%>
         <!--부트스트랩 JS CDN-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
-        <!--JQgrid CDN-->
-        <script src="../util/js/jquery-3.6.0.min.js"></script>
+        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         <script>
             function checkValid(){
-                var form = window.document.writeReview;
-                var selectCheck=$('#review_select_goods > option:selected').val();
-                var radioCheck =$('input[name=rate]').is(":checked");
+                var title = document.writeReview.review_title;
+                var contents = document.writeReview.review_contents;
                 
-
-                if(form.review_title.value==""){
-                    alert("후기 제목을 입력해 주십시오.")
-                    form.review_title.focus();
-                    return false;
-                }
-                if(!selectCheck){
-                	alert("후기를 쓸 상품을 선택해주십시오.")
+                if(title.value==""){
+                	alert("후기 제목을 입력해 주십시오.");
+                	title.focus();
                 	return false;
                 }
-                if(!radioCheck){
-                    alert("상품의 별점을 선택해주십시오.")
-                    return false;
+                if(contents.value==""){
+                	alert("후기 내용을 입력해 주십시오.");
+                	contents.focus();
+                	return false;
                 }
-                if(form.review_contents.value==""){
-                    alert("후기 내용을 입력해 주십시오.")
-                    form.review_contents.focus();
+                if($("select[name=review_select_goods]").val()==""){
+                	alert("후기를 쓸 상품을 선택해주십시오.");
+                	$("#review_select_goods").focus();
+                	return false;
+                }
+                if($("input[name=rate]:radio:checked").length<1){
+                	alert("상품의 별점을 선택해주십시오.")
                     return false;
                 }
                 
@@ -103,6 +102,7 @@ pageEncoding="UTF-8"%>
             <div class="review-writeForm">
                 <form name="writeReview" method="post" action="${path}/front?key=review&methodName=update"
                 onSubmit='return checkValid()' enctype="multipart/form-data">
+                <input type="hidden" name="reviewNo" value="${review.reviewNo}">
                     <table>
                         <tr>
                             <th>제목</th>

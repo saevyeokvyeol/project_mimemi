@@ -45,7 +45,7 @@ public class ReviewController implements Controller {
 		request.setAttribute("list", reviewList);
 		request.setAttribute("pageNum", curPageNo);
 		
-		System.out.println("서비스에서 돌아온 후.."+curPageNo);
+		//System.out.println("서비스에서 돌아온 후.."+curPageNo);
 		
 		return new ModelAndView("/board/reviewList.jsp");
 		
@@ -84,7 +84,7 @@ public class ReviewController implements Controller {
 			throw new Exception("아이디가 일치하지 않습니다.게시물 수정 권한이 없습니다.");
 		}*/
 		request.setAttribute("review", review);
-		System.out.println(review.getReviewContent());
+		//System.out.println(review.getReviewContent());
 		
 		return new ModelAndView("board/reviewUpdate2.jsp");
 	}
@@ -130,7 +130,7 @@ public class ReviewController implements Controller {
 		//수정완료하면 조회수 증가 없이 상세보기 페이지로 이동한다.
 		ReviewDTO dbreview = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
 		request.setAttribute("reviewDetail", dbreview);
-		return new ModelAndView("/board/reviewRead.jsp");
+		return new ModelAndView("front?key=review&methodName=selectAll",true);
 		
 		//테스트용 임시 리턴
 		//return new ModelAndView("front?key=review&methodName=selectAll",true);
@@ -145,7 +145,7 @@ public class ReviewController implements Controller {
 		String saveDir = request.getServletContext().getRealPath("/img/save");
 		int maxSize = 1024*1024*100;
 		String encoding= "UTF-8";
-		System.out.println(saveDir);
+		//System.out.println(saveDir);
 		
 		MultipartRequest m = new MultipartRequest(request, saveDir,maxSize, encoding, new DefaultFileRenamePolicy());
 		
@@ -159,7 +159,7 @@ public class ReviewController implements Controller {
 		//String reviewUser = session.getAttribute("loginUser");
 		String reviewUser = "happy01";
 		
-		System.out.println(reviewGoods);
+		System.out.println("후기등록하려는 상품아이디: "+reviewGoods);
 		
 		ReviewDTO review = new ReviewDTO(reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
