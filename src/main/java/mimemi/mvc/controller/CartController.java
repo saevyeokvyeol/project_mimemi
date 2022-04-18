@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.service.CartService;
@@ -20,6 +21,37 @@ public class CartController implements Controller {
 	public ModelAndView hendlerRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+
+	/**
+	 * 구매폼에 장바구니에 담긴 상품 뿌려주기
+	 * */
+	public ModelAndView viewOrderForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String mode = request.getParameter("mode");
+		List<CartDTO> cartList = null;
+
+		if(mode.equals("C")) { // 장바구니 전체 구매
+			String userId = "happy01";
+			cartList = cartService.selectCartByUserId(userId);
+		} else if(mode.equals("S")) { // 장바구니 부분 구매
+			String[] cartIds = request.getParameterValues("cartSelect");
+			cartList = new ArrayList<CartDTO>();
+			
+			for(String id : cartIds) {
+				CartDTO cart = cartService.selectCartByCartId(Integer.parseInt(id));
+				cartList.add(cart);
+			}
+		} else if(mode.equals("D")) { // 상품란에서 바로 구매
+			
+		}
+		
+		session.removeAttribute("cartList");
+		session.setAttribute("cartList", cartList);
+		
+		ModelAndView mv = new ModelAndView("order/order.jsp?mode=" + mode, true);
+		return mv;
 	}
 
 	/**

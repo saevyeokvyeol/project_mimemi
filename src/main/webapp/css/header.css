@@ -24,5 +24,5 @@
 .main-header-menubar ul {list-style: none; text-align: center; padding: 0; margin: 0;}
 .main-header-menubar li {display: inline-block; text-align: center;}
 .main-header-menubar a {text-decoration: none; color: #666666; font-weight: bold; font-size: 16px; margin: 0 40px;}
-body > nav > div > ul:nth-child(1) > li:nth-child(1) > a {margin-left: 0;}
-body > nav > div > ul:nth-child(2) > li:nth-child(2) > a {margin-right: 0;}
+body > nav > div > ul:nth-child(2) > li:first-child > a {margin-left: 0;}
+body > nav > div > ul:nth-child(2) > li:last-child > a {margin-right: 0;}

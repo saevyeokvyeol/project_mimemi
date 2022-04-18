@@ -5,17 +5,21 @@ import java.util.List;
 
 import javax.security.sasl.AuthenticationException;
 
+import mimemi.mvc.dao.AddrDAO;
+import mimemi.mvc.dao.AddrDAOImpl;
 import mimemi.mvc.dao.UserDAO;
 import mimemi.mvc.dao.UserDAOImpl;
 import mimemi.mvc.dto.UserDTO;
 
 public class UserServiceImpl implements UserService {
 	private UserDAO userDAO = new UserDAOImpl();
+	private AddrDAO addrDAO = new AddrDAOImpl();
 
 	@Override
 	public UserDTO loginUser(UserDTO user) throws SQLException, AuthenticationException {
 		UserDTO userDTO = userDAO.loginUser(user);
 		if(userDTO == null) {
+			
 			throw new AuthenticationException("아이디와 비밀번호를 확인해주세요");
 		}
 		return userDTO;
@@ -27,6 +31,7 @@ public class UserServiceImpl implements UserService {
 		if(result==0) {throw new SQLException("회원가입에 실패했습니다.");
 		
 		}
+		
 
 	}
 
@@ -39,13 +44,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean selectUserPwd(String userId, String userName, String userPhone) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = userDAO.selectUserPwd(userId, userName, userPhone);
+		
+		if(result == false) {throw new SQLException("해당 정보가 존재하지 않습니다.");
+
+		}else {
+			return true;
+		}
 	}
+		
+	
 
 	@Override
 	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -62,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUserPwd(String userId, String userPwd) throws SQLException {
+	public void updateUserPwd(String userId, String userPwd, String userName) throws SQLException {
 		// TODO Auto-generated method stub
 
 	}

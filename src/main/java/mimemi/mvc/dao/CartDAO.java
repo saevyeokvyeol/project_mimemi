@@ -63,4 +63,11 @@ public interface CartDAO {
 	 * @return List<CartDTO>
 	 */
 	List<CartDTO> selectCartByUserId(String userId) throws SQLException;
+
+	/**
+	 * 장바구니 조회
+	 * @param cartId
+	 * @return CartDTO
+	 */
+	CartDTO selectCartByCartId(int cartId) throws SQLException;
 }
