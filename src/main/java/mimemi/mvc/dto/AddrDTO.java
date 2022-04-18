@@ -7,13 +7,14 @@ public class AddrDTO {
 	private int zipcode;
 	private String addrAddr;
 	private String addrDetailAddr;
+	private String addrRefAddr;
 	private String receiverName;
 	private String receiverPhone;
 	
 	public AddrDTO() {}
 
 	public AddrDTO(int addrId, String userId, String addrName, int zipcode, String addrAddr, String addrDetailAddr,
-			String receiverName, String receiverPhone) {
+			String addrRefAddr, String receiverName, String receiverPhone) {
 		super();
 		this.addrId = addrId;
 		this.userId = userId;
@@ -21,6 +22,7 @@ public class AddrDTO {
 		this.zipcode = zipcode;
 		this.addrAddr = addrAddr;
 		this.addrDetailAddr = addrDetailAddr;
+		this.addrRefAddr = addrRefAddr;
 		this.receiverName = receiverName;
 		this.receiverPhone = receiverPhone;
 	}
@@ -87,6 +89,14 @@ public class AddrDTO {
 
 	public void setReceiverPhone(String receiverPhone) {
 		this.receiverPhone = receiverPhone;
+	}
+
+	public String getAddrRefAddr() {
+		return addrRefAddr;
+	}
+
+	public void setAddrRefAddr(String addrRefAddr) {
+		this.addrRefAddr = addrRefAddr;
 	}
 	
 	

@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+<<<<<<< HEAD
 
+=======
+import kosta.mvc.dto.Electronics;
+>>>>>>> main
 import mimemi.mvc.dto.AnswerDTO;
 import mimemi.mvc.dto.AskDTO;
 import mimemi.mvc.paging.AskListPageCnt;
@@ -180,6 +184,7 @@ public class AskDAOImpl implements AskDAO {
 		ResultSet rs=null;
 		AskDTO askDto=null;
 		String sql = proFile.getProperty("ask.detail");
+<<<<<<< HEAD
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
@@ -193,6 +198,8 @@ public class AskDAOImpl implements AskDAO {
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}
+=======
+>>>>>>> main
 		
 		return null;
 	}

@@ -9,12 +9,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.OrderDTO;
+import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 import mimemi.mvc.paging.OrderListPageCnt;
 import mimemi.mvc.util.DbUtil;
@@ -549,5 +549,37 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 		
 		return order;
+	}
+
+	/**
+	 * 월간 주문 식단 가져오기
+	 * @param String goodsId, String userId, String date
+	 * @return OrderDeliDTO
+	 * */
+	@Override
+	public List<OrderDeliDTO> selectMlyDeli(String goodsId, String userId, String date) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("order.selectMlyDeli");
+		List<OrderDeliDTO> list = new ArrayList<OrderDeliDTO>();
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, goodsId);
+			ps.setString(2, userId);
+			ps.setString(3, date);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				OrderDeliDTO od = new OrderDeliDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+				list.add(od);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return list;
 	}
 }

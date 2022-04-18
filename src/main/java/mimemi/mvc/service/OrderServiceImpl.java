@@ -7,14 +7,14 @@ import java.util.List;
 import mimemi.mvc.dao.OrderDAO;
 import mimemi.mvc.dao.OrderDAOImpl;
 import mimemi.mvc.dao.OrderLineDAO;
-import mimemi.mvc.dao.OrderLineDAOImpl;
+//import mimemi.mvc.dao.OrderLineDAOImpl;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 
 public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDao = new OrderDAOImpl();
-	private OrderLineDAO orderLineDao = new OrderLineDAOImpl();
+//	private OrderLineDAO orderLineDao = new OrderLineDAOImpl();
 
 	/**
 	 * 주문 등록
@@ -73,8 +73,9 @@ public class OrderServiceImpl implements OrderService {
 	 * */
 	@Override
 	public OrderDTO selectByOrderId(int orderId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		OrderDTO order = orderDao.selectByOrderId(orderId);
+		
+		return order;
 	}
 
 	/**
@@ -150,6 +151,18 @@ public class OrderServiceImpl implements OrderService {
 	public OrderDeliDTO selectByOrderDeliId(int orderDeliId) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * 월간 주문 식단 가져오기
+	 * @param String goodsId, String userId, String date
+	 * @return OrderDeliDTO
+	 * */
+	@Override
+	public List<OrderDeliDTO> selectMlyDeli(String goodsId, String userId, String date) throws SQLException {
+		List<OrderDeliDTO> list = orderDao.selectMlyDeli(goodsId, userId, date);
+		
+		return list;
 	}
 
 }

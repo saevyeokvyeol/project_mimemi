@@ -21,6 +21,11 @@ public class GoodsDTO {
 	private String goodsDetailImg;
 	
 	public GoodsDTO() {}
+	public GoodsDTO(String goodsId, String goodsName) {
+		super();
+		this.goodsId = goodsId;
+		this.goodsName = goodsName;
+	}
 	public GoodsDTO(String goodsId, String goodsName, String goodsDetail, String goodsThumbnail, int goodsPrice,
 			boolean goodsSale, String goodsDetailImg) {
 		super();

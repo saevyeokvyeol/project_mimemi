@@ -69,7 +69,7 @@
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td>${notice.noticeTitle}</td>
-								<td>${notice.noticeContent}</td>
+								<td> <span><a href="${path}/front?key=notice&methodName=selectBynoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeContent}</a></span></td>
 								<td>${notice.noticeAttach}</td>
 								<td>${notice.noticeRegdate}</td>
 							</tr>
@@ -78,6 +78,9 @@
 					</c:choose>
 				</tbody>
 			</table>
+			<div style="float:right;">
+				 <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a>
+		    </div>
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>

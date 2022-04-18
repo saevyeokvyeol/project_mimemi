@@ -5,19 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.GoodsDTO;
-import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.service.GoodsService;
 import mimemi.mvc.service.GoodsServiceImpl;
 import net.sf.json.JSONArray;
-
-//import mimemi.mvc.service.CartService;
-//import mimemi.mvc.service.CartServiceImpl;
-//
-//public class CartController implements Controller {
-//	private CartService cartService = new CartServiceImpl();
 
 public class GoodsController implements Controller {
 	private static GoodsService goodsService = new GoodsServiceImpl();
@@ -72,4 +65,17 @@ public class GoodsController implements Controller {
 		return null;
 	}
 
+	public void selectOrderGoods(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		HttpSession session = request.getSession();
+		String userId = "happy01";
+		
+		List<GoodsDTO> goodsList = goodsService.selectOrderGoods(userId);
+		
+		JSONArray arr = JSONArray.fromObject(goodsList);
+		
+		PrintWriter out = response.getWriter();
+		out.print(arr);
+	}
 }

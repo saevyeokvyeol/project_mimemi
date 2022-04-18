@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import mimemi.mvc.dto.NoticeDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.ReviewDTO;
@@ -27,36 +30,36 @@ public class NoticeController implements Controller {
 	
 	/**
 	 * 공지사항 등록
-	 * @return 
-	 * @throws SQLException 
 	 **/
-  /*  
-	public void insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView insertNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
-		String saveDir=request.getServletContext().getRealPath("/save");
-		int maxSize =1024*1024*100;
-	    String encoding="UTF-8";
-	    
-		MultipartRequest m = 
-				new MultipartRequest(request, saveDir,maxSize,encoding , new DefaultFileRenamePolicy());
-	    
+		String saveDir = request.getServletContext().getRealPath("/img");
+		int maxSize = 1024*1024*100;
+		String encoding= "UTF-8";
+		System.out.println(saveDir);
+		
+		MultipartRequest m = new MultipartRequest(request, saveDir,maxSize, encoding, new DefaultFileRenamePolicy());
+		
+		System.out.println("아마2");
 
 		String noticeTitle = m.getParameter("notice_title"); 
-		String noticeContent = m.getParameter("notice_cotent"); 
+		String noticeContent = m.getParameter("notice_content"); 
 		String noticeAttach = m.getParameter("notice_attach"); 
+
 		
-		NoticeDTO noticeDto = new NoticeDTO(maxSize, noticeTitle, noticeContent, noticeAttach, noticeAttach);
+		NoticeDTO noticeDto = new NoticeDTO(noticeTitle, noticeContent, noticeAttach);
+		System.out.println("아마");
+		
 		if(m.getFilesystemName("noticeAttach") != null) {
 			noticeDto. setNoticeAttach(m.getFilesystemName("noticeAttach"));	
 		}	
-		noticeService.insertNotice(noticeDto);	
-		return new ModelAndView("front", true);
-	
+		noticeService.insertNotice(noticeDto);
 		
 		
-	
-	
-*/
+		return new ModelAndView("front?key=notice&methodName=selectAllNotice", true);
+		
+		
+	}
 
 /*	
 	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -85,7 +88,7 @@ public class NoticeController implements Controller {
 	*/
 	
 	/**
-	 *  공지사항 전체보기
+	 *  공지사항 관리자 전체보기
 	 **/
 	
 	public ModelAndView selectAllNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -109,16 +112,81 @@ public class NoticeController implements Controller {
 	
 		
 	/**
+	 *  공지사항 고객 전체보기
+	 **/
+	
+	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<NoticeDTO> noticeList = noticeService.selectAllNotice(Integer.parseInt(pageNum), field);
+		
+		request.setAttribute("NoticeList", noticeList);
+		request.setAttribute("pageNum", pageNum); 
+		ModelAndView mv = new ModelAndView("board/notice.jsp");
+		
+		return mv;
+	}	
+	
+	
+	
+	
+	
+	
+	/**
 	 *  상세보기 
 	 **/
+	
+	public ModelAndView selectByNoticeNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+        String noticeNo = request.getParameter("noticeNo");
+		String pageNum = request.getParameter("pageNum");
+	/*	String user = request.getParameter("user");
+		
+		boolean isAdmin = (user.equals("admin")) ? true : false;
+		
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}*/
+		System.out.println("dd");
+	    NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
+		request.setAttribute("noticeDetail", notice); 
+		request.setAttribute("pageNum", pageNum);
+		
+		/*request.setAttribute("isAdmin", isAdmin);*/
+		return new ModelAndView("/board/notice_view.jsp"); 
+		
+	
+	}
+	
+	
+	
 	
 	/**
 	 * 수정폼 
 	 **/
+	public ModelAndView updateFrom(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String noticeNo = request.getParameter("noticeNo");
+		NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
+		request.setAttribute("notice", notice);
+		return new ModelAndView("manager/noticeUpdate.jsp");
+	}
 	
 	/**
 	 * 수정하기
 	 **/
+     public ModelAndView update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	 return null;
+     }
+	
+	
 	
 	/**
 	 * 삭제하기

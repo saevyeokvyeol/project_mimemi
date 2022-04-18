@@ -7,15 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mimemi.mvc.dao.AddrDAO;
+import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
+import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
+import mimemi.mvc.service.AddrService;
+import mimemi.mvc.service.AddrServiceImpl;
 import mimemi.mvc.service.OrderService;
 import mimemi.mvc.service.OrderServiceImpl;
 import net.sf.json.JSONArray;
 
 public class OrderController implements Controller {
 	private OrderService orderService = new OrderServiceImpl();
+	private AddrService addrService = new AddrServiceImpl();
 
 	@Override
 	public ModelAndView hendlerRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -96,19 +102,18 @@ public class OrderController implements Controller {
 		out.print(orderLineArr);
 	}
 	
-	public ModelAndView selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String pageNum = request.getParameter("pageNum");
-		if(pageNum == null || pageNum.equals("")) {
-			pageNum = "1";
-		}
+	public ModelAndView selectByOrderId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderId = request.getParameter("orderId");
 		
-		String field = request.getParameter("field");
+		OrderDTO order = orderService.selectByOrderId(Integer.parseInt(orderId));
+		List<OrderLineDTO> orderLineList = orderService.selectLineByOrderId(Integer.parseInt(orderId));
 		
-		List<OrderDTO> orderList = orderService.selectAll(Integer.parseInt(pageNum), field);
+		AddrDTO addr = addrService.selectByAddrId(order.getAddrId());
 		
-		request.setAttribute("orderList", orderList);
-		request.setAttribute("pageNum", pageNum); // 뷰에서 사용하기 위해 저장
-		ModelAndView mv = new ModelAndView("manager/orderList.jsp");
+		request.setAttribute("order", order);
+		request.setAttribute("orderLineList", orderLineList);
+		request.setAttribute("addr", addr);
+		ModelAndView mv = new ModelAndView("mypage/orderView.jsp");
 		
 		return mv;
 	}
@@ -117,6 +122,33 @@ public class OrderController implements Controller {
 		String orderId = request.getParameter("orderId");
 
 		orderService.deleteOrder(Integer.parseInt(orderId));
+	}
+	
+	public void viewOrderCalendar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderId = request.getParameter("orderId");
+
+		orderService.deleteOrder(Integer.parseInt(orderId));
+	}
+	
+	public void selectMlyDeli(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+
+		String userId = "happy01";
+		String goodsId = request.getParameter("goodsId");
+		
+		if(goodsId == null || goodsId == "") {
+			goodsId = "VEGAN01";
+		}
+		System.out.println(goodsId);
+		
+		String date = request.getParameter("date");
+		
+		List<OrderDeliDTO> orderDeliList = orderService.selectMlyDeli(goodsId, userId, date);
+		
+		JSONArray orderDeliArr = JSONArray.fromObject(orderDeliList);
+		
+		PrintWriter out = response.getWriter();
+		out.print(orderDeliArr);
 	}
 
 }

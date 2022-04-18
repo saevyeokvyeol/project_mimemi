@@ -7,7 +7,7 @@ import mimemi.mvc.dao.GoodsDAO;
 import mimemi.mvc.dao.GoodsDAOImpl;
 import mimemi.mvc.dto.GoodsDTO;
 
-public class GoodsServiceImpl implements GoodsService {
+public class GoodsServiceImpl implements GoodsService{
 	
 	
 	private GoodsDAO goodsDAO = new GoodsDAOImpl();
@@ -57,6 +57,48 @@ public class GoodsServiceImpl implements GoodsService {
 	/**
 	 * 상품 판매 여부 수정
 	 */
+
+	@Override
+	public void goodsUpdate(GoodsDTO goods) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsDeleteThumbnail(String goodsId) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsDeleteDetailImg(String goodsId) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GoodsDTO selectByGoodsId(String goodsId) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 고객이 주문한 식단명 가져오기
+	 * @param String userId
+	 * @return List<GoodsDTO>
+	 * */
+	public List<GoodsDTO> selectOrderGoods(String userId) throws SQLException {
+		List<GoodsDTO> list = goodsDAO.selectOrderGoods(userId);
+		
+		return list;
+	}
+	
 	public void goodsUpdateForSale(String goodsId, String goodsSale) throws SQLException {
 		int result = goodsDAO.goodsUpdateForSale(goodsId, goodsSale);
 		if(result == 0) throw new SQLException("상품이 수정되지 않았습니다");

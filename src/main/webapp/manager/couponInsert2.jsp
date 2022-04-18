@@ -29,9 +29,9 @@ function checkValid() {
 </head>
 <body>
 
-<form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=insertLiveCp">
+<form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=insertRgCp">
 <table>
-   <caption><h2> 실시간쿠폰등록 Form</h2></caption>
+   <caption><h2> 정기쿠폰등록 Form</h2></caption>
   <tr>
 	<td>쿠폰번호</td>
 	<td><input type="text" name="id" id="id"/></td>
@@ -55,7 +55,7 @@ function checkValid() {
   <tr>
 	<td colspan="2" >
 	<input type="hidden" name="key" value="coupon">
-	<input type="hidden" name="methodName" value="insertLiveCp">
+	<input type="hidden" name="methodName" value="insertRgCp">
 	<input type="submit" value="등록" id="btn"/>
 	<input type="reset" value="취소" />
 	</td>

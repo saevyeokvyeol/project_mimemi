@@ -39,10 +39,10 @@
     	$(function()) {
     		function goodsSellectAll(){
     			$.ajax({
-    				url: "${path}/ajax",
+    				url: "${path}/mimemi/ajax",
     				type: "post"
     				dataType: "json",
-    				data: {key: "goods", methodName: "goodsSelectAll"},
+    				data: {key: "goods", methodName: "getGoodsList"},
     				success: function(result) {
     					let text = "";
     					$.each(result, function(index, item){

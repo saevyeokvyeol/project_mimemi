@@ -46,8 +46,8 @@
 					<option value="rowprice">구매 가격 낮은 순</option>
 				</select>
 			</section>
-			<table class="table-secondary table-hover" id="orderList">
-				<thead>
+			<table class="table table-hover" id="orderList">
+				<thead class="table-secondary">
 					<tr>
 						<th>주문 번호</th>
 						<th>구매자 아이디</th>

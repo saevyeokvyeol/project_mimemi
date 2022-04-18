@@ -35,7 +35,7 @@ public interface FaqService {
 	/**
 	 * FAQ 전체 검색
 	 * */
-	List<FaqDTO> selectAllFaq() throws SQLException;
+	List<FaqDTO> selectAllFaq(int pageNum, String filed) throws SQLException;
 	
 	/**
 	 * FAQ 전체 검색(페이지 처리)
