@@ -7,7 +7,7 @@
 <html>
  <head>
  <meta charset="UTF-8">
- <title>FAQ</title>
+ <title>공지사항 고객뷰어</title>
 	</head>
 	<style type="text/css">
 	.left side {width : 300px;
@@ -83,7 +83,7 @@
 							<c:forEach items="${NoticeList}" var="notice">
 							<tr>
 								<td>${notice.noticeNo}</td>
-								<td>${notice.noticeTitle}</td>
+								<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
 								<td>${notice.noticeRegdate}</td>
 							</tr>
 							</c:forEach>

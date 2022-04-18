@@ -51,9 +51,14 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public NoticeDTO selectByNoticeNo(int noticeNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		    System.out.println("ddd");
+			NoticeDTO noticeDetail = noticeDao.selectByNoticeNo(noticeNo);
+			 if(noticeDetail==null) {
+				 throw new SQLException("상세보기를 불러올 수 없습니다.");
+			 }
+			return noticeDetail;
+		}
+		
 
 	@Override
 	public List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException {

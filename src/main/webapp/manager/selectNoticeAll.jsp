@@ -67,7 +67,7 @@
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td>${notice.noticeTitle}</td>
-								<td>${notice.noticeContent}</td>
+								<td> <span><a href="${path}/front?key=notice&methodName=selectBynoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeContent}</a></span></td>
 								<td>${notice.noticeAttach}</td>
 								<td>${notice.noticeRegdate}</td>
 							</tr>

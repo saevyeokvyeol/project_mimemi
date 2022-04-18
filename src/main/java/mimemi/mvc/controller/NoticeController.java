@@ -143,6 +143,32 @@ public class NoticeController implements Controller {
 	 *  상세보기 
 	 **/
 	
+	public ModelAndView selectByNoticeNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+        String noticeNo = request.getParameter("noticeNo");
+		String pageNum = request.getParameter("pageNum");
+	/*	String user = request.getParameter("user");
+		
+		boolean isAdmin = (user.equals("admin")) ? true : false;
+		
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}*/
+		System.out.println("dd");
+	    NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
+		request.setAttribute("noticeDetail", notice); 
+		request.setAttribute("pageNum", pageNum);
+		
+		/*request.setAttribute("isAdmin", isAdmin);*/
+		return new ModelAndView("/board/notice_view.jsp"); 
+		
+	
+	}
+	
+	
+	
+	
 	/**
 	 * 수정폼 
 	 **/
@@ -150,14 +176,15 @@ public class NoticeController implements Controller {
 		String noticeNo = request.getParameter("noticeNo");
 		NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
 		request.setAttribute("notice", notice);
-		return new ModelAndView("");
+		return new ModelAndView("manager/noticeUpdate.jsp");
 	}
-	
 	
 	/**
 	 * 수정하기
 	 **/
-
+     public ModelAndView update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	 return null;
+     }
 	
 	
 	
