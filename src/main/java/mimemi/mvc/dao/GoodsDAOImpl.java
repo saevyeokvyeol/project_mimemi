@@ -14,8 +14,18 @@ import mimemi.mvc.util.DbUtil;
 import mimemi.mvc.dto.GoodsDTO;
 
 public class GoodsDAOImpl implements GoodsDAO {
+	private Properties proFile = new Properties();
 	
-	private Properties proFile = DbUtil.getProFile();
+	/**
+	 * dbQuery.properties 로딩해 Properties 객체에 저장
+	 * */
+	public GoodsDAOImpl() {
+		try {
+			proFile.load(getClass().getClassLoader().getResourceAsStream("dbQuery.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	// select * from goods -> oods전체 확인 
 	public List<GoodsDTO> goodsSelectAll() throws SQLException{
@@ -182,6 +192,36 @@ public class GoodsDAOImpl implements GoodsDAO {
 			DbUtil.dbClose(rs, ps, con);
 			
 		}
+		return list;
+	}
+
+	/**
+	 * 고객이 주문한 식단 가져오기
+	 * @param String userId
+	 * @return List<String>
+	 * */
+	@Override
+	public List<GoodsDTO> selectOrderGoods(String userId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("goods.selectOrderGoods");
+		List<GoodsDTO> list = new ArrayList<GoodsDTO>();
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, userId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2));
+				list.add(goods);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
 		return list;
 	}
 }

@@ -58,8 +58,6 @@ public interface GoodsService {
 	 */
 	public List<GoodsDTO> goodsSelectAll() throws SQLException;
 	
-		
-	
 	/**
 	 * 판매 중인 상품 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
@@ -80,6 +78,13 @@ public interface GoodsService {
 	 * @return: GoodsDTO(인수로 받은 ID와 상품 아이디가 동일한 상품)
 	 * */
 	GoodsDTO selectByGoodsId(String goodsId) throws SQLException;
+
+	/**
+	 * 고객이 주문한 식단명 가져오기
+	 * @param String userId
+	 * @return List<GoodsDTO>
+	 * */
+	List<GoodsDTO> selectOrderGoods(String userId) throws SQLException;
 	
 	
 }

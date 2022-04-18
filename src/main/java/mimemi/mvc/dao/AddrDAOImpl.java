@@ -17,7 +17,7 @@ public class AddrDAOImpl implements AddrDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		AddrDTO addr = new AddrDTO();
+		AddrDTO addr = null;
 		
 		String sql = "select * from addr where addr_name=?";
 		
@@ -25,6 +25,11 @@ public class AddrDAOImpl implements AddrDAO {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
 			ps.setString(1, addrName);
+			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				addr = new AddrDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}
@@ -45,6 +50,11 @@ public class AddrDAOImpl implements AddrDAO {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
 			ps.setInt(1, addrId);
+			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				addr = new AddrDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}

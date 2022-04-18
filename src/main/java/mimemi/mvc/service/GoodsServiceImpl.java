@@ -7,7 +7,7 @@ import mimemi.mvc.dao.GoodsDAO;
 import mimemi.mvc.dao.GoodsDAOImpl;
 import mimemi.mvc.dto.GoodsDTO;
 
-public abstract class GoodsServiceImpl implements GoodsService{
+public class GoodsServiceImpl implements GoodsService{
 	
 	
 	private GoodsDAO goodsDAO = new GoodsDAOImpl();
@@ -66,7 +66,66 @@ public abstract class GoodsServiceImpl implements GoodsService{
 	 */
 	
 	
-	
+
+
+	@Override
+	public void goodsUpdate(GoodsDTO goods) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsUpdateForSale(String goodsId, String goodsSale) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsUpdateThumbnail(String goodsId, String goodsThumbnail) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsUpdateDetailImg(String goodsId, String goodsDetailImg) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsDeleteThumbnail(String goodsId) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void goodsDeleteDetailImg(String goodsId) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GoodsDTO selectByGoodsId(String goodsId) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 고객이 주문한 식단명 가져오기
+	 * @param String userId
+	 * @return List<GoodsDTO>
+	 * */
+	public List<GoodsDTO> selectOrderGoods(String userId) throws SQLException {
+		List<GoodsDTO> list = goodsDAO.selectOrderGoods(userId);
+		
+		return list;
+	}
 	
 }
 

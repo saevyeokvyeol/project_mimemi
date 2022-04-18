@@ -13,7 +13,8 @@
 			section {width: 1200px; margin: auto;}
 			table {width: 100%; caption-side: top;}
 			form > table td:nth-child(1) {width: 200px; padding: 30px;}
-		</style><script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		</style>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
 			// 우편번호 API
 		    function sample6_execDaumPostcode() {

@@ -7,6 +7,7 @@ import java.util.List;
 
 import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.OrderDTO;
+import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 
 public interface OrderDAO {
@@ -100,4 +101,11 @@ public interface OrderDAO {
 	 * @return OrderDTO
 	 * */
 	OrderDTO selectByOrderId(int orderId) throws SQLException;
+
+	/**
+	 * 월간 주문 식단 가져오기
+	 * @param String goodsId, String userId, String date
+	 * @return OrderDeliDTO
+	 * */
+	List<OrderDeliDTO> selectMlyDeli(String goodsId, String userId, String date) throws SQLException;
 }
