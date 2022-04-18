@@ -11,13 +11,13 @@ public interface ReviewService {
 	 * @param ReviewDTO(String goodsId, String userId, String reviewTitle, String reviewAttach, String reviewContent,
 			int reviewRate)
 	 * */
-	void insertReview(ReviewDTO reviewDTO) throws SQLException;
+	void insertReview(ReviewDTO reviewDTO, String path) throws SQLException;
 	
 	/**
 	 * 후기 수정 
 	 * @param ReviewDTO(int reviewNo, String reviewTitle, String reviewContent, int reviewRate)
 	 * */
-	void updateReview(ReviewDTO reviewDTO) throws SQLException;
+	void updateReview(ReviewDTO reviewDTO, String path) throws SQLException;
 	
 	/**
 	 * 후기 이미지 수정
@@ -29,12 +29,7 @@ public interface ReviewService {
 	 * 후기 삭제
 	 * */
 	void deleteReview(ReviewDTO review,String path) throws SQLException;
-	
-	/**
-	 * 블라인드 여부 변경 기능
-	 * */
-	void updateBlind(int reviewNo, String blind) throws SQLException;
-	
+
 	/**
 	 * 후기 전체 검색
 	 * field -> 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)
@@ -59,5 +54,16 @@ public interface ReviewService {
 	 * @return ReviewDTO
 	 * */
 	ReviewDTO selectByReviewNo(int reviewNo, boolean flag) throws SQLException;
+	
+	/**
+	 * 관리자- 전체 검색(페이지 처리)
+	 * field -> 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)
+	 * */
+	List<ReviewDTO> selectAllByPagingManager(int pageNo, String field) throws SQLException;
+	
+	/**
+	 * 관리자 - 블라인드 여부 변경 기능
+	 * */
+	void updateBlind(int reviewNo, String blind) throws SQLException;
 	
 }

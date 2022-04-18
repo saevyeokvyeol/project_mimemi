@@ -26,13 +26,36 @@ public class FaqDAOImpl implements FaqDAO {
 			e.printStackTrace();
 		}
 	}
-
+ 
+	/**
+     * FAQ µî·Ï 
+     **/
+	
 	@Override
 	public int insertFaq(FaqDTO faqDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null; 
+		String sql = proFile.getProperty("faq.insertFaq");
+		int result = 0;
+		
+		try { 
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, faqDTO.getFaqTitle());
+			ps.setString(2, faqDTO.getFaqContent());
+			ps.setString(3, faqDTO.getFaqAttach());
+			ps.setString(4, faqDTO.getFaqCategory());
+			
+			result = ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		
+		return result;
 	}
-
+ 
+	
 	@Override
 	public int updateFaq(FaqDTO faqDTO) throws SQLException {
 		// TODO Auto-generated method stub

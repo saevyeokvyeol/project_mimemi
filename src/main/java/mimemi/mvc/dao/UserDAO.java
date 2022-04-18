@@ -11,7 +11,7 @@ public interface UserDAO {
 	 * 로그인기능
 	 * @param UserDTO(String userId, String userPwd)
 	 * */
-	UserDTO loginUser(UserDTO user) throws SQLException;
+	UserDTO loginUser(String userId, String userPwd) throws SQLException;
 	
 	/**
 	 * 회원가입기능
