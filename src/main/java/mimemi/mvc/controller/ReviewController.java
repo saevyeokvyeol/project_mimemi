@@ -245,7 +245,7 @@ public class ReviewController implements Controller {
 		String reviewNo= request.getParameter("reviewNo");
 		String blindStatus = request.getParameter("blindStatus"); //선택한 게시글의 블라인드상태
 		
-		System.out.println("현재 블라인드 상태"+blindStatus);
+		System.out.println(reviewNo+": 현재 블라인드 상태"+blindStatus);
 		
 		reviewService.updateBlind(Integer.parseInt(reviewNo), blindStatus);
 		

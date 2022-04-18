@@ -134,7 +134,11 @@ public class ReviewServiceImpl implements ReviewService {
 	 * */
 	@Override
 	public void updateBlind(int reviewNo, String blind) throws SQLException {
-		// TODO Auto-generated method stub
+		int result =reviewDAO.updateBlind(reviewNo, blind);
+		if(result==0) {
+			throw new SQLException("블라인드 처리를 하는 도중 오류가 발생했습니다.");
+		}
+		
 
 	}
 

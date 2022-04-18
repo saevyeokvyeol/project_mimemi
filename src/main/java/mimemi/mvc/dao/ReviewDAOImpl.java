@@ -14,6 +14,7 @@ import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.dto.ReviewReplyDTO;
 import mimemi.mvc.paging.PageCnt;
 import mimemi.mvc.util.DbUtil;
+import oracle.jdbc.proxy.annotation.Pre;
 
 public class ReviewDAOImpl implements ReviewDAO {
 	private Properties proFile = new Properties();
@@ -359,10 +360,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 						rs.getString(9),
 						rs.getInt(10)
 						);
+				
 				review.getGoodsDTO().setGoodsName("상품이름");
 				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
 				list.add(review);
-				//System.out.println(review.getReviewRegdate());
+				//System.out.println(review.getReviewBlind());
 			}
 			
 		}finally {
@@ -400,8 +402,32 @@ public class ReviewDAOImpl implements ReviewDAO {
 	 * */
 	@Override
 	public int updateBlind(int reviewNo, String blind) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		int result=0;
+		String sql=null;
+		
+		if (blind != null) {
+			if (blind.equals("F")) {
+				sql = "update review set REVIEW_BLIND='T' where REVIEW_NO=?";
+				//sql = proFile.getProperty("review.updateBlindToT");
+			} else if (blind.equals("T")) {
+				sql = "update review set REVIEW_BLIND='F' where REVIEW_NO=?";
+				//sql = proFile.getProperty("review.updateBlindToF");
+			}
+		}
+			
+		try {
+			con=DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reviewNo);
+			
+			result=ps.executeUpdate();
+					
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 }

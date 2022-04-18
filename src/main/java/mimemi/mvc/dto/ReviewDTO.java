@@ -1,6 +1,6 @@
 package mimemi.mvc.dto;
 
-import java.util.Date;
+
 
 public class ReviewDTO {
 	private int reviewNo;
@@ -118,10 +118,6 @@ public class ReviewDTO {
 		this.reviewRate = reviewRate;
 	}
 
-	public String isReviewBlind() {
-		return reviewBlind;
-	}
-
 	public void setReviewBlind(String reviewBlind) {
 		this.reviewBlind = reviewBlind;
 	}
@@ -134,6 +130,10 @@ public class ReviewDTO {
 		this.reviewViews = reviewViews;
 	}
 
+	public String getReviewBlind() {
+		return reviewBlind;
+	}
+	
 	
 	
 }
