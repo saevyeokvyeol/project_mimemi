@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import kosta.mvc.dto.Electronics;
 import mimemi.mvc.dto.AnswerDTO;
 import mimemi.mvc.dto.AskDTO;
 import mimemi.mvc.paging.AskListPageCnt;
@@ -174,11 +175,15 @@ public class AskDAOImpl implements AskDAO {
 	//1:1상세보기(userId)
 	@Override
 	public AskDTO selectByuserId(String userId) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		AskDTO askDto=null;
+		String sql = proFile.getProperty("ask.detail");
+		
 		return null;
 	}
 
 	
-
 
 }
