@@ -81,11 +81,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	}
 
-	@Override
-	public void updateBlind(int reviewNo, String blind) throws SQLException {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	public List<ReviewDTO> selectAllReview(String field) throws SQLException {
@@ -121,6 +117,25 @@ public class ReviewServiceImpl implements ReviewService {
 		//댓글정보 가져오기
 		
 		return reviewDetail;
+	}
+	
+	/**
+	 * 관리자 - 후기 전체조회(페이지처리)
+	 * */
+	@Override
+	public List<ReviewDTO> selectAllByPagingManager(int pageNo, String field) throws SQLException {
+		List<ReviewDTO> list =reviewDAO.selectAllByPagingManager(pageNo, field);
+		
+		return list;
+	}
+	
+	/**
+	 * 관리자 - 후기 블라인드처리
+	 * */
+	@Override
+	public void updateBlind(int reviewNo, String blind) throws SQLException {
+		// TODO Auto-generated method stub
+
 	}
 
 }

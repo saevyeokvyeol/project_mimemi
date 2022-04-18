@@ -1,6 +1,7 @@
 package mimemi.mvc.controller;
 
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.ReviewService;
 import mimemi.mvc.service.ReviewServiceImpl;
+import net.sf.json.JSONArray;
 
 public class ReviewController implements Controller {
 	private static ReviewService reviewService = new ReviewServiceImpl();
@@ -27,7 +29,7 @@ public class ReviewController implements Controller {
 	}
 	
 	/**
-	 * 리뷰 전체 조회하기(+페이지처리)
+	 * 사용자/회원 - 리뷰 전체 조회하기(+페이지처리)
 	 * */
 	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String curPageNo = request.getParameter("pageNum");
@@ -50,6 +52,10 @@ public class ReviewController implements Controller {
 		return new ModelAndView("/board/reviewList.jsp");
 		
 	}
+	
+	/**
+	 * 검색기능
+	 * */
 	public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
@@ -207,13 +213,43 @@ public class ReviewController implements Controller {
 		return new ModelAndView("front?key=review&methodName=selectAll",true);
 	}
 	
-	
+	/**
+	 * 관리자용 - 리뷰 전체 조회하기(+페이지처리)
+	 * 
+	 * */
+	public ModelAndView selectAllManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		//페이지처리
+		String curPageNo = request.getParameter("pageNum");
+		if(curPageNo ==null||curPageNo.equals("")) {
+			curPageNo="1";
+		}
+		String field =request.getParameter("field");
+		if(field==null||field.equals("")) {
+			field="reg";
+		}
+
+		System.out.println("관리자 selectAll: "+field+" 페이지 번호: "+curPageNo);
+		List<ReviewDTO> reviewList = reviewService.selectAllByPagingManager(Integer.parseInt(curPageNo), field);
+
+		request.setAttribute("list", reviewList);
+		request.setAttribute("pageNum", curPageNo);
+		return new ModelAndView("/manager/reviewListBlind.jsp");
+	}
 	/**
 	 * 관리자용 - 게시글 블라인드 처리
+	 * 
 	 * */
 	public ModelAndView updateBlind(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String reviewNo= request.getParameter("reviewNo");
+		String blindStatus = request.getParameter("blindStatus"); //선택한 게시글의 블라인드상태
 		
-		return null;
+		System.out.println("현재 블라인드 상태"+blindStatus);
+		
+		reviewService.updateBlind(Integer.parseInt(reviewNo), blindStatus);
+		
+		return new ModelAndView("front?key=review&methodName=selectAllManager",true);
 	}
 	
 
