@@ -13,7 +13,7 @@ public interface UserService {
 	 * @param UserDTO(String userId, String userPwd)
 	 * @throws AuthenticationException 
 	 * */
-	UserDTO loginUser(UserDTO user) throws SQLException, AuthenticationException;
+	UserDTO loginUser(String userId, String userPwd) throws SQLException, AuthenticationException;
 	
 	/**
 	 * 회원가입기능

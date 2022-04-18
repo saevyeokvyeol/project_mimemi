@@ -45,13 +45,14 @@ public class UserController implements Controller {
 		String userId= request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		
-		UserDTO dbDTO = userService.loginUser(new UserDTO(userId,userPwd));
-		
+		UserDTO dbDTO = userService.loginUser(userId,userPwd);
+		System.out.println(dbDTO.getUserName());
+		System.out.println(dbDTO.getUserId());
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", dbDTO);
 		session.setAttribute("loginName", dbDTO.getUserName());
 		
-		return new ModelAndView("userTest.jsp", false);
+		return new ModelAndView("userTest.jsp", true);
 	}
 //	public void loginUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
 //		response.setContentType("text/html;charset=UTF-8");
