@@ -54,6 +54,8 @@ public class AskController implements Controller {
 		String pageNo = request.getParameter("pageNo");
 		
 		AskDTO askDto = askService.selectByUserId(userId);
+		request.setAttribute("askDto", askDto);
+		request.setAttribute("pageNo", pageNo);
 		
 		
 		return new ModelAndView("board/askdetail.jsp");

@@ -68,8 +68,5 @@ public interface AskDAO {
 	 * */
 	List<AnswerDTO> selectAnsByAskNo(int askNo) throws SQLException;
 	
-	/**
-	 * userId에 해당하는 댓글
-	 * */
-	List<AskDTO> selectByuserIdList(String userID)throws SQLException;
+	
 }
