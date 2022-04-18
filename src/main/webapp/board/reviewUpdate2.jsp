@@ -66,8 +66,8 @@ pageEncoding="UTF-8"%>
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         <script>
             function checkValid(){
-                var title = document.writeReview.review_title;
-                var contents = document.writeReview.review_contents;
+                var title = document.updateReview2.review_title;
+                var contents = document.updateReview2.review_contents;
                 
                 if(title.value==""){
                 	alert("후기 제목을 입력해 주십시오.");
@@ -100,7 +100,7 @@ pageEncoding="UTF-8"%>
                 <hr>
             </div>
             <div class="review-writeForm">
-                <form name="writeReview" method="post" action="${path}/front?key=review&methodName=update"
+                <form name="updateReview2" method="post" action="${path}/front?key=review&methodName=update"
                 onSubmit='return checkValid()' enctype="multipart/form-data">
                 <input type="hidden" name="reviewNo" value="${review.reviewNo}">
                     <table>
@@ -149,7 +149,7 @@ pageEncoding="UTF-8"%>
                                 	<input type="file" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
                                 	<p id="file-status">${review.reviewAttach}</p>
                                     <div class="review-image-preview">
-                                        <img id="review-image-output">
+                                        <img id="review-image-output" src="${path}/img/save/${review.reviewAttach}">
                                     </div>
                                     <script>
                                         const status = document.getElementById('file-status')

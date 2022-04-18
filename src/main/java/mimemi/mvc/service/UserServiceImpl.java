@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
 	private AddrDAO addrDAO = new AddrDAOImpl();
 
 	@Override
-	public UserDTO loginUser(UserDTO user) throws SQLException, AuthenticationException {
-		UserDTO userDTO = userDAO.loginUser(user);
+	public UserDTO loginUser(String userId, String userPwd) throws SQLException, AuthenticationException {
+		UserDTO userDTO = userDAO.loginUser(userId, userPwd);
 		if(userDTO == null) {
 			
 			throw new AuthenticationException("아이디와 비밀번호를 확인해주세요");

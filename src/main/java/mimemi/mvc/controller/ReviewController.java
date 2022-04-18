@@ -71,7 +71,7 @@ public class ReviewController implements Controller {
 	 * 리뷰 수정하기(update페이지로 이동하기)
 	 * */
 	public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String reviewNo= request.getParameter("revireewNo");
+		String reviewNo= request.getParameter("reviewNo");
 		ReviewDTO review = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
 		//String dbUserId=review.getUserId();
 		
@@ -112,7 +112,7 @@ public class ReviewController implements Controller {
 		
 		System.out.println("수정하는 리뷰번호: "+reviewNo+"상품이름: "+reviewGoods);
 		
-		ReviewDTO review = new ReviewDTO(reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
+		ReviewDTO review = new ReviewDTO(Integer.parseInt(reviewNo),reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일첨부를 했다면(파일을 수정했다면)
 			if(m.getFilesystemName("review-image-selector")!=null) {
@@ -161,7 +161,7 @@ public class ReviewController implements Controller {
 		
 		System.out.println("후기등록하려는 상품아이디: "+reviewGoods);
 		
-		ReviewDTO review = new ReviewDTO(reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
+		ReviewDTO review = new ReviewDTO(0,reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일 첨부 했다면(필수요소가 아니기때문에 생성자에 없으므로 추가해준다)
 			if(m.getFilesystemName("review_image")!=null) {
