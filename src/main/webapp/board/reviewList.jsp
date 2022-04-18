@@ -49,7 +49,21 @@ pageEncoding="UTF-8"%>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
                 
         <!--부트스트랩 JS CDN-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+        <!-- jQuery -->
+		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+        <script>
+        	$(function(){
+        		$("#review_sort_select").change(function(){
+        			if($(this).val() != "0"){
+        				let url =`${path}/front?key=review&methodName=selectAll&field=` + $(this).val();
+        				location.replace(url);
+        			}
+        		})
+        	})
+        </script>
+        
         
         
     </head>
@@ -63,11 +77,11 @@ pageEncoding="UTF-8"%>
             <div class="review-sort-area">
                  <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
                 <select name="review_sort_select" id="review_sort_select">
+                	<option name="review_sort" value="0">--정렬방식--</option>
                     <option name="review_sort" value="reg" selected='selected'>등록순</option>
-                    <option name="review_sort" value="higirate"<c:if test="${requestScope.field == 'higirate'}">selected='selected'</c:if>>별점 높은순</option>
-                    <option name="review_sort" value="rowrate"<c:if test="${requestScope.field == 'rowrate'}">selected='selected'</c:if>>별점 낮은순</option>
-                    <option name="review_sort" value="view"<c:if test="${requestScope.field == 'view'}">selected='selected'</c:if>>조회순</option>
-                    <option name="review_sort" value="reply"<c:if test="${requestScope.field == 'reply'}">selected='selected'</c:if>>댓글순</option>
+                    <option name="review_sort" value="higirate">별점 높은순</option>
+                    <option name="review_sort" value="rowrate">별점 낮은순</option>
+                    <option name="review_sort" value="view">조회순</option>
                 </select>
             </div>
            
@@ -142,43 +156,42 @@ pageEncoding="UTF-8"%>
                     </tbody>
                 </table>
              </div>
+             <!-- 관리자 아이디면 작성불가 메세지 띄워주기 처리해야함-->
             <div class="reivew-wirte-bnt">
                 <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp">리뷰쓰기</a></span>
             </div>
             <div class="reivew-search">
-                <select name="" id="">
-                    <option name="reviewsearch_sort" value="title">제목</option>
-                    <option name="reviewsearch_sort" value="content">내용</option>
+                <select name="review_search_sort_select" id="review_search_sort_select">
+                    <option name="review_search_sort" value="title">제목</option>
+                    <option name="review_search_sort" value="content">내용</option>
                 </select>
                 <input type="text" name="review_search">
                 <input type="button" value="검색하기" id="btn">
             </div>
-            <jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/>
-            <div class="reivew-pagination-container">
-                <div class="reivew-pagination-area">
-                    <c:set var="doneLoop" value="false"/>
-                    <c:set var="temp" value="${(pageNo-1)% p.blockcount}"/>
-                    <c:set var="startPage" value="${pageNo-temp}"/>
-
-                    <c:if test="${(startPage-p.blockcount)>0}">
-                        <a class="pagination-newer" href="${path}/front?key=review&methodName=selectAll&pageNo=${startPage-1}">이전</a>
-                    </c:if>
-                    <span class="paginateion-inner">
-                        <c:forEach var="i" begin="${startPage}" end="${(startPage-1)+p.blockcount}">
-                            <c:if test="${(i-1)>=p.pageCnt}">
-                                <c:set var="doneLoop" value="true"/>
-                            </c:if>
-                            <c:if test="${not doneLoop}">
-                                <a class="${i==pageNo?'pagination-active':page}" href="${path}/front?key=review&methodName=selectAll&pageNo=${i}">${i}</a>
-                            </c:if>
-                        </c:forEach>
-                    </span>
-                    <c:if test="${(startPage+p.blockcount)<=p.pageCnt}">
-                        <a class="pagination-older" href="${path}/front?key=review&methodName=selectall&pageNo=${startPage+p.blockcount}">다음</a>
-                    </c:if>
-                </div>
-                
-            </div>
+            <!-- 페이징 처리 -->
+            
+            <nav aria-label="Page navigation example">
+				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 
+				<c:set var="isLoop" value="false"/>
+				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
+				<c:set var="startPage" value="${pageNum - temp}"/>
+				<ul class="pagination justify-content-center">
+					<c:if test="${(startPage - p.blockcount) > 0}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=review&methodName=selectAll&pageNum=${startPage-1}">이전</a></li>
+					</c:if>
+					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
+						<c:if test="${(i-1) >= p.pageCnt}">
+							<c:set var="isLoop" value="true"/>
+						</c:if> 
+						<c:if test="${not isLoop}" >
+							<li class="page-item ${i == pageNum ? ' active' : page}"><a class="page-link page_num" href="${path}/front?key=review&methodName=selectAll&pageNum=${i}">${i}</a></li> 
+						</c:if>
+					</c:forEach>
+					<c:if test="${(startPage + p.blockcount) <= p.pageCnt}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=review&methodName=selectAll&pageNum=${startPage+p.blockcount}">이후</a></li>
+					</c:if>
+				</ul>
+			</nav>
         </div>
     </body>
 </html>

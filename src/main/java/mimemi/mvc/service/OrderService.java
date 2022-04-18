@@ -92,4 +92,11 @@ public interface OrderService {
 	 * @return: int(수정된 스케줄 수)
 	 * */
 	OrderDeliDTO selectByOrderDeliId(int orderDeliId) throws SQLException;
+
+	/**
+	 * 월간 주문 식단 가져오기
+	 * @param String goodsId, String userId, String date
+	 * @return OrderDeliDTO
+	 * */
+	List<OrderDeliDTO> selectMlyDeli(String goodsId, String userId, String date) throws SQLException;
 }

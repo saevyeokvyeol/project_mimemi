@@ -52,7 +52,7 @@ public class DbUtil {
 		  if(con!=null) con.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}	
 	}
 	
 	/**
@@ -65,22 +65,6 @@ public class DbUtil {
     	}catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static Properties getProFile() {
-		String fileName = "dbQuery";
-		ResourceBundle rb = ResourceBundle.getBundle(fileName);
-		Properties properties = new Properties();
-
-		try {
-			for(String key : rb.keySet()) {
-				String value = rb.getString(key);
-				properties.put(key, value);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return properties;
 	}
 }
 

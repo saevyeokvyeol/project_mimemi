@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -31,16 +32,18 @@ public class NoticeDAOImpl implements NoticeDAO {
 		PreparedStatement ps=null;
 		String sql = proFile.getProperty("notice.insertNotice"); 
 		int result = 0;
+		
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, noticeDTO.getNoticeNo());
-			ps.setString(2, noticeDTO.getNoticeTitle());
-			ps.setString(3, noticeDTO.getNoticeContent());
-			ps.setString(4, noticeDTO.getNoticeAttach());
-			ps.setString(5, noticeDTO.getNoticeRegdate());
-			
+			ps.setString(1, noticeDTO.getNoticeTitle());
+			ps.setString(2, noticeDTO.getNoticeContent());
+			ps.setString(3, noticeDTO.getNoticeAttach());
+
+		System.out.println("ddd");	
 			result = ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}finally {
 			DbUtil.dbClose(ps, con);
 		}
@@ -89,6 +92,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 		try {
 			// 전체 레코드 수를 반환하는 메소드로 db에 저장된 총 레코드 수를 구함
 			int totalCount = this.getTotalCount();
+			
 			// 구한 전체 레코드 수로 전체 페이지 수를 구함
 			int totalPage = totalCount % NoticeListPageCnt.getPagesize() == 0 ? totalCount / NoticeListPageCnt.getPagesize() : (totalCount / NoticeListPageCnt.getPagesize()) + 1;
 			
@@ -148,8 +152,34 @@ public class NoticeDAOImpl implements NoticeDAO {
 
 	@Override
 	public NoticeDTO selectByNoticeNo(int noticeNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("notice.selectByNoticeNo");
+		NoticeDTO noticeDetail = null;
+	/*	SimpleDateFormat noticeFormat = new SimpleDateFormat("yyyy-MM-DD"); 이해안감 나중에 질문*/
+		
+		try { 
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, noticeNo);
+			rs=ps.executeQuery();
+			
+			if(rs.next()) { 
+				noticeDetail = new NoticeDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5)
+								);	 System.out.println("dao");
+		    }
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return noticeDetail;
 	}
 
 	@Override

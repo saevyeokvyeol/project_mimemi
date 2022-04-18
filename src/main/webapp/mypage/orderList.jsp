@@ -85,13 +85,14 @@
 				} // 구매 상품명 메소드 종료
 				
 				$(document).on("click", "#cancel", function() {
-					// alert();
+					confirm("해당 주문이 전체 취소됩니다.\n정말 취소하시겠습니까?");
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "text",
 						data: {key: "order", methodName: "deleteOrder", orderId: $(this).parent().parent().attr("id")},
 						success: function(result) {
+							alert("취소가 완료되었습니다.");
 							selectOrderByUserId();
 						}, // 성공 메소드
 						error : function(err) {
@@ -100,15 +101,16 @@
 					}) // ajax 종료
 				})
 				
-				$(document).on("click", "tbody > tr", function() {
-					location.href = "${path}/front?key=order&methodName=selectOrderByOrderId&orderId=" + $(this).attr("id");
+				// 주문 상세 이동 메소드
+				$(document).on("click", "tbody > tr > td:not(:last-child)", function() {
+					location.href = "${path}/front?key=order&methodName=selectByOrderId&orderId=" + $(this).parent().attr("id");
 				})
 				
 				selectOrderByUserId();
 			})
 		</script>
 	</head>
-	<body></a>
+	<body>
 		<section>
 			<h1>주문/배송 조회</h1>
 			<table class="table table-hover" id="orderTable">
@@ -118,7 +120,7 @@
 						<td>주문일자</td>
 						<td>상품명</td>
 						<td>결제금액</td>
-						<td>상품 취소</td>
+						<td>주문 취소</td>
 					</tr>
 				</thead>
 				<tbody>

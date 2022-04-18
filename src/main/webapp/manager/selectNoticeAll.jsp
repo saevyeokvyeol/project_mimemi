@@ -18,11 +18,13 @@
 		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 		<!-- JavaScript Bundle with Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	  	
 	  		<style>
 			.orderList-main {width: 1200px; margin: auto;}
 			table {width: 100%;}
 			.order_sort{text-align: right;}
 		</style>
+		
 		<script type="text/javascript">
 			$(function(){
 				$("select").change(function() {
@@ -67,7 +69,7 @@
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td>${notice.noticeTitle}</td>
-								<td>${notice.noticeContent}</td>
+								<td> <span><a href="${path}/front?key=notice&methodName=selectBynoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeContent}</a></span></td>
 								<td>${notice.noticeAttach}</td>
 								<td>${notice.noticeRegdate}</td>
 							</tr>
@@ -76,6 +78,9 @@
 					</c:choose>
 				</tbody>
 			</table>
+			<div style="float:right;">
+				 <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a>
+		    </div>
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>

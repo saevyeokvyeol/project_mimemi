@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>error</title>
+<script type="text/javascript">
+alert("${errorMsg}");
+history.go(-1);
+</script>
 </head>
 <body>
 <h3>error.jsp 페이지 입니다.</h3>

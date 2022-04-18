@@ -1,5 +1,7 @@
 package mimemi.mvc.dto;
 
+import java.util.List;
+
 public class AskDTO {
 	private int askNo;//글번호
 	private String userId;//회원아이디
@@ -10,12 +12,16 @@ public class AskDTO {
 	private String askCategory;//카테고리명
 	private String askComplete;//답변완료
 	
+	private int pageCnt;
+	
+	List<AskDTO> askDtoList;
+	
 	public AskDTO() {}
 
-	public AskDTO(String askTitle, String askContent, String askAttach) {
+	public AskDTO(String userId, String askTitle,String askContent) {
+		this.userId=userId;
 		this.askTitle=askTitle;
 		this.askContent=askContent;
-		this.askAttach=askAttach;
 	}
 	
 	public AskDTO(int askNo, String userId, String askTitle, String askContent, String askAttach, String askRegdate,
@@ -93,6 +99,22 @@ public class AskDTO {
 
 	public void setAskComplete(String askComplete) {
 		this.askComplete = askComplete;
+	}
+
+	public int getPageCnt() {
+		return pageCnt;
+	}
+
+	public void setPageCnt(int pageCnt) {
+		this.pageCnt = pageCnt;
+	}
+
+	public List<AskDTO> getAskDtoList() {
+		return askDtoList;
+	}
+
+	public void setAskDtoList(List<AskDTO> askDtoList) {
+		this.askDtoList = askDtoList;
 	}
 	
 }

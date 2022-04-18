@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
                 margin: auto;
             }
             table {
-                width: 700px;
+                width: 1000px;
                 margin-left: auto;
                 margin-right: auto;
                 border-collapse: collapse;
@@ -24,13 +24,33 @@ pageEncoding="UTF-8"%>
                 background-color: gainsboro;
                 font-weight: bold;
             }
-            div.review-writeForm{
+            div.review-updateForm{
                 text-align: left;
+            }
+            img.starRateImg{
+            	box-sizing: border-box;
+                width:90px;
+                height: auto;
+                padding-bottom: 5px;                
+            }
+            div.review-image-insert-area{
+            	width: 500px;
+            }
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+
+            }
+            #review-image-output{
+                width: 100px;
+                height: auto;
             }
             div.review-submit-button{
                 text-align: center;
             }
-            div.review-write-foot-area{
+            div.review-update-foot-area{
                 text-align: right;
             }
             
@@ -42,11 +62,11 @@ pageEncoding="UTF-8"%>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
         <!--JQgrid CDN-->
-        <script src="../util/js/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         <script>
             function checkValid(){
                 var form = window.document.writeReview;
-                var selectCheck=$('#review_select-goods > option:selected').val();
+                var selectCheck=$('#review_select_goods > option:selected').val();
                 var radioCheck =$('input[name=rate]').is(":checked");
                 
 
@@ -86,13 +106,13 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>제목</th>
                             <td>
-                            	<span><input type="text" name="review_title" placeholder="제목"></span>
+                            	<span><input type="text" name="review_title" placeholder="제목" maxlength='16'></span>
                             </td>
                         </tr>
                         <tr>
                             <th>상품</th>
                             <td>
-                                <select name="review_select-goods" id="review_select-goods">
+                                <select name="review_select_goods" id="review_select_goods">
                                 	<option name="reivew_goods" value="">--상품 이름--</option>
                                 	<option name="reivew_goods" value="JUNG01">정성한상</option>
                                     <option name="reivew_goods" value="VEGAN01">비건 식단</option>
@@ -113,13 +133,41 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="review_contents" cols="50" rows="10" placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다."></textarea>
+                                <textarea name="review_contents" cols="50" rows="10" maxlength='333' placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다."></textarea>
                             </td>
                         </tr>
                         <tr>
                             <th>첨부파일</th>
                             <td>
-                                <input type="file" name="review_image" maxlength="60" size="" >
+                                <div class="review-image-insert-area">
+                                	<input type="file" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
+                                	<p id="file-status"></p>
+                                    <div class="review-image-preview">
+                                        <img id="review-image-output">
+                                    </div>
+                                    <script>
+                                        const status = document.getElementById('file-status')
+                                        //const fileSelector =document.getElementById('review-image-selector')
+                                        const output = document.getElementById('review-image-output')
+                                        
+                                        if(window.FileList && window.File && window.FileReader){
+                                            document.getElementById('review-image-selector').addEventListener('change', event =>{
+                                                output.src='';
+                                                status.textContent='';
+                                                const file = event.target.files[0];
+                                                if(!file.type){
+                                                    status.textContent = "첨부한 파일 타입이 현재 브라우저에서 지원하지 않습니다."
+                                                    return;
+                                                }
+                                                const reader = new FileReader();
+                                                reader.addEventListener('load', event =>{
+                                                    output.src = event.target.result;
+                                                })
+                                                reader.readAsDataURL(file);
+                                            })
+                                        }
+                                    </script>
+                                </div>
                             </td>
                         </tr>
                     </table>

@@ -37,14 +37,17 @@
 							
 							let text = "";
 							$.each(result, function(index, item) {
-								text += "<tr>";
-								text += `<td><a href='#'>\${item.livecouId}</a></td>`;
+								text += `<tr id="\${item.livecouId}">`;
+								text += `<td>\${item.livecouId}</a></td>`;
 								text += `<td>\${item.livecouName}</td>`;
 								text += `<td>\${item.livecouPrice}</td>`;
 								text += `<td>\${item.livecouPubdate.substr(0,10)}</td>`;
 								//text += `<td>\${item.livecouUseperiod}</td>`;
 								text += `<td>\${item.livecouPubdate.substr(0,8)}\${parseInt(item.livecouPubdate.substr(8,2)) + item.livecouUseperiod}</td>`;
-								text +=`<td><input type='button' value='수정하기' name='\${item.livecouId}'/></td>`;
+								text +=
+									`<td>
+										<input type='button' value='수정LC' name='\${item.livecouId}' onclick="${path}/front?key=coupon&methodName=updateLiveCpForm&id=livecouId&name=livecouName&price=livecouPrice&pubDate=livecouPubdate&endDate=livecouUseperiod" />
+									</td>`;
 								text += "</tr>";
 								
 							});//each함수 끝
@@ -60,6 +63,13 @@
 				} // selectAllLiveCp() 메소드 종료
 				//selectAllLiveCp();
 				
+				//수정하기 버튼 클릭시 그값을 가지고 폼으로 이동
+				$(document).on("click", "input[value=수정LC]", function() {
+					location.href = "${path}/front?key=coupon&methodName=updateLiveCpForm&id=" + $(this).parent().parent().attr('id');
+					
+				});
+				
+				
 				// RGCOUPON 전체 검색
 				function selectAllRgCp(){
 					$.ajax({
@@ -71,13 +81,13 @@
 							
 							let text = "";
 							$.each(result, function(index, item) {
-								text += "<tr>";
-								text += `<td><a href='#'>\${item.rgcouId}</a></td>`;
+								text += `<tr id="\${item.rgcouId}">`;
+								text += `<td>\${item.rgcouId}</a></td>`;
 								text += `<td>\${item.rgcouName}</td>`;
 								text += `<td>\${item.rgcouPrice}</td>`;
 								text += `<td>\${item.rgcouPubdate.substr(0,10)}</td>`;
 								text += `<td>\${item.rgcouEnddate.substr(0,10)}</td>`;
-								text +=`<td><input type='button' value='수정하기' name='\${item.rgcouId}'/></td>`;
+								text +=`<td><input type='button' value='수정RC' name='\${item.rgcouId}' /></td>`;
 								text += "</tr>";
 								
 							});//each함수 끝
@@ -92,6 +102,13 @@
 					}); // ajax 종료
 				} // selectAllRgCp() 메소드 종료
 				//selectAllRgCp();
+				
+				//수정하기 버튼 클릭시 그값을 가지고 폼으로 이동
+				$(document).on("click", "input[value=수정RC]", function() {
+					location.href = "${path}/front?key=coupon&methodName=updateRgCpForm&id=" + $(this).parent().parent().attr('id');
+					
+				});
+				
 				
 			}); //ready 끝
 			
@@ -140,7 +157,8 @@
 				</table>
 				
 				<div style="text-align: right;">
-					<input type="submit" onclick="location.href='couponInsert.jsp'" value="쿠폰등록">
+					<input type="submit" onclick="location.href='couponInsert.jsp'" value="실시간쿠폰등록">
+					<input type="submit" onclick="location.href='couponInsert2.jsp'" value="정기쿠폰등록">
 				</div>
 				
 				<p>
