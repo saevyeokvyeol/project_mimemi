@@ -30,25 +30,7 @@ public interface GoodsService {
 	 * @param: String goodsId, String goodsThumbnail
 	 * */
 	void goodsUpdateThumbnail(String goodsId, String goodsThumbnail) throws SQLException;
-	
-	/**
-	 * 상품 상세이미지 수정
-	 * @param: String goodsId, String goodsDetailImg
-	 * */
-	void goodsUpdateDetailImg(String goodsId, String goodsDetailImg) throws SQLException;
-	
-	/**
-	 * 상품 썸네일 삭제
-	 * @param: String goodsId
-	 * */
-	void goodsDeleteThumbnail(String goodsId) throws SQLException;
-	
-	/**
-	 * 상품 상세이미지 삭제
-	 * @param: String goodsId
-	 * */
-	void goodsDeleteDetailImg(String goodsId) throws SQLException;
-	
+			
 	/**
 	 * 전체 상품조회 (상품 목록을 가져오기)
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
@@ -57,13 +39,16 @@ public interface GoodsService {
 	 * 
 	 */
 	public List<GoodsDTO> goodsSelectAll() throws SQLException;
+<<<<<<< HEAD
 	
+=======
+		
+>>>>>>> 16a23ac650cfe82f8faa349a876bbe02f9b9b15d
 	/**
 	 * 판매 중인 상품 조회
-	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<GoodsDTO>(goodsSale이 Y인 상품)
 	 * */
-	public List<GoodsDTO> goodsSelectForSale(String forsale) throws SQLException;
+	public List<GoodsDTO> goodsSelectForSale() throws SQLException;
 	
 	/**
 	 * 상품명으로 상품 조회
@@ -71,6 +56,7 @@ public interface GoodsService {
 	 * @return: List<GoodsDTO>(상품명에 키워드가 들어가는 상품)
 	 * */
 	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException;
+<<<<<<< HEAD
 	
 	/**
 	 * 상품코드로 상품 조회
@@ -87,4 +73,6 @@ public interface GoodsService {
 	List<GoodsDTO> selectOrderGoods(String userId) throws SQLException;
 	
 	
+=======
+>>>>>>> 16a23ac650cfe82f8faa349a876bbe02f9b9b15d
 }

@@ -31,7 +31,7 @@ function checkValid() {
 
 <form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=insertLiveCp">
 <table>
-   <caption><h2> 쿠폰등록 Form</h2></caption>
+   <caption><h2> 실시간쿠폰등록 Form</h2></caption>
   <tr>
 	<td>쿠폰번호</td>
 	<td><input type="text" name="id" id="id"/></td>

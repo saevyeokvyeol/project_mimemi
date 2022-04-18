@@ -10,12 +10,12 @@ public class MealDTO {
 	private int mealProtein;
 	private int mealFat;
 	private String mealImg;
-	private String mealSale;
+	private boolean mealSale;
 	
 	
 	public MealDTO() {}	
 	public MealDTO(String mealId, String goodsId, String mealName, int mealWeight, int mealKcal, int mealCarbo, int mealProtein,
-			int mealFat, String mealImg, String mealSale ) {
+			int mealFat, String mealImg, Boolean mealSale ) {
 		super();
 		this.mealId = mealId;
 		this.goodsId = goodsId;
@@ -28,12 +28,7 @@ public class MealDTO {
 		this.mealImg = mealImg;
 		this.mealSale = mealSale;
 	}
-	public int getMealKcal() {
-		return mealKcal;
-	}
-	public void setMealKcal(int mealKcal) {
-		this.mealKcal = mealKcal;
-	}
+
 	public String getMealId() {
 		return mealId;
 	}
@@ -58,9 +53,17 @@ public class MealDTO {
 	public void setMealWeight(int mealWeight) {
 		this.mealWeight = mealWeight;
 	}
+	
+	public int getMealKcal() {
+		return mealKcal;
+	}
+	public void setMealKcal(int mealKcal) {
+		this.mealKcal = mealKcal;
+	}
 	public int getMealCarbo() {
 		return mealCarbo;
 	}
+
 	public void setMealCarbo(int mealCarbo) {
 		this.mealCarbo = mealCarbo;
 	}
@@ -82,10 +85,10 @@ public class MealDTO {
 	public void setMealImg(String mealImg) {
 		this.mealImg = mealImg;
 	}
-	public String getMealSale() {
+	public boolean isMealSale() {
 		return mealSale;
 	}
-	public void setMealSale(String mealSale) {
+	public void setMealSale(boolean mealSale) {
 		this.mealSale = mealSale;
 	}
 	

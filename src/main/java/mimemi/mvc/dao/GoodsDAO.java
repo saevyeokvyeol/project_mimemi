@@ -57,9 +57,13 @@ public interface GoodsDAO {
 	 * @return: List<GoodsDTO>(상품명에 키워드가 들어가는 상품)
 	 * */
 
+<<<<<<< HEAD
+	List<GoodsDTO> selectByKeyword(String keyword) throws SQLException;
+=======
 
 	List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException;
 
+<<<<<<< HEAD
 	/**
 	 * 고객이 주문한 식단명 가져오기
 	 * @param String userId
@@ -67,3 +71,12 @@ public interface GoodsDAO {
 	 * */
 	List<GoodsDTO> selectOrderGoods(String userId) throws SQLException;
 }
+=======
+	
+>>>>>>> main
+
+
+	
+	
+}
+>>>>>>> 16a23ac650cfe82f8faa349a876bbe02f9b9b15d

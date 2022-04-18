@@ -11,9 +11,6 @@
 <body>
 <h3>index.jsp 페이지 입니다.</h3>
 
-
-
-
 </body>
 </html>
 

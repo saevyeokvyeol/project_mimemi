@@ -80,16 +80,17 @@ public class GoodsDAOImpl implements GoodsDAO {
 		PreparedStatement ps = null;
 		int result = 0;
 		String sql = proFile.getProperty("goods.update");
+		// goods.update = update goods set goods_name = ?, goods_detail = ?, goods_thumbnail = ?, goods_price = ?, goods_sale = ?, goods_detail_image = ? where goods_id = ?
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, goods.getGoodsId());
-			ps.setString(2,goods.getGoodsName());
-			ps.setString(3,goods.getGoodsDetail());
-			ps.setString(4,goods.getGoodsThumbnail());
-			ps.setInt(5,goods.getGoodsPrice());
-			ps.setBoolean(6, goods.isGoodsSale());
-			ps.setString(7,goods.getGoodsDetailImg());
+			ps.setString(7, goods.getGoodsId());
+			ps.setString(1,goods.getGoodsName());
+			ps.setString(2,goods.getGoodsDetail());
+			ps.setString(3,goods.getGoodsThumbnail());
+			ps.setInt(4,goods.getGoodsPrice());
+			ps.setBoolean(5, goods.isGoodsSale());
+			ps.setString(6,goods.getGoodsDetailImg());
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, con);
