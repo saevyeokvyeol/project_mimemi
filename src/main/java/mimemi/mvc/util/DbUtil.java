@@ -7,10 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
+
+import mimemi.mvc.controller.Controller;
 
 
 
@@ -27,7 +31,6 @@ public class DbUtil {
 		try {
 		  Context initContext = new InitialContext();
 		  ds = (DataSource)initContext.lookup("java:/comp/env/jdbc/myoracle");
-		  
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,7 +40,7 @@ public class DbUtil {
 	 * ¿¬°á
 	 * */
 	public static Connection getConnection() throws SQLException{
-		return  ds.getConnection();
+		return ds.getConnection();
 	} 
 	
 	/**
@@ -65,8 +68,19 @@ public class DbUtil {
 	}
 
 	public static Properties getProFile() {
-		// TODO Auto-generated method stub
-		return null;
+		String fileName = "dbQuery";
+		ResourceBundle rb = ResourceBundle.getBundle(fileName);
+		Properties properties = new Properties();
+
+		try {
+			for(String key : rb.keySet()) {
+				String value = rb.getString(key);
+				properties.put(key, value);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return properties;
 	}
 }
 

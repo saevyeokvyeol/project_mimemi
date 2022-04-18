@@ -51,10 +51,10 @@
     				"price": 3000,
     			},
     			{
-    				"name": "비건 식당",
+    				"name": "비건식단",
     				"price": 4000,
     			}
-    		 */]s
+    		 */]
     	}
     	
     	function fillCards() {

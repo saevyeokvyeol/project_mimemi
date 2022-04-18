@@ -7,14 +7,14 @@ import java.util.List;
 import mimemi.mvc.dao.OrderDAO;
 import mimemi.mvc.dao.OrderDAOImpl;
 import mimemi.mvc.dao.OrderLineDAO;
-import mimemi.mvc.dao.OrderLineDAOImpl;
+//import mimemi.mvc.dao.OrderLineDAOImpl;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 
 public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDao = new OrderDAOImpl();
-	private OrderLineDAO orderLineDao = new OrderLineDAOImpl();
+//	private OrderLineDAO orderLineDao = new OrderLineDAOImpl();
 
 	/**
 	 * 주문 등록

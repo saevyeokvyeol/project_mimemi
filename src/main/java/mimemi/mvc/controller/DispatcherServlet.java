@@ -44,12 +44,9 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		
 		System.out.println("key = " + key + ", methodName = " + methodName);
-		
-		
 		try {
 			// clzMap에서 키 값에 해당하는 밸류(클래스) 가져와 저장
 			Class<?> clz = clzMap.get(key);
-			
 			// 위에서 저장한 클래스에서 메소드 이름으로 메소드를 가져옴(가져올 때 매개변수도 함께 입력)
 			Method method = clz.getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
 			
