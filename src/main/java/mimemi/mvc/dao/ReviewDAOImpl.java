@@ -17,6 +17,7 @@ import mimemi.mvc.util.DbUtil;
 
 public class ReviewDAOImpl implements ReviewDAO {
 	private Properties proFile = new Properties();
+	private ReviewReplyDAO reviewReplyDAO = new ReviewReplyDAOImpl();
 
 	@Override
 	public int insertReview(ReviewDTO reviewDTO) throws SQLException {
@@ -46,10 +47,63 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 	@Override
 	public int updateReview(ReviewDTO reviewDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql ="update review set GOODS_ID=?, REVIEW_TITLE=?,REVIEW_CONTENT=?,REVIEW_RATE=? where REVIEW_NO =?";
+		//String sql=proFile.getProperty("");
+		int result = 0;
+		try {
+			con= DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps =con.prepareStatement(sql);
+			ps.setString(1, reviewDTO.getGoodsId());
+			ps.setString(2, reviewDTO.getReviewTitle());
+			ps.setString(3, reviewDTO.getReviewContent());
+			ps.setInt(4, reviewDTO.getReviewRate());
+			ps.setInt(5, reviewDTO.getReviewNo());
+			
+			result = ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("후기 수정에 실패했습니다.");
+			}else {
+				//수정한 파일이 값이 있다면, 파일 수정한다.
+				if(reviewDTO.getReviewAttach()!=null) {
+					int re = updateFaqImgCon(con,reviewDTO.getReviewNo(),reviewDTO.getReviewAttach());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("후기 파일 수정에 실패했습니다.");
+						}
+				}
+				con.commit();
+			}
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
-
+	
+	/*후기 게시글 수정할 때, 이미지만 수정하는 메소드*/
+	public int updateFaqImgCon(Connection con,int reviewNo, String reviewAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql ="update review set REVIEW_ATTACH=? where REVIEW_NO =?";
+		//String sql=proFile.getProperty("");
+		int result =0;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, reviewAttach);
+			ps.setInt(2, reviewNo);
+			
+			result=ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	} 
+	
 	@Override
 	public int updateFaqImg(int reviewNo, String reviewAttach) throws SQLException {
 		// TODO Auto-generated method stub
@@ -58,8 +112,25 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 	@Override
 	public int deleteReview(int reviewNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql="delete from review where REVIEW_NO=?";
+		//String sql=proFile.getProperty("");
+		int result=0;
+		
+		try {
+			con =DbUtil.getConnection();
+			int re = reviewReplyDAO.deleteReviewReplyByReviewNo(con, reviewNo);
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reviewNo);
+			
+			result= ps.executeUpdate();
+			System.out.println("dao: 삭제한 리뷰번호 "+reviewNo);
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	@Override
@@ -79,12 +150,26 @@ public class ReviewDAOImpl implements ReviewDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql="select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
+		String sql= null;
 		//String sql=proFile.getProperty("");
 		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
 		SimpleDateFormat reviewFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		
+		if (field != null) {
+			if (field.equals("reg")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
+				//sql = proFile.getProperty("review.selectAllReg");
+			} else if (field.equals("higirate")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE desc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllHigirate");
+			} else if (field.equals("rowrate")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE asc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllRowrate");
+			} else if (field.equals("view")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_VIEWS desc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllView");
+			} 
+		}
 		try {
 			int totalCount =this.getTotalCount(field);
 			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
@@ -133,7 +218,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 		PreparedStatement ps=null;
 		ResultSet rs =null;
 		int totalCount=0;
-		String sql="select*from review order by review_regdate desc";
+		String sql="select count(*) from review";
+		 //select count(*) from review
 		//String sql=proFile.getProperty("");
 		//나중에 카테고리별 if문 이용해서 다른 sql문 사용하기
 		

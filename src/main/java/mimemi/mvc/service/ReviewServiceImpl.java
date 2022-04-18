@@ -31,19 +31,40 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public void updateReview(ReviewDTO reviewDTO) throws SQLException {
-		// TODO Auto-generated method stub
+		ReviewDTO dbreview = reviewDAO.selectByReviewNo(reviewDTO.getReviewNo());
+			if(dbreview==null) {
+				throw new SQLException("리뷰 번호에 해당하는 리뷰를 찾을 수 없습니다.");
+			}else if(!dbreview.getUserId().equals(reviewDTO.getUserId())||dbreview.getUserId()==reviewDTO.getUserId()) {
+				throw new SQLException("아이디가 일치하지 않습니다.게시물 수정 권한이 없습니다.");
+			}
+		int result = reviewDAO.updateReview(reviewDTO);
+			if(result==0) {
+				throw new SQLException("수정되지 않았습니다.");
+			}
 
 	}
 
 	@Override
 	public void updateFaqImg(int reviewNo, String reviewAttach) throws SQLException {
-		// TODO Auto-generated method stub
+		/*ReviewDTO dbreview = reviewDAO.selectByReviewNo(reviewNo);
+		if(dbreview==null) {
+			throw new SQLException("리뷰 번호에 해당하는 리뷰를 찾을 수 없습니다.");
+		}*/
 
 	}
 
 	@Override
-	public void deleteReview(int reviewNo) throws SQLException {
-		// TODO Auto-generated method stub
+	public void deleteReview(ReviewDTO review, String path) throws SQLException {
+		//db에서 삭제한다.
+		int result =reviewDAO.deleteReview(review.getReviewNo());
+		if(result==0) {
+			throw new SQLException("삭제에 오류가 생겨 삭제되지 않았습니다.");
+		}
+		//게시물을 삭제했다면 save 폴더에서 삭제한다.
+		if(review.getReviewAttach()!=null) {
+			new java.io.File(path+"/"+review.getReviewAttach()).delete();
+		}
+		System.out.println("폴더에서 삭제완료");
 
 	}
 

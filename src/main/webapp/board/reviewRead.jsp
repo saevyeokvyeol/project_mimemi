@@ -19,14 +19,11 @@ pageEncoding="UTF-8"%>
             }
             
             .review-Image{
-                box-sizing: border-box;
+            	box-sizing: border-box;
                 width: 400px;
                 height: 100%;
-                align-items: center;
-                display: flex;
-                justify-content: center;
-                background-color: rgb(241, 241, 241);
                 float: left;
+                
             }
             .review-userInfo{
                 box-sizing: border-box;
@@ -38,7 +35,12 @@ pageEncoding="UTF-8"%>
             }
             
             #reviewImg, #reveiwImg-when-empty{
-                width: 400px;
+            	box-sizing: border-box;
+                width:400px;
+                height: 100%;
+                object-fit:contain;
+                background-color: rgb(241, 241, 241);
+                float: left;
             }
             .reivew-writer{
                 box-sizing: border-box;
@@ -195,7 +197,7 @@ pageEncoding="UTF-8"%>
             <div class="base-btn">
                 <span class="bLeft"><a href="javascript:void(0);" onclick="backList()">목록으로 돌아가기<img src="목록아이콘"></a></span>
                 <span class="bRight">
-                	<a href="javascript:void(0);">삭제<img src="삭제아이콘"></a>
+                	<a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}">삭제<img src="삭제아이콘"></a>
                 </span>
                 <span class="bRight">
                 	<a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" >수정<img src="수정아이콘"></a>
