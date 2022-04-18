@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
 <div class="left side"> 
 	<div class="title">고객센터</div><hr width="100px">
 	<ul class="menu">
-		<li><a href="${path}/front?key=notice&methodName=selectAll">공지사항</a></li>
+		<li><a href="${path}/front?key=notice&methodName=selectAllNotice">공지사항</a></li>
 		<li class="">
 			<a href="faq.jsp">FAQ</a>
 			<ul>

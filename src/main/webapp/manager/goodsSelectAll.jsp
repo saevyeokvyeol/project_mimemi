@@ -20,6 +20,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
+    
+	<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 
     <title>미미미</title>
 
@@ -36,39 +38,36 @@
     </style>
     
     <script type = "text/javascript">
-    	$(function()) {
-    		function goodsSellectAll(){
+    	$(function() {
+    		if (window.location.href.endsWith('.jsp')) {
+    			window.location.href='${path}/front?key=goods&methodName=goodsSelectAll';	
+    		}
+    		
+    		function goodsSelectAll(){
     			$.ajax({
-    				url: "${path}/mimemi/ajax",
-    				type: "post"
+    				url: "${path}/ajax",
+    				type: "get",
     				dataType: "json",
     				data: {key: "goods", methodName: "getGoodsList"},
     				success: function(result) {
     					let text = "";
     					$.each(result, function(index, item){
     						text+="<tr>"
-    						text+='<td>\${item.goodsId}</td>';
-    						text+='<td>\${item.goodsThumbnail}</td>';
-    						text+='<td>\${item.goodsName}</td>';
-    						text+='<td>\${item.goodsPrice}</td>';
-    						text+='<td>\${item.goodsSale}</td>';
-    						text+='<td>\${item.goodsDetail}</td>';
+    						text+='<td>' + item.goodsId + '</td>';
+    						text+='<td>' + item.goodsThumbnail + '</td>';
+    						text+='<td>' + item.goodsName + '</td>';
+    						text+='<td>' + item.goodsPrice + '</td>';
+    						text+='<td>' + (item.goodsSale ? 'Y' : 'N') + '</td>';
+    						text+='<td>' + item.goodsDetail + '</td>';
     						text+='</tr>';
     					});
-    						$("#goodsTable tr:gt(0)").remove();
-    						$("#goodsTable tbody").append(str);
-    						
-    					}
-    				})
-    			
+   						$("#goodsTable tr:gt(0)").remove();
+   						$("#goodsTable tbody").append(text);    						
+   					}
+   				})
     		}
-    		goodsSellectAll();
-    	}
-    				
-    					
-    							
-    		
-    	
+    		goodsSelectAll();
+    	})
     </script>
 </head>
 
@@ -107,46 +106,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>JUNG01</td>
-                            <td>
-                                <img src="/Users/egg/kosta/Project2/img/Goods_1.png">
-                            </td>
-                            <td>정성한상</td>
-                            <td>10000</td>
-                            <td>Y</td>
-                            <td>1일 1식/정성가득한 영양만점 식단</td>
-                            <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
-                        </tr>
-                        <tr>
-                            <td>VEGAN01</td>
-                            <td>
-                                <img src="/Users/egg/kosta/Project2/img/Goods_2.png">
-                            </td>
-                            <td>비건 식단</td>
-                            <td>8500</td>
-                            <td>Y</td>
-                            <td>1일 1식/신선하고 바른 비건 맞춤 식단</td>
-                            <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
-                        </tr>
-                        <!-- <tr>
-                            <td>H</td>
-                            <td>맛있는 한식</td>
-                            <td>2022.04.20</td>
-                            <td>H01</td>
-                            <td>김치볶음밥</td>
-                            <td>3000원</td>
-                            <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
-                        </tr> -->
-                        <!-- <tr>
-                            <td>H</td>
-                            <td>맛있는 한식</td>
-                            <td>2022.04.20</td>
-                            <td>H01</td>
-                            <td>김치볶음밥</td>
-                            <td>3000원</td>
-                            <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
-                        </tr> -->
                     </tbody>
                 </table>
             </div>

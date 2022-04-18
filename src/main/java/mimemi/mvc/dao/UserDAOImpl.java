@@ -15,7 +15,7 @@ public class UserDAOImpl implements UserDAO {
 	private Properties proFile = new Properties();
 
 	@Override
-	public UserDTO loginUser(UserDTO user) throws SQLException {
+	public UserDTO loginUser(String userId, String userPwd) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -25,8 +25,8 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, user.getUserId());
-			ps.setString(2, user.getUserPwd());
+			ps.setString(1, userId);
+			ps.setString(2, userPwd);
 			
 			rs=ps.executeQuery();
 			if(rs.next()) {
@@ -136,7 +136,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException {
+	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException { //검색기능, 생일검색 기능 따로 만들어야함.
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

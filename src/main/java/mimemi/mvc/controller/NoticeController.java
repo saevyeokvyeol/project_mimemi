@@ -40,15 +40,12 @@ public class NoticeController implements Controller {
 		
 		MultipartRequest m = new MultipartRequest(request, saveDir,maxSize, encoding, new DefaultFileRenamePolicy());
 		
-		System.out.println("아마2");
-
 		String noticeTitle = m.getParameter("notice_title"); 
 		String noticeContent = m.getParameter("notice_content"); 
 		String noticeAttach = m.getParameter("notice_attach"); 
 
-		
 		NoticeDTO noticeDto = new NoticeDTO(noticeTitle, noticeContent, noticeAttach);
-		System.out.println("아마");
+
 		
 		if(m.getFilesystemName("noticeAttach") != null) {
 			noticeDto. setNoticeAttach(m.getFilesystemName("noticeAttach"));	
@@ -147,7 +144,7 @@ public class NoticeController implements Controller {
         response.setContentType("text/html;charset=UTF-8"); 
         
         String noticeNo = request.getParameter("noticeNo");
-		String pageNum = request.getParameter("pageNum");
+
 	/*	String user = request.getParameter("user");
 		
 		boolean isAdmin = (user.equals("admin")) ? true : false;
@@ -155,10 +152,9 @@ public class NoticeController implements Controller {
 		if(pageNum == null || pageNum.equals("")) {
 			pageNum = "1";
 		}*/
-		System.out.println("dd");
+
 	    NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
 		request.setAttribute("noticeDetail", notice); 
-		request.setAttribute("pageNum", pageNum);
 		
 		/*request.setAttribute("isAdmin", isAdmin);*/
 		return new ModelAndView("/board/notice_view.jsp"); 

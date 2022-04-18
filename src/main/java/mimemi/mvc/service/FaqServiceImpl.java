@@ -12,7 +12,8 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public void insertFaq(FaqDTO faqDTO) throws SQLException {
-		// TODO Auto-generated method stub
+		int result = faqDao.insertFaq(faqDTO);
+		if(result==0)throw new SQLException("등록되지 않았습니다.");
 
 	}
 
@@ -49,7 +50,7 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public List<FaqDTO> selectByKeyword(String faqKeyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 

@@ -11,12 +11,16 @@ public class UserDTO {
 	private String userBirth;
 	
 	public UserDTO() {}
-	public UserDTO(String userId, String userPwd) {
+//	public UserDTO(String userId, String userPwd) {
+//		super();
+//		this.userId = userId;
+//		this.userPwd = userPwd;
+//	}
+	public UserDTO(String userId, String userName) {
 		super();
 		this.userId = userId;
-		this.userPwd = userPwd;
+		this.userName = userName;
 	}
-	
 	public UserDTO(String userPhone) {
 		this.userPhone = userPhone;
 	}
