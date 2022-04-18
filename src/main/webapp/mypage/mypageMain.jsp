@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
+<jsp:include page="../common/header.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,18 @@
 <style type="text/css">
 	iframe{border-style:none; width:100%; height:100%; }
 </style>
+
+<script type="text/javascript">
+ $(function(){
+	alert($(userId));	
+})
+
+</script>
 </head>
 <body>
 <div class="topBox">
 	<div class="firstBox">
-	  <div class="txt1"><strong>~</strong>님 반갑습니다.</div>
+	  <div class="txt1"><strong>11</strong>님 반갑습니다.</div>
 	  <div class="txt2">미미미와 함께하신지 ~일 되었습니다.</div>
 	</div>
 	<div class="secondBox">
