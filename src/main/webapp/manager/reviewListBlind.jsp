@@ -20,6 +20,10 @@ pageEncoding="UTF-8"%>
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
        <style>
+           div{
+                width: 1000px;
+                margin: auto;
+            }
            #review-list-img-preview{
                 width: 50px;
                 height: 50px;

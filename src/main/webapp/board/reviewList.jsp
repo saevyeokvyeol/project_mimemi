@@ -7,52 +7,18 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
-        <style>
-            div{
-                width: 1000px;
-                margin: auto;
-                text-align: center;
-            }
-            table {
-                width: 800px;
-                margin: 10px,0px,10px,0px;
-                border-collapse: collapse;
-            }
-            th,td{
-                border: 1px black solid;
-                padding: 10px;
-            }
-            .container{
-                width: 1200px;
-            }
-            div.review-title{
-                text-align: left;
-            }
-            div.review-sort-area{
-                text-align: right;
-                
-            }
-            #review-list-img-preview{
-                width: 50px;
-                height: auto;
-            }
-            div.reivew-wirte-bnt{
-                text-align: right;
-            }
-            span.review-list-img-preview-empty-area{
-                width: 50px;
-                height: auto;
-            }
-           
-        </style>
-        <!--부트스트랩 CSS CDN-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-                
-        <!--부트스트랩 JS CDN-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-        </script>
-        <!-- jQuery -->
-		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+         <!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        
+		<!-- JavaScript Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        
+        <!-- jQuery -->        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+        
+        
         <script>
         	$(function(){
         		$("#review_sort_select").change(function(){
@@ -63,53 +29,55 @@ pageEncoding="UTF-8"%>
         		})
         	})
         </script>
-        
+        <style>
+           div{
+                width: 1000px;
+                margin: auto;
+            }
+           #review-list-img-preview{
+                width: 50px;
+                height: 50px;
+                object-fit:cover;
+            }
+            table th{
+                text-align: center;
+            }
+            img.starRateImg{
+                width:70px;
+                height: auto; 
+            }
+            
+       </style>
         
         
     </head>
     <body>
         <div class="container">
             <div class="review-title">
-                <h1>후기 게시판</h1>
-                <hr>
+                <h3>후기 게시판</h3>
             </div>
 
             <div class="review-sort-area">
-                 <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
+                <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
                 <select name="review_sort_select" id="review_sort_select">
-                	<option name="review_sort" value="0">--정렬방식--</option>
+                    <option name="review_sort" value="0">--정렬방식--</option>
                     <option name="review_sort" value="reg" selected='selected'>등록순</option>
                     <option name="review_sort" value="higirate">별점 높은순</option>
                     <option name="review_sort" value="rowrate">별점 낮은순</option>
                     <option name="review_sort" value="view">조회순</option>
                 </select>
             </div>
-           
             <div class="review-list">
-                <table id ="review-list-table">
-                    <thead>
+                <table class="table">
+                    <thead class="thead-dark">
                         <tr>
-                            <th>
-                                <span>번호</span> 
-                            </th>
-                            <th>
-                                <span>리뷰이미지</span>
-                            </th>
-                            <th>
-                                <span>상품</span>
-                            </th>
-                            <th>
-                                <span>제목</span>
-                            </th>
-                            <th>
-                                <span>글쓴이</span>
-                            </th>
-                            <th>
-                                <span>날짜</span>
-                            </th>
-                            <th>
-                                <span>별점</span>
-                            </th>
+                        <th scope="col">게시글번호</th>
+                        <th scope="col">리뷰이미지</th>
+                        <th scope="col">상품</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">날짜</th>
+                        <th scope="col">별점</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,39 +92,56 @@ pageEncoding="UTF-8"%>
                             <c:otherwise>
                                 <c:forEach items="${requestScope.list}" var="review">
                                     <tr>
-                                        <td>
+                                        <th>
                                             <span>${review.reviewNo}</span>
-                                        </td>
-                                        <td>
+                                        </th>
+                                        <th>
                                             <c:if test="${not empty review.reviewAttach}">
                                                 <span class="review-list-img-preview-area">
                                                     <img src="${path}/img/save/${review.reviewAttach}" alt="후기 이미지입니다." id="review-list-img-preview"></span>
                                             </c:if>
                                             <span class="review-list-img-preview-empty-area"></span>
-                                        </td>
-                                        <td>
+                                        </th>
+                                        <th>
                                             <span>${review.goodsDTO.goodsName}</span>
-                                        </td>
+                                        </th>
                                         <td>
-                                            <span><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></span>
+                                            <span class="review-list-content-link"><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></span>
                                         </td>
-                                        <td>
+                                        <th>
                                             <span>${review.userDTO.userName}</span>
-                                        </td>
-                                        <td>
+                                        </th>
+                                        <th>
                                             <span>${review.reviewRegdate}</span>
-                                        </td>
-                                        <td>
-                                            <span>${review.reviewRate}</span>
-                                        </td>
+                                        </th>
+                                        <th>
+                                            <c:choose>
+                                                <c:when test="${review.reviewRate eq 1}">
+                                                    <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
+                                                </c:when>
+                                                <c:when test="${review.reviewRate eq 2}">
+                                                    <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
+                                                </c:when>
+                                                <c:when test="${review.reviewRate eq 3}">
+                                                    <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
+                                                </c:when>
+                                                <c:when test="${review.reviewRate eq 4}">
+                                                    <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
+                                                </c:when>
+                                                <c:when test="${review.reviewRate eq 5}">
+                                                    <img src="${path}/img/ui/starRate5.jpg" class="starRateImg">
+                                                </c:when>
+                                            </c:choose>
+                                        </th>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
                         </c:choose>
                     </tbody>
                 </table>
-             </div>
-             <!-- 관리자 아이디면 작성불가 메세지 띄워주기 처리해야함-->
+            </div>
+            
+             <!-- 리뷰쓰기 - 관리자 아이디면 작성불가 메세지 띄워주기 처리해야함-->
             <div class="reivew-wirte-bnt">
                 <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp">리뷰쓰기</a></span>
             </div>
@@ -168,6 +153,13 @@ pageEncoding="UTF-8"%>
                 <input type="text" name="review_search">
                 <input type="button" value="검색하기" id="btn">
             </div>
+            <!--검색하기-->
+            <nav class="navbar navbar-light bg-light">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                </nav>
             <!-- 페이징 처리 -->
             
             <nav aria-label="Page navigation example">
