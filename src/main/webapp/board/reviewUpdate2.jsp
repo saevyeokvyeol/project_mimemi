@@ -35,6 +35,7 @@ pageEncoding="UTF-8"%>
             }
             div.review-image-insert-area{
             	width: 500px;
+            	margin: 0px
             }
             div.review-image-preview{
                 box-sizing: border-box;
@@ -61,31 +62,30 @@ pageEncoding="UTF-8"%>
         <!--부트스트랩 JS CDN-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
-        <!--JQgrid CDN-->
+        
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         <script>
             function checkValid(){
-                var form = window.document.writeReview;
-                var selectCheck=$('#review_select_goods > option:selected').val();
-                var radioCheck =$('input[name=rate]').is(":checked");
+                var title = document.writeReview.review_title;
+                var contents = document.writeReview.review_contents;
                 
-
-                if(form.review_title.value==""){
-                    alert("후기 제목을 입력해 주십시오.")
-                    form.review_title.focus();
-                    return false;
-                }
-                if(!selectCheck){
-                	alert("후기를 쓸 상품을 선택해주십시오.")
+                if(title.value==""){
+                	alert("후기 제목을 입력해 주십시오.");
+                	title.focus();
                 	return false;
                 }
-                if(!radioCheck){
-                    alert("상품의 별점을 선택해주십시오.")
-                    return false;
+                if(contents.value==""){
+                	alert("후기 내용을 입력해 주십시오.");
+                	contents.focus();
+                	return false;
                 }
-                if(form.review_contents.value==""){
-                    alert("후기 내용을 입력해 주십시오.")
-                    form.review_contents.focus();
+                if($("select[name=review_select_goods]").val()==""){
+                	alert("후기를 쓸 상품을 선택해주십시오.");
+                	$("#review_select_goods").focus();
+                	return false;
+                }
+                if($("input[name=rate]:radio:checked").length<1){
+                	alert("상품의 별점을 선택해주십시오.")
                     return false;
                 }
                 
@@ -96,17 +96,18 @@ pageEncoding="UTF-8"%>
     <body>
         <div class="container">
             <div class="review-title">
-                <h1>후기 게시판 등록</h1>
+                <h1>후기 게시판 수정</h1>
                 <hr>
             </div>
             <div class="review-writeForm">
-                <form name="writeReview" method="post" action="${path}/front?key=review&methodName=insert"
+                <form name="writeReview" method="post" action="${path}/front?key=review&methodName=update"
                 onSubmit='return checkValid()' enctype="multipart/form-data">
+                <input type="hidden" name="reviewNo" value="${review.reviewNo}">
                     <table>
                         <tr>
                             <th>제목</th>
                             <td>
-                            	<span><input type="text" name="review_title" placeholder="제목" maxlength='16'></span>
+                            	<span><input type="text" name="review_title" placeholder="제목" maxlength='16' value="${review.reviewTitle}"></span>
                             </td>
                         </tr>
                         <tr>
@@ -123,17 +124,22 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>별점</th>
                             <td>
-                                <input type="radio" name="rate" value="1">★ 
-                                <input type="radio" name="rate" value="2">★★ 
-                                <input type="radio" name="rate" value="3">★★★
-                                <input type="radio" name="rate" value="4">★★★★ 
-                                <input type="radio" name="rate" value="5">★★★★★ 
+                                <input type="radio" name="rate" value="1">
+                                <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="2">
+                                <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="3">
+                                <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="4">
+                                <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="5">
+                                <img src="${path}/img/ui/starRate5.jpg" class="starRateImg"> 
                             </td>
                         </tr>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="review_contents" cols="50" rows="10" maxlength='333' placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다."></textarea>
+                                <textarea name="review_contents" cols="50" rows="10" maxlength='333' placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다.">${review.reviewContent}</textarea>
                             </td>
                         </tr>
                         <tr>
@@ -141,7 +147,7 @@ pageEncoding="UTF-8"%>
                             <td>
                                 <div class="review-image-insert-area">
                                 	<input type="file" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
-                                	<p id="file-status"></p>
+                                	<p id="file-status">${review.reviewAttach}</p>
                                     <div class="review-image-preview">
                                         <img id="review-image-output">
                                     </div>

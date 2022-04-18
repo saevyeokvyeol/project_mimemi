@@ -71,4 +71,14 @@ public interface CouponService {
 	 * @return: UserCouponDTO(회원 아이디로 검색된 전체 레코드)
 	 * */
 	List<UserCouponDTO> selectCpByUserId(String userId) throws SQLException;
+	
+	/**
+	 * livecouId값으로 LiveCouponDTO 객체 하나 불러오기
+	 * */
+	LiveCouponDTO selectLvCouByCouId(String livecouId) throws SQLException;
+	
+	/**
+	 * rgcouId값으로 RgCouponDTO 객체 하나 불러오기
+	 * */
+	RgCouponDTO selectRgCouByCouId(String rgcouId) throws SQLException;
 }

@@ -88,8 +88,96 @@ public class CouponController implements Controller {
 		LiveCouponDTO dto = new LiveCouponDTO(livecouId, livecouName, Integer.parseInt(livecouPrice), livecouPubdate, Integer.parseInt(livecouUseperiod) );
 		couponService.insertLiveCp(dto);
 		
-		return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
+		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
+		return new ModelAndView("manager/selectCouponAll.jsp", true);
 		
 	}
+	
+	/**
+	 * Á¤±â ÄíÆù µî·Ï
+	 * @param: RgCouponDTO(String rgcouId, String rgcouName, int rgcouPrice, String rgcouPubdate, String rgcouEnddate)
+	 * */
+	public ModelAndView insertRgCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String rgcouId = request.getParameter("id");
+		String rgcouName = request.getParameter("name");
+		String rgcouPrice = request.getParameter("price");
+		String rgcouPubdate = request.getParameter("pubDate");
+		String rgcouEnddate = request.getParameter("endDate");
+		
+		RgCouponDTO dto = new RgCouponDTO(rgcouId, rgcouName, Integer.parseInt(rgcouPrice), rgcouPubdate, rgcouEnddate );
+		couponService.insertRgCp(dto);
+		
+		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
+		return new ModelAndView("manager/selectCouponAll.jsp", true);
+	}
 
+	/**
+	 * ½Ç½Ã°£ ÄíÆù ¼öÁ¤(ModelAndView)
+	 * @param: LiveCouponDTO(String livecouId, String livecouName, int livecouPrice, int livecouUseperiod)
+	 * */
+	public ModelAndView updateLiveCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String livecouId = request.getParameter("id");
+		String livecouName = request.getParameter("name");
+		String livecouPrice = request.getParameter("price");
+		String livecouPubdate = request.getParameter("pubDate");
+		String livecouUseperiod = request.getParameter("endDate");
+		
+		LiveCouponDTO liveCoupon = new LiveCouponDTO(livecouId, livecouName, Integer.parseInt(livecouPrice), livecouPubdate, Integer.parseInt(livecouUseperiod) );
+		request.setAttribute("liveCoupon", liveCoupon);
+		couponService.updateLiveCp(liveCoupon);
+		
+		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
+		return new ModelAndView("manager/selectCouponAll.jsp");
+	}
+	
+	/**½Ç½Ã°£ÄíÆù ¼öÁ¤Æû*/
+	public ModelAndView updateLiveCpForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String liveCouId = request.getParameter("id");
+		System.out.println(liveCouId);
+		
+		LiveCouponDTO liveCoupon = couponService.selectLvCouByCouId(liveCouId);
+		
+		request.setAttribute("liveCoupon", liveCoupon);
+		
+		return new ModelAndView("manager/couponUpdate.jsp");
+	}
+	
+	/**
+	 * Á¤±â ÄíÆù ¼öÁ¤(ModelAndView)
+	 * @param: RgCouponDTO
+	 * */
+	public ModelAndView updateRgCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String rgcouId = request.getParameter("id");
+		String rgcouName = request.getParameter("name");
+		String rgcouPrice = request.getParameter("price");
+		String rgcouPubdate = request.getParameter("pubDate");
+		String rgcouEnddate = request.getParameter("endDate");
+		
+		RgCouponDTO rgCoupon = new RgCouponDTO(rgcouId, rgcouName, Integer.parseInt(rgcouPrice), rgcouPubdate, rgcouEnddate );
+		request.setAttribute("rgCoupon", rgCoupon);
+		couponService.updateRgCp(rgCoupon);
+		
+		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
+		return new ModelAndView("manager/selectCouponAll.jsp");
+	}
+	
+	/**Á¤±âÄíÆù ¼öÁ¤Æû*/
+	public ModelAndView updateRgCpForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String rgcouId = request.getParameter("id");
+		System.out.println(rgcouId);
+		
+		RgCouponDTO rgCoupon = couponService.selectRgCouByCouId(rgcouId);
+		
+		request.setAttribute("rgCoupon", rgCoupon);
+		
+		return new ModelAndView("manager/couponUpdate2.jsp");
+	}
+	
+	
 }

@@ -78,4 +78,18 @@ public interface CouponDAO {
 	 * */
 	List<UserCouponDTO> selectCpByUserId(String userId) throws SQLException;
 	
+	/**
+	 * LiveCoupon 쿠폰 조회
+	 * @param: String userId
+	 * @return: UserCouponDTO(회원 아이디로 검색된 전체 레코드)
+	 * */
+	LiveCouponDTO selectLvCouByCouId(String livecouId) throws SQLException;
+	
+	/**
+	 * RgCoupon 쿠폰 조회
+	 * @param: String userId
+	 * @return: UserCouponDTO(회원 아이디로 검색된 전체 레코드)
+	 * */
+	RgCouponDTO selectRcCouByCouId(String rgcouId) throws SQLException;
+	
 }

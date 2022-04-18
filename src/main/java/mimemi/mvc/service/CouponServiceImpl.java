@@ -1,5 +1,8 @@
 package mimemi.mvc.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.LiveCouponDTO;
 import mimemi.mvc.dto.RgCouponDTO;
 import mimemi.mvc.dto.UserCouponDTO;
+import mimemi.mvc.util.DbUtil;
 
 public class CouponServiceImpl implements CouponService {
 	private CouponDAO couponDAO = new CouponDAOImpl();
@@ -32,7 +36,11 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void updateLiveCp(LiveCouponDTO liveCoupon) throws SQLException {
-		// TODO Auto-generated method stub
+		int result = couponDAO.updateLiveCp(liveCoupon);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 
 	}
 	
@@ -42,7 +50,11 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void insertRgCp(RgCouponDTO rgCoupon) throws SQLException {
-		// TODO Auto-generated method stub
+		int result = couponDAO.insertRgCp(rgCoupon);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 
 	}
 	
@@ -52,8 +64,11 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void updateRgCp(RgCouponDTO rgCoupon) throws SQLException {
-		// TODO Auto-generated method stub
-
+		int result = couponDAO.updateRgCp(rgCoupon);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 	
 	/**
@@ -121,6 +136,25 @@ public class CouponServiceImpl implements CouponService {
 		List<UserCouponDTO> list = couponDAO.selectCpByUserId(userId);
 		
 		return list;
+	}
+	
+	/**
+	 * LiveCoupon을 쿠폰 아이디로 찾기
+	 * */
+	public LiveCouponDTO selectLvCouByCouId(String livecouId) throws SQLException {
+		LiveCouponDTO liveCoupon = couponDAO.selectLvCouByCouId(livecouId);
+		
+		return liveCoupon;
+	}
+
+	/**
+	 * RgCoupon을 쿠폰 아이디로 찾기
+	 * */
+	@Override
+	public RgCouponDTO selectRgCouByCouId(String rgcouId) throws SQLException {
+		RgCouponDTO rgCoupon = couponDAO.selectRcCouByCouId(rgcouId);
+		
+		return rgCoupon;
 	}
 
 }
