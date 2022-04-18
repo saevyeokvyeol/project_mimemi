@@ -94,6 +94,10 @@ pageEncoding="UTF-8"%>
                 width: 800px;
                 padding: 20px 30px 20px 30px;
             }
+            img.reply-user-icon{
+            	width: 30px;
+            	margin-right: 10px;
+            }
         </style>
        <!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
@@ -107,20 +111,43 @@ pageEncoding="UTF-8"%>
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
         <script>
-        	var methodName = "${methodName}"
-            function returnList(){
+        	var target ='${reviewDetail.reviewNo}'
+        	
+        $(function(){
+            //전체 댓글 검색
+        	function selectAllReply(){
+                $.ajax({
+				url: "../ajax" , //서버요청주소
+				type: "post" , //요청방식 (get,post...)
+				dataType: "json" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+				data: {key:"reviewreply", methodName:"select", reviewNo: target} , //서버에게 보낼 데이터정보(parameter정보)
+				
+				success: function(result){
+					alert("검색성공~")
+					let str="";
+					$.each(result,function(index,reply){
+                        str+=`<tr>`;
+                            str+=`<th rowspan="2"> ${index+1}</th>`
+                            str+=`<td>${reply.userId}</td>`
+                            str+=`<td>${reply.replyRegdate}</td>`
+                        str+=`</tr>`;
+                        str+=`<tr>`;
+                            str+=`<td colspan="2"><pre>${reply.replyContent}</pre></th>`
+                        str+=`</tr>`;
+                    })
+                   $("#review_reply_view tr:gt(0)").remove();
+                   $("#review_reply_view tr:eq(0)").after(str)
+				},
 
+				error: function(err){//실패했을 때 콜백함수
+				  alert(err+"오류가 발생했습니다.")
+				} 
+
+			    })
             }
-        	function sendDelete(){
-        		//session에 로그인된 사용자 id가 현재 게시글의 사용자 id와 일치하는지 체크하기
-        	}
-            function sendUpdate(){
-            	//session에 로그인된 사용자 id가 현재 게시글의 사용자 id와 일치하는지 체크하기
-            	if(true){
-            		location.replace("${path}")
-            	}
+        	selectAllReply();
             
-            }
+        })
         </script>
         
 
@@ -208,27 +235,47 @@ pageEncoding="UTF-8"%>
                 </span>
             </div>
             <div class="review-reply">
-                <div class="user-write-wrap">
-                    <form>
-                        <fieldset>
-                            <legend class=""></legend>
-                        </fieldset>
-                        <div class="user-rbox-profile-area">
-                            <div class="user_rbox_profile_id">
-                                <b><span class="user_rbox_id">fro*****</span></b>
+                
+                <!--댓글 입력창-->
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                            <div class="form-inline mb-2">
+                                <label for="replyId"><img src="${path}/img/ui/user.png" class="reply-user-icon"><img></label>
+                                <span><strong>현재 로그인한 유저 아이디</strong></span>
                             </div>
-                        </div>
-                        <div class="user_rbox_wirte_area">
-                            <textarea name="user_write_reply" cols="80" rows="5" placeholder="댓글을 달아보세요."></textarea>
-                            <input type="submit" value="등록">
-                        </div>
-                    </form>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">댓글 등록하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 아작스 댓글 조회하기 -->
+                <div class="card-header bg-light">
+	                <i class="fa fa-comment fa"></i> 
+                </div>
+                <div class="review_reply_wrap">
+                    <div class="review_reply_area">
+                        <table id="review_reply_view">
+                        	<tr id="review_reply_list"> 
+                        	    <th rowspan="2"> ㅁ</th> 
+                                <td>fro***</td>  	
+                                <td>등록한 날짜</td>	
+                        	</tr>
+                            <tr><td colspan="2">댓글내용입니다~~~~~~~~~</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <!--댓글 조회창-->
+                <div class="card-header bg-light">
+	                <i class="fa fa-comment fa"></i> 
                 </div>
                 <div class="review_reply_wrap">
                     <div class="review_reply_area">
                         <div class="review_reply-user-profile-area">
                             <div class="review_reply_userid">
-                                <b><span class="reply_user_id">adf****</span></b>
+                                <b><span class="reply_user_id"></span></b>
                             </div>
                         </div>
                         <div class="review_reply_content_area">
@@ -240,6 +287,9 @@ pageEncoding="UTF-8"%>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="card-header bg-light">
+	                <i class="fa fa-comment fa"  ></i> 
                 </div>
             </div>
 

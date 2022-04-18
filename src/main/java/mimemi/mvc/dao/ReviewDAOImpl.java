@@ -296,11 +296,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return result;
 	}
 
-	@Override
-	public List<ReviewReplyDTO> selectReplyByReviewNo(int reviewNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	
 	/**

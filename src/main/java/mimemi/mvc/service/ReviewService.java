@@ -55,6 +55,7 @@ public interface ReviewService {
 	 * */
 	ReviewDTO selectByReviewNo(int reviewNo, boolean flag) throws SQLException;
 	
+	
 	/**
 	 * 관리자- 전체 검색(페이지 처리)
 	 * field -> 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)

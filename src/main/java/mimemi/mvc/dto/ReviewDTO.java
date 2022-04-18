@@ -1,7 +1,5 @@
 package mimemi.mvc.dto;
 
-
-
 public class ReviewDTO {
 	private int reviewNo;
 	private String userId;
@@ -37,6 +35,7 @@ public class ReviewDTO {
 		this.reviewBlind = reviewBlind;
 		this.reviewViews = reviewViews;
 	}
+	
 
 	public GoodsDTO getGoodsDTO() {
 		return goodsDTO;

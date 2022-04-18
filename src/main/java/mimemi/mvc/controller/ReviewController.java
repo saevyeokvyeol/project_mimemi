@@ -12,6 +12,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import mimemi.mvc.dto.ReviewDTO;
+import mimemi.mvc.dto.ReviewReplyDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.ReviewService;
 import mimemi.mvc.service.ReviewServiceImpl;
@@ -62,7 +63,7 @@ public class ReviewController implements Controller {
 	}
 	
 	/**
-	 * 리뷰 번호로 상세조회하기
+	 * 리뷰 상세보기
 	 * */
 	public ModelAndView selectByReviewNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String curPageNo= request.getParameter("pageNum");

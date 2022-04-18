@@ -4,18 +4,28 @@ public class ReviewReplyDTO {
 	private int replyNo;
 	private int reviewNo;
 	private String userId;
+	private String managerId;
 	private String replyContent;
 	private String replyRegdate;
 	
 	public ReviewReplyDTO() {}
 
-	public ReviewReplyDTO(int replyNo, int reviewNo, String userId, String replyContent, String replyRegdate) {
+	public ReviewReplyDTO(int replyNo, int reviewNo, String userId, String managerId, String replyContent, String replyRegdate) {
 		super();
 		this.replyNo = replyNo;
 		this.reviewNo = reviewNo;
 		this.userId = userId;
+		this.managerId = managerId;
 		this.replyContent = replyContent;
 		this.replyRegdate = replyRegdate;
+	}
+	
+	public String getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
 	}
 
 	public int getReplyNo() {
