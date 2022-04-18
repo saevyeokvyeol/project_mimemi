@@ -24,7 +24,7 @@ $(function() {
 	
 	//아이디박스 비활성화(입력불가능) - atrr()이용
 	$("#id").attr("readonly", "readonly"); //읽기전용
-		
+	
 	
 });
    
@@ -34,36 +34,36 @@ $(function() {
 </head>
 <body>
 
-<form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=updateLiveCp">
+<form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=updateRgCp">
 <input type="hidden" name="key" value="coupon" >
-    <input type="hidden" name="methodName" value="updateLiveCp" >
-    <input type='hidden' name='id' value="${liveCoupon.livecouId}">
+    <input type="hidden" name="methodName" value="updateRgCp" >
+    <input type='hidden' name='id' value="${rgCoupon.rgcouId}">
 <table>
-   <caption><h2> 실시간쿠폰수정 Form</h2></caption>
+   <caption><h2> 정기쿠폰수정 Form</h2></caption>
   <tr>
 	<td>쿠폰번호</td>
-	<td><input type="text" name="id" id="id" value="${liveCoupon.livecouId}"/></td>
+	<td><input type="text" name="id" id="id" value="${rgCoupon.rgcouId}"/></td>
   </tr>
   <tr>
 	<td>쿠폰명</td>
-	<td><input type="text" name="name" id="name" value="${liveCoupon.livecouName}"/></td>
+	<td><input type="text" name="name" id="name" value="${rgCoupon.rgcouName}"/></td>
   </tr>
   <tr>
 	<td>쿠폰금액</td>
-	<td><input type="text" name="price" id="price" value="${liveCoupon.livecouPrice}"/></td>
+	<td><input type="text" name="price" id="price" value="${rgCoupon.rgcouPrice}"/></td>
   </tr>
   <tr>
 	<td>쿠폰발행일</td>
-	<td><input type="text" name="pubDate" id="pubDate" value="${liveCoupon.livecouPubdate}"/></td>
+	<td><input type="text" name="pubDate" id="pubDate" value="${rgCoupon.rgcouPubdate}"/></td>
   </tr>
   <tr>
 	<td>쿠폰만료일</td>
-	<td><input type="text" name="endDate" id="endDate" value="${liveCoupon.livecouUseperiod}"/></td>
+	<td><input type="text" name="endDate" id="endDate" value="${rgCoupon.rgcouEnddate}"/></td>
   </tr>
   <tr>
 	<td colspan="2" >
 	<input type="hidden" name="key" value="coupon">
-	<input type="hidden" name="methodName" value="updateLiveCp">
+	<input type="hidden" name="methodName" value="updateRgCp">
 	<input type="submit" value="수정" id="btn"/>
 	<input type="reset" value="취소" />
 	</td>

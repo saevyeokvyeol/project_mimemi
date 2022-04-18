@@ -56,20 +56,78 @@ public class CouponDAOImpl implements CouponDAO {
 
 	@Override
 	public int updateLiveCp(LiveCouponDTO liveCoupon) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		int result=0;
+		String sql = proFile.getProperty("coupon.updateLiveCp"); 
+		//coupon.updateLiveCp=update LIVECOUPON set LIVECOU_NAME=?, LIVECOU_PRICE=?, LIVECOU_PUBDATE=?, LIVECOU_USEPERIOD=?  where LIVECOU_ID=?
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, liveCoupon.getLivecouName());
+			ps.setInt(2, liveCoupon.getLivecouPrice());
+			ps.setString(3, liveCoupon.getLivecouPubdate());
+			ps.setInt(4, liveCoupon.getLivecouUseperiod());
+			ps.setString(5, liveCoupon.getLivecouId());
+			
+			result = ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	@Override
 	public int insertRgCp(RgCouponDTO rgCoupon) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		int result=0;
+		String sql = proFile.getProperty("coupon.insertRgCp"); 
+		//coupon.insertRgCp=insert into RGCOUPON values(?,?,?,sysdate,?)
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, rgCoupon.getRgcouId());
+			ps.setString(2, rgCoupon.getRgcouName());
+			ps.setInt(3, rgCoupon.getRgcouPrice());
+			ps.setString(4, rgCoupon.getRgcouEnddate());
+			
+			
+			result = ps.executeUpdate();
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int updateRgCp(RgCouponDTO rgCoupon) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		int result=0;
+		String sql = proFile.getProperty("coupon.updateRgCp"); 
+		//coupon.updateRgCp=update RGCOUPON set RGCOU_NAME=?, RGCOU_PRICE=?, RGCOU_PUBDATE=?, RGCOU_ENDDATE=?  where RGCOU_ID=?
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, rgCoupon.getRgcouName());
+			ps.setInt(2, rgCoupon.getRgcouPrice());
+			ps.setString(3, rgCoupon.getRgcouPubdate());
+			ps.setString(4, rgCoupon.getRgcouEnddate());
+			ps.setString(5, rgCoupon.getRgcouId());
+			
+			result = ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	@Override
@@ -184,6 +242,57 @@ public class CouponDAOImpl implements CouponDAO {
 			DbUtil.dbClose(rs, ps, con);
 		}
 		return userCouponlist;
+	}
+	
+	public LiveCouponDTO selectLvCouByCouId(String livecouId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("coupon.selectLvCouByCouId");
+		//coupon.selectLvCouByCouId=select * from LIVECOUPON where LIVECOU_ID = ?"
+		LiveCouponDTO liveCoupon = null;
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, livecouId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				liveCoupon = new LiveCouponDTO(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5));
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return liveCoupon;
+	}
+
+	@Override
+	public RgCouponDTO selectRcCouByCouId(String rgcouId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("coupon.selectRcCouByCouId");
+		//coupon.selectRcCouByCouId=select * from RGCOUPON where RGCOU_ID = ?"
+		RgCouponDTO RgCoupon = null;
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, rgcouId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				RgCoupon = new RgCouponDTO(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return RgCoupon;
 	}
 	
 
