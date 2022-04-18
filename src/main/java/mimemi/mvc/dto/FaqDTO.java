@@ -23,6 +23,15 @@ public class FaqDTO {
 		this.faqCategory = faqCategory;
 	}
 
+	public FaqDTO(String faqTitle, String faqContent, String faqCategory) {
+		super();
+		this.faqTitle = faqTitle;
+		this.faqContent = faqContent;
+		this.faqCategory = faqCategory;
+	}
+	
+	
+	
 	public int getFaqNo() {
 		return faqNo;
 	}

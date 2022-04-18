@@ -26,7 +26,11 @@ public class NoticeDAOImpl implements NoticeDAO {
 		}
 	}
 
-	@Override //공지사항 게시판 등록
+/**
+ * 	 공지사항 등록
+ **/
+		
+	@Override 
 	public int insertNotice(NoticeDTO noticeDTO) throws SQLException {
 		Connection con=null;
 		PreparedStatement ps=null;
@@ -40,7 +44,6 @@ public class NoticeDAOImpl implements NoticeDAO {
 			ps.setString(2, noticeDTO.getNoticeContent());
 			ps.setString(3, noticeDTO.getNoticeAttach());
 
-		System.out.println("ddd");	
 			result = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -150,6 +153,10 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return null;
 	}
 
+/**
+ * 공지사항 상세보기 
+ **/
+	
 	@Override
 	public NoticeDTO selectByNoticeNo(int noticeNo) throws SQLException {
 		Connection con = null;
@@ -173,7 +180,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 						rs.getString(3),
 						rs.getString(4),
 						rs.getString(5)
-								);	 System.out.println("dao");
+								);	 
 		    }
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
