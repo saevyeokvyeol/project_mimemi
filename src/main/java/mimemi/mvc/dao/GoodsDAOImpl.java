@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.List;
 import mimemi.mvc.util.DbUtil;
 import mimemi.mvc.dto.GoodsDTO;
 
@@ -174,7 +173,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 	}
 
 	@Override
-	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException {
+	public List<GoodsDTO> selectByKeyword(String keyword) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
