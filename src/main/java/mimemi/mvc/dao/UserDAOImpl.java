@@ -13,6 +13,17 @@ import mimemi.mvc.util.DbUtil;
 
 public class UserDAOImpl implements UserDAO {
 	private Properties proFile = new Properties();
+	
+	/**
+	 * dbQuery.properties 로딩해 Properties 객체에 저장
+	 * */
+	public UserDAOImpl() {
+		try {
+			proFile.load(getClass().getClassLoader().getResourceAsStream("dbQuery.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public UserDTO loginUser(String userId, String userPwd) throws SQLException {
@@ -221,7 +232,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return result;
 	}
-/***
+
 	@Override
 	public boolean idCheck(String userId) throws SQLException {
 		PreparedStatement ps = null;
@@ -229,7 +240,7 @@ public class UserDAOImpl implements UserDAO {
 		Connection con= null;
 		boolean result = false;
 		
-		String sql = proFile.getProperty("select user_id from users where user_id=?");
+		String sql = proFile.getProperty("user.selectById");
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
@@ -252,7 +263,7 @@ public class UserDAOImpl implements UserDAO {
 		ResultSet rs = null;
 		Connection con= null;
 		boolean result = false;
-		String sql = proFile.getProperty("select user_phone from users where user_phone=?");
+		String sql = proFile.getProperty("user.selectByPhone");
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
@@ -268,5 +279,5 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return result;
 	}
-*/
+
 }
