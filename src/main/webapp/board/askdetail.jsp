@@ -10,13 +10,27 @@
 	span{font-size:9pt;}
 
 </style>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+ 
 <script type="text/javascript">
 
-function sendUpdate(){
-	document.requestForm.methodName.value ="updateForm";
-	document.requestForm.submit();
-}
-
+	$(function(){
+		
+	
+		function sendUpdate(){
+			document.requestForm.methodName.value ="updateForm";
+			document.requestForm.submit();
+		}
+		
+		$("a[name]").click(function(){
+			if( confirm("정말 삭제하실래요??") ){
+				
+				var idValue = $(this).parent().siblings().eq(1).text();
+				
+				location.href="${path}/delete?id="+idValue;
+			}
+		})
+	})
 
 </script>
 </head>
@@ -74,7 +88,7 @@ function sendUpdate(){
     
    
    
-    <form name="requestForm" method=post action="${path}/manager/askAnswer2.jsp">
+    <form name="requestForm" method=post action="${path}/front">
  
     
     <tr>
@@ -86,6 +100,7 @@ function sendUpdate(){
 				<input type=hidden name="pageNo" value="${pageNo}" >
 				<input type=button value="답글달기" onClick="sendUpdate()">
 				<input type=button value="삭제하기" onClick="sendDelete()">
+				<a href="#" name="${askDto.userId}">삭제</a>
 				
     </form>
 			

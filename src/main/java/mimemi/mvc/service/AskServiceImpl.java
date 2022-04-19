@@ -1,5 +1,6 @@
 package mimemi.mvc.service;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 

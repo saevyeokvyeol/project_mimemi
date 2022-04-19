@@ -111,16 +111,18 @@ public class AskController implements Controller {
 		String askContent = request.getParameter("askContent");
 		
 		
+		
+		
 		//인수값 설정
 		//AskDTO askDto=new AskDTO(userId, askTitle, askContent);
 		
 		//askService.updateAsk(askDto);
-		
-		//상세보기 페이지로 이동
-		
+		AskDTO askDto = new AskDTO(userId, askTitle, askContent); 
 		
 		
-		return null;
+		
+		
+		return new ModelAndView("board/ask2.jsp");
 	}
 	
 	/**
@@ -134,14 +136,17 @@ public class AskController implements Controller {
 	/**
 	 * 1:1문의 삭제
 	 * */
-	public void deleAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String askNo=request.getParameter(null);
+	public ModelAndView deleteAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String askNo=request.getParameter("askNo");
+	
 		
 		//askService.deleteAsk(0);
 		
 		String path=request.getServletContext().getRealPath("/save");
 		
-		askService.deleteAsk(Integer.parseInt(askNo), path);
+		askService.deleteAsk(Integer.parseInt(askNo) ,path);
+		
+		return new ModelAndView("board/ask2.jsp");
 		
 	}
 	

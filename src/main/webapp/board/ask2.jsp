@@ -79,7 +79,7 @@
 								
 								<td>
 								<span>
-								<a href="${path}/front?key=ask&methodName=selectByUserId&userId=${AskDTO.userId}">
+								<a href="${path}/front?key=ask&methodName=selectByUserId&askNo=${AskDTO.userId}">
 								${ask.userId}
 								</a>
 								</span>

@@ -18,6 +18,13 @@ public class AskDTO {
 	
 	public AskDTO() {}
 	
+	public AskDTO(String userId, String askTitle, String Content) {
+		this.userId=userId;
+		this.askTitle=askTitle;
+		this.askContent=askContent;
+	}
+	
+	
 	public AskDTO(int askNo, String userId, String askTitle,String askContent) {
 		this.askNo=askNo;
 		this.userId=userId;
