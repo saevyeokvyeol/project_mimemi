@@ -50,7 +50,8 @@
 					<option value="0">--정렬방식--</option>
 					<option value="order_id">제목</option>
 					<option value="user_id">내용</option>
-			</select>		
+			</select>	
+	
 	</section>
 		<table class="table table-hover" id="askList" >
 			<thead>
@@ -78,7 +79,7 @@
 								<td>
 								<span>
 								<a href="${path}/front?key=ask&methodName=selectByAskNoManager&askNo=${ask.askNo}">
-							
+								
 								${ask.askNo}
 								</a>
 								</span>

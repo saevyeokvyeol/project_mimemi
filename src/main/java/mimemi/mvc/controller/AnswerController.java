@@ -40,13 +40,30 @@ public class AnswerController implements Controller {
 		
 		answerService.insertAnswerReply(answerDto);
 		
-		return new ModelAndView("front?key=ask&methodName=selectAll", true);
+		return new ModelAndView("/manager/managerAsk.jsp");
 	}
 	
 	/**
 	 * 댓글보기 (회원)
 	 * */
 	public void selectAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8"); 
+		
+		String askNo=request.getParameter("askNo");
+		System.out.println("controller");
+		AnswerDTO answerDto = answerService.selectByAskNo(Integer.parseInt(askNo));
+		request.setAttribute("answerDto", answerDto);
+		
+		JSONArray replyArr = JSONArray.fromObject(answerDto);
+		PrintWriter out = response.getWriter();
+		out.print(replyArr);
+		
+	}
+	
+	/**
+	 * 댓글보기 (관리자)
+	 * */
+	public void selectAnswerReplyManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8"); 
 		
 		String askNo=request.getParameter("askNo");
@@ -73,8 +90,11 @@ public class AnswerController implements Controller {
 	 * */
 	
 	public ModelAndView deleteAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String askNo=request.getParameter("askNo");
+		answerService.deleteAnswerReply(Integer.parseInt(askNo));
 		
-		return null;
+		
+		return new ModelAndView("/manager/managerAsk.jsp");
 	}
 	
 }

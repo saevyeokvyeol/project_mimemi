@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,27 +13,57 @@
 	 a{}
 
 </style>
+	<!--부트스트랩 CSS CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                
+        <!--부트스트랩 JS CDN-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        
+        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
  
 <script type="text/javascript">
 
-	$(function(){
-		
+
 	
-		function sendUpdate(){
-			document.requestForm.methodName.value ="updateForm";
-			document.requestForm.submit();
-		}
+	$(function(){
+		var target = '${askDto.askNo}'
 		
-		$("a[name]").click(function(){
-			if( confirm("정말 삭제하실래요??") ){
+		function selectReply(){
+            $.ajax({
+				url: "${path}/ajax" , //서버요청주소
+				type: "post" , //요청방식 (get,post...)
+				dataType: "json" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+				data: {key:"answer", methodName:"selectAnswerReplyManager", askNo: target} , //서버에게 보낼 데이터정보(parameter정보)
 				
-				var idValue = $(this).parent().siblings().eq(1).text();
+				success: function(result){
+					
+					let str="";														
+					$.each(result,function(index,reply){					
+                        str+=`<div class="reply-user-info">`;
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerNo}</span>&nbsp;`
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerRegdate}</span>`
+                            
+                        str+=`</div>`;
+                        str+=`<div class="reply-content">`;
+                            str+=`<span class="reply-content-text">\${reply.answerContent}</span>`
+               
+                        str+=`</div>`;
+                    })
+                   	$("#askReplyOutPut").html(askReplyOutPut)
+                   	$("#askReplyOutPut").append(str)
+				},
+
+				error: function(err){//실패했을 때 콜백함수
+				  alert(err+"오류가 발생했습니다.")
+				} 
+
+			    })//ajax끝
+            }	//selectReply끝
 				
-				location.href="${path}/delete?id="+idValue;
-			}
-		})
-	})
+			selectReply();
+		})//function끝
 
 </script>
 </head>
@@ -41,13 +73,13 @@
 <table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
     <tr>
         <td width="1220" height="20" colspan="4" >
-            <p align="center"><size="3"><b>
-             상세 보기</b></font></p>
+            <size="3"><b>
+             상세 보기</b></font>
         </td>
     </tr>
     <tr>
         <td width="100" height="20" >
-            <p align="right"><b><span>글번호</span></b></p>
+            <b><span>글번호</span></b>
         </td>
         <td width="450" height="20" colspan="3">
         	<div><b>${askDto.askNo}</b></div>
@@ -55,7 +87,7 @@
     </tr>
     <tr>
         <td width="100" height="20" >
-            <p align="right"><b><span>회원 ID</span></b></p>
+            <b><span>회원 ID</span></b>
         </td>
         <td width="300" height="20">
         	<span ><b>${askDto.userId}</b></span>
@@ -65,7 +97,7 @@
     
     <tr>
 		<td width="100" height="20" valign="top">
-            <p align="right"><b><span>제목</span></b></p>
+            <b><span>제목</span></b>
         </td>
 		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
         <td width="300" height="20">
@@ -77,9 +109,9 @@
       
        <tr>
         <td width="100" height="20">
-            <p align="right"><b><span>내용</span></b></p>
+            <b><span>내용</span></b>
         </td>
-        <td width="450" height="200" valign="top" colspan="3">
+        <td width="450" height="200" colspan="3">
         <span><b>${askDto.askContent}</b></span>
         </td>
         
@@ -91,8 +123,19 @@
     
     </tr>
     
-    
-   
+     <h3>댓글 정보1</h3>
+	<div>
+		<div>
+			<div id="askReplyOutPut">
+				
+			</div>
+		</div>
+	</div>
+	<div >
+					<a href="${path}/front?key=answer&methodName=updateAnswerReply&askNo=${askDto.askNo}">수정하기</a>
+						<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">삭제하기</a>
+	</div>
+	
     
    
    
@@ -112,7 +155,11 @@
 				<a href="${path}/front?key=ask&methodName=deleteAsk&askNo=${askDto.askNo}">삭제하기</a>
 		</td>
 	 </tr>	
+	
     </form>
+    <hr>
+    <!-- 댓글창 조회 -->
+    
 			
 		
    

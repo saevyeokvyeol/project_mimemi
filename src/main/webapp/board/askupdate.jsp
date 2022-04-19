@@ -1,21 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 	span{font-size:9pt;}
 
 </style>
- 		<!--ºÎÆ®½ºÆ®·¦ CSS CDN-->
+ 		<!--ë¶€íŠ¸ìŠ¤íŠ¸ë© CSS CDN-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
                 
-        <!--ºÎÆ®½ºÆ®·¦ JS CDN-->
+        <!--ë¶€íŠ¸ìŠ¤íŠ¸ë© JS CDN-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         
         
@@ -25,13 +25,13 @@
 function checkValid() {
 	var f = window.document.updateForm;
 	if ( f.askTitle.value == "" ) {
-		alert( "Á¦¸ñÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." );
+		alert( "ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." );
 		f.askTitle.focus();
 		return false;
 	}
 	
 	if ( f.askContent.value == "" ) {
-        alert( "³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." );
+        alert( "ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." );
         f.askContent.focus();
         return false;
     }
@@ -44,13 +44,13 @@ function checkValid() {
 		alert(target);
 		function selectReply(){
             $.ajax({
-				url: "${path}/ajax" , //¼­¹ö¿äÃ»ÁÖ¼Ò
-				type: "post" , //¿äÃ»¹æ½Ä (get,post...)
-				dataType: "json" , //¼­¹ö°¡ º¸³»¿Â µ¥ÀÌÅÍ(ÀÀ´ä)type(text | html | xml | json)
-				data: {key:"answer", methodName:"selectAnswerReply", askNo: target} , //¼­¹ö¿¡°Ô º¸³¾ µ¥ÀÌÅÍÁ¤º¸(parameterÁ¤º¸)
+				url: "${path}/ajax" , //ì„œë²„ìš”ì²­ì£¼ì†Œ
+				type: "post" , //ìš”ì²­ë°©ì‹ (get,post...)
+				dataType: "json" , //ì„œë²„ê°€ ë³´ë‚´ì˜¨ ë°ì´í„°(ì‘ë‹µ)type(text | html | xml | json)
+				data: {key:"answer", methodName:"selectAnswerReply", askNo: target} , //ì„œë²„ì—ê²Œ ë³´ë‚¼ ë°ì´í„°ì •ë³´(parameterì •ë³´)
 				
 				success: function(result){
-					alert("°Ë»ö¼º°ø~")
+					alert("ê²€ìƒ‰ì„±ê³µ~")
 					let str="";														
 					$.each(result,function(index,reply){					
                         str+=`<div class="reply-user-info">`;
@@ -67,15 +67,15 @@ function checkValid() {
                    	$("#askReplyOutPut").append(str)
 				},
 
-				error: function(err){//½ÇÆĞÇßÀ» ¶§ Äİ¹éÇÔ¼ö
-				  alert(err+"¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.")
+				error: function(err){//ì‹¤íŒ¨í–ˆì„ ë•Œ ì½œë°±í•¨ìˆ˜
+				  alert(err+"ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.")
 				} 
 
-			    })//ajax³¡
-            }	//selectReply³¡
+			    })//ajaxë
+            }	//selectReplyë
 				
 			selectReply();
-		})//function³¡
+		})//functionë
 		
 	
 
@@ -84,7 +84,7 @@ function checkValid() {
 </script>
 </head>
 <body>
-<h1>°Ô½Ã¹° ¼öÁ¤ÇÏ±â ÆäÀÌÁöÀÔ´Ï´Ù.</h1>
+<h1>ê²Œì‹œë¬¼ ìˆ˜ì •í•˜ê¸° í˜ì´ì§€ì…ë‹ˆë‹¤.</h1>
 
 <form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
 onSubmit='return checkValid()' enctype="multipart/form-data">
@@ -93,12 +93,12 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
    <table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
     <tr>
         <td width="1220" height="20" colspan="2">
-            <p align="center"><font size="3"><b>  °Ô½Ã¹° ¼öÁ¤ÇÏ±â</b></font></p>
+            <p align="center"><font size="3"><b>  ê²Œì‹œë¬¼ ìˆ˜ì •í•˜ê¸°</b></font></p>
         </td>
     </tr>
     <tr>
         <td width="150" height="20">
-            <span >Á¦¸ñ</span>
+            <span >ì œëª©</span>
            
         </td>
         <td>
@@ -109,7 +109,7 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
     
     <tr>
         <td width="150" height="20" >
-            <b><span >³» ¿ë</span></b>
+            <b><span >ë‚´ ìš©</span></b>
         </td>
         <td>
         <textarea class="form-control" rows="5" name="askContent" id="content" >${askDto.askContent}</textarea>
@@ -118,7 +118,7 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
     <tr>
     	<td width="150" height="20" >
     		<span>
-    			Ã·ºÎÆÄÀÏ
+    			ì²¨ë¶€íŒŒì¼
     		</span>
     	</td>
     	<td>	
@@ -131,24 +131,15 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
     
     <tr>
         <td width="450" height="20" colspan="2" align="center"><b><span>
-		<input type="submit" value="¼öÁ¤ÇÏ±â"> <input type="reset" value="´Ù½Ã¾²±â"></span></b></td>
+		<input type="submit" value="ìˆ˜ì •í•˜ê¸°"> <input type="reset" value="ë‹¤ì‹œì“°ê¸°"></span></b></td>
     </tr>
 </table>
 </div>
 	
 </form>
-	<h3>´ñ±Û Á¤º¸</h3>
-	<c:choose>
-	<c:when test="${empty answerDto.repliesList}">
-		<h5>´ñ±Û Á¤º¸°¡ ¾ø½À´Ï´Ù.</h5>
-	</c:when>
-	<c:otherwise>
-		<c:forEach items="${elec.repliesList}" var="reply">
-			${reply.replyNum} / ${reply.replyContent} / ${reply.replyRegDate} / ${reply.parentModelNum} <br>
-		</c:forEach>
-	</c:otherwise>
-</c:choose>
-<!-- ´ñ±ÛÃ¢ Á¶È¸ -->
+	<h3>ëŒ“ê¸€ ì •ë³´</h3>
+	
+<!-- ëŒ“ê¸€ì°½ ì¡°íšŒ -->
 <div>
 	<div>
 		<div id="askReplyOutPut">
@@ -157,6 +148,6 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
 	</div>
 </div>
 <hr>
-<div align=right><span >&lt;<a href="${path}/board/ask2.jsp">¸®½ºÆ®·Î µ¹¾Æ°¡±â</a>&gt;</span></div>
+<div align=right><span >&lt;<a href="${path}/board/ask2.jsp">ë¦¬ìŠ¤íŠ¸ë¡œ ëŒì•„ê°€ê¸°</a>&gt;</span></div>
 </body>
 </html>

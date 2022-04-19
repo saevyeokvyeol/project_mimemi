@@ -25,6 +25,6 @@ public interface AnswerService {
 	/**
 	 * ¥Ò±€ ªË¡¶
 	 * */
-	void deleteAnswerReply(int answerNo) throws SQLException;
+	void deleteAnswerReply(int askNo) throws SQLException;
 	
 }

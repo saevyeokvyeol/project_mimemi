@@ -22,7 +22,7 @@
 				
      			<div >
      				<input type="submit" value="댓글달기" />
-				    <input type="button" value="목록보기" onclick="location.href='../board/ask2.jsp'"/>
+				    <input type="button" value="목록보기" onclick="location.href='../manager/managerAsk.jsp'"/>
 			</div>
 		</div>
 </form>

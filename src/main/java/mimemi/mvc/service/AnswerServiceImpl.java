@@ -36,9 +36,10 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public void deleteAnswerReply(int answerNo) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void deleteAnswerReply(int askNo) throws SQLException {
+		int result = answerDao.deleteAnswerReply(askNo);
+		if(result==0)throw new SQLException("삭제되지 않았습니다");
+		
 	}
 
 

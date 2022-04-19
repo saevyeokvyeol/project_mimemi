@@ -87,10 +87,25 @@ public class AnswerDAOImpl implements AnswerDAO {
 		return 0;
 	}
 
+	/**
+	 * 답글 삭제하기
+	 * */
 	@Override
-	public int deleteAnswerReply(int answerNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteAnswerReply(int askNo) throws SQLException {
+		Connection con=null;
+		PreparedStatement ps=null;
+		
+		String sql= proFile.getProperty("answer.delete");
+		int result=0;
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, askNo);
+			result=ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 }
