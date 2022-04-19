@@ -78,8 +78,6 @@ $(function() {
 	
 	$(".datepicker").datepicker();
 })
-	
-<<<<<<< HEAD
 
 </script>
 <script type="text/javascript">
@@ -107,12 +105,12 @@ $(function() {
 					if (data == "true") {
 						alert("이미 존재하는 아이디 입니다.");
 						$(".userId_input").focus();
-						return;
 					} else {
 						alert("사용가능한 아이디 입니다.");
 						return;
 					}
 				}//success 끝
+				error : 
 			})//ajax 끝
 		}) //function 끝
 		
@@ -161,7 +159,6 @@ $(function() {
 <script type="text/javascript">
 
 $(function(){
-	
 	/*
 	비밀번호 일치 여부 체크
 	*/
@@ -183,24 +180,19 @@ $(function(){
 			}	
 		}
 	})
-	
-	/*
-	필수 정보 입력 체크
-	*/
-	$("#joinBtn").click(function(){
+})
+
+</script>
+<script type="text/javascript">
+// $(function(){
+// 	/*
+// 	필수 정보 입력 체크
+// 	*/
+// 	$("#joinBtn").click(function(){
 		
-		let state = true;
+// 		let state = true;
 		
-		$("input[type=text]").each(function(index,item){
-			if($(this).val()==""){
-				alert("값을 입력해주세요");
-				$(this).focus();
-				
-				state=false;
-				return false;
-			}
-		})//text타입 입력
-// 		$("input[type=password]").each(function(index,item){
+// 		$("input[type=text]").each(function(index,item){
 // 			if($(this).val()==""){
 // 				alert("값을 입력해주세요");
 // 				$(this).focus();
@@ -208,15 +200,10 @@ $(function(){
 // 				state=false;
 // 				return false;
 // 			}
-// 		})//password타입 입력
-		
-	})//필수정보 입력체크 끝
-	
-=======
->>>>>>> fa7d068974821e0e09a1a797f5e5b43e9ebf9c98
-})
+// 		})//text타입 입력
+// 	})
+// })
 </script>
-
 </head>
 <body>
 <form name="joinForm" method="post" id="joinForm" action="${path}/front?key=user&methodName=insertUser">
@@ -224,48 +211,47 @@ $(function(){
 	<table cellspacing="0" align="center">
 		<tr>
 			<th>아이디</th>
-			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" check_result="fail" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
+			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
 			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
 			<img id="id_check_success" style="display: none;">
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" id="userPwd" name="pwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요"></td>
+			<td><input type="password" id="userPwd" name="userPwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요" required></td>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" id="userPwd2"name="pwd2" size="50" placeholder="한번 더 입력해주세요">
+			<td><input type="password" id="userPwd2" size="50" placeholder="한번 더 입력해주세요" required>
 			<span id="pwdCheck_Success" style="display:none;">비밀번호가 일치합니다</span>
 			<span id="pwdCheck_Fail" style="display:none;">비밀번호가 일치하지 않습니다.</span></td>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<td colspan="3"><input type="text" id="userName" name="name" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요"></td>
+			<td colspan="3"><input type="text" id="userName" name="userName" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요" required></td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호</th>
 
-			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요">
+			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요" required>
 			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
 			<td>
-				<input type="text" readonly="readonly" class="datepicker" placeholder="날짜를 골라주세요">
+				<input type="text" name="userBirth" readonly="readonly" class="datepicker" placeholder="날짜를 골라주세요" required>
 			</td>
 		</tr>
 		<tr>
 			<th>배송지 주소</th>
 			<td>
-				<input type="text" id="addrName" placeholder="배송지별명" ><br>
-				<input type="text" id="sample6_postcode" readonly="readonly">
+				<input type="text" id="sample6_postcode" name="zipcode" readonly="readonly" required>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호검색"><br>
-				<input type="text" id="sample6_address"><br>
-				<input type="text" id="sample6_detailAddress">
-				<input type="text" id="sample6_extraAddress">
+				<input type="text" id="sample6_address" name="addrAddr" required><br>
+				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" placeholder="상세주소1(선택)">
+				<input type="text" id="sample6_extraAddress" name="addrRefAddr" placeholder="상세주소2(선택)">
 			</td>
 		</tr>
 		<tr>
-			<td><input type="submit" value="취소"> <input type="submit" id="joinBtn" value="회원가입"></td>
+			<td><input type="button" value="취소"> <input type="submit" id="joinBtn" value="회원가입"></td>
 		</tr>
 
 	</table>

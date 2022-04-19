@@ -4,12 +4,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import mimemi.mvc.dto.ManagerDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.util.DbUtil;
 
 public class ManagerDAOImpl implements ManagerDAO {
+	private Properties proFile = new Properties();
+	/**
+	 * dbQuery.properties 로딩해 Properties 객체에 저장
+	 * */
+	public ManagerDAOImpl() {
+		try {
+			proFile.load(getClass().getClassLoader().getResourceAsStream("dbQuery.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public ManagerDTO loginManager(String managerId, String managerPwd) throws SQLException {
