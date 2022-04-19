@@ -80,7 +80,35 @@ public class FaqController implements Controller {
 		
 		return mv;
 	}
+	
+
+	/**
+	 *  FAQ °í°´ºä¾î 
+	 **/
 		
+	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=UTF-8"); 
+        
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<FaqDTO> faqList = faqService.selectAllFaq(Integer.parseInt(pageNum), field);
+		
+		request.setAttribute("FaqList", faqList);
+		request.setAttribute("pageNum", pageNum); 
+		ModelAndView mv = new ModelAndView("board/faq.jsp");
+		
+		return mv;
+	}	
+	
+	
+	
+	
+	
 	
 	/**
 	 *  »ó¼¼º¸±â 
@@ -100,7 +128,7 @@ public class FaqController implements Controller {
 		}*/
 
 	    FaqDTO faq = faqService.selectByFaqNo(Integer.parseInt(faqNo));
-		request.setAttribute("faqDetail", faq); 
+		request.setAttribute("faq", faq); 
 		
 		/*request.setAttribute("isAdmin", isAdmin);*/
 		return new ModelAndView("/board/faq.jsp"); 
