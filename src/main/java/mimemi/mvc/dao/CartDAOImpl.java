@@ -37,17 +37,18 @@ public class CartDAOImpl implements CartDAO {
 		PreparedStatement ps = null;
 		
 		String sql = proFile.getProperty("cart.insert");
-		// insert into cart values(CART_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?);
+		// insert into cart values(CART_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?);
 		int result = 0;
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setString(1, cart.getUserId());
-			ps.setString(2, cart.getUserId());
-			ps.setString(3, cart.getUserId());
-			ps.setString(4, cart.getUserId());
-			ps.setString(5, cart.getUserId());
-			ps.setString(6, cart.getUserId());
+			ps.setString(2, cart.getGoodsId());
+			ps.setInt(3, cart.getCartQty());
+			ps.setString(4, cart.getCartWeekday());
+			ps.setString(5, cart.getCartPeriod());
+			ps.setString(6, cart.getCartStart());
+			ps.setInt(7, cart.getGoodsPrice());
 			
 			result = ps.executeUpdate();
 		} finally {

@@ -11,6 +11,18 @@ public class CartDTO {
 	
 	public CartDTO() {}
 
+	public CartDTO(String userId, String goodsId, int cartQty, String cartWeekday, String cartPeriod,
+			String cartStart, int goodsPrice) {
+		super();
+		this.userId = userId;
+		this.goodsId = goodsId;
+		this.cartQty = cartQty;
+		this.cartWeekday = cartWeekday;
+		this.cartPeriod = cartPeriod;
+		this.cartStart = cartStart;
+		this.goodsPrice = goodsPrice;
+	}
+
 	public CartDTO(int cartId, String userId, String goodsId, int cartQty, String cartWeekday, String cartPeriod,
 			String cartStart) {
 		super();
