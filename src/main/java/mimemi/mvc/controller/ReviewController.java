@@ -1,6 +1,7 @@
 package mimemi.mvc.controller;
 
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.ReviewService;
 import mimemi.mvc.service.ReviewServiceImpl;
+import net.sf.json.JSONArray;
 
 public class ReviewController implements Controller {
 	private static ReviewService reviewService = new ReviewServiceImpl();
@@ -27,7 +29,7 @@ public class ReviewController implements Controller {
 	}
 	
 	/**
-	 * 리뷰 전체 조회하기(+페이지처리)
+	 * 사용자/회원 - 리뷰 전체 조회하기(+페이지처리)
 	 * */
 	public ModelAndView selectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String curPageNo = request.getParameter("pageNum");
@@ -50,6 +52,10 @@ public class ReviewController implements Controller {
 		return new ModelAndView("/board/reviewList.jsp");
 		
 	}
+	
+	/**
+	 * 검색기능
+	 * */
 	public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
@@ -71,7 +77,7 @@ public class ReviewController implements Controller {
 	 * 리뷰 수정하기(update페이지로 이동하기)
 	 * */
 	public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String reviewNo= request.getParameter("revireewNo");
+		String reviewNo= request.getParameter("reviewNo");
 		ReviewDTO review = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
 		//String dbUserId=review.getUserId();
 		
@@ -106,26 +112,31 @@ public class ReviewController implements Controller {
 		String reviewRate = m.getParameter("rate");
 		String reviewContent =m.getParameter("review_contents");
 		
-		//HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();s
 		//String reviewUser = session.getAttribute("loginUser");
 		String reviewUser = "happy01";
 		
 		System.out.println("수정하는 리뷰번호: "+reviewNo+"상품이름: "+reviewGoods);
 		
-		ReviewDTO review = new ReviewDTO(reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
+		ReviewDTO review = new ReviewDTO(Integer.parseInt(reviewNo),reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일첨부를 했다면(파일을 수정했다면)
-			if(m.getFilesystemName("review-image-selector")!=null) {
-				String reviewAttach =m.getFilesystemName("review-image-selector");
+			if(m.getFilesystemName("review_image")!=null) {
+				//기존에 등록한 첨부파일을 삭제한다.
+				
+				
+				String reviewAttach =m.getFilesystemName("review_image");
 				//파일 이름을 reviewDTO에 저장한다.
 				review.setReviewAttach(reviewAttach);
 				//데이터베이스에 이미지와 함께 수정한다.
 				//connection을 유지하기 위해 reviewService.updateFaqImg 작성안했다. 
 				//나중에 필요하면 만들기
 				//reviewService.updateFaqImg(Integer.parseInt(reviewNo), reviewAttach);
+				System.out.println("수정하려는 첨부파일이름: "+reviewAttach);
 			}
 		//나머지 입력값을 수정한다.
-		reviewService.updateReview(review);
+		//saveDir: 오류를 대비해서 첨부파일을 삭제할 save 경로도 보낸다.
+		reviewService.updateReview(review,saveDir);
 		
 		//수정완료하면 조회수 증가 없이 상세보기 페이지로 이동한다.
 		ReviewDTO dbreview = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
@@ -161,7 +172,7 @@ public class ReviewController implements Controller {
 		
 		System.out.println("후기등록하려는 상품아이디: "+reviewGoods);
 		
-		ReviewDTO review = new ReviewDTO(reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
+		ReviewDTO review = new ReviewDTO(0,reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일 첨부 했다면(필수요소가 아니기때문에 생성자에 없으므로 추가해준다)
 			if(m.getFilesystemName("review_image")!=null) {
@@ -170,7 +181,8 @@ public class ReviewController implements Controller {
 				review.setReviewAttach(m.getFilesystemName("review_image"));
 				
 			}
-		reviewService.insertReview(review);
+		//saveDir: 오류를 대비해서 첨부파일을 삭제할 save 경로도 보낸다.
+		reviewService.insertReview(review,saveDir);
 		return new ModelAndView("front?key=review&methodName=selectAll",true);
 	}
 	
@@ -201,13 +213,43 @@ public class ReviewController implements Controller {
 		return new ModelAndView("front?key=review&methodName=selectAll",true);
 	}
 	
-	
+	/**
+	 * 관리자용 - 리뷰 전체 조회하기(+페이지처리)
+	 * 
+	 * */
+	public ModelAndView selectAllManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		//페이지처리
+		String curPageNo = request.getParameter("pageNum");
+		if(curPageNo ==null||curPageNo.equals("")) {
+			curPageNo="1";
+		}
+		String field =request.getParameter("field");
+		if(field==null||field.equals("")) {
+			field="reg";
+		}
+
+		System.out.println("관리자 selectAll: "+field+" 페이지 번호: "+curPageNo);
+		List<ReviewDTO> reviewList = reviewService.selectAllByPagingManager(Integer.parseInt(curPageNo), field);
+
+		request.setAttribute("list", reviewList);
+		request.setAttribute("pageNum", curPageNo);
+		return new ModelAndView("/manager/reviewListBlind.jsp");
+	}
 	/**
 	 * 관리자용 - 게시글 블라인드 처리
+	 * 
 	 * */
 	public ModelAndView updateBlind(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String reviewNo= request.getParameter("reviewNo");
+		String blindStatus = request.getParameter("blindStatus"); //선택한 게시글의 블라인드상태
 		
-		return null;
+		System.out.println("현재 블라인드 상태"+blindStatus);
+		
+		reviewService.updateBlind(Integer.parseInt(reviewNo), blindStatus);
+		
+		return new ModelAndView("front?key=review&methodName=selectAllManager",true);
 	}
 	
 

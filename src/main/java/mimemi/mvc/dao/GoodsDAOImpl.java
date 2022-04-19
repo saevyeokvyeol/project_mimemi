@@ -41,6 +41,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6).equals("Y"), rs.getString(7));
 				list.add(goods);
 			}
+			System.out.println(list.size());
 			
 		} finally {
 			DbUtil.dbClose(rs, ps, con);
@@ -135,6 +136,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 		}
 		return result;
 	}
+	
 
 	@Override
 	public List<GoodsDTO> goodsSelectForSale() throws SQLException {
@@ -223,5 +225,32 @@ public class GoodsDAOImpl implements GoodsDAO {
 		}
 		
 		return list;
+	}
+	/**
+	 * 상품 ID로 상품 상세 가져오기
+	 */
+	public GoodsDTO goodsSelectByGoodsId(String goodsId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = proFile.getProperty("goods.selectByGoodsId");
+		GoodsDTO goods = null;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, goodsId);
+			rs = ps.executeQuery();
+			rs.next();
+			goods = new GoodsDTO();
+			goods.setGoodsId(rs.getString(1));
+			goods.setGoodsName(rs.getString(2));
+			goods.setGoodsDetail(rs.getString(3));
+			goods.setGoodsThumbnail(rs.getString(4));
+			goods.setGoodsPrice(rs.getInt(5));
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+			
+		}
+		return goods;
 	}
 }

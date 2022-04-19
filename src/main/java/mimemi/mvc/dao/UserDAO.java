@@ -1,8 +1,10 @@
 package mimemi.mvc.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.UserDTO;
 
 public interface UserDAO {
@@ -11,15 +13,20 @@ public interface UserDAO {
 	 * 로그인기능
 	 * @param UserDTO(String userId, String userPwd)
 	 * */
-	UserDTO loginUser(UserDTO user) throws SQLException;
+	UserDTO loginUser(String userId, String userPwd) throws SQLException;
 	
 	/**
 	 * 회원가입기능
-	 * @param UserDTO(String userId, String userName, String userPwd, String userPhone, String userBirth)
+	 * @param UserDTO(String userId, String userName, String userPwd, String userPhone, String userBirth), AddrDTO
 	 * 
 	 * : 회원가입 시 입력 받은 데이터를 가져와서 UserDTO에 insert
 	 * */
-	int insertUser(UserDTO user) throws SQLException;
+	int insertUser(UserDTO user, AddrDTO addr) throws SQLException;
+	
+	/**
+	 * 주소 등록
+	 * */
+	int insertAddr(Connection con, AddrDTO addr) throws SQLException;
 	
 	/**
 	 * 아이디찾기
@@ -42,17 +49,26 @@ public interface UserDAO {
 	boolean selectUserPwd(String userId, String userName, String userPhone) throws SQLException;
 	
 	/**
+	 * 유저 포인트 가져오기
+	 * */
+	int selectPointByUserId(String userId) throws SQLException;
+	
+	/**
 	 * User 검색하기
 	 * @param String keyword
-	 * field : 이름/생일 등등
-	 * 쿼리문쓰고 if 여러개~
+	 * field : 이름/생일~
 	 * */
-	List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException;
+	List<UserDTO> selectUserByKeyword(String keyword, String field) throws SQLException;
 	
 	/**
 	 * Id로 user검색하기(id가 완전히 같아야만 검색됨)
 	 * */
 	UserDTO selectByID(String userId) throws SQLException;
+	
+	/**
+	 * Phone으로 user검색하기
+	 * */
+	UserDTO selectByPhone(String userPhone) throws SQLException;
 	
 	/**
 	 * 회원정보 수정

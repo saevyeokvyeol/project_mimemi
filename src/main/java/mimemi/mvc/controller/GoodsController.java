@@ -46,24 +46,46 @@ public class GoodsController implements Controller {
 	}
 	
 	public ModelAndView goodsView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String goodsId = request.getParameter("goodsId");
 		ModelAndView mv = new ModelAndView("goods/goodsView.jsp");
+		request.setAttribute("goodsId", goodsId);
 		return mv;
 	}
 	
+	
 	// 단순히 데이터만 제공해주는 API Controller (RestController)
 	public void getGoodsList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
 		List<GoodsDTO> goodsList = goodsService.goodsSelectAll();
 		JSONArray goodsArr = JSONArray.fromObject(goodsList);
 		PrintWriter out = response.getWriter();
-		out.print(goodsList);
+		out.print(goodsArr);
 	}
 	
-		
+	public void getGoodsSelectForSale(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		List<GoodsDTO> goodsList = goodsService.goodsSelectForSale();
+		JSONArray goodsArr = JSONArray.fromObject(goodsList);
+		PrintWriter out = response.getWriter();
+		out.print(goodsArr);
+	}
+	
+	public void getSelectByGoodsId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		String goodsId = request.getParameter("goodsId");
+		GoodsDTO goods = goodsService.selectByGoodsId(goodsId);
+		JSONArray goodsArr = JSONArray.fromObject(goods);
+		PrintWriter out = response.getWriter();
+		out.print(goodsArr);
+	}
+	
 	@Override
 	public ModelAndView hendlerRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 	public void selectOrderGoods(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");

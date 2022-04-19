@@ -10,14 +10,14 @@ public interface FaqService {
 	 * FAQ 등록
 	 * @param FaqDTO(String faqTitle, String faqContent, String faqAttach)
 	 * */
-	void insertFaq(FaqDTO faqDTO) throws SQLException;
+	void insertFaq(FaqDTO faqDTO, String path) throws SQLException;
 	
 	/**
 	 * FAQ 수정 
 	 * @param FaqDTO(int faqNo, String faqTitle, String faqContent)
 	 * 수정날짜는 자동으로 sysdate
 	 * */
-	void updateFaq(FaqDTO faqDTO) throws SQLException;
+	void updateFaq(FaqDTO faqDTO, String path) throws SQLException;
 	
 	/**
 	 * FAQ 이미지 수정
@@ -30,7 +30,7 @@ public interface FaqService {
 	 * @param int faqNo
 	 * 삭제하면 완전히 삭제
 	 * */
-	void deleteFaq(int faqNo) throws SQLException;
+	void deleteFaq(FaqDTO faq, String path) throws SQLException;
 
 	/**
 	 * FAQ 전체 검색

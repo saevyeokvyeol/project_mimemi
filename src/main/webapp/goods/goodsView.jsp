@@ -24,6 +24,7 @@
 
     <title>상품 상세보기</title>
 
+	<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 
@@ -64,7 +65,48 @@
             width: 500px;
             height: 500px;
         }
+        
+        
+        .goodsname {
+        	font-size:4em;
+        }
+        
+        .goodDetail {
+        	font-size:1.5em;
+        }
     </style>
+    
+    <script type = "text/javascript">
+    	function calcTotalPrice() {
+    		price = $("#quantity").val();
+    		quantity = $("#goodsprice").text();
+			$("#goodstotalprice").text(price * quantity);
+    	}
+    
+    	$(function() {
+    		if (window.location.href.endsWith('.jsp')){
+    			window.location.href='${path}/front?key=goods&methodName=goodsView';
+    		}
+    		function selectByGoodsId(){
+    			$.ajax({
+    				url: "${path}/ajax",
+    				type: "get",
+    				dataType: "json",
+    				data: {key: "goods", methodName: "getSelectByGoodsId", goodsId: '${goodsId}'},
+    				success: function(result) {
+    					let text ="";
+    					item = result[0]
+   						$("#goodsname").text(item.goodsName);
+   						$("#goodsdetail").text(item.goodsDetail);
+   						$("#goodsprice").text(item.goodsPrice);
+   						calcTotalPrice();
+    				}
+    				
+    			})
+    		}
+    		selectByGoodsId();
+    	})
+    </script>
 </head>
 
 <body>
@@ -77,8 +119,8 @@
             </div>
             <div class="col">
                 <div class="goodsinformation">
-                    <a class="goodsname">정성한상</a>
-                    <p class="goodsdetail">집밥 느낌 그대로, 정성껏 차린 가정식 한상</p>
+                    <a class="goodsname" id="goodsname"></a>
+                    <p class="goodsdetail" id="goodsdetail"></p>
 
                 </div>
                 <div class="order-box">
@@ -103,13 +145,21 @@
 
                         <div class="spiner-form-container clearfix">
                             <button class="spiner-minus"><i class="material-icons" id="minus">remove</i></button>
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="quantity" value="1" onchange="calcTotalPrice()">
                             <button class="spiner-plus"><i class="material-icons" id="plus">add</i></button>
                         </div>
                     </div>
                     <div class="order-box">
                         <label for="exampleInputPassword1">첫 배송일</label>
                         <input type="password" id="datePicker" class="form-control" placeholder="">
+                    </div>
+                    <div>
+                    	<label for="exampleInputPassword1">금액</label>
+                    	<a class="goodsprice" id="goodsprice"></a>
+                    	<label for="exampleInputPassword1">원</label><br>
+						<label for="exampleInputPassword1">총 주문금액</label>
+						<a class="goodstotalprice" id="goodstotalprice"></a>
+						<label for="exampleInputPassword1">원</label>
                     </div>
                     <button type="submit" class="btn btn-primary">장바구니 담기</button>
                     <button type="submit" class="btn btn-primary">주문하기</button>
