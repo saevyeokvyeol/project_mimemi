@@ -19,7 +19,7 @@ public interface AskService {
 	 * @param AskDTO(int askNo, String userId, String askTitle, String askContent, 
 			String askCategory)
 	 * */
-	void updateAsk(AskDTO askDTO) throws SQLException;
+	void updateAsk(AskDTO askDTO, String path) throws SQLException;
 	
 	/**
 	 * 1:1 문의 게시글 첨부파일 수정

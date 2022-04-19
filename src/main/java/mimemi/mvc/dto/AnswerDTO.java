@@ -5,11 +5,17 @@ public class AnswerDTO {
 	private int askNo;//글번호(시퀀스)
 	private String answerContent;//댓글내용
 	private String answerRegdate;//작성날짜
-	
+
 	public AnswerDTO() {}
 
-	public AnswerDTO(String answerContent) {
+	public AnswerDTO(int askNo) {
 		super();
+		this.askNo=askNo;
+	}
+	
+	public AnswerDTO(int askNo, String answerContent) {
+		super();
+		this.askNo=askNo;
 		this.answerContent=answerContent;
 	}
 	

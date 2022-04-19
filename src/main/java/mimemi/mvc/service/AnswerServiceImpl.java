@@ -17,6 +17,18 @@ public class AnswerServiceImpl implements AnswerService {
 
 	}
 
+	/**
+	 * 댓글보기
+	 * */
+	@Override
+	public AnswerDTO selectByAskNo(int askNo) throws SQLException {
+		
+		AnswerDTO answerDto = answerDao.selectByAskNo(askNo);
+		if(answerDto==null)throw new SQLException("댓글보기에 오류가 발생했습니다");
+		
+		return null;
+	}
+	
 	@Override
 	public void updateAnswerReply(AnswerDTO answerDTO) throws SQLException {
 		// TODO Auto-generated method stub
@@ -28,5 +40,8 @@ public class AnswerServiceImpl implements AnswerService {
 		// TODO Auto-generated method stub
 
 	}
+
+
+	
 
 }

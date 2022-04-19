@@ -44,7 +44,7 @@
 </head>
 <body>
 <section class="askList-main">
-	<h1><a href="${path}/front?key=ask&methodName=selectAll">1 : 1 문의 목록</a></h1>
+	<h1><a href="${path}/front?key=ask&methodName=selectAllManager">1 : 1 문의 목록(관리자페이지)</a></h1>
 	<section name="ask_sort" id="">
 			<select name="ask_sort" id="">
 					<option value="0">--정렬방식--</option>
@@ -77,7 +77,8 @@
 							<tr>
 								<td>
 								<span>
-								<a href="${path}/front?key=ask&methodName=selectByAskNo&askNo=${ask.askNo}">
+								<a href="${path}/front?key=ask&methodName=selectByAskNoManager&askNo=${ask.askNo}">
+							
 								${ask.askNo}
 								</a>
 								</span>
@@ -88,22 +89,16 @@
 								<td>${ask.askAttach}</td>
 								<td>${ask.askRegdate}</td>
 								<td>${ask.askCategory}</td>
-								
 								<td>
-								<span>
-								<a href="${path}/front?key=ask&methodName=selectByAskNo&askNo=${ask.askNo}">
+							
 								${ask.askComplete}
-								</a>
-								</span>
 								</td>
 							</tr>
 							
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
-					<div align=right>
-					<span>&lt;<a href="${path}/board/write.jsp">문의하기</a>&gt;</span>
-					</div>
+					
 		    </tbody>
 		</table>
 		<nav aria-label="Page navigation example">

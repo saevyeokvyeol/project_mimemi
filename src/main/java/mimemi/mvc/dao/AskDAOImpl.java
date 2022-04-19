@@ -59,11 +59,65 @@ public class AskDAOImpl implements AskDAO {
 		
 		return result;
 	}
-
+	/**
+	 * 1:1문의 업데이트
+	 * */
 	@Override
 	public int updateAsk(AskDTO askDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=proFile.getProperty("ask.update");
+		int result = 0;
+		
+		try {
+			con=DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, askDTO.getAskTitle());
+			ps.setString(2, askDTO.getAskContent());
+			ps.setInt(3, askDTO.getAskNo());
+			
+			result=ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("문의수정에 실패하였습니다.");
+			}else {
+				if(askDTO.getAskAttach()!=null) {
+					int re = updateAskAttachCon(con,askDTO.getAskNo(),askDTO.getAskAttach());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("후기 파일 수정에 실패했습니다.");
+						}
+				}
+			}
+			
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+		}
+		
+		
+		return result;
+	}
+	
+	//1:1문의 첨부파일 수정
+	public int updateAskAttachCon(Connection con,int askNo, String askAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql = proFile.getProperty("ask.updateAskAttachCon");
+		int result =0;
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, askAttach);
+			ps.setInt(2, askNo);
+			
+			result=ps.executeUpdate();
+			
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		
+		return result;
 	}
 
 	@Override

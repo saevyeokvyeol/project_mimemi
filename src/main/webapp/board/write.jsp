@@ -65,9 +65,16 @@ function checkValid() {
 				 <input type="file" name="notice_attach" maxlength="" size="40">
 				</div>
 				<div class="mb-3">
-					<label for="title">카테고리</label>
-					<input type="text" class="form-control" name="ask_category" id="title" placeholder="카테고리명을 입력해주세요. ex)구독관련문의, 구매관련문의 등등">
-				</div>
+			         <label for="title">카테고리</label>
+			        
+			         <select name="ask_category" id = "ask_select_category"> 
+			          <option name="ask_category" value="">FAQ카테고리</option>
+			          <option name="ask_category" value="구매관련">구매관련</option>
+			           <option name="ask_category" value="구독관련">구독관련</option>
+			          <option name="ask_category" value="기타">기타</option>
+			        
+			         </select>
+			    </div>
      			<div >
      				<input type="submit" value="문의하기" />
 				    <input type="button" value="목록보기" onclick="location.href='ask2.jsp'"/>

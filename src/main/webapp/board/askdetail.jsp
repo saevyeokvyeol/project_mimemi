@@ -106,7 +106,9 @@
 				<input type=hidden name="key" value="ask">
 				<input type=hidden name="methodName" >
 				<input type=hidden name="pageNo" value="${pageNo}" >
-				<input type=button value="답글달기" onClick="sendUpdate()">
+								
+				<a href="${path}/manager/askAnswer2.jsp?key=answer&methodName=insertAnswerReply&askNo=${askDto.askNo}">답글달기</a>
+				
 				<a href="${path}/front?key=ask&methodName=deleteAsk&askNo=${askDto.askNo}">삭제하기</a>
 		</td>
 	 </tr>	

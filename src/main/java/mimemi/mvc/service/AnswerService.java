@@ -12,6 +12,11 @@ public interface AnswerService {
 	void insertAnswerReply(AnswerDTO answerDTO) throws SQLException;
 
 	/**
+	 * ´ñ±Ûº¸±â
+	 * */
+	AnswerDTO selectByAskNo(int askNo)throws SQLException;
+	
+	/**
 	 * ´ñ±Û ¼öÁ¤ 
 	 * @param AnswerDTO(int answerNo, String answerContent)
 	 * */

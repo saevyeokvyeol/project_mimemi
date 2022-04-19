@@ -24,9 +24,24 @@ public class AskServiceImpl implements AskService {
 
 
 	@Override
-	public void updateAsk(AskDTO askDTO) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void updateAsk(AskDTO askDTO,String path) throws SQLException {
+		AskDTO dbAsk = askDao.selectByAskNo(askDTO.getAskNo());
+		if(dbAsk==null)throw new SQLException("해당번호의 글을 찾을 수 없습니다");
+		
+		String dbAttach=dbAsk.getAskAttach();
+		
+		int result = askDao.updateAsk(askDTO);
+		
+		if(result==0) {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete();
+			}
+			throw new SQLException("수정되지 않았습니다");
+		}else {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
+			}
+		}
 	}
 
 	@Override

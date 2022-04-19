@@ -18,6 +18,11 @@ public interface AnswerDAO {
 	int updateAnswerReply(AnswerDTO answerDTO) throws SQLException;
 	
 	/**
+	 * ¥Ò±€ ∫∏±‚
+	 * */
+	AnswerDTO selectByAskNo(int askNo) throws SQLException;
+	
+	/**
 	 * ¥Ò±€ ªË¡¶
 	 * */
 	int deleteAnswerReply(int answerNo) throws SQLException;

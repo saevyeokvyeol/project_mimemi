@@ -1,27 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<h2>°ü¸®ÀÚ ´ä±Û ÆäÀÌÁö</h2>
+<h2>ê´€ë¦¬ì ë‹µê¸€ í˜ì´ì§€</h2>
  <form name="writeNotice" method="post" action="${path}/front?key=answer&methodName=insertAnswerReply"
        onsubmit='return checkValid()' enctype="multipart/form-data">
 		<div class="container" role="main">
 			answerNo, askNo, answerContent, answerRegdate
-			´ñ±Û¹øÈ£,±Û¹øÈ£,´ñ±Û³»¿ë,ÀÛ¼º³¯Â¥
+			ëŒ“ê¸€ë²ˆí˜¸,ê¸€ë²ˆí˜¸,ëŒ“ê¸€ë‚´ìš©,ì‘ì„±ë‚ ì§œ
 				
-				<div class="mb-3">
-					<label for="content">´ñ±Û ³»¿ë</label>
-					<textarea class="form-control" rows="5" name="answer_content" id="content" placeholder="³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä" ></textarea>
+				<div class="mb-3">${param.askNo}
+				<input type="hidden" value="${param.askNo}" name="askNo">
+					<label for="content">ëŒ“ê¸€ ë‚´ìš©</label>
+					<textarea class="form-control" rows="5" name="answer_content" id="content" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”" ></textarea>
 				</div>
 				
      			<div >
-     				<input type="submit" value="´ñ±Û´Ş±â" />
-				    <input type="button" value="¸ñ·Ïº¸±â" onclick="location.href='../board/ask2.jsp'"/>
+     				<input type="submit" value="ëŒ“ê¸€ë‹¬ê¸°" />
+				    <input type="button" value="ëª©ë¡ë³´ê¸°" onclick="location.href='../board/ask2.jsp'"/>
 			</div>
 		</div>
 </form>

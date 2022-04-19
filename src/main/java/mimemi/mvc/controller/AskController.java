@@ -47,6 +47,32 @@ public class AskController implements Controller {
 	}
 	
 	/**
+	 * (관리자) 전체보기
+	 * */
+	
+	public ModelAndView selectAllManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		String field = request.getParameter("field");
+		
+		List<AskDTO> askList = askService.selectAllAsk(Integer.parseInt(pageNum), field);
+		
+		request.setAttribute("askList", askList);
+		request.setAttribute("pageNum", pageNum);
+		
+		
+		return new ModelAndView("manager/managerAsk.jsp");
+		
+		
+	}
+	
+	/**
 	 * 1:1 문의 등록
 	 * */
 	public ModelAndView insertAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -84,26 +110,49 @@ public class AskController implements Controller {
 		
 		return new ModelAndView("front?key=ask&methodName=selectAll", true);
 	}
+	
+	/**
+	 * ask 수정페이지이동
+	 * */
+	public ModelAndView updateAskForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String askNo = request.getParameter("askNo");
+		AskDTO ask = askService.selectByAskNo(Integer.parseInt(askNo));
+		request.setAttribute("ask", ask);		
+	
+		//notice update참고
+				//faq update참고
+				//수정폼
+				//
+		
+		return new ModelAndView("board/askupdate.jsp");
+	}
+	
 	/**
 	 * 1:1 문의 수정
 	 * */
 	public ModelAndView updateAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String userId = request.getParameter("userId");
-		String askTitle = request.getParameter("askTitle");
-		String askContent = request.getParameter("askContent");
 		
+		String saveDir = request.getServletContext().getRealPath("/img");
+    	int maxSize = 1024*1024*100;
+		String encoding= "UTF-8";
 		
+		 MultipartRequest m = new MultipartRequest(request, saveDir,maxSize, encoding, new DefaultFileRenamePolicy());
+			
 		
+		String askNo=m.getParameter("askNo");
+		String askTitle=m.getParameter("askTitle");
+		String askContent=m.getParameter("askContent");
 		
-		//인수값 설정
-		//AskDTO askDto=new AskDTO(userId, askTitle, askContent);
+		AskDTO ask = new AskDTO(Integer.parseInt(askNo), askTitle, askContent);
 		
-		//askService.updateAsk(askDto);
-		AskDTO askDto = new AskDTO(userId, askTitle, askContent); 
-		
-		
-		
-		
+
+		if(m.getFilesystemName("askAttach")!=null) {
+			String askAttach=m.getFilesystemName("askAttach");
+			
+			ask.setAskAttach(askAttach);
+		}
+		askService.updateAsk(ask,saveDir);
+	
 		return new ModelAndView("board/ask2.jsp");
 	}
 	
@@ -136,6 +185,25 @@ public class AskController implements Controller {
 	 * 문의 번호로 불러오기(상세보기)
 	 * */
 	public ModelAndView selectByAskNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		response.setContentType("text/html;charset=UTF-8"); 
+		
+		
+		String askNo = request.getParameter("askNo");
+		String pageNo = request.getParameter("pageNo");
+		
+		AskDTO askDto = askService.selectByAskNo(Integer.parseInt(askNo));
+		request.setAttribute("askDto", askDto);
+		request.setAttribute("pageNo", pageNo);
+		
+		
+		return new ModelAndView("/board/askupdate.jsp");
+	}
+	
+	/**
+	 * 문의 번호로 불러오기 (관리자)
+	 * */
+	public ModelAndView selectByAskNoManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		response.setContentType("text/html;charset=UTF-8"); 
 		
