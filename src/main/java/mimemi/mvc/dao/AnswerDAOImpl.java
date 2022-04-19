@@ -72,7 +72,7 @@ public class AnswerDAOImpl implements AnswerDAO {
 						rs.getString(3),
 						rs.getString(4));
 			}
-			
+	
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}

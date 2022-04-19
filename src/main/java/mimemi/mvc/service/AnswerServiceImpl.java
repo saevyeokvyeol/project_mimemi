@@ -26,7 +26,7 @@ public class AnswerServiceImpl implements AnswerService {
 		AnswerDTO answerDto = answerDao.selectByAskNo(askNo);
 		if(answerDto==null)throw new SQLException("댓글보기에 오류가 발생했습니다");
 		
-		return null;
+		return answerDto;
 	}
 	
 	@Override

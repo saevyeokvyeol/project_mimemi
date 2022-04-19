@@ -39,6 +39,46 @@ function checkValid() {
 	    
 }
 
+	$(function(){
+		var target = '${askDto.askNo}'
+		alert(target);
+		function selectReply(){
+            $.ajax({
+				url: "${path}/ajax" , //서버요청주소
+				type: "post" , //요청방식 (get,post...)
+				dataType: "json" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+				data: {key:"answer", methodName:"selectAnswerReply", askNo: target} , //서버에게 보낼 데이터정보(parameter정보)
+				
+				success: function(result){
+					alert("검색성공~")
+					let str="";														
+					$.each(result,function(index,reply){					
+                        str+=`<div class="reply-user-info">`;
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerNo}</span>&nbsp;`
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerRegdate}</span>`
+                            
+                        str+=`</div>`;
+                        str+=`<div class="reply-content">`;
+                            str+=`<span class="reply-content-text">\${reply.answerContent}</span>`
+               
+                        str+=`</div>`;
+                    })
+                   	$("#askReplyOutPut").html(askReplyOutPut)
+                   	$("#askReplyOutPut").append(str)
+				},
+
+				error: function(err){//실패했을 때 콜백함수
+				  alert(err+"오류가 발생했습니다.")
+				} 
+
+			    })//ajax끝
+            }	//selectReply끝
+				
+			selectReply();
+		})//function끝
+		
+	
+
 
 
 </script>
@@ -108,7 +148,14 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
 		</c:forEach>
 	</c:otherwise>
 </c:choose>
-
+<!-- 댓글창 조회 -->
+<div>
+	<div>
+		<div id="askReplyOutPut">
+			
+		</div>
+	</div>
+</div>
 <hr>
 <div align=right><span >&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>

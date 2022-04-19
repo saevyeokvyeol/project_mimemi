@@ -1,5 +1,7 @@
 package mimemi.mvc.controller;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import mimemi.mvc.dto.AnswerDTO;
 import mimemi.mvc.service.AnswerService;
 import mimemi.mvc.service.AnswerServiceImpl;
+import net.sf.json.JSONArray;
 
 public class AnswerController implements Controller {
 
@@ -43,15 +46,18 @@ public class AnswerController implements Controller {
 	/**
 	 * 댓글보기 (회원)
 	 * */
-	public ModelAndView selectAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void selectAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8"); 
 		
 		String askNo=request.getParameter("askNo");
-		
+		System.out.println("controller");
 		AnswerDTO answerDto = answerService.selectByAskNo(Integer.parseInt(askNo));
 		request.setAttribute("answerDto", answerDto);
 		
-		return new ModelAndView("/board/askupdate.jsp");
+		JSONArray replyArr = JSONArray.fromObject(answerDto);
+		PrintWriter out = response.getWriter();
+		out.print(replyArr);
+		
 	}
 	
 	/**
