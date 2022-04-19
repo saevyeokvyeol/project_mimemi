@@ -47,6 +47,7 @@ public class ReviewController implements Controller {
 		
 		request.setAttribute("list", reviewList);
 		request.setAttribute("pageNum", curPageNo);
+		request.setAttribute("field", field);
 		
 		//System.out.println("서비스에서 돌아온 후.."+curPageNo);
 		
@@ -58,8 +59,19 @@ public class ReviewController implements Controller {
 	 * 검색기능
 	 * */
 	public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String curPageNo = request.getParameter("pageNum");
+		if(curPageNo ==null||curPageNo.equals("")) {
+			curPageNo="1";
+		}
+		
+		String field= request.getParameter("field");
+		String keyword= request.getParameter("keyword");
+		List<ReviewDTO> reviewList=reviewService.selectByKeyword(keyword, field, Integer.parseInt(curPageNo));
+		request.setAttribute("list", reviewList);
+		request.setAttribute("pageNum", curPageNo);
+		request.setAttribute("field", field);
+		request.setAttribute("keyword", keyword);
+		return new ModelAndView("/board/reviewSearch.jsp");
 	}
 	
 	/**

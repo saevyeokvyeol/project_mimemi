@@ -25,5 +25,5 @@ public interface ReviewReplyService {
 	/**
 	 * ¥Ò±€ ªË¡¶
 	 * */
-	int deleteReviewReply(int answerNo) throws SQLException;
+	int deleteReviewReply(int replyNo) throws SQLException;
 }

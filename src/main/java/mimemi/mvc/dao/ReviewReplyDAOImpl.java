@@ -95,13 +95,23 @@ public class ReviewReplyDAOImpl implements ReviewReplyDAO {
 	 * ¥Ò±€ ªË¡¶
 	 * */
 	@Override
-	public int deleteReviewReply(int answerNo) throws SQLException {
+	public int deleteReviewReply(int replyNo) throws SQLException {
 		Connection con =null;
 		PreparedStatement ps =null;
 		String sql="delete from REVIEW_REPLY where REPLY_NO=?";
 		//String sql=proFile.getProperty("");
+		int result=0;
 		
-		return 0;
+		try {
+			con = DbUtil.getConnection();
+			ps= con.prepareStatement(sql);
+			ps.setInt(1, replyNo);
+			
+			result= ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 	
 	/**

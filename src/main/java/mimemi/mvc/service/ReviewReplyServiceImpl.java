@@ -20,23 +20,19 @@ public class ReviewReplyServiceImpl implements ReviewReplyService {
 	@Override
 	public int insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException {
 		int result=replyDAO.insertReviewReply(reviewreplyDTO);
-		if(result==0) {
-			throw new SQLException("댓글이 등록되지 않았습니다.");
-		}
 		return result;
 	}
 
 	@Override
 	public int updateReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException {
 		// TODO Auto-generated method stub
-		int result=0;
+		int result= replyDAO.updateReviewReply(reviewreplyDTO);
 		return result;
 	}
 
 	@Override
-	public int deleteReviewReply(int answerNo) throws SQLException {
-		// TODO Auto-generated method stub
-		int result=0;
+	public int deleteReviewReply(int replyNo) throws SQLException {
+		int result=replyDAO.deleteReviewReply(replyNo);
 		return result;
 	}
 

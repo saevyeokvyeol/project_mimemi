@@ -27,7 +27,7 @@ public interface ReviewReplyDAO {
 	/**
 	 * 댓글 삭제
 	 * */
-	int deleteReviewReply(int answerNo) throws SQLException;
+	int deleteReviewReply(int replyNo) throws SQLException;
 	
 	/**
 	 * 후기 게시물 삭제할 때, 댓글 삭제

@@ -98,9 +98,9 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewDTO> selectByKeyword(String reviewKeyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReviewDTO> selectByKeyword(String reviewKeyword, String field, int pageNo) throws SQLException {
+		List<ReviewDTO> list =reviewDAO.selectByKeyword(reviewKeyword, field, pageNo);
+		return list;
 	}
 
 	@Override

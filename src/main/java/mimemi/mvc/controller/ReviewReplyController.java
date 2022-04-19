@@ -26,7 +26,6 @@ public class ReviewReplyController implements Controller {
 	 * */
 	public void select(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
-		//System.out.println("replyselect ~~~");
 		String reviewNo = request.getParameter("reviewNo");
 		
 		List<ReviewReplyDTO> replyList = replyService.selectReplyByReviewNo(Integer.parseInt(reviewNo));		
@@ -41,7 +40,6 @@ public class ReviewReplyController implements Controller {
 		String userId = request.getParameter("reply_id");
 		String managerId = request.getParameter("reply_manager_id");
 		String content=request.getParameter("reply_content");
-		System.out.println("replyinsert~~");
 		//LocalDate now = LocalDate.now();
 		//String regDate = now;
 		ReviewReplyDTO reply = new ReviewReplyDTO(Integer.parseInt(reviewNo), userId, managerId, content);
@@ -52,11 +50,17 @@ public class ReviewReplyController implements Controller {
 	}
 	
 	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+		String replyNo = request.getParameter("reply_No");
+		System.out.println(replyNo);
+		int result =replyService.deleteReviewReply(Integer.parseInt(replyNo));
+		PrintWriter out = response.getWriter();
+		out.print(result);
+				
 	}
 	
 	public void update(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+		String replyNo = request.getParameter("reply_No");
+		String content = request.getParameter("reply_content");
 	}
 	
 

@@ -8,14 +8,16 @@ pageEncoding="UTF-8"%>
         <title>Document</title>
        
         <style>
+            section{
+                
+            }
             .container{
                 width: 1000px;
                 margin: auto;
             }
             .review-view{
-                width: 800px;
+                width: 1000px;
                 height:500px;
-                
             }
             
             .review-Image{
@@ -78,11 +80,33 @@ pageEncoding="UTF-8"%>
             .bRight{
                 float: right;
             }
+            
             .base-btn{
                 width: 800px;
                 height: 20px;
                 margin: 20px 0px 50px;
             }
+            #back-list-btn, #delete-btn, #update-btn{
+                background-color: rgb(248, 249, 250);
+                color: gray;
+                border: 2px solid gray;
+                border-radius: 15px;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            #back-list-btn:hover{
+                background-color: cornflowerblue;
+                border: 2px solid cornflowerblue;
+                color: white;
+            }
+            #delete-btn:hover, #update-btn:hover{
+                background-color: rgb(207, 207, 207);
+                border: 2px solid rgb(207, 207, 207);
+                color: white
+            }
+
             .review-reply{
                 width: 800px;
             }
@@ -113,6 +137,14 @@ pageEncoding="UTF-8"%>
                 background-color: rgb(248, 249, 250);
                 border: 1px solid rgb(196, 196, 196);
             }
+            .reply-content{
+            	padding:10px 10px 10px 0px;
+            }
+            #reply-update-bnt, #reply-delete-bnt{
+            	color:gray;
+            }
+            
+            
             
         </style>
        <!-- Bootstrap CSS -->
@@ -129,6 +161,9 @@ pageEncoding="UTF-8"%>
         <script>
         $(function(){
             var target ='${reviewDetail.reviewNo}'
+            //var loginUser='${session.loginUser}' //세션으로 확인한 현재 로그인한 유저
+            var loginUser='frog123'
+
             //전체 댓글 검색
         	function selectAllReply(){
                 $.ajax({
@@ -147,7 +182,9 @@ pageEncoding="UTF-8"%>
                             str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.replyRegdate}</span>`
                         str+=`</div>`;
                         str+=`<div class="reply-content">`;
-                            str+=`<pre class="reply-content-text">\${reply.replyContent}</pre>`
+                            str+=`<span class="reply-content-text">\${reply.replyContent}</span>`
+                            str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-update-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}>수정</a></span>`
+                            str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-delete-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}">삭제</a></span>`
                         str+=`</div>`;
                     })
                    	$("#review_reply_output").html(review_reply_output)
@@ -179,7 +216,7 @@ pageEncoding="UTF-8"%>
                         data: $("#reply-loginUser-insert").serialize() , //서버에게 보낼 데이터정보(parameter정보)
                         
                         success: function(result){
-                            alert("댓글등록성공~")
+                            //alert("댓글등록성공~")
                             if(result==0){
                                 alert("댓글을 등록하지 못 했습니다.")
                             }else{
@@ -197,6 +234,39 @@ pageEncoding="UTF-8"%>
 			        })
                 }
             })
+            $(document).on("click","#reply-delete-bnt",function(){
+                
+                var replyId = $(this).attr("name")
+                alert("댓글유저아이디~~"+replyId)
+                var replyNo =$(this).attr("reply_No")
+                //alert(replyNo)
+
+                //세션에서 로그인한 유저와 댓글 작성자 id가 일치하는지 확인
+                if(loginUser==replyId){
+                    $.ajax({
+                        url: "${path}/ajax" , //서버요청주소
+                        type: "post" , //요청방식 (get,post...)
+                        dataType: "text" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+                        data: {key:"reviewreply", methodName:"delete", reply_No: replyNo } , //서버에게 보낼 데이터정보(parameter정보)
+                        
+                        success: function(result){
+                            if(result==0){
+                                alert("댓글이 삭제되지 않았습니다.")
+                            }else{
+                                selectAllReply(); //화면갱신
+                            }
+                        
+                        },
+
+                        error: function(err){//실패했을 때 콜백함수
+                        alert(err+"오류가 발생했습니다.")
+                        } 
+
+			        })
+                }else{
+                    alert("댓글은 자신이 단 댓글만 삭제 가능합니다.")
+                }
+            })
 
             selectAllReply();
         })
@@ -206,6 +276,7 @@ pageEncoding="UTF-8"%>
 
     </head>
     <body>
+        <section>
         <div class="container">
             <div class="review-title">
                 <h4>후기 게시판</h4>
@@ -268,9 +339,9 @@ pageEncoding="UTF-8"%>
                 </div>
             </div>
             <div class="base-btn">
-                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()">목록으로 돌아가기<img src="목록아이콘"></a></span>
-                <span class="bRight"><a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}">삭제<img src="삭제아이콘"></a></span>
-                <span class="bRight"><a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" >수정<img src="수정아이콘"></a></span>
+                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()" id="back-list-btn">목록으로 돌아가기</a></span>
+                <span class="bRight"><a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}" id="delete-btn">삭제</a></span>
+                <span class="bRight"><a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" id="update-btn" >수정</a></span>
             </div>
             <div class="review-reply">
                 
@@ -288,7 +359,7 @@ pageEncoding="UTF-8"%>
                             <input type="hidden" name="key" value="reviewreply">
                             <input type="hidden" name="methodName" value="insert">
                             <input type="hidden" name="reviewNo" value="${reviewDetail.reviewNo}">
-                            <button type="button" class="btn btn-dark mt-3" id="reply-insert-btn" aria-placeholder="댓글을 달아보세요!">댓글 등록하기</button>
+                            <button type="button" class="btn btn-dark mt-3" id="reply-insert-btn" >댓글 등록하기</button>
                     	</form>
                     </div>
                 </div>
@@ -310,5 +381,6 @@ pageEncoding="UTF-8"%>
             </div>
 
         </div>
+        </section>
     </body>
 </html>

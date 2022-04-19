@@ -208,7 +208,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return list;
 	}
 	/**
-	 * 블라인드는 안보이는 - 전체 레코드 수 가져오기
+	 * 전체 레코드 수 가져오기
 	 * */
 	private int getTotalCount(String field) throws SQLException{
 		Connection con =null;
@@ -230,11 +230,101 @@ public class ReviewDAOImpl implements ReviewDAO {
 		}
 		return totalCount;
 	}
-
+	
+	/**
+	 * 게시물검색
+	 * */
 	@Override
-	public List<ReviewDTO> selectByKeyword(String reviewKeyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReviewDTO> selectByKeyword(String reviewKeyword, String field, int pageNo) throws SQLException {
+		Connection con =null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql="";
+		//String sql=proFile.getProperty("");
+		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
+		SimpleDateFormat reviewFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if(field.equals("title")){
+			sql="select * from (select rv.*, rownum from (select* from review where REVIEW_TITLE like ? order by review_no desc) rv) where rownum>=? and rownum<=?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select * from (select rv.*, rownum from (select* from review where REVIEW_CONTENT like ? order by review_no desc) rv) where rownum>=? and rownum<=?";
+			//sql=proFile.getProperty("");
+		}
+		
+		try {
+			int totalCount =this.getTotalCountByKeyword(reviewKeyword,field);
+			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
+			PageCnt pagecnt = new PageCnt();
+			pagecnt.setPageCnt(totalPage);
+			pagecnt.setPageNo(pageNo);
+			
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%"+reviewKeyword+"%");
+			
+			//페이지 처리 : ?에 들어갈 값 설정하기
+			ps.setInt(2, ((pageNo-1)*PageCnt.pagesize)+1);
+			ps.setInt(3, pageNo*PageCnt.pagesize);
+			
+			rs= ps.executeQuery();
+			while(rs.next()) {
+				ReviewDTO review = new ReviewDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						reviewFormat.format(rs.getDate(7)),
+						rs.getInt(8),
+						rs.getString(9),
+						rs.getInt(10)
+						);
+				review.getGoodsDTO().setGoodsName("상품이름");
+				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
+				list.add(review);
+				//System.out.println(review.getReviewRegdate());
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return list;
+	}
+	
+	/**
+	 * 전체 레코드 수 가져오기
+	 * */
+	private int getTotalCountByKeyword(String keyword, String field) throws SQLException{
+		Connection con =null;
+		PreparedStatement ps=null;
+		ResultSet rs =null;
+		int totalCount=0;
+		String sql="";
+		//String sql=proFile.getProperty("review.totalCount");
+		
+		
+		if(field.equals("title")){
+			sql="select count(*) from review where REVIEW_BLIND='F' and REVIEW_TITLE like ?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select count(*) from review where REVIEW_BLIND='F' and REVIEW_CONTENT like ?";
+			//sql=proFile.getProperty("");
+		}
+		
+		
+		try {
+			con=DbUtil.getConnection();
+			ps =con.prepareStatement(sql);
+			ps.setString(1, "%"+keyword+"%");
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return totalCount;
 	}
 
 	@Override
