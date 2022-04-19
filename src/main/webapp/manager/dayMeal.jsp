@@ -51,18 +51,17 @@
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
-                            <th scope="col">상품번호</th>
-                            <th scope="col">상품명</th>
-                            <th scope="col">날짜</th>
+                            <th scope="col">식단번호</th>
+                            <th scope="col">상품카테고리</th>
                             <th scope="col">도시락ID</th>
                             <th scope="col">도시락명</th>
-                            <th scope="col">가격</th>
+                            <th scope="col">날짜</th>       
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>H</td>
+                            <td>1</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>
@@ -71,7 +70,7 @@
                             <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
                         </tr>
                         <tr>
-                            <td>H</td>
+                            <td>2</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>
@@ -80,7 +79,7 @@
                             <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
                         </tr>
                         <tr>
-                            <td>H</td>
+                            <td>3</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>
@@ -89,7 +88,7 @@
                             <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
                         </tr>
                         <tr>
-                            <td>H</td>
+                            <td>4</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>

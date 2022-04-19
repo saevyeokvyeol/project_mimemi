@@ -23,7 +23,7 @@
     
 	<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 
-    <title>미미미</title>
+    <title>상품관리 페이지</title>
 
     <style>
         .wrap {
@@ -38,36 +38,158 @@
     </style>
     
     <script type = "text/javascript">
+		
+    	function fillUpdateModal(goodsId, goodsName, goodsThumbnail, goodsPrice, goodsSale, goodsDetail) {
+    		$('#updateGoodsId').text(goodsId)
+    		$('#updateGoodsIdHidden').val(goodsId)
+    		$('#updateGoodsNameHidden').val(goodsName)
+    		$('#updateGoodsThumbnail').val(goodsThumbnail)
+    		$('#updateGoodsPrice').val(goodsPrice)
+    		$('#updateGoodsSale').val(goodsSale)
+    		$('#updateGoodsDetail').val(goodsDetail)
+    	}
+    	
+    	function fillTable(result) {
+    		let text = "";
+			$.each(result, function(index, item){
+				text+="<tr>"
+				text+='<td>' + item.goodsId + '</td>';
+				text+='<td>' + item.goodsThumbnail + '</td>';
+				text+='<td>' + item.goodsName + '</td>';
+				text+='<td>' + item.goodsPrice + '</td>';
+				text+='<td>' + item.goodsSale + '</td>';
+				text+='<td>' + item.goodsDetail + '</td>';
+				text+="<td><button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#updateGoodsModal\" onclick=\"fillUpdateModal(\'" + item.goodsId + "\', \'" + item.goodsName + "\', \'" + item.goodsThumbnail + "\', " + item.goodsPrice + ", \'" + item.goodsSale + "\', \'" + item.goodsDetail + "\')\">수정</button><td>";
+				text+='<td>';
+				text+='</tr>';
+			});
+			$("#goodsTable tr:gt(0)").remove();
+			$("#goodsTable tbody").append(text);    	
+    	}
+    
+		function goodsSelectAll(){
+			$.ajax({
+				url: "${path}/ajax",
+				type: "get",
+				dataType: "json",
+				data: {key: "goods", methodName: "getGoodsList"},
+				success: function(result) {
+					fillTable(result)  						
+				}
+			})
+		}
+    	/* 상품추가 */
+    	function goodsInsert() {
+    		let goodsId = $("#goodsId").val()
+    			goodsName = $("#goodsName").val()
+    			goodsPrice = $("#goodsPrice").val()
+    			goodsDetail = $("#goodsDetail").val()
+    			goodsThumbnail = $("#goodsThumbnail").val()
+    			goodsSale = $("#goodsSale").val()
+    		
+   			$.ajax({
+   				url: "${path}/ajax",
+   				type: "post",
+   				data: {
+   					key: "goods",
+   					methodName: "getGoodsInsert",
+   					goodsId: goodsId,
+   					goodsName: goodsName,
+   					goodsPrice: goodsPrice,
+   					goodsDetail: goodsDetail,
+   					goodsThumbnail: goodsThumbnail,
+   					goodsSale: goodsSale
+   					},
+   				success: function(result) {
+   					//console.log('들어오냐')
+   					location.reload()
+   										
+  				}
+			})
+   		}
+    	/*상품 추가하기*/
+    	function goodsUpdate() {
+    		let goodsId = $("#updateGoodsIdHidden").val()
+				goodsName = $("#updateGoodsNameHidden").val()
+				goodsPrice = $("#updateGoodsPrice").val()
+				goodsDetail = $("#updateGoodsDetail").val()
+				goodsThumbnail = $("#updateGoodsThumbnail").val()
+				goodsSale = $("#updateGoodsSale").val()
+		
+			$.ajax({
+				url: "${path}/ajax",
+				type: "post",
+				data: {
+					key: "goods",
+					methodName: "getGoodsUpdate",
+					goodsId: goodsId,
+					goodsName: goodsName,
+					goodsPrice: goodsPrice,
+					goodsDetail: goodsDetail,
+					goodsThumbnail: goodsThumbnail,
+					goodsSale: goodsSale
+					},
+				success: function(result) {
+					//console.log('들어오냐')
+					location.reload()
+				}
+			})
+    		   
+    		 
+    		
+    		
+    	}
+    	
+
+    		
+    	
+   		/*판매중인것들만 조회*/
+    	function goodsSelectByForSale() {
+    		
+   			let sale = $("#goodsSelectByForSale").val()
+   			let methodName = ''
+   			if (sale === '전체조회') {
+   				methodName = 'getGoodsList'
+   				
+   			} else {
+   				methodName = 'getGoodsSelectForSale'
+   			}
+   			
+    		$.ajax({
+				url: "${path}/ajax",
+				type: "get",
+				dataType: "json",
+				data: {key: "goods", methodName: methodName},
+				success: function(result) {
+					fillTable(result)						
+				}
+			})
+ 
+    	}
+    	/*상품이름으로 검색하기*/
+    	function goodsSelectByKeyword() {
+    		let keyword = $("#searchkeyword").val()
+    	
+    		$.ajax({
+				url: "${path}/ajax",
+				type: "get",
+				dataType: "json",
+				data: {key: "goods", methodName: "getGoodsSelectByKeyword", keyword: keyword},
+				
+				success: function(result) {
+					fillTable(result)
+				}
+			})
+ 
+    	}
     	$(function() {
     		if (window.location.href.endsWith('.jsp')) {
     			window.location.href='${path}/front?key=goods&methodName=goodsSelectAll';	
     		}
-    		
-    		function goodsSelectAll(){
-    			$.ajax({
-    				url: "${path}/ajax",
-    				type: "get",
-    				dataType: "json",
-    				data: {key: "goods", methodName: "getGoodsList"},
-    				success: function(result) {
-    					let text = "";
-    					$.each(result, function(index, item){
-    						text+="<tr>"
-    						text+='<td>' + item.goodsId + '</td>';
-    						text+='<td>' + item.goodsThumbnail + '</td>';
-    						text+='<td>' + item.goodsName + '</td>';
-    						text+='<td>' + item.goodsPrice + '</td>';
-    						text+='<td>' + (item.goodsSale ? 'Y' : 'N') + '</td>';
-    						text+='<td>' + item.goodsDetail + '</td>';
-    						text+='</tr>';
-    					});
-   						$("#goodsTable tr:gt(0)").remove();
-   						$("#goodsTable tbody").append(text);    						
-   					}
-   				})
-    		}
     		goodsSelectAll();
     	})
+    	
+    	
     </script>
 </head>
 
@@ -81,15 +203,15 @@
                 <div class="col-3">
                     <!-- select box -->
 
-                    <select class="selectpicker">
-                        <option>전제조회</option>
+                    <select class="selectpicker" id="goodsSelectByForSale">
+                        <option>전체조회</option>
                         <option>판매중</option>
-                        <option>가격순</option>
                     </select>
+                    <button type="button" class="btn btn-default"onclick="goodsSelectByForSale()">조회</button>
                 </div>
                 <div>
-                    <input type="text" class="spiner-text" id="quantity" value="상품이름 검색">
-                    <button type="button" class="btn btn-default">검색</button>
+                    <input type="text" class="spiner-text" id="searchkeyword" value="상품이름 검색">
+                    <button type="button" class="btn btn-default" id="goodsSelectByKeyword" onclick="goodsSelectByKeyword()">검색</button>
                 </div>
             </div>
             <div class="table-responsive">
@@ -147,25 +269,39 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                    
+                        <div class="col-4">
+                            <p>상품ID 입력</p>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="spiner-text" id="goodsId" value="">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-4">
                             <p>상품이름</p>
                         </div>
                         <div class="col-8">
                             <!-- select box -->
-
-                            <select class="selectpicker">
-                                <option>정성한상</option>
-                                <option>비건 식단</option>
-                                <option>300 시리즈</option>
-                            </select>
+							<div>
+	                            <select class="selectpicker" id="goodsName">
+	                                <option>정성한상</option>
+	                                <option>비건 식단</option>
+	                                <option>시그니처</option>
+	                                <option>직장인 식단</option>
+	                                <option>고기 식단</option>
+	                                <option>300덮밥</option>
+	                            </select>
+	                        </div>
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-4">
                             <p>상품 가격</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="goodsPrice" value="">
                         </div>
                     </div>
                     <div class="row">
@@ -173,7 +309,7 @@
                             <p>상품 상세설명</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="goodsDetail" value="1일/1식">
                         </div>
                     </div>
                     <div class="row">
@@ -182,7 +318,7 @@
                         </div>
                         <div class="col-8">
 
-                            <button type="button" class="btn btn-default">이미지 선택하기</button>
+                            <button type="button" class="btn btn-default" id="goodsThumbnail">이미지 선택하기</button>
                         </div>
                     </div>
                     <div class="row">
@@ -190,20 +326,87 @@
                             <p>상품 판매여부</p>
                         </div>
                         <div class="col-8">
-                            <select class="selectpicker">
+                            <select class="selectpicker" id="goodsSale">
                                 <option>Y</option>
                                 <option>N</option>
                             </select>
                         </div>
+      			</div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">등록</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="goodsInsert" onclick="goodsInsert()">등록</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                         </div>
                     </div>
 
                 </div>
             </div>
+    </div>        
+    <div id="updateGoodsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">상품 수정하기</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    
+                        <div class="col-4">
+                            <p>상품ID</p>
+                        </div>
+                        <div class="col-8">
+                        	<p id="updateGoodsId"></p>
+                            <input type="hidden" class="spiner-text" id="updateGoodsIdHidden" value="">
+                        </div>
+                    </div>
+                    <input type="hidden" class="spiner-text" id="updateGoodsNameHidden" value="">
+                    <div class="row">
+                        <div class="col-4">
+                            <p>상품 가격</p>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="spiner-text" id="updateGoodsPrice" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p>상품 상세설명</p>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="spiner-text" id="updateGoodsDetail" value="1일/1식">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p>상품 썸네일 수정</p>
+                        </div>
+                        <div class="col-8">
+                            <button type="button" class="btn btn-default" id="updateGoodsThumbnail">이미지 선택하기</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p>상품 판매여부</p>
+                        </div>
+                        <div class="col-8">
+                            <select class="selectpicker" id="updateGoodsSale">
+                                <option>Y</option>
+                                <option>N</option>
+                            </select>
+                        </div>
+      			</div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="goodsUpdate()">등록</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>            
+</div>
 </body>
 
 </html>

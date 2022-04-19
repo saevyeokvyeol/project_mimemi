@@ -39,7 +39,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6).equals("Y"), rs.getString(7));
+				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
 				list.add(goods);
 			}
 			System.out.println(list.size());
@@ -62,12 +62,17 @@ public class GoodsDAOImpl implements GoodsDAO {
 			ps = con.prepareStatement(sql);
 			// goods.insert = insert into goods (goods_id, goods_name, goods_detail, goods_thumbnail, goods_price, goods_sale, goods_detail_image) values (?, ?, ?, ?, ?, ?, ?)
 			ps.setString(1, goods.getGoodsId());
-			ps.setString(2,goods.getGoodsName());
-			ps.setString(3,goods.getGoodsDetail());
-			ps.setString(4,goods.getGoodsThumbnail());
-			ps.setInt(5,goods.getGoodsPrice());
-			ps.setBoolean(6, goods.isGoodsSale());
-			ps.setString(7,goods.getGoodsDetailImg());
+			ps.setString(2, goods.getGoodsName());
+			ps.setString(3, goods.getGoodsDetail());
+			ps.setString(4, goods.getGoodsThumbnail());
+			ps.setInt(5, goods.getGoodsPrice());
+			ps.setString(6, goods.getGoodsSale());
+			System.out.println(goods.getGoodsId());
+			System.out.println(goods.getGoodsName());
+			System.out.println(goods.getGoodsDetail());
+			System.out.println(goods.getGoodsThumbnail());
+			System.out.println(goods.getGoodsPrice());
+			System.out.println(goods.getGoodsSale());
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, con);
@@ -85,13 +90,13 @@ public class GoodsDAOImpl implements GoodsDAO {
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(7, goods.getGoodsId());
+			ps.setString(6, goods.getGoodsId());
 			ps.setString(1,goods.getGoodsName());
 			ps.setString(2,goods.getGoodsDetail());
 			ps.setString(3,goods.getGoodsThumbnail());
 			ps.setInt(4,goods.getGoodsPrice());
-			ps.setBoolean(5, goods.isGoodsSale());
-			ps.setString(6,goods.getGoodsDetailImg());
+			ps.setString(5, goods.getGoodsSale());
+			//ps.setString(6,goods.getGoodsDetailImg());
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, con);
@@ -158,7 +163,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 //				} else {
 //					forSaleBoolean = false;
 //				}
-				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6).equals("Y"), rs.getString(7));
+				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
 				list.add(goods);
 			}
 		} finally {
@@ -188,7 +193,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 //				} else {
 //					forSaleBoolean = false;
 //				}
-				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6).equals("Y"), rs.getString(7));
+				GoodsDTO goods = new GoodsDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
 				list.add(goods);
 			}
 		} finally {
