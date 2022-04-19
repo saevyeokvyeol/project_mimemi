@@ -7,13 +7,6 @@ import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 
 public interface OrderLineDAO {
-	/**
-	 * 주문 상세 등록
-	 * @param OrderLineDTO(int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
-			String deliPeriod, String deliStart)
-	 * @return int(등록한 레코드 수)
-	 */
-	int insert(OrderLineDTO orderLine) throws SQLException;
 
 	/**
 	 * 주문 상세 삭제(취소)

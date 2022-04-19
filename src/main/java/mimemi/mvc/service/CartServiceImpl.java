@@ -18,8 +18,11 @@ public class CartServiceImpl implements CartService {
 	 */
 	@Override
 	public void insert(CartDTO cart) throws SQLException {
-		// TODO Auto-generated method stub
-
+		int result = cartDao.insert(cart);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 	}
 
 	/**
