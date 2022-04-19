@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.LiveCouponDTO;
+import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.RgCouponDTO;
 import mimemi.mvc.dto.UserCouponDTO;
+import mimemi.mvc.paging.OrderListPageCnt;
 import mimemi.mvc.util.DbUtil;
 
 public class CouponDAOImpl implements CouponDAO {
@@ -196,22 +199,119 @@ public class CouponDAOImpl implements CouponDAO {
 		return rgCouponList;
 	}
 
+	/**
+	 * coupon.insertUserCpLiveCp=insert into USERCOUPON (USERCOU_ID, USER_ID, LIVECOU_ID, USERCOU_USEABLE, USERCOU_PUBDATE, USERCOU_ENDDATE) values(USERCOUPON_SEQ.NEXTVAL,?,?,?,?,?)
+	 * coupon.insertUserCpRgCp=insert into USERCOUPON (USERCOU_ID, USER_ID, RGCOU_ID, USERCOU_USEABLE, USERCOU_PUBDATE, USERCOU_ENDDATE) values(USERCOUPON_SEQ.NEXTVAL,?,?,?,?,?)
+	 * */
 	@Override
 	public int insertUserCp(UserCouponDTO userCoupon, String couponType) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		int result=0;
+		String sql= null;
+		
+		//sql = proFile.getProperty("coupon.insertUserCpLiveCp");
+		//insert into USERCOUPON(USERCOU_ID, USER_ID, LIVECOU_ID, USERCOU_USEABLE, USERCOU_PUBDATE, USERCOU_ENDDATE)
+//		values(USERCOUPON_SEQ.NEXTVAL,?,?,?,?,?)
+		
+		//sql = proFile.getProperty("coupon.insertUserCpRgCp");
+		//insert into USERCOUPON(USERCOU_ID, USER_ID, RGCOU_ID, USERCOU_USEABLE, USERCOU_PUBDATE, USERCOU_ENDDATE)
+		// values(USERCOUPON_SEQ.NEXTVAL,?,?,?,?,?)
+		 
+		
+		if(couponType.equals("LiveCp")) {
+			sql = proFile.getProperty("coupon.insertUserCpLiveCp");
+		}else if(couponType.equals("RgCp")){
+			sql = proFile.getProperty("coupon.insertUserCpRgCp");
+		}
+		System.out.println(couponType);
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, userCoupon.getUserId());
+			
+			if(couponType.equals("LiveCp")) {
+				ps.setString(2, userCoupon.getLivecouId());
+			}else if(couponType.equals("RgCp")){
+				ps.setString(2, userCoupon.getRgcouId());
+			}
+			
+			ps.setString(3, userCoupon.getUsercouUsable() );
+			ps.setString(4, userCoupon.getUsercouPubdate() );
+			ps.setString(5, userCoupon.getUsercouEnddate());
+			
+			result = ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		
+		return result;
 	}
 
 	@Override
 	public int updateCpState(int usercouId, String state) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		int result=0;
+		String sql = proFile.getProperty("coupon.updateCpState");
+		// coupon.updateCpState=update USERCOUPON set USERCOU_USEABLE =? where USERCOU_ID =?
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, state);
+			ps.setInt(2, usercouId);
+			
+			result = ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	@Override
 	public List<UserCouponDTO> selectAllUserCp(String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = null;
+		//SELECT * FROM USERCOUPON order by USER_ID asc
+		//SELECT * FROM USERCOUPON order by USERCOU_PUBDATE asc
+		//SELECT * FROM USERCOUPON order by USERCOU_ENDDATE desc
+		List<UserCouponDTO> userCouponList = new ArrayList<UserCouponDTO>();
+		SimpleDateFormat userCouponFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		
+		if(field != null) {
+			if(field.equals("UserID")) {
+				sql = proFile.getProperty("coupon.selectAllUserCpUserID");
+			}else if (field.equals("PubDate")) {
+				sql = proFile.getProperty("coupon.selectAllUserCpPubDate");
+				
+			} else if (field.equals("EndDate")){
+				sql = proFile.getProperty("coupon.selectAllUserCpEndDate");
+			}
+		}
+		
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				UserCouponDTO  userCoupon = new UserCouponDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), userCouponFormat.format(rs.getDate(6)), userCouponFormat.format(rs.getDate(7)));
+				userCouponList.add(userCoupon);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return userCouponList;
 	}
 
 	@Override
