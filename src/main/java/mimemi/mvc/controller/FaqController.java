@@ -70,12 +70,18 @@ public class FaqController implements Controller {
 			pageNum = "1";
 		}
 		
-        String field = request.getParameter("field");
+		String field =request.getParameter("field");
+		if(field==null||field.equals("")) {
+			field="no";
+		}
 		
+		
+				
 		List<FaqDTO> faqList = faqService.selectAllFaq(Integer.parseInt(pageNum), field);
 		
 		request.setAttribute("FaqList", faqList);
 		request.setAttribute("pageNum", pageNum); 
+		request.setAttribute("field", field);
 		ModelAndView mv = new ModelAndView("manager/selectFaqAll.jsp");
 		
 		return mv;
@@ -94,7 +100,10 @@ public class FaqController implements Controller {
 			pageNum = "1";
 		}
 		
-		String field = request.getParameter("field");
+		String field =request.getParameter("field");
+		if(field==null||field.equals("")) {
+			field="selectAll";
+		}
 		
 		List<FaqDTO> faqList = faqService.selectAllFaq(Integer.parseInt(pageNum), field);
 		
