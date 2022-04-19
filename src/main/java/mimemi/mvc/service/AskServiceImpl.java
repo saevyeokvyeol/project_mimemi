@@ -36,10 +36,14 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public void deleteAsk(int askNo, String path) throws SQLException {
+	public void deleteAsk(AskDTO ask, String path) throws SQLException {
 		
-			int result = askDao.deleteAsk(askNo);
+			int result = askDao.deleteAsk(ask.getAskNo());
 			if(result == 0) throw new SQLException("삭제되지 않았습니다");
+			
+			if(ask.getAskAttach()!=null) {
+				new java.io.File(path+"/"+ask.getAskAttach()).delete();
+			}
 			
 			
 	}
@@ -62,8 +66,14 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public AskDTO selectByAskNo(int askNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		AskDTO askDto = askDao.selectByAskNo(askNo);
+		
+		if(askDto==null)throw new SQLException("상세보기에 오류가 발생했습니다");
+		
+		
+		return askDto;
+		
 	}
 
 	@Override
@@ -73,18 +83,6 @@ public class AskServiceImpl implements AskService {
 	}
 
 
-	/**
-	 * 1:1 상세보기
-	 * */
-	@Override
-	public AskDTO selectByUserId(String userId) throws SQLException {
-		
-		AskDTO askDto = askDao.selectByuserId(userId);
-		
-		if(askDto==null)throw new SQLException("상세보기에 오류가 발생했습니다");
-		
-		
-		return askDto;
-	}
+	
 
 }

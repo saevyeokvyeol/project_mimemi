@@ -8,6 +8,7 @@
 <style type="text/css">
 
 	span{font-size:9pt;}
+	 a{}
 
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
@@ -84,6 +85,13 @@
         
         
     </tr>
+    <tr>
+    	<td><span>첨부파일</span></td>
+    	<td><span>${askDto.askAttach}</span></td>
+    
+    </tr>
+    
+    
    
     
    
@@ -99,13 +107,13 @@
 				<input type=hidden name="methodName" >
 				<input type=hidden name="pageNo" value="${pageNo}" >
 				<input type=button value="답글달기" onClick="sendUpdate()">
-				<input type=button value="삭제하기" onClick="sendDelete()">
-				<a href="#" name="${askDto.userId}">삭제</a>
-				
+				<a href="${path}/front?key=ask&methodName=deleteAsk&askNo=${askDto.askNo}">삭제하기</a>
+		</td>
+	 </tr>	
     </form>
 			
-		</td>
-    </tr>
+		
+   
 </table>
 </body>
 </html>

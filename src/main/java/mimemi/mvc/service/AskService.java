@@ -32,17 +32,12 @@ public interface AskService {
 	 * 1:1 문의 삭제
 	 * @param int askNo
 	 * */
-	void deleteAsk(int askNo,String path) throws SQLException;
+	void deleteAsk(AskDTO ask,String path) throws SQLException;
 	
 	/**
 	 * 1:1 문의 전체 검색
 	 * */
 	List<AskDTO> selectAllAsk(int pageNum, String field) throws SQLException;
-	
-	/**
-	 * 1:1 문의 상세보기
-	 * */
-	AskDTO selectByUserId(String userId)throws SQLException;
 	
 	/**
 	 * 1:1 문의 전체 검색(페이지 처리)

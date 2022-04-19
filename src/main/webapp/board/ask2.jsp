@@ -75,15 +75,14 @@
 						<c:otherwise>
 							<c:forEach items="${askList}" var="ask">
 							<tr>
-								<td>${ask.askNo}</td>
-								
 								<td>
 								<span>
-								<a href="${path}/front?key=ask&methodName=selectByUserId&askNo=${AskDTO.userId}">
-								${ask.userId}
+								<a href="${path}/front?key=ask&methodName=selectByAskNo&askNo=${ask.askNo}">
+								${ask.askNo}
 								</a>
 								</span>
 								</td>
+								<td>${ask.userId}</td>
 								<td>${ask.askTitle}</td>
 								<td>${ask.askContent}</td>
 								<td>${ask.askAttach}</td>
@@ -100,8 +99,29 @@
 					</div>
 		    </tbody>
 		</table>
+		<nav aria-label="Page navigation example">
+				<jsp:useBean class="mimemi.mvc.paging.AskListPageCnt" id="p"/> 
+				<c:set var="isLoop" value="false"/>
+				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
+				<c:set var="startPage" value="${pageNum - temp}"/>
+				<ul class="pagination justify-content-center">
+					<c:if test="${(startPage - p.blockcount) > 0}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=ask&methodName=selectAll&pageNum=${startPage-1}">이전</a></li>
+					</c:if>
+					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
+						<c:if test="${(i-1) >= p.pageCnt}">
+							<c:set var="isLoop" value="true"/>
+						</c:if> 
+						<c:if test="${not isLoop}" >
+							<li class="page-item ${i == pageNum ? ' active' : 'page'}"><a class="page-link page_num" href="${path}/front?key=ask&methodName=selectAll&pageNum=${i}">${i}</a></li> 
+						</c:if>
+					</c:forEach>
+					<c:if test="${(startPage + p.blockcount) <=p.pageCnt}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=ask&methodName=selectAll&pageNum=${startPage+p.blockcount}">이후</a></li>
+					</c:if>
+				</ul>
+			</nav>
 		
-	
 </section>
 
 </body>

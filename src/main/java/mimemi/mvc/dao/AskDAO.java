@@ -38,12 +38,7 @@ public interface AskDAO {
 	 * 1:1 문의 전체 검색
 	 * */
 	List<AskDTO> selectAllAsk(int pageNum, String field) throws SQLException;
-	
-	/**
-	 * 1:1문의 상세보기
-	 * */
-	AskDTO selectByuserId(String userId)throws SQLException;
-	
+
 	/**
 	 * 1:1 문의 전체 검색(페이지 처리)
 	 * @param int pageNo

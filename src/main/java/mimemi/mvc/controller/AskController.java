@@ -45,24 +45,6 @@ public class AskController implements Controller {
 		return new ModelAndView("board/ask2.jsp");
 		
 	}
-	/**
-	 * 1:1문의 상세보기
-	 * */
-	
-	public ModelAndView selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("text/html;charset=UTF-8"); 
-		
-		
-		String userId = request.getParameter("userId");
-		String pageNo = request.getParameter("pageNo");
-		
-		AskDTO askDto = askService.selectByUserId(userId);
-		request.setAttribute("askDto", askDto);
-		request.setAttribute("pageNo", pageNo);
-		
-		
-		return new ModelAndView("/board/askdetail.jsp");
-	}
 	
 	/**
 	 * 1:1 문의 등록
@@ -138,26 +120,35 @@ public class AskController implements Controller {
 	 * */
 	public ModelAndView deleteAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String askNo=request.getParameter("askNo");
-	
+		AskDTO ask = askService.selectByAskNo(Integer.parseInt(askNo));
 		
 		//askService.deleteAsk(0);
-		
+		System.out.println(ask);
 		String path=request.getServletContext().getRealPath("/save");
 		
-		askService.deleteAsk(Integer.parseInt(askNo) ,path);
+		askService.deleteAsk(ask ,path);
 		
-		return new ModelAndView("board/ask2.jsp");
-		
+		return new ModelAndView("front?key=ask&methodName=selectAll",true);
+	
 	}
 	
 	/**
-	 * 문의 번호로 불러오기
+	 * 문의 번호로 불러오기(상세보기)
 	 * */
-	public AskDTO selectByAskNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView selectByAskNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		response.setContentType("text/html;charset=UTF-8"); 
 		
 		
+		String askNo = request.getParameter("askNo");
+		String pageNo = request.getParameter("pageNo");
 		
-		return null;
+		AskDTO askDto = askService.selectByAskNo(Integer.parseInt(askNo));
+		request.setAttribute("askDto", askDto);
+		request.setAttribute("pageNo", pageNo);
+		
+		
+		return new ModelAndView("/board/askdetail.jsp");
 	}
 	
 	/**

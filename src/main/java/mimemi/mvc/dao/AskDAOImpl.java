@@ -173,8 +173,33 @@ public class AskDAOImpl implements AskDAO {
 
 	@Override
 	public AskDTO selectByAskNo(int askNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		AskDTO askDto=null;
+		String sql = proFile.getProperty("ask.detail");
+
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, askNo);
+			
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				askDto = new AskDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5));
+			}
+			
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+
+		
+		return askDto;
 	}
 
 	@Override
@@ -189,37 +214,7 @@ public class AskDAOImpl implements AskDAO {
 		return null;
 	}
 
-	//1:1상세보기(userId)
-	@Override
-	public AskDTO selectByuserId(String userId) throws SQLException {
-		Connection con=null;
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		AskDTO askDto=null;
-		String sql = proFile.getProperty("ask.detail");
-
-		try {
-			con=DbUtil.getConnection();
-			ps=con.prepareStatement(sql);
-			ps.setString(1, "happy01");
-			
-			rs=ps.executeQuery();
-			if(rs.next()) {
-				askDto = new AskDTO(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getString(4));
-			}
-			
-		}finally {
-			DbUtil.dbClose(rs, ps, con);
-		}
-
-		
-		return askDto;
-	}
-
+	
 	
 
 }

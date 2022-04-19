@@ -25,11 +25,12 @@ public class AskDTO {
 	}
 	
 	
-	public AskDTO(int askNo, String userId, String askTitle,String askContent) {
+	public AskDTO(int askNo, String userId, String askTitle,String askContent,String askAttach) {
 		this.askNo=askNo;
 		this.userId=userId;
 		this.askTitle=askTitle;
 		this.askContent=askContent;
+		this.askAttach=askAttach;
 	}
 	public AskDTO(String userId, String askTitle,String askContent, String askCategory) {
 		this.userId=userId;
