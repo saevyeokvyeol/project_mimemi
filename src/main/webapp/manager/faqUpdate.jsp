@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FAQ 작성</title>
+<title>Insert title here</title>
 </head>
 <style type="text/css">
 body {
@@ -27,12 +27,14 @@ body {
     
 </script>
 <body>
-   <form name="writeFaq" method="post" action="${path}/front?key=faq&methodName=insertFaq"
+   <form name="updateFaq" method="post" action="${path}/front?key=faq&methodName=update"
         onsubmit='return checkValid()' enctype="multipart/form-data">
 		<div class="container" role="main">
-			<h2>FAQ 등록</h2>
+			<h2>FAQ 수정</h2>
 			    <div class="mb-3">
 			         <label for="title">FAQ카테고리</label>
+			          <input type="hidden" name="faqNo" value="${faq.faqNo}">
+			          <input type="hidden" name="faq_Category" value="${faq.faqCategory}">
 			         <select name="faq_category" id = "faq_select_category"> 
 			          <option name="faq_category" value="">FAQ카테고리</option>
 			          <option name="faq_category" value="CR">교환/환불</option>
@@ -44,23 +46,23 @@ body {
 			    </div>
 				<div class="mb-3">
 					<label for="title">제목</label>
-					<input type="text" class="form-control" name="faq_title" id="title" placeholder="제목을 입력해 주세요">
+					<textarea class="form-control" rows="1" name="faq_title" id="title" >${faq.faqTitle}</textarea>
 				</div>
 				<div class="mb-3">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="5" name="faq_content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+					<textarea class="form-control" rows="5" name="faq_content" id="content" >${faq.faqContent}</textarea>
 				</div>
 				<div class="mb-3">
 					<label for="attach">첨부파일</label>
 				 <input type="file" name="file" maxlength="" size="40">
+				  <p id="file-status">${faq.faqAttach}</p>
 				</div>
 			<div >
 				<input type="submit" value="작성" />
-			    <input type="button" value="목록보기" onclick="location.href='selectFaqAll.jsp'"/>
+			    <span class="back-faq-list"><a href="${path}/front?key=faq&methodName=selectAllFaq">목록</a></span>
+			    <span class="delete-faq"><a href="${path}/front?key=faq&methodName=delete&faqNo=${faq.faqNo}">삭제</a></span>
 			</div>
 		</div>
 	</form>
 </body>
 </html>
-
-

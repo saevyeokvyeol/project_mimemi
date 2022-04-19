@@ -32,11 +32,6 @@ public interface ReviewDAO {
 	int deleteReview(int reviewNo) throws SQLException;
 	
 	/**
-	 * 블라인드 여부 변경 기능
-	 * */
-	int updateBlind(int reviewNo, String blind) throws SQLException;
-	
-	/**
 	 * 후기 전체 검색
 	 * field -> 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)
 	 * */
@@ -71,4 +66,15 @@ public interface ReviewDAO {
 	 * 각 후기에 해당하는 댓글 정보 가져오기
 	 * */
 	List<ReviewReplyDTO> selectReplyByReviewNo(int reviewNo) throws SQLException;
+	
+	/**
+	 * 관리자 - 후기 전체 검색(페이지 처리)
+	 * field -> 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)
+	 * */
+	List<ReviewDTO> selectAllByPagingManager(int pageNo, String field) throws SQLException;
+	
+	/**
+	 * 관리자 - 블라인드 여부 변경 기능
+	 * */
+	int updateBlind(int reviewNo, String blind) throws SQLException;
 }

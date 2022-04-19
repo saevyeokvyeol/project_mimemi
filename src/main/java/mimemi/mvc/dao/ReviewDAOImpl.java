@@ -98,6 +98,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 			ps.setInt(2, reviewNo);
 			
 			result=ps.executeUpdate();
+			System.out.println("이미지수정 ...dao");
 		}finally {
 			DbUtil.dbClose(ps, null);
 		}
@@ -134,12 +135,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public int updateBlind(int reviewNo, String blind) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<ReviewDTO> selectAllReview(String field) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -157,16 +152,16 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		if (field != null) {
 			if (field.equals("reg")) {
-				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW where REVIEW_BLIND='F' ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
 				//sql = proFile.getProperty("review.selectAllReg");
 			} else if (field.equals("higirate")) {
-				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE desc) a) where  rnum>=? and rnum <=?";
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW where REVIEW_BLIND='F' ORDER BY REVIEW_RATE desc) a) where  rnum>=? and rnum <=?";
 				//sql = proFile.getProperty("review.selectAllHigirate");
 			} else if (field.equals("rowrate")) {
-				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE asc) a) where  rnum>=? and rnum <=?";
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW where REVIEW_BLIND='F' ORDER BY REVIEW_RATE asc) a) where  rnum>=? and rnum <=?";
 				//sql = proFile.getProperty("review.selectAllRowrate");
 			} else if (field.equals("view")) {
-				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_VIEWS desc) a) where  rnum>=? and rnum <=?";
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW where REVIEW_BLIND='F' ORDER BY REVIEW_VIEWS desc) a) where  rnum>=? and rnum <=?";
 				//sql = proFile.getProperty("review.selectAllView");
 			} 
 		}
@@ -211,17 +206,16 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		return list;
 	}
-
-	/*전체 레코드 수 가져오기*/
+	/**
+	 * 블라인드는 안보이는 - 전체 레코드 수 가져오기
+	 * */
 	private int getTotalCount(String field) throws SQLException{
 		Connection con =null;
 		PreparedStatement ps=null;
 		ResultSet rs =null;
 		int totalCount=0;
-		String sql="select count(*) from review";
-		 //select count(*) from review
-		//String sql=proFile.getProperty("");
-		//나중에 카테고리별 if문 이용해서 다른 sql문 사용하기
+		String sql="select count(*) from review where REVIEW_BLIND='F'";
+		//String sql=proFile.getProperty("review.totalCount");
 		
 		try {
 			con=DbUtil.getConnection();
@@ -305,6 +299,109 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReplyDTO> selectReplyByReviewNo(int reviewNo) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	
+	/**
+	 * 관리자 - 후기 전체 조회
+	 * */
+	@Override
+	public List<ReviewDTO> selectAllByPagingManager(int pageNo, String field) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql= null;
+		//String sql=proFile.getProperty("");
+		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
+		SimpleDateFormat reviewFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if (field != null) {
+			if (field.equals("reg")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_REGDATE desc) a) where  rnum>=? and rnum <=? ";
+				//sql = proFile.getProperty("review.selectAllRegManager");
+			} else if (field.equals("higirate")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE desc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllHigirateManager");
+			} else if (field.equals("rowrate")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_RATE asc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllRowrateManager");
+			} else if (field.equals("view")) {
+				sql = "select * from  (SELECT a.*, ROWNUM rnum FROM (SELECT * FROM REVIEW ORDER BY REVIEW_VIEWS desc) a) where  rnum>=? and rnum <=?";
+				//sql = proFile.getProperty("review.selectAllViewManager");
+			} 
+		}
+		try {
+			int totalCount =this.getTotalCountManager(field);
+			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
+			PageCnt pagecnt = new PageCnt();
+			pagecnt.setPageCnt(totalPage);
+			pagecnt.setPageNo(pageNo);
+			
+			con = DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			
+			//페이지 처리 : ?에 들어갈 값 설정하기
+			ps.setInt(1, ((pageNo-1)*PageCnt.pagesize)+1);
+			ps.setInt(2, pageNo*PageCnt.pagesize);
+			
+			rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				ReviewDTO review = new ReviewDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						reviewFormat.format(rs.getDate(7)),
+						rs.getInt(8),
+						rs.getString(9),
+						rs.getInt(10)
+						);
+				review.getGoodsDTO().setGoodsName("상품이름");
+				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
+				list.add(review);
+				//System.out.println(review.getReviewRegdate());
+			}
+			
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return list;
+	}
+	/**
+	 * 관리자 - 전체 레코드 수 가져오기
+	 * */
+	private int getTotalCountManager(String field) throws SQLException{
+		Connection con =null;
+		PreparedStatement ps=null;
+		ResultSet rs =null;
+		int totalCount=0;
+		String sql="select count(*) from review";
+		//String sql=proFile.getProperty("review.totalCountManager");
+		
+		try {
+			con=DbUtil.getConnection();
+			ps =con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return totalCount;
+	}
+	
+	/**
+	 * 관리자 - 블라인드처리
+	 * */
+	@Override
+	public int updateBlind(int reviewNo, String blind) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
