@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.util.DbUtil;
 
+
 public class UserDAOImpl implements UserDAO {
 	private Properties proFile = new Properties();
-	
+
 	/**
 	 * dbQuery.properties 로딩해 Properties 객체에 저장
 	 * */
@@ -24,7 +26,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public UserDTO loginUser(String userId, String userPwd) throws SQLException {
 		Connection con = null;
@@ -50,24 +52,62 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int insertUser(UserDTO user) throws SQLException {
+	public int insertUser(UserDTO user, AddrDTO addr) throws SQLException {
 		PreparedStatement ps = null;
 		Connection con = null;
+		
 		int result=0;
-		String sql = proFile.getProperty("user.insertUser"); //insert into users values(?,?,?,?,user_point,sysdate,user_quit,?)
+		String sql = proFile.getProperty("user.insertUser"); //insert into users(user_id, user_name, user_pwd, user_phone, user_regdate, user_birth) values(?,?,?,?,sysdate,?)
 		try {
 			con=DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			//회원정보 입력
 			ps = con.prepareStatement(sql);
 			ps.setString(1, user.getUserId());
 			ps.setString(2, user.getUserName());
 			ps.setString(3, user.getUserPwd());
 			ps.setString(4, user.getUserPhone());
 			ps.setString(5, user.getUserBirth());
+			
 			result=ps.executeUpdate();
-		}catch(SQLException e) {
-			e.printStackTrace();
+			
+			//주소 저장
+			if(this.insertAddr(con, addr)==0) {
+				throw new SQLException("회원가입에 실패했습니다");
+			}
+			con.commit();
 		}finally {
-			DbUtil.dbClose(ps, con);
+			con.rollback();
+			DbUtil.dbClose(ps,con);
+		}
+		return result;
+	}
+
+	
+	@Override
+	public int insertAddr(Connection con, AddrDTO addr) throws SQLException {
+		PreparedStatement ps = null;
+		
+		int result=0;
+		
+		String sql = proFile.getProperty("user.insertAddr");
+		// insert into addr values(ADDR_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setString(1, addr.getUserId());
+			ps.setString(2, addr.getAddrName());
+			ps.setInt(3, addr.getZipcode());
+			ps.setString(4, addr.getAddrAddr());
+			ps.setString(5, addr.getAddrDetailAddr());
+			ps.setString(6, addr.getAddrRefAddr());
+			ps.setString(7, addr.getReceiverName());
+			ps.setString(8, addr.getReceiverPhone());
+			
+			result=ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, null);
 		}
 		return result;
 	}
@@ -115,7 +155,7 @@ public class UserDAOImpl implements UserDAO {
 			ps.setString(3, userPhone);
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				result = rs.getBoolean(1);
+				result = true;
 			}
 			
 		}catch(SQLException e){
@@ -140,35 +180,91 @@ public class UserDAOImpl implements UserDAO {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
 			ps.setString(1, userId);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				user = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
+						rs.getBoolean(7), rs.getString(8));
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return user;
+	}
+	@Override
+	public UserDTO selectByPhone(String userPhone) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		UserDTO user = new UserDTO();
+		String sql = proFile.getProperty("user.selectByPhone");//select * from users where user_phone=?
+
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setString(1, userPhone);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				user = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
+						rs.getBoolean(7), rs.getString(8));
+			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}
 		return user;
 	}
 	
+	
 	@Override
-	public List<UserDTO> selectByKeyword(String keyword, String field) throws SQLException { //검색기능, 생일검색 기능 따로 만들어야함.
+	public int selectPointByUserId(String userId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int userPoint = 0;
+		
+		String sql = proFile.getProperty("user.selectPointByUserId");//select user_point from users where user_id=?
+
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setString(1, userId);
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				userPoint= rs.getInt(1);
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return userPoint;
+	}
+	
+	@Override
+	public List<UserDTO> selectUserByKeyword(String keyword, String field) throws SQLException { //이름검색기능
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<UserDTO> userList = new ArrayList<UserDTO>();
-		String sql = proFile.getProperty("user.selectByKeyword");
-		String column = null;
+		String sql = null;
 		
 		if (field == "이름") {
-			column = "user_name";
-		}
-		if (field == "생일") {
-			column = "user_birth";
-		}
+			sql = proFile.getProperty("user.selectUserByName"); //select * from users where user_name=%?%
+		}else if(field == "생일") {
+			sql = proFile.getProperty("user.selectUserByBirth"); //select * from users where extract(month from user_birth)='?' 
+		}			
 		try {
 			ps=con.prepareStatement(sql);
-			ps.setString(1, column);
-			ps.setString(2, keyword);
-			//select * from users where ?=%?%
+			ps.setString(1, keyword);
+			rs=ps.executeQuery();
+			
+			if(rs.next()) {
+				UserDTO user = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
+						rs.getBoolean(7), rs.getString(8));
+				
+				userList.add(user);
+			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
 		}
+		
 		return userList;
 	}
 
@@ -220,12 +316,14 @@ public class UserDAOImpl implements UserDAO {
 		
 		int result = 0;
 		
-		String sql = proFile.getProperty("user.deleteUser");//update users set user_quit=? where user_id=?
+		String sql = proFile.getProperty("user.deleteUser");//update users set user_quit=? where user_id=? and user_pwd=?
 		
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
-			ps.setString(1, userId);
+			ps.setString(1, "T");
+			ps.setString(2, userId);
+			ps.setString(3, userPwd);
 			result = ps.executeUpdate();
 		}finally {
 			DbUtil.dbClose(ps, con);
