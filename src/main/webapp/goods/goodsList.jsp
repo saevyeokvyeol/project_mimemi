@@ -22,6 +22,7 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 
+	<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
     <title>미미미</title>
 
     <style>
@@ -32,57 +33,53 @@
     </style>
     
     <script>
+
+	function showDetail(goodsId) {
+		window.location.href='${path}/front?key=goods&methodName=goodsView&goodsId=' + goodsId;
+	}
+    $(function() {
+    /* 	function showDetail(goodsId) {
+    		window.location.href='${path}/front?key=goods&methodName=goodsView&goodsId=' + goodsId;
+    	} */
     	function selectGoodsList() {
     		$.ajax({
     			url: "${path}/ajax",
     			data: {
-    				"key": "GoodsController",
-    				"method": "getGoodsList"
-    			}
-    			type: "get"
-    			dataType: "json"
-    			success: function(res) {
-    				return res
+    				"key": "goods",
+    				"methodName": "getGoodsSelectForSale"
+    			},
+    			type: "get",
+    			dataType: "json",
+    			success: function(result) {
+    	    		let text = "";
+    	    		console.log(result)
+    	    		$.each(result, function(index, item){
+    	    			console.log(item)
+    	    			/* text += "<div class=\"card\" onclick=\"location=\'goodsView.jsp\'\">" */
+   	    				text += "<div class=\"card\" onclick=\"showDetail(\'" + item.goodsId +  "\')\">"
+    	    			text += "<img class=\"card-img-top\""
+    	    			text += "src=\"" + item.goodsThumbnail + "\""
+    	    			text += "alt=\"Card image cap\">"
+    	    			text += "<div class=\"card-body\">"
+    	    			text += "<h5 class=\"card-title\">" + item.goodsName + "</h5>"
+    	    			text += "<p class=\"card-text\">1일 1식/ 1주 (월~금, 총 5회)</p>"
+    	    			text += "<span>" + item.goodsPrice + "</span> 원"
+    	    			text += "</div>"
+    	    			text += "</div>"
+    	    		});
+    	    		$("#goodsCard").empty();
+    	    		$("#goodsCard").append(text);
     			}
     		})
-    		/* return [
-    			{
-    				"name": "정성한상",
-    				"price": 3000,
-    			},
-    			{
-    				"name": "비건식단",
-    				"price": 4000,
-    			}
-    		 */]
-    	}
-    	
-    	function fillCards() {
-    		data = selectGoodsList()
-    		let text = "";
-    		for goods in data {
-    			text += "<div class=\"card\">"
-    			text += "<img class=\"card-img-top\""
-    			text += "src=\"" + goods.goods_thumbnail + "\""
-    			text += "alt=\"Card image cap\">"
-    			text += "<div class=\"card-body\">"
-    			text += "<h5 class=\"card-title\">" + goods.goods_name + "</h5>"
-    			text += "<p class=\"card-text\">1일 1식/ 1주 (월~금, 총 5회)</p>"
-    			text += "<span>" + goods.good_price + "</span> 원"
-    			text += "</div>"
-    			text += "</div>"
-    		}
-    		$("goodsTable").remove()
-    		$("#goodsTable").append(text)
     	}
     	
     	function initialize() {
-    		fillCards()
+    		selectGoodsList()
     	}
     	
-    	$(function()) {
-    		initialize()
-    	}
+    	initialize()
+    	
+    })
     </script>	
     
 </head>
@@ -98,67 +95,7 @@
             </p>
         </div>
 
-        <div class="card-columns">
-            <div class="card">
-                <img class="card-img-top"
-                    src="/Users/egg/kosta/Project2/img/1.png"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">정성한상</h5>
-                    <p class="card-text">1일 1식/ 1주 (월~금, 총 5회)</p>
-                    <span>75,000</span> 원
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                    src="/Users/egg/kosta/Project2/img/2.png"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">300 샐러드</h5>
-                    <p class="card-text">1일 1식/ 1주 (월~금, 총 5회)</p>
-                    <span>60,000</span> 원
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                    src="/Users/egg/kosta/Project2/img/3.png"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">비건 식단</h5>
-                    <p class="card-text">1일 1식/ 1주 (월~금, 총 5회)</p>
-                    <span>48,000</span> 원
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                    src="/Users/egg/kosta/Project2/img/4.png"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">300 덮밥</h5>
-                    <p class="card-text">1일 1식/ 1주 (월~금, 총 5회)</p>
-                    <span>70,000</span> 원
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                    src="/Users/egg/kosta/Project2/img/5.png"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">스무스 한끼밀</h5>
-                    <p class="card-text">1일 1식/ 1주 (월~금, 총 5회)</p>
-                    <span>39,000</span> 원
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                    src="/Users/egg/kosta/Project2/img/6.png"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">시그니처</h5>
-                    <p class="card-text">1일 1식/ 1주 (월~금, 총 5회)</p>
-                    <span>65,000</span> 원
-                </div>
-            </div>
+        <div class="card-columns" id="goodsCard">
         </div>
     </div>
 

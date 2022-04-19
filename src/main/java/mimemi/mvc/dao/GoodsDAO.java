@@ -30,7 +30,12 @@ public interface GoodsDAO {
 	 * */
 	int goodsUpdateThumbnail(String goodsId, String goodsThumbnail) throws SQLException;
 	
-	
+	/**
+	 *상품 ID로 상품 조회
+	 * @return
+	 * @throws SQLException
+	 */
+	GoodsDTO goodsSelectByGoodsId(String goodsId) throws SQLException;
 	/**
 	 * 전체 상품 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
@@ -41,9 +46,9 @@ public interface GoodsDAO {
 	List<GoodsDTO> goodsSelectAll() throws SQLException;
 	
 	/**
-	 * 시간 남으면 판매량 순, 가격 순 조회 만들기 !! 
+	 * keyword로 상품 조회
 	 */
-	
+	List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException;
 	/**
 	 * 판매 중인 상품 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
@@ -51,19 +56,7 @@ public interface GoodsDAO {
 	 * */
 	List<GoodsDTO> goodsSelectForSale() throws SQLException;
 	
-	/**
-	 * 상품명으로 상품 조회
-	 * @param: 이름에 해당 키워드가 들어가는지 체크할 키워드를 받음
-	 * @return: List<GoodsDTO>(상품명에 키워드가 들어가는 상품)
-	 * */
 
-<<<<<<< HEAD
-	List<GoodsDTO> selectByKeyword(String keyword) throws SQLException;
-=======
-
-	List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException;
-
-<<<<<<< HEAD
 	/**
 	 * 고객이 주문한 식단명 가져오기
 	 * @param String userId
@@ -71,12 +64,4 @@ public interface GoodsDAO {
 	 * */
 	List<GoodsDTO> selectOrderGoods(String userId) throws SQLException;
 }
-=======
-	
->>>>>>> main
 
-
-	
-	
-}
->>>>>>> 16a23ac650cfe82f8faa349a876bbe02f9b9b15d
