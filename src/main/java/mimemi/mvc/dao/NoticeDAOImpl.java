@@ -80,7 +80,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 			}else {
 				//수정한 파일이 값이 있다면, 파일 수정한다.
 				if(noticeDTO.getNoticeAttach()!=null) {
-					int re = updateFaqImgCon(con,noticeDTO.getNoticeNo(),noticeDTO.getNoticeAttach());
+					int re = updateNoticeImgCon(con,noticeDTO.getNoticeNo(),noticeDTO.getNoticeAttach());
 						if(re!=1) {
 							con.rollback();
 							throw new SQLException("후기 파일 수정에 실패했습니다.");

@@ -38,6 +38,12 @@ public class CartController implements Controller {
 		String cartPeriod = request.getParameter("cartPeriod");
 		String cartStart = request.getParameter("cartStart");
 		String goodsPrice = request.getParameter("goodsPrice");
+		System.out.println(goodsId);
+		System.out.println(cartQty);
+		System.out.println(cartWeekDay);
+		System.out.println(cartPeriod);
+		System.out.println(cartStart);
+		System.out.println(goodsPrice);
 		
 		CartDTO cart = new CartDTO(userId, goodsId, Integer.parseInt(cartQty), cartWeekDay, cartPeriod, cartStart, Integer.parseInt(goodsPrice));
 		cartService.insert(cart);
