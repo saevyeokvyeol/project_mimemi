@@ -3,7 +3,7 @@ package mimemi.mvc.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import mimemi.mvc.dto.DayMenuDTO;
+import mimemi.mvc.dto.DayMealDTO;
 import mimemi.mvc.dto.MealDTO;
 import mimemi.mvc.dto.MealDTO;
 
@@ -12,7 +12,7 @@ public interface DayMenuService {
 	 * 월간 식단 등록
 	 * @param: DayMenuDTO(int dayMenuId, String mealId, String goodsId, String dayMenuDate)
 	 * */
-	void insert(DayMenuDTO dayMenu) throws SQLException;
+	void insert(DayMealDTO dayMenu) throws SQLException;
 	
 	/**
 	 * 월간 식단 수정
@@ -25,7 +25,7 @@ public interface DayMenuService {
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<MealDTO>(goodsSale이 true인 상품)
 	 * */
-	List<DayMenuDTO> selectForSale(String sort, String date) throws SQLException;
+	List<DayMealDTO> selectForSale(String sort, String date) throws SQLException;
 	
 	/**
 	 * 배송 식단 조회
@@ -36,5 +36,5 @@ public interface DayMenuService {
 	 * @param: String userId
 	 * @return:List<DayMenuDTO>(아이디 기준으로 만들어진 배송 식단 리스트)
 	 * */
-	List<DayMenuDTO> selectByUserOrder(String userId) throws SQLException;
+	List<DayMealDTO> selectByUserOrder(String userId) throws SQLException;
 }

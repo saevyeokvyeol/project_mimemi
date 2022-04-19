@@ -43,12 +43,9 @@
 			<section class="faq_sort">
 				<select name="faq_sort" id="">
 					<option value="0">--정렬방식--</option>
-					<option value="faq_category" value="CR">교환환불</option>
-					<option value="faq_category" value="US">회원관련</option>
-					<option value="faq_category" value="OP">주문/결제</option>
-					<option value="faq_category" value="DE">배송관련</option>
-					<option value="ffaq_category" value="EC">기타</option>
-					
+					<option value="faq_title">제목</option>
+					<option value="faq_content">내용</option>
+					<option value="faq_regdate">작성날짜</option>
 				</select>
 			</section>
 			<table class="table table-hover" id="faqList">
@@ -61,7 +58,6 @@
 							<th>작성날짜</th>
 							<th>수정날짜</th>
 							<th>카테고리</th>
-							<th>관리<th>
 							
 						</tr>
 					</thead>
@@ -82,7 +78,6 @@
 								<td>${faq.faqRegdate}</td>
 								<td>${faq.faqModidate}</td>
 								<td>${faq.faqCategory}</td>
-								<th><a href="${path}/front?key=faq&methodName=updateForm&faqNo=${faq.faqNo}" >관리</a><th>
 							</tr>
 							</c:forEach>
 						</c:otherwise>

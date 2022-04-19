@@ -76,7 +76,10 @@
     	function initialize() {
     		selectGoodsList()
     	}
-    	
+
+		if (window.location.href.endsWith('.jsp')) {
+			window.location.href='${path}/front?key=goods&methodName=goodsList';	
+		}
     	initialize()
     	
     })

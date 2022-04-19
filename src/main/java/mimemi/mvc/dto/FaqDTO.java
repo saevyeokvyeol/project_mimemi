@@ -30,12 +30,6 @@ public class FaqDTO {
 		this.faqCategory = faqCategory;
 	}
 	
-	public FaqDTO(int faqNo,String faqTitle, String faqContent, String faqCategory) {
-		this.faqNo = faqNo;
-		this.faqTitle = faqTitle;
-		this.faqContent = faqContent;
-		this.faqCategory = faqCategory;
-	}
 	
 	
 	public int getFaqNo() {

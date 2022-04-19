@@ -56,7 +56,6 @@ public interface GoodsDAO {
 	 * */
 	List<GoodsDTO> goodsSelectForSale() throws SQLException;
 	
-
 	/**
 	 * 고객이 주문한 식단명 가져오기
 	 * @param String userId
@@ -64,4 +63,3 @@ public interface GoodsDAO {
 	 * */
 	List<GoodsDTO> selectOrderGoods(String userId) throws SQLException;
 }
-

@@ -23,23 +23,21 @@ body {
 
 </script>
 <body>
- <form name="updateNotice" method="post" action="${path}/front?key=notice&methodName=update"
+ <form name="writeNotice" method="post" action="${path}/front?key=notice&methodName=insertNotice"
        onsubmit='return checkValid()' enctype="multipart/form-data">
-           <input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 		<div class="container" role="main">
-			<h2>공지사항 수정</h2>
+			<h2>공지사항 등록</h2>
 				<div class="mb-3">
 					<label for="title">제목</label>
-					<textarea class="form-control" rows="1" name="notice_title" id="title" >${notice.noticeTitle}</textarea>
+					<input type="text" class="form-control" name="notice_title" id="title" placeholder="제목을 입력해 주세요">
 				</div>
 				<div class="mb-3">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="5" name="notice_content" id="content" >${notice.noticeContent}</textarea>
+					<textarea class="form-control" rows="5" name="notice_content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
 				</div>
 				<div class="mb-3">
 					<label for="attach">첨부파일</label>
 				 <input type="file" name="notice_attach" maxlength="" size="40">
-				 <p id="file-status">${notice.noticeAttach}</p>
 				</div>
      			<div >
 					<input type="submit" value="작성" />

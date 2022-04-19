@@ -8,14 +8,16 @@ pageEncoding="UTF-8"%>
         <title>Document</title>
        
         <style>
+            section{
+                
+            }
             .container{
                 width: 1000px;
                 margin: auto;
             }
             .review-view{
-                width: 800px;
+                width: 1000px;
                 height:500px;
-                
             }
             
             .review-Image{
@@ -63,6 +65,7 @@ pageEncoding="UTF-8"%>
                 overflow-y: auto;
                 height: 300px;
             }
+            
             .review-goods{
                 box-sizing: border-box;
                 height: auto;
@@ -77,11 +80,33 @@ pageEncoding="UTF-8"%>
             .bRight{
                 float: right;
             }
+            
             .base-btn{
                 width: 800px;
                 height: 20px;
                 margin: 20px 0px 50px;
             }
+            #back-list-btn, #delete-btn, #update-btn{
+                background-color: rgb(248, 249, 250);
+                color: gray;
+                border: 2px solid gray;
+                border-radius: 15px;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            #back-list-btn:hover{
+                background-color: cornflowerblue;
+                border: 2px solid cornflowerblue;
+                color: white;
+            }
+            #delete-btn:hover, #update-btn:hover{
+                background-color: rgb(207, 207, 207);
+                border: 2px solid rgb(207, 207, 207);
+                color: white
+            }
+
             .review-reply{
                 width: 800px;
             }
@@ -94,34 +119,164 @@ pageEncoding="UTF-8"%>
                 width: 800px;
                 padding: 20px 30px 20px 30px;
             }
-        </style>
-        <!--부트스트랩 CSS CDN-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-                
-        <!--부트스트랩 JS CDN-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        
-        <!--JQgrid CDN-->
-        <script>
-        	var methodName = "${methodName}"
-            function returnList(){
-
+            img.reply-user-icon{
+            	width: 30px;
+            	margin-right: 10px;
             }
-        	function sendDelete(){
-        		//session에 로그인된 사용자 id가 현재 게시글의 사용자 id와 일치하는지 체크하기
-        	}
-            function sendUpdate(){
-            	//session에 로그인된 사용자 id가 현재 게시글의 사용자 id와 일치하는지 체크하기
-            	if(true){
-            		location.replace("${path}")
-            	}
+            pre{
+            	white-space: pre-wrap;
+            }
+            .reply-user-info{
+                padding-bottom: 5px;
+            }
+            .reply-content-text{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                width: fit-content;
+                padding: 10px;
+                border-radius: 15px;
+                background-color: rgb(248, 249, 250);
+                border: 1px solid rgb(196, 196, 196);
+            }
+            .reply-content{
+            	padding:10px 10px 10px 0px;
+            }
+            #reply-update-bnt, #reply-delete-bnt{
+            	color:gray;
+            }
             
+            
+            
+        </style>
+       <!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        
+		<!-- JavaScript Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        
+        <!-- jQuery -->        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+        
+        <script>
+        $(function(){
+            var target ='${reviewDetail.reviewNo}'
+            //var loginUser='${session.loginUser}' //세션으로 확인한 현재 로그인한 유저
+            var loginUser='frog123'
+
+            //전체 댓글 검색
+        	function selectAllReply(){
+                $.ajax({
+				url: "${path}/ajax" , //서버요청주소
+				type: "post" , //요청방식 (get,post...)
+				dataType: "json" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+				data: {key:"reviewreply", methodName:"select", reviewNo: target} , //서버에게 보낼 데이터정보(parameter정보)
+				
+				success: function(result){
+					//alert("검색성공~")
+					let str="";
+					$.each(result,function(index,reply){
+                        str+=`<div class="reply-user-info">`;
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.userId}</span>&nbsp;`
+                           	str+=`<span class="badge rounded-pill bg-primary">\${reply.managerId}</span>`
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.replyRegdate}</span>`
+                        str+=`</div>`;
+                        str+=`<div class="reply-content">`;
+                            str+=`<span class="reply-content-text">\${reply.replyContent}</span>`
+                            str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-update-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}>수정</a></span>`
+                            str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-delete-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}">삭제</a></span>`
+                        str+=`</div>`;
+                    })
+                   	$("#review_reply_output").html(review_reply_output)
+                   	$("#review_reply_output").append(str)
+				},
+
+				error: function(err){//실패했을 때 콜백함수
+				  alert(err+"오류가 발생했습니다.")
+				} 
+
+			    })
             }
+        	
+            $("#reply-insert-btn").click(function(){
+                let status =true;
+                //댓글 유효성체크
+                if($("#exampleFormControlTextarea1").val()==""){
+                    alert("댓글을 입력해 주십시오.")
+                    $(this).focus();
+                    status=false;
+                    return;
+                }
+                //댓글 달기
+                if(status){
+                    $.ajax({
+                        url: "${path}/ajax" , //서버요청주소
+                        type: "post" , //요청방식 (get,post...)
+                        dataType: "text" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+                        data: $("#reply-loginUser-insert").serialize() , //서버에게 보낼 데이터정보(parameter정보)
+                        
+                        success: function(result){
+                            //alert("댓글등록성공~")
+                            if(result==0){
+                                alert("댓글을 등록하지 못 했습니다.")
+                            }else{
+                                //textarea부분 지우고 
+                                $("textarea.form-control").val("")
+                                //화면갱신한다
+                                selectAllReply();
+                            }
+                        },
+
+                        error: function(err){//실패했을 때 콜백함수
+                        alert(err+"오류가 발생했습니다.")
+                        } 
+
+			        })
+                }
+            })
+            $(document).on("click","#reply-delete-bnt",function(){
+                
+                var replyId = $(this).attr("name")
+                alert("댓글유저아이디~~"+replyId)
+                var replyNo =$(this).attr("reply_No")
+                //alert(replyNo)
+
+                //세션에서 로그인한 유저와 댓글 작성자 id가 일치하는지 확인
+                if(loginUser==replyId){
+                    $.ajax({
+                        url: "${path}/ajax" , //서버요청주소
+                        type: "post" , //요청방식 (get,post...)
+                        dataType: "text" , //서버가 보내온 데이터(응답)type(text | html | xml | json)
+                        data: {key:"reviewreply", methodName:"delete", reply_No: replyNo } , //서버에게 보낼 데이터정보(parameter정보)
+                        
+                        success: function(result){
+                            if(result==0){
+                                alert("댓글이 삭제되지 않았습니다.")
+                            }else{
+                                selectAllReply(); //화면갱신
+                            }
+                        
+                        },
+
+                        error: function(err){//실패했을 때 콜백함수
+                        alert(err+"오류가 발생했습니다.")
+                        } 
+
+			        })
+                }else{
+                    alert("댓글은 자신이 단 댓글만 삭제 가능합니다.")
+                }
+            })
+
+            selectAllReply();
+        })
+        	
         </script>
         
 
     </head>
     <body>
+        <section>
         <div class="container">
             <div class="review-title">
                 <h4>후기 게시판</h4>
@@ -147,29 +302,19 @@ pageEncoding="UTF-8"%>
                         <div class="review-rate">
                             <c:choose>
                                 <c:when test="${reviewDetail.reviewRate==1}">
-                                    <span>
-                                        <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
-                                    </span>
+                                    <span> <img src="${path}/img/ui/starRate1.jpg" class="starRateImg"></span>
                                 </c:when>
                                 <c:when test="${reviewDetail.reviewRate==2}">
-                                    <span>
-                                        <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
-                                    </span>
+                                    <span><img src="${path}/img/ui/starRate2.jpg" class="starRateImg"></span>
                                 </c:when>
                                 <c:when test="${reviewDetail.reviewRate==3}">
-                                    <span>
-                                        <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
-                                    </span>
+                                    <span><img src="${path}/img/ui/starRate3.jpg" class="starRateImg"></span>
                                 </c:when>
                                 <c:when test="${reviewDetail.reviewRate==4}">
-                                    <span>
-                                        <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
-                                    </span>
+                                    <span><img src="${path}/img/ui/starRate4.jpg" class="starRateImg"></span>
                                 </c:when>
                                 <c:when test="${reviewDetail.reviewRate==5}">
-                                    <span>
-                                        <img src="${path}/img/ui/starRate5.jpg" class="starRateImg">
-                                    </span>
+                                    <span><img src="${path}/img/ui/starRate5.jpg" class="starRateImg"></span>
                                 </c:when>
                             </c:choose>
                         </div>
@@ -185,8 +330,7 @@ pageEncoding="UTF-8"%>
                         <pre>${reviewDetail.reviewContent}</pre>
                     </div>
                     <div>
-                        <span>조회수</span>
-                        <span>${reviewDetail.reviewViews}</span>
+                        <span>조회수</span><span>${reviewDetail.reviewViews}</span>
                     </div>
                     <div class="review-goods">
                             <img src="${path}/img/goods/${reviewDetail.goodsDTO.goodsThumbnail}" alt="상품 이미지입니다." name="goodsImg" id="goodsImg">
@@ -195,50 +339,48 @@ pageEncoding="UTF-8"%>
                 </div>
             </div>
             <div class="base-btn">
-                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()">목록으로 돌아가기<img src="목록아이콘"></a></span>
-                <span class="bRight">
-                	<a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}">삭제<img src="삭제아이콘"></a>
-                </span>
-                <span class="bRight">
-                	<a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" >수정<img src="수정아이콘"></a>
-                </span>
+                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()" id="back-list-btn">목록으로 돌아가기</a></span>
+                <span class="bRight"><a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}" id="delete-btn">삭제</a></span>
+                <span class="bRight"><a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" id="update-btn" >수정</a></span>
             </div>
             <div class="review-reply">
-                <div class="user-write-wrap">
-                    <form>
-                        <fieldset>
-                            <legend class=""></legend>
-                        </fieldset>
-                        <div class="user-rbox-profile-area">
-                            <div class="user_rbox_profile_id">
-                                <b><span class="user_rbox_id">fro*****</span></b>
+                
+                <!--댓글 등록하기-->
+                <div class="card">
+                    <div class="card-body">
+                    	<form name="reply-loginUser-insert" method="post" id="reply-loginUser-insert">
+                            <div class="form-inline mb-2">
+                                <label for="replyId"><img src="${path}/img/ui/user.png" class="reply-user-icon"><img></label>
+                                <span><strong>현재 로그인한 유저 아이디</strong></span>
+                                <input type="hidden" name="reply_id" value="frog123"><!-- 나중에 세션으로 아이디 받기 -->
+                                <input type="hidden" name="reply_manager_id" value="">
                             </div>
-                        </div>
-                        <div class="user_rbox_wirte_area">
-                            <textarea name="user_write_reply" cols="80" rows="5" placeholder="댓글을 달아보세요."></textarea>
-                            <input type="submit" value="등록">
-                        </div>
-                    </form>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reply_content"></textarea>
+                            <input type="hidden" name="key" value="reviewreply">
+                            <input type="hidden" name="methodName" value="insert">
+                            <input type="hidden" name="reviewNo" value="${reviewDetail.reviewNo}">
+                            <button type="button" class="btn btn-dark mt-3" id="reply-insert-btn" >댓글 등록하기</button>
+                    	</form>
+                    </div>
+                </div>
+                <!--댓글 조회하기 -->
+                <div class="card-header bg-light">
+	                <i class="fa fa-comment fa"></i> 
                 </div>
                 <div class="review_reply_wrap">
                     <div class="review_reply_area">
-                        <div class="review_reply-user-profile-area">
-                            <div class="review_reply_userid">
-                                <b><span class="reply_user_id">adf****</span></b>
-                            </div>
-                        </div>
-                        <div class="review_reply_content_area">
-                            <div class="review_reply_content">
-                                <span>공감합니다 `~~^^</span>
-                            </div>
-                            <div class="review_reply_regdate">
-                                <span>2022-04-14</span>
-                            </div>
-                        </div>
+                       	<div id="review_reply_output"></div>
                     </div>
                 </div>
+                <!--댓글 조회창 하단-->
+                <div class="card-header bg-light">
+	                <i class="fa fa-comment fa"></i> 
+                    
+                </div>
+                
             </div>
 
         </div>
+        </section>
     </body>
 </html>

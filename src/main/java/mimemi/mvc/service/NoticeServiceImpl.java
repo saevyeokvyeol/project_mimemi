@@ -1,7 +1,6 @@
 package mimemi.mvc.service;
 
 import java.sql.SQLException;
-import java.io.File;
 import java.util.List;
 
 import mimemi.mvc.dao.NoticeDAO;
@@ -12,47 +11,17 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeDAO noticeDao = new NoticeDAOImpl();
 
 	@Override
-	public void insertNotice(NoticeDTO noticeDTO, String path) throws SQLException {
+	public void insertNotice(NoticeDTO noticeDTO) throws SQLException {
 		int result = noticeDao.insertNotice(noticeDTO);
-		//등록에 오류가 난다면
-		if(result==0) {
-			//첨부파일이 있다면 save폴더에 저장한 첨부파일 삭제하기
-			if(noticeDTO.getNoticeAttach()!=null) {
-				new java.io.File(path+"/"+noticeDTO.getNoticeAttach()).delete(); //경로확인하기
-			}
-			throw new SQLException("후기가 등록되지 않았습니다.");
-		}
+		if(result==0)throw new SQLException("등록되지 않았습니다.");
 
 	}
 
 	@Override
-	public void updateNotice(NoticeDTO noticeDTO, String path) throws SQLException {
-		NoticeDTO dbnotice = noticeDao.selectByNoticeNo(noticeDTO.getNoticeNo());
-		if(dbnotice==null) {
-			throw new SQLException("공지사항을 찾을수 없습니다.");
-		}
-		//db저장한 기존 리뷰의 첨부파일명을 미리 구한다.
-         String dbAttach = dbnotice.getNoticeAttach();
-       //dao로 게시물 수정한다.
-         int result = noticeDao.updateNotice(noticeDTO);
-			
-			if(result==0) {
-				//첨부파일이 있다면 save폴더에 예전에 첨부한 첨부파일 삭제하기
-				if(dbAttach!=null) {
-					new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
-				}
-				throw new SQLException("수정되지 않았습니다.");
-			}else {
-				//첨부파일이 있다면 save폴더에 예전에 첨부한 첨부파일 삭제하기
-				if(dbAttach!=null) {
-					new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
-				}
-				System.out.println("삭제되야할 기존 파일이름:"+dbAttach);
-			}
-			
+	public void updateNotice(NoticeDTO noticeDTO) throws SQLException {
+		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void updateNoticeAttach(int noticeNo, String noticeAttach) throws SQLException {
@@ -61,17 +30,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public void deleteNotice(NoticeDTO notice, String path) throws SQLException {
-		//db에서 삭제한다.
-		int result =noticeDao.deleteNotice(notice.getNoticeNo());
-		if(result==0) {
-			throw new SQLException("삭제에 오류가 생겨 삭제되지 않았습니다.");
-		}
-		//게시물을 삭제했다면 save 폴더에서 삭제한다.
-		if(notice.getNoticeAttach()!=null) {
-			new java.io.File(path+"/"+notice.getNoticeAttach()).delete();
-		}
-		System.out.println("폴더에서 삭제완료");
+	public void deleteNotice(int noticeNo) throws SQLException {
+		// TODO Auto-generated method stub
 
 	}
 

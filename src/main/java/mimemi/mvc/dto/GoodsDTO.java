@@ -17,8 +17,8 @@ public class GoodsDTO {
 	private String goodsDetail;
 	private String goodsThumbnail;
 	private int goodsPrice;
-	private boolean goodsSale;
-	private String goodsDetailImg;
+	private String goodsSale;
+//	private String goodsDetailImg;
 	
 	public GoodsDTO() {}
 	public GoodsDTO(String goodsId, String goodsName) {
@@ -27,7 +27,7 @@ public class GoodsDTO {
 		this.goodsName = goodsName;
 	}
 	public GoodsDTO(String goodsId, String goodsName, String goodsDetail, String goodsThumbnail, int goodsPrice,
-			boolean goodsSale, String goodsDetailImg) {
+			String goodsSale) {
 		super();
 		this.goodsId = goodsId;
 		this.goodsName = goodsName;
@@ -35,7 +35,7 @@ public class GoodsDTO {
 		this.goodsThumbnail = goodsThumbnail;
 		this.goodsPrice = goodsPrice;
 		this.goodsSale = goodsSale;
-		this.goodsDetailImg = goodsDetailImg;
+//		this.goodsDetailImg = goodsDetailImg;
 	}
 
 	public String getGoodsId() {
@@ -78,21 +78,21 @@ public class GoodsDTO {
 		this.goodsPrice = goodsPrice;
 	}
 
-	public boolean isGoodsSale() {
+	public String getGoodsSale() {
 		return goodsSale;
 	}
 
-	public void setGoodsSale(boolean goodsSale) {
+	public void setGoodsSale(String goodsSale) {
 		this.goodsSale = goodsSale;
 	}
 
-	public String getGoodsDetailImg() {
-		return goodsDetailImg;
-	}
-
-	public void setGoodsDetailImg(String goodsDetailImg) {
-		this.goodsDetailImg = goodsDetailImg;
-	}
+//	public String getGoodsDetailImg() {
+//		return goodsDetailImg;
+//	}
+//
+//	public void setGoodsDetailImg(String goodsDetailImg) {
+//		this.goodsDetailImg = goodsDetailImg;
+//	}
 	
 	
 }

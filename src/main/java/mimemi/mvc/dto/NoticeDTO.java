@@ -27,14 +27,6 @@ public class NoticeDTO {
 		this.noticeContent = noticeContent;
 		this.noticeAttach = noticeAttach;
 	}
-	
-	public NoticeDTO(int noticeNo, String noticeTitle, String noticeContent) {
-		
-		this.noticeNo = noticeNo;
-		this.noticeTitle = noticeTitle;
-		this.noticeContent = noticeContent;
-	}
-	
 
 	public int getNoticeNo() {
 		return noticeNo;
