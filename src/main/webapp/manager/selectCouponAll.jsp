@@ -130,15 +130,6 @@
 			<form action="">
         <input type="hidden" name="" id="">
 				<h1>쿠폰조회 </h1>
-				<div style="text-align: right;">
-					<form name="sort" action="" method="post">
-						<select name="coupon_sort" id="coupon_sort">
-							<option value="0">--정렬선택--</option>
-							<option value="couponId">쿠폰번호</option>
-							<option value="couponName">쿠폰명</option>
-						</select> 
-					</form>
-				</div>
 				
 				<p>
 				
