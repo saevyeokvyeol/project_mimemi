@@ -58,9 +58,62 @@ public class FaqDAOImpl implements FaqDAO {
 	
 	@Override
 	public int updateFaq(FaqDTO faqDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql = proFile.getProperty("faq.updateFaq"); 
+		int  result = 0;
+		
+		try { 
+			con= DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps =con.prepareStatement(sql);
+			ps.setString(1, faqDTO.getFaqCategory());
+			ps.setString(2, faqDTO.getFaqTitle());
+			ps.setString(3, faqDTO.getFaqContent());
+			ps.setInt(4, faqDTO.getFaqNo());
+			
+			result = ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("공지사항 수정에 실패했습니다.");
+			}else {
+				//수정한 파일이 값이 있다면, 파일 수정한다.
+				if(faqDTO.getFaqAttach()!=null) {
+					int re = updateFaqImgCon(con,faqDTO.getFaqNo(),faqDTO.getFaqAttach());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("후기 파일 수정에 실패했습니다.");
+						}
+				}
+				con.commit();
+			}
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
+    
+
+	/*공지사항 게시글 수정할 때, 이미지만 수정하는 메소드*/
+	public int updateFaqImgCon(Connection con,int faqNo, String faqAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql = proFile.getProperty("faq.updateFaqImgCon");
+		int result =0;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, faqAttach);
+			ps.setInt(2, faqNo);
+			
+			result=ps.executeUpdate();
+			System.out.println("이미지수정 ...dao");
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	} 
 
 	@Override
 	public int updateFaqImg(int faqNo, String faqAttach) throws SQLException {
@@ -166,11 +219,41 @@ public class FaqDAOImpl implements FaqDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+    /**
+     * FAQ 상세보기 
+     **/
+	
 	@Override
 	public FaqDTO selectByFaqNo(int faqNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = proFile.getProperty("faq.selectByFaqNo");
+		FaqDTO faqDetail = null;
+
+		
+		try { 
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, faqNo);
+			rs=ps.executeQuery();
+			
+			if(rs.next()) { 
+				faqDetail = new FaqDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getString(7)
+								);	 
+		    }
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return faqDetail;
 	}
 
 	@Override

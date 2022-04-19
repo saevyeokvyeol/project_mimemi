@@ -29,7 +29,7 @@ body {
 			<h2>공지사항 등록</h2>
 				<div class="mb-3">
 					<label for="title">제목</label>
-					<input type="text" class="form-control" name="notice_title" id="title" placeholder="제목을 입력해 주세요">
+					<textarea class="form-control" rows="1" name="notice_title" id="title" placeholder="제목을 입력해 주세요"></textarea>
 				</div>
 				<div class="mb-3">
 					<label for="content">내용</label>
@@ -38,6 +38,7 @@ body {
 				<div class="mb-3">
 					<label for="attach">첨부파일</label>
 				 <input type="file" name="notice_attach" maxlength="" size="40">
+				 <p id="file-status"></p>
 				</div>
      			<div >
 					<input type="submit" value="작성" />
