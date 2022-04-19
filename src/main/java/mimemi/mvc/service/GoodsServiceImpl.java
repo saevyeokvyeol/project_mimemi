@@ -54,38 +54,10 @@ public class GoodsServiceImpl implements GoodsService{
 		if(result == 0) throw new SQLException("상품이 수정되지 않았습니다");
 	}
 
-	/**
-	 * 상품 판매 여부 수정
-	 */
-
-	@Override
-	public void goodsUpdate(GoodsDTO goods) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void goodsDeleteThumbnail(String goodsId) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void goodsDeleteDetailImg(String goodsId) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public GoodsDTO selectByGoodsId(String goodsId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		GoodsDTO goods = goodsDAO.goodsSelectByGoodsId(goodsId);
+		return goods;
 	}
 
 	/**

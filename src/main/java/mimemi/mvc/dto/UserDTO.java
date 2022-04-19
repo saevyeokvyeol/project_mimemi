@@ -10,13 +10,19 @@ public class UserDTO {
 	private boolean userQuit;
 	private String userBirth;
 	
+	private AddrDTO addr;
+	
 	public UserDTO() {}
-	public UserDTO(String userId, String userPwd) {
+//	public UserDTO(String userId, String userPwd) {
+//		super();
+//		this.userId = userId;
+//		this.userPwd = userPwd;
+//	}
+	public UserDTO(String userId, String userName) {
 		super();
 		this.userId = userId;
-		this.userPwd = userPwd;
+		this.userName = userName;
 	}
-	
 	public UserDTO(String userPhone) {
 		this.userPhone = userPhone;
 	}
@@ -33,6 +39,12 @@ public class UserDTO {
 		this.userBirth = userBirth;
 	}
 
+	public AddrDTO getAddr() {
+		return addr;
+	}
+	public void setAddr(AddrDTO addr) {
+		this.addr = addr;
+	}
 	public String getUserId() {
 		return userId;
 	}

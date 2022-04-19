@@ -179,6 +179,7 @@ public class CouponController implements Controller {
 	}
 	
 	/**
+
 	 * 사용자별 쿠폰 등록
 	 * */
 	public ModelAndView insertUserCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -236,4 +237,26 @@ public class CouponController implements Controller {
 		
 	}
 	
+
+	 /* 아이디로 실시간 쿠폰/정기 쿠폰 조회
+	 * */
+	public void selectCouByCouId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String CouId = request.getParameter("CouId");
+		LiveCouponDTO LvCou = null;
+		RgCouponDTO RgCou = null;
+		JSONArray arr = null;
+		if(CouId.substring(0, 1).equals("L")) {
+			LvCou = couponService.selectLvCouByCouId(CouId);
+			arr = JSONArray.fromObject(LvCou);
+		} else {
+			RgCou = couponService.selectRgCouByCouId(CouId);
+			arr = JSONArray.fromObject(RgCou);
+		}
+		
+		PrintWriter out = response.getWriter();
+		out.print(arr);
+	}
+
 }

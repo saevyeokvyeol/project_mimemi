@@ -22,7 +22,7 @@
 			h3 {display: inline;}
 			#prevMonth, #nextMonth{margin: 0 0 20px;}
 			
-			#selectBox {text-align: right;}
+			#selectBox-div {text-align: right;}
 			
 			li {list-style: none; max-width: 240px;}
 			ul > li:first-child {text-align: right;}
@@ -127,7 +127,7 @@
 						data: {key: "order", methodName: "selectMlyDeli", goodsId: "${param.goodsId}", date: "" + year + paramMonth},
 						success: function(result) {
 							$.each(result, function(index, item) {
-								delidate = item.orderDeliDate.substr(5, 2);
+								delidate = item.orderDeliDate.substr(8, 2);
 								text = "<div class='deliMenu'>식단 준비 중</div>"
 								
 								$("#" + delidate).append(text);
@@ -140,29 +140,36 @@
 					}) // ajax 종료
 				}
 				
-				// 주문 식단 가져오기
+				// 개인이 주문한 상품 내역 셀렉트 박스 안에 넣기
 				function selectOrderGoods() {
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
-						dataType: "text",
+						dataType: "json",
 						data: {key: "goods", methodName: "selectOrderGoods"},
 						success: function(result) {
-							alert(result);
-							/* $.each(result, function(index, item) {
-								delidate = item.orderDeliDate.substr(5, 2);
-								text = "<div class='deliMenu'>식단 준비 중</div>"
-								
-								$("#" + delidate).append(text);
-								
-							}) */
+							let text = "";
+							$("#selectCalendar").children().remove();
+							if(JSON.stringify(result) == "[]"){
+								text = `<option value="0">구매하신 내역이 없습니다.</option>`;
+							} else {
+								$.each(result, function(index, item) {
+									text += `<option value="\${item.goodsId}">\${item.goodsName}</option>`;
+								})
+							}
+							$("#selectCalendar").append(text);
+							$("#selectCalendar").val("${param.goodsId}");
 						}, // 성공 메소드
 						error : function(err) {
 							alert(err + "\n구매 내역을 불러올 수 없습니다.");
 						} // 에러 메소드
 					}) // ajax 종료
-				}
+				} // 개인이 주문한 상품 내역 종료
 				
+				// 캘린더 이동
+				$("#selectCalendar").on("change", function() {
+					location.href = "${path}/mypage/calendar.jsp?goodsId=" + $(this).val();
+				})
 				
 				
 				printCalendar();
@@ -170,16 +177,12 @@
 				selectOrderGoods();
 			})
 		</script>
-		<script type="text/javascript">
-			$()
-		</script>
 	</head>
 	<body>
 		<section>
 			<h1>나의 배송 캘린더</h1>
-			<div id="selectBox">
-				<select name="" id="">
-					<option value="">구매하신 내역이 없습니다.</option>
+			<div id="selectBox-div">
+				<select name="selectBox" id="selectCalendar">
 				</select>
 			</div>
 			<table class="table table-bordered caption-top" id="deliCalendar">

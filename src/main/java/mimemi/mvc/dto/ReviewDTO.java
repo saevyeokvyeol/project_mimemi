@@ -19,8 +19,9 @@ public class ReviewDTO {
 	
 	public ReviewDTO() {}
 	
-	public ReviewDTO(String userId, String  goodsId, String reviewTitle, String reviewContent, int reviewRate) {
+	public ReviewDTO(int reviewNo,String userId, String  goodsId, String reviewTitle, String reviewContent, int reviewRate) {
 		super();
+		this.reviewNo = reviewNo;
 		this.userId = userId;
 		this.goodsId = goodsId;
 		this.reviewTitle = reviewTitle;
@@ -30,8 +31,7 @@ public class ReviewDTO {
 	
 	public ReviewDTO(int reviewNo, String userId, String  goodsId, String reviewTitle, String reviewContent, String reviewAttach, 
 			String reviewRegdate, int reviewRate, String reviewBlind, int reviewViews) {
-		this(userId,goodsId,reviewTitle,reviewContent,reviewRate);
-		this.reviewNo = reviewNo;
+		this(reviewNo,userId,goodsId,reviewTitle,reviewContent,reviewRate);
 		this.reviewAttach = reviewAttach;
 		this.reviewRegdate = reviewRegdate;
 		this.reviewBlind = reviewBlind;

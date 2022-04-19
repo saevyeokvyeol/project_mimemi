@@ -39,11 +39,6 @@ public interface GoodsService {
 	 * 
 	 */
 	public List<GoodsDTO> goodsSelectAll() throws SQLException;
-<<<<<<< HEAD
-	
-=======
-		
->>>>>>> 16a23ac650cfe82f8faa349a876bbe02f9b9b15d
 	/**
 	 * 판매 중인 상품 조회
 	 * @return: List<GoodsDTO>(goodsSale이 Y인 상품)
@@ -56,7 +51,6 @@ public interface GoodsService {
 	 * @return: List<GoodsDTO>(상품명에 키워드가 들어가는 상품)
 	 * */
 	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException;
-<<<<<<< HEAD
 	
 	/**
 	 * 상품코드로 상품 조회
@@ -72,7 +66,4 @@ public interface GoodsService {
 	 * */
 	List<GoodsDTO> selectOrderGoods(String userId) throws SQLException;
 	
-	
-=======
->>>>>>> 16a23ac650cfe82f8faa349a876bbe02f9b9b15d
 }
