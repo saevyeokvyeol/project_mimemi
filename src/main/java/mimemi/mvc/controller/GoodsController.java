@@ -88,7 +88,7 @@ public class GoodsController implements Controller {
 	// 상품 이름으로 조회하기 (특정조건조회)
 	public void getGoodsSelectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
-		String keyword = request.getParameter("keword");
+		String keyword = request.getParameter("keyword");
 		List<GoodsDTO> goodsList = goodsService.goodsSelectByKeyword(keyword);
 		JSONArray goodsArr = JSONArray.fromObject(goodsList);
 		PrintWriter out = response.getWriter();

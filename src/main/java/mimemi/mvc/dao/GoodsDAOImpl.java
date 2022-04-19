@@ -173,7 +173,7 @@ public class GoodsDAOImpl implements GoodsDAO {
 	}
 
 	@Override
-	public List<GoodsDTO> selectByKeyword(String keyword) throws SQLException {
+	public List<GoodsDTO> goodsSelectByKeyword(String keyword) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

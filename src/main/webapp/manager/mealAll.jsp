@@ -8,18 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    
+    <!-- 부트스트랩 CSS CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		
+	<!-- 부트스트랩 JS CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
+
 
     <title>도시락관리 페이지</title>
 
@@ -122,23 +118,32 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                    	<div class="col-4">
-                            <p>상품 카테고리</p>
+                        <div class="col-4">
+                            <p>도시락 번호</p>
                         </div>
                         <div class="col-8">
+                            <input type="text" class="spiner-text" id="quantity" value="1">
+                        </div>
+                    </div>
+                    <div class="row">
+                   		<div class="col-4">
+                           <p>상품 카테고리</p>
+                       </div>
+                       <div class="col-8">
                             <!-- select box -->
 
                             <select class="selectpicker">
                                 <option>정성한상</option>
                                 <option>비건 식단</option>
-                                <option>300 시리즈</option>
+                                <option>시그니처</option>
+                                <option>300 덮밥</option>
                             </select>
                         </div>
                         <div class="col-4">
                             <p>도시락이름</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="quantity" value="">
                         </div>
                     </div>
                     <div class="row">
@@ -146,7 +151,7 @@
                             <p>도시락 무게</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="quantity" value="">
                         </div>
                     </div>
                     <div class="row">
@@ -154,7 +159,7 @@
                             <p>도시락 탄수화물</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="quantity" value="">
                         </div>
                     </div>
                     <div class="row">
@@ -162,7 +167,7 @@
                             <p>도시락 단백질</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="quantity" value="">
                         </div>
                     </div>
                      <div class="row">
@@ -170,7 +175,7 @@
                             <p>도시락 지방</p>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="spiner-text" id="quantity" value="1">
+                            <input type="text" class="spiner-text" id="quantity" value="">
                         </div>
                     </div>
                     <div class="row">
@@ -201,6 +206,7 @@
 
                 </div>
             </div>
+</div>            
 </body>
 
 </html>
