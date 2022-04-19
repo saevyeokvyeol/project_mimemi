@@ -79,6 +79,7 @@ $(function() {
 	$(".datepicker").datepicker();
 })
 	
+<<<<<<< HEAD
 
 </script>
 <script type="text/javascript">
@@ -211,6 +212,8 @@ $(function(){
 		
 	})//필수정보 입력체크 끝
 	
+=======
+>>>>>>> fa7d068974821e0e09a1a797f5e5b43e9ebf9c98
 })
 </script>
 
@@ -224,7 +227,6 @@ $(function(){
 			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" check_result="fail" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
 			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
 			<img id="id_check_success" style="display: none;">
-<!-- 			<input type="text" name="ID" size="50" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요"/><input type="submit" value="중복확인"></td> -->
 		</tr>
 		<tr>
 			<th>비밀번호</th>
@@ -241,6 +243,7 @@ $(function(){
 		</tr>
 		<tr>
 			<th>휴대폰 번호</th>
+
 			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요">
 			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button></td>
 		</tr>
@@ -261,25 +264,6 @@ $(function(){
 				<input type="text" id="sample6_extraAddress">
 			</td>
 		</tr>
-<!-- 		<tr> -->
-<!-- 			<th>식단 수령자 정보</th> -->
-<!-- 			<td> -->
-<!-- 				<input type="text" id="receiverName" placeholder="수령자 성함" ><br> -->
-<!-- 				<input type="text" id="receiverPhone" class="receiverPhone_input" placeholder="수령자 번호" > -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-
-<!-- 		<tr> -->
-<!-- 			<th>우편번호</th> -->
-<!-- 			<td colspan="3"><input type="text" name="zip-code" size="10">- -->
-<!-- 				<input type="text" name="zip-code" size="10"> <input -->
-<!-- 				type="submit" value="우편번호검색"></td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<!-- 			<th>주소</th> -->
-<!-- 			<td colspan="3"><input type="text" name="address" size="50"> -->
-<!-- 			</td> -->
-<!-- 		</tr>	 -->
 		<tr>
 			<td><input type="submit" value="취소"> <input type="submit" id="joinBtn" value="회원가입"></td>
 		</tr>

@@ -10,13 +10,13 @@ public interface NoticeService {
 	 * 공지사항 등록
 	 * @param NoticeDTO(String noticeTitle, String noticeContent, String noticeAttach)
 	 * */
-	void insertNotice(NoticeDTO noticeDTO, String path) throws SQLException;
+	void insertNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
 	 * 공지사항 수정 
 	 * @param NoticeDTO(int noticeNo, String noticeTitle, String noticeContent)
 	 * */
-	void updateNotice(NoticeDTO noticeDTO, String path) throws SQLException;
+	void updateNotice(NoticeDTO noticeDTO) throws SQLException;
 	
 	/**
 
@@ -28,7 +28,7 @@ public interface NoticeService {
 	/**
 	 * 공지사항 삭제 
 	 * */
-	void deleteNotice(NoticeDTO notice, String path) throws SQLException;
+	void deleteNotice(int noticeNo) throws SQLException;
 	
 	/**
 	 * 공지사항 전체 검색

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import mimemi.mvc.dao.UserDAO;
 import mimemi.mvc.dao.UserDAOImpl;
 import mimemi.mvc.dto.AddrDTO;
+
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AddrService;
 import mimemi.mvc.service.AddrServiceImpl;
@@ -30,13 +31,12 @@ public class UserController implements Controller {
 	 * 회원가입
 	 * */
 	public ModelAndView insertUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		//회원정보 받기
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		String userPhone = request.getParameter("userPhone");
 		String userBirth = request.getParameter("userBirth");
-		//주소 받기
+
 		String addrName = request.getParameter("addrName");
 		int zipcode = Integer.parseInt(request.getParameter("zipcode"));
 		String addrAddr = request.getParameter("addrAddr");
@@ -46,10 +46,8 @@ public class UserController implements Controller {
 		
 		UserDTO user = new UserDTO(userId, userName, userPwd, userPhone, 0, userId, false, userBirth);
 		AddrDTO addr = new AddrDTO(userId, addrName, zipcode, addrAddr, addrDetailAddr, addrRefAddr, userName, userPhone);
-		
-		userService.insertUser(user,addr);
-		
-		return new ModelAndView("user/join02.jsp", true);
+
+		return new ModelAndView("user/join02.jsp");
 	}
 	
 	/**
@@ -61,8 +59,8 @@ public class UserController implements Controller {
 		String userPwd = request.getParameter("userPwd");
 		
 		UserDTO dbDTO = userService.loginUser(userId,userPwd);
-		//System.out.println(dbDTO.getUserName());
-		//System.out.println(dbDTO.getUserId());
+		System.out.println(dbDTO.getUserName());
+		System.out.println(dbDTO.getUserId());
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", dbDTO);
 		session.setAttribute("loginName", dbDTO.getUserName());
@@ -126,7 +124,7 @@ public class UserController implements Controller {
 		
 		UserDTO userDTO = new UserDTO(userId, userPwd);
 		
-		userService.updateUserPwd(userPwd);
+		userService.updateUserPwd(userId, userPwd, userPwd);
 		
 		logoutUser(request, response); //??????
 		
@@ -152,7 +150,7 @@ public class UserController implements Controller {
 		String userName = request.getParameter("userName");
 		String userPhone = request.getParameter("userPhone");
 		
-		userService.updateUserPwd(userPhone);
+		userService.updateUserPwd(userId, userPhone, userPhone);
 		
 		return new ModelAndView("user/login.jsp");
 	}

@@ -10,8 +10,6 @@ public class UserDTO {
 	private boolean userQuit;
 	private String userBirth;
 	
-	private AddrDTO addr;
-	
 	public UserDTO() {}
 //	public UserDTO(String userId, String userPwd) {
 //		super();
@@ -39,12 +37,6 @@ public class UserDTO {
 		this.userBirth = userBirth;
 	}
 
-	public AddrDTO getAddr() {
-		return addr;
-	}
-	public void setAddr(AddrDTO addr) {
-		this.addr = addr;
-	}
 	public String getUserId() {
 		return userId;
 	}

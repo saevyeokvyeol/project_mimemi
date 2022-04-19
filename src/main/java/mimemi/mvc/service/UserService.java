@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.security.sasl.AuthenticationException;
 
-import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.UserDTO;
 
 public interface UserService {
@@ -22,7 +21,7 @@ public interface UserService {
 	 * 
 	 * : 회원가입 시 입력 받은 데이터를 가져와서 UserDTO에 insert
 	 * */
-	void insertUser(UserDTO user, AddrDTO addr) throws SQLException;
+	void insertUser(UserDTO user) throws SQLException;
 	
 	/**
 	 * 아이디찾기
@@ -58,21 +57,16 @@ public interface UserService {
 	UserDTO selectByID(String userId) throws SQLException;
 	
 	/**
-	 * Id로 포인트 검색하기
-	 * */
-	int selectPointByUserId(String userId) throws SQLException;
-	
-	/**
 	 * 회원정보 수정
 	 * : 주소, 번호 
 	 * */
 	void updateUser(UserDTO user) throws SQLException;
 	
 	/**
-	 * 비밀번호 수정
+	 * 비밀번호 변경
 	 * @param userId, userPwd
 	 * */
-	void updateUserPwd(String userPwd) throws SQLException;
+	void updateUserPwd(String userId, String userPwd, String userPhone) throws SQLException;
 	
 	/**
 	 * 회원 탈퇴
@@ -90,12 +84,4 @@ public interface UserService {
 	 */
 	boolean phoneCheck(String userPhone) throws SQLException;
 	
-	/**
-	 * 아이디 형식 체크
-	 * */
-	boolean validId(String userId) throws SQLException;
-	/**
-	 * 비밀번호 형식 체크
-	 * */
-	boolean validPwd(String userPwd) throws SQLException;
 }
