@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Properties;
 
 import mimemi.mvc.dto.AddrDTO;
-import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
@@ -71,27 +70,20 @@ public class OrderDAOImpl implements OrderDAO {
 			ps.setString(1, order.getUserId());
 			ps.setInt(2, order.getAddrId());
 			ps.setString(3, order.getPayMethod());
-			ps.setInt(4, order.getPayPoint());
+			ps.setInt(3, order.getPayPoint());
 			
-			int totalPrice = calTotalPrice(order.getCartList());
+			int totalPrice = calTotalPrice(order.getOrderLineList());
 			ps.setInt(5, totalPrice);
 			ps.setString(6, order.getOrderMemo());
 			ps.setString(7, order.getTakeMethod());
 			ps.setString(8, order.getEnterPwd());
-			
-			if(order.getUsercouId() == 0) {
-				ps.setString(9, null);
-			} else {
-				ps.setInt(9, order.getUsercouId());
-			}
+			ps.setInt(9, order.getUsercouId());
 			
 			result = ps.executeUpdate();
 			
 			// 주소 저장: 나중에 주소 체크 메소드랑 비교~~
-			if(order.getAddrId() == 0) {
-				if(this.insertAddr(con, order.getAddr()) == 0) {
-					throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
-				}
+			if(this.insertAddr(con, order.getAddr()) == 0) {
+				throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
 			}
 			
 			// 적립금 차감
@@ -108,7 +100,7 @@ public class OrderDAOImpl implements OrderDAO {
 			}
 			
 			// 주문 상세 인서트
-			int[] re = this.insertOrderLine(con, order.getCartList());
+			int[] re = this.insertOrderLine(con, order.getOrderLineList());
 			for(int r : re) {
 				if(r == 0) {
 					throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
@@ -124,8 +116,8 @@ public class OrderDAOImpl implements OrderDAO {
 			
 			// 해당 장바구니 삭제
 			if(mode.equals("C") || mode.equals("S")) {
-				for(CartDTO c : order.getCartList()) {
-					if(this.deleteSelectedCart(con, c.getCartId()) == 0) {
+				for(OrderLineDTO ol : order.getOrderLineList()) {
+					if(this.deleteSelectedCart(con, order.getUserId(), ol.getGoodsId()) == 0) {
 						throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
 					}
 				}
@@ -142,20 +134,10 @@ public class OrderDAOImpl implements OrderDAO {
 	/**
 	 * 총 금액 계산
 	 * */
-	private int calTotalPrice(List<CartDTO> list) {
+	private int calTotalPrice(List<OrderLineDTO> list) {
 		int totalPrice = 0;
-		for(CartDTO c : list) {
-			int weekday = 0;
-			int period = Integer.parseInt(c.getCartPeriod().substring(0, 1));
-			
-			if(c.getCartWeekday().equals("T")) {
-				weekday = 3;
-			} else {
-				weekday = 5;
-			}
-			
-			
-			totalPrice += c.getCartQty() * c.getGoodsPrice() * weekday * period;
+		for(OrderLineDTO ol : list) {
+			totalPrice += ol.getPriceQty();
 		}
 		return totalPrice;
 	}
@@ -207,7 +189,7 @@ public class OrderDAOImpl implements OrderDAO {
 	public int increamentUserPoint(Connection con, String userId, int addedPoint) throws SQLException {
 		PreparedStatement ps = null;
 		
-		String sql = proFile.getProperty("order.increamentUserPoint");
+		String sql = proFile.getProperty("order.insertOrder");
 		// update users set user_point = user_point + ? where USER_ID = ?
 		int result = 0;
 		try {
@@ -228,83 +210,55 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @throws ParseException 
 	 * */
 	@Override
-	public int[] insertOrderLine(Connection con, List<CartDTO> list) throws SQLException, ParseException {
+	public int[] insertOrderLine(Connection con, List<OrderLineDTO> list) throws SQLException, ParseException {
 		PreparedStatement ps = null;
 		
-		String sql = proFile.getProperty("order.insertOrderLine");
+		String sql = proFile.getProperty("order.insertOrder");
 		// insert into order values(ORDER_LINE_ID_SEQ.NEXTVAL, orders_seq.currval, ?, ?, ?, ?, ?, ?)
 		int[] result = null;
 		try {
 			ps = con.prepareStatement(sql);
-			for(CartDTO c : list) {
-				ps.setString(1, c.getGoodsId());
-				ps.setInt(2, c.getCartQty());
-				
-				int weekday = 0;
-				int period = Integer.parseInt(c.getCartPeriod().substring(0, 1));
-				
-				if(c.getCartWeekday().equals("T")) {
-					weekday = 3;
-				} else {
-					weekday = 5;
-				}
-				
-				int totalPrice = c.getCartQty() * c.getGoodsPrice() * weekday * period;
-				
-				ps.setInt(3, totalPrice);
-				ps.setString(4, c.getCartWeekday());
-				ps.setString(5, c.getCartPeriod());
-				ps.setString(6, c.getCartStart().substring(0, 10));
-				System.out.println(c.getGoodsId());
-				System.out.println(c.getCartQty());
-				System.out.println(totalPrice);
-				System.out.println(c.getCartWeekday());
-				System.out.println(c.getCartPeriod());
-				System.out.println(c.getCartStart().substring(0, 10));
+			for(OrderLineDTO ol : list) {
+				ps.setString(1, ol.getGoodsId());
+				ps.setInt(2, ol.getOrderQty());
+				ps.setInt(3, ol.getPriceQty());
+				ps.setString(4, ol.getDeliWeekday());
+				ps.setString(5, ol.getDeliPeriod());
+				ps.setString(6, ol.getDeliStart());
 				
 				ps.addBatch();
 				ps.clearParameters();
-			}
-			
-			result = ps.executeBatch();
-			int count = list.size();
-			
-			for(CartDTO c : list) {
-				count--;
 				
 				int weekday = 0;
-				int period = Integer.parseInt(c.getCartPeriod().substring(0, 1));
-				
-				if(c.getCartWeekday().equals("T")) {
+				if(ol.getDeliWeekday().equals("T")) {
 					weekday = 3;
 				} else {
 					weekday = 5;
 				}
-				
-				int totalPrice = c.getCartQty() * c.getGoodsPrice() * weekday * period;
-				int totalDeli = period * weekday;
+				int totalDeli = Integer.parseInt(ol.getDeliPeriod().substring(0, 1)) * weekday;
 
 				Calendar cal = Calendar.getInstance();
 		        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		        cal.setTime(df.parse(c.getCartStart()));
+		        cal.setTime(df.parse(ol.getDeliStart()));
 		        int wd = 0;
 				while(totalDeli > 0){
 					wd = cal.get(Calendar.DAY_OF_WEEK);
 					if(wd == 2 || wd == 4 || wd == 6) {
-						if(this.insertOrderDeli(con, df.format(cal.getTime()), count) == 0) {
+						if(this.insertOrderDeli(con, df.format(cal.getTime())) == 0) {
 							throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
 						}
-						if(c.getCartWeekday().equals("F") && (wd == 3 || wd == 5)) {
-							if(this.insertOrderDeli(con, df.format(cal.getTime()), count) == 0) {
+						if(ol.getDeliWeekday().equals("F") && (wd == 3 || wd == 5)) {
+							if(this.insertOrderDeli(con, df.format(cal.getTime())) == 0) {
 								throw new SQLException("주문이 정상적으로 완료되지 않았습니다.\\n잠시 후 다시 시도해주세요.");
 							}
 						}
-						totalDeli--;
 					}
 					cal.add(Calendar.DATE, 1);
+					totalDeli--;
 				}
 			}
 			
+			result = ps.executeBatch();
 		} finally {
 			DbUtil.dbClose(ps, null);
 		}
@@ -314,16 +268,15 @@ public class OrderDAOImpl implements OrderDAO {
 	/**
 	 * 주문 상세 배송 등록
 	 * */
-	private int insertOrderDeli(Connection con, String orderDeliDate, int count) throws SQLException {
+	private int insertOrderDeli(Connection con, String orderDeliDate) throws SQLException {
 		PreparedStatement ps = null;
 		
-		String sql = proFile.getProperty("order.insertOrderDeli");
+		String sql = proFile.getProperty("order.insertOrder");
 		// insert into order values(ORDER_LINE_ID_SEQ.NEXTVAL, orders_seq.currval, ?, ?, ?, ?, ?, ?)
 		int result = 0;
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, count);
-			ps.setString(2, orderDeliDate);
+			ps.setString(1, orderDeliDate);
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, null);
@@ -358,14 +311,15 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @return int(삭제한 레코드 수)
 	 * */
 	@Override
-	public int deleteSelectedCart(Connection con, int cardId) throws SQLException {
+	public int deleteSelectedCart(Connection con, String userId, String goodsId) throws SQLException {
 		PreparedStatement ps = null;
 		
 		String sql = proFile.getProperty("order.deleteSelectedCart");
 		int result = 0;
 		try {
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, cardId);
+			ps.setString(1, goodsId);
+			ps.setString(2, userId);
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, null);

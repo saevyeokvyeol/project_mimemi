@@ -38,6 +38,7 @@ public class FaqDTO {
 	}
 	
 	
+	
 	public int getFaqNo() {
 		return faqNo;
 	}

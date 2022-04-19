@@ -1,24 +1,41 @@
-package mimemi.mvc.service;
+package mimemi.mvc.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import mimemi.mvc.dao.EventDAO;
-import mimemi.mvc.dao.EventDAOImpl;
 import mimemi.mvc.dto.EventDTO;
+import mimemi.mvc.util.DbUtil;
 
-public class EventServiceImpl implements EventService {
-	private EventDAO eventDAO = new EventDAOImpl();
+public class EventDAOImpl implements EventDAO {
+	private Properties proFile = new Properties();
+	
+	/**
+	 * dbQuery.properties 로딩해 Properties 객체에 저장
+	 * */
+	public EventDAOImpl() {
+		try {
+			proFile.load(getClass().getClassLoader().getResourceAsStream("dbQuery.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 이벤트 게시글 등록
 	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventImg,
 	 * 			String eventStartdate, String eventEnddate)
+	 * @return: int(등록 성공한 레코드 수)
 	 * */
 	@Override
-	public void insert(EventDTO event) throws SQLException {
+	public int insert(EventDTO event) throws SQLException {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
 	
 	/**
@@ -29,20 +46,20 @@ public class EventServiceImpl implements EventService {
 	 * @return: int(수정 성공한 레코드 수)
 	 * */
 	@Override
-	public void updateEvent(EventDTO event) throws SQLException {
+	public int updateEvent(EventDTO event) throws SQLException {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
-	
+
 	/**
 	 * 이벤트 게시글 썸네일 이미지 수정
 	 * @param: int eventId, String eventImg
 	 * @return: int(수정 성공한 레코드 수)
 	 * */
 	@Override
-	public void updateEventImg(int eventId, String eventImg) throws SQLException {
+	public int updateEventImg(int eventId, String eventImg) throws SQLException {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
 	
 	/**
@@ -51,9 +68,9 @@ public class EventServiceImpl implements EventService {
 	 * @return: int(수정 성공한 레코드 수)
 	 * */
 	@Override
-	public void updateEventAttach(int eventId, String eventAttach) throws SQLException {
+	public int updateEventAttach(int eventId, String eventAttach) throws SQLException {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
 	
 	/**
@@ -62,11 +79,45 @@ public class EventServiceImpl implements EventService {
 	 * */
 	@Override
 	public List<EventDTO> selectAll() throws SQLException {
-		List<EventDTO> eventList = eventDAO.selectAll();
-
+		Connection con =null;
+		PreparedStatement ps =null;
+		ResultSet rs =null;
+		
+		List<EventDTO> eventList = new ArrayList<EventDTO>();
+		SimpleDateFormat eventFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//event.selectAll=select * from EVENT order by EVENT_NO desc
+		String sql = proFile.getProperty("event.selectAll");
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				EventDTO event = new EventDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						eventFormat.format(rs.getDate(6)),
+						eventFormat.format(rs.getDate(7)), 
+						eventFormat.format(rs.getDate(8))
+						);
+				
+				eventList.add(event);
+			}
+			
+			
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+			
+	
 		return eventList;
 	}
-	
+
 	/**
 	 * 이벤트 게시글 진행 상황별 조회
 	 * sysdate를 기준으로 진행 예정/ 진행중 / 진행 완료를 나누어 조회
@@ -78,7 +129,7 @@ public class EventServiceImpl implements EventService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * 이벤트 게시글 상세 조회
 	 * 글번호 기준으로 게시글 상세 조회
@@ -90,7 +141,7 @@ public class EventServiceImpl implements EventService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * 이벤트 전체 검색(페이지 처리)
 	 * @param int pageNo

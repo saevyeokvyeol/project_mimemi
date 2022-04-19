@@ -12,6 +12,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import mimemi.mvc.dto.ReviewDTO;
+import mimemi.mvc.dto.ReviewReplyDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.ReviewService;
 import mimemi.mvc.service.ReviewServiceImpl;
@@ -46,6 +47,7 @@ public class ReviewController implements Controller {
 		
 		request.setAttribute("list", reviewList);
 		request.setAttribute("pageNum", curPageNo);
+		request.setAttribute("field", field);
 		
 		//System.out.println("서비스에서 돌아온 후.."+curPageNo);
 		
@@ -57,12 +59,23 @@ public class ReviewController implements Controller {
 	 * 검색기능
 	 * */
 	public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String curPageNo = request.getParameter("pageNum");
+		if(curPageNo ==null||curPageNo.equals("")) {
+			curPageNo="1";
+		}
+		
+		String field= request.getParameter("field");
+		String keyword= request.getParameter("keyword");
+		List<ReviewDTO> reviewList=reviewService.selectByKeyword(keyword, field, Integer.parseInt(curPageNo));
+		request.setAttribute("list", reviewList);
+		request.setAttribute("pageNum", curPageNo);
+		request.setAttribute("field", field);
+		request.setAttribute("keyword", keyword);
+		return new ModelAndView("/board/reviewSearch.jsp");
 	}
 	
 	/**
-	 * 리뷰 번호로 상세조회하기
+	 * 리뷰 상세보기
 	 * */
 	public ModelAndView selectByReviewNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String curPageNo= request.getParameter("pageNum");
@@ -245,7 +258,7 @@ public class ReviewController implements Controller {
 		String reviewNo= request.getParameter("reviewNo");
 		String blindStatus = request.getParameter("blindStatus"); //선택한 게시글의 블라인드상태
 		
-		System.out.println("현재 블라인드 상태"+blindStatus);
+		System.out.println(reviewNo+": 현재 블라인드 상태"+blindStatus);
 		
 		reviewService.updateBlind(Integer.parseInt(reviewNo), blindStatus);
 		

@@ -1,7 +1,5 @@
 package mimemi.mvc.dto;
 
-import java.util.Date;
-
 public class ReviewDTO {
 	private int reviewNo;
 	private String userId;
@@ -37,6 +35,7 @@ public class ReviewDTO {
 		this.reviewBlind = reviewBlind;
 		this.reviewViews = reviewViews;
 	}
+	
 
 	public GoodsDTO getGoodsDTO() {
 		return goodsDTO;
@@ -118,10 +117,6 @@ public class ReviewDTO {
 		this.reviewRate = reviewRate;
 	}
 
-	public String isReviewBlind() {
-		return reviewBlind;
-	}
-
 	public void setReviewBlind(String reviewBlind) {
 		this.reviewBlind = reviewBlind;
 	}
@@ -134,6 +129,10 @@ public class ReviewDTO {
 		this.reviewViews = reviewViews;
 	}
 
+	public String getReviewBlind() {
+		return reviewBlind;
+	}
+	
 	
 	
 }

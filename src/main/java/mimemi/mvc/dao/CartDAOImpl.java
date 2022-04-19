@@ -237,7 +237,7 @@ public class CartDAOImpl implements CartDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				CartDTO cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
+				CartDTO cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7));
 				list.add(cart);
 			}
 		} finally {
@@ -270,7 +270,7 @@ public class CartDAOImpl implements CartDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
+				cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7));
 			}
 		} finally {
 			DbUtil.dbClose(rs, ps, con);

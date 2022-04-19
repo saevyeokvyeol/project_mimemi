@@ -8,7 +8,6 @@ public class CartDTO {
 	private String cartWeekday;
 	private String cartPeriod;
 	private String cartStart;
-	private int goodsPrice;
 	
 	public CartDTO() {}
 
@@ -25,7 +24,7 @@ public class CartDTO {
 	}
 
 	public CartDTO(int cartId, String userId, String goodsId, int cartQty, String cartWeekday, String cartPeriod,
-			String cartStart, int goodsPrice) {
+			String cartStart) {
 		super();
 		this.cartId = cartId;
 		this.userId = userId;
@@ -34,7 +33,6 @@ public class CartDTO {
 		this.cartWeekday = cartWeekday;
 		this.cartPeriod = cartPeriod;
 		this.cartStart = cartStart;
-		this.goodsPrice = goodsPrice;
 	}
 
 	public int getCartId() {
@@ -91,14 +89,6 @@ public class CartDTO {
 
 	public void setCartStart(String cartStart) {
 		this.cartStart = cartStart;
-	}
-
-	public int getGoodsPrice() {
-		return goodsPrice;
-	}
-
-	public void setGoodsPrice(int goodsPrice) {
-		this.goodsPrice = goodsPrice;
 	}
 	
 }

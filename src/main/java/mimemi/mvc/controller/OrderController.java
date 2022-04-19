@@ -33,29 +33,21 @@ public class OrderController implements Controller {
 	public ModelAndView insertOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		
-		String userId = "happy01";
-		int addrId = Integer.parseInt(request.getParameter("addrId"));
-		String payMethod = request.getParameter("payMethod");
-		
-		String payPoint = request.getParameter("payPoint");
-		if(payPoint.equals("") || payPoint == null) {
-			payPoint = "0";
+		String userId = request.getParameter("userId");
+		int addrId = 0;
+		if(request.getParameter("addrId") != null) {
+			addrId = Integer.parseInt(request.getParameter("addrId"));
 		}
-		
+		String payMethod = request.getParameter("payMethod");
+		int payPoint = Integer.parseInt(request.getParameter("payPoint"));
 		int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
 		String orderMemo = request.getParameter("orderMemo");
 		String takeMethod = request.getParameter("takeMethod");
 		String enterPwd = request.getParameter("enterPwd");
-		
 		int usercouId = Integer.parseInt(request.getParameter("usercouId"));
-		
-		OrderDTO order = new OrderDTO(userId, addrId, payMethod, Integer.parseInt(payPoint), totalPrice, orderMemo, takeMethod, enterPwd, usercouId);
+		OrderDTO order = new OrderDTO(userId, addrId, payMethod, payPoint, totalPrice, orderMemo, takeMethod, enterPwd, usercouId);
 		
 		List<CartDTO> cartList = (List<CartDTO>)session.getAttribute("cartList");
-		if(cartList == null) {
-			throw new Exception("세션이 만료되었습니다.\\n구매 정보를 다시 확인해주세요.");
-		}
-		
 		order.setCartList(cartList);
 		
 		String mode = request.getParameter("mode");
