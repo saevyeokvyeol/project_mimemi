@@ -62,8 +62,17 @@ public class FaqServiceImpl implements FaqService {
 	}
 
 	@Override
-	public void deleteFaq(int faqNo) throws SQLException {
-		// TODO Auto-generated method stub
+	public void deleteFaq(FaqDTO faq, String path) throws SQLException {
+		//db에서 삭제한다.
+		int result =faqDao.deleteFaq(faq.getFaqNo());
+		if(result==0) {
+			throw new SQLException("삭제에 오류가 생겨 삭제되지 않았습니다.");
+		}
+		//게시물을 삭제했다면 save 폴더에서 삭제한다.
+		if(faq.getFaqAttach()!=null) {
+			new java.io.File(path+"/"+faq.getFaqAttach()).delete();
+		}
+		System.out.println("폴더에서 삭제완료");
 
 	}
 

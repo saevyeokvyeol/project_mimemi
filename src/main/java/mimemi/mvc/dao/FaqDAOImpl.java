@@ -123,8 +123,23 @@ public class FaqDAOImpl implements FaqDAO {
 
 	@Override
 	public int deleteFaq(int faqNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql= proFile.getProperty("faq.deleteFaq");
+		int result=0;
+		
+		try {
+			con =DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, faqNo);
+			
+			result= ps.executeUpdate();
+			System.out.println("dao: 삭제한 FAQ번호 "+faqNo);
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
     /**
      *  FAQ 전체 조회

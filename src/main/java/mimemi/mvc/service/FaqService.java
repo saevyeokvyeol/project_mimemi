@@ -30,7 +30,7 @@ public interface FaqService {
 	 * @param int faqNo
 	 * 삭제하면 완전히 삭제
 	 * */
-	void deleteFaq(int faqNo) throws SQLException;
+	void deleteFaq(FaqDTO faq, String path) throws SQLException;
 
 	/**
 	 * FAQ 전체 검색
