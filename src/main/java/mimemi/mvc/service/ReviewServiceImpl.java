@@ -7,6 +7,7 @@ import java.util.List;
 import mimemi.mvc.dao.ReviewDAO;
 import mimemi.mvc.dao.ReviewDAOImpl;
 import mimemi.mvc.dto.ReviewDTO;
+import mimemi.mvc.dto.ReviewReplyDTO;
 
 public class ReviewServiceImpl implements ReviewService {
 	private ReviewDAO reviewDAO = new ReviewDAOImpl();
@@ -97,9 +98,9 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewDTO> selectByKeyword(String reviewKeyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReviewDTO> selectByKeyword(String reviewKeyword, String field, int pageNo) throws SQLException {
+		List<ReviewDTO> list =reviewDAO.selectByKeyword(reviewKeyword, field, pageNo);
+		return list;
 	}
 
 	@Override
@@ -110,11 +111,11 @@ public class ReviewServiceImpl implements ReviewService {
 				throw new SQLException("조회수 증가를 하는 도중 오류가 생겼습니다.");
 			}
 		}
+		//게시물 정보 가져오기
 		ReviewDTO reviewDetail = reviewDAO.selectByReviewNo(reviewNo);
 			if(reviewDetail==null) {
-				throw new SQLException("상세보기를 불러올 수 없습니다.");
+				throw new SQLException("게시물 상세보기를 불러올 수 없습니다.");
 			}
-		//댓글정보 가져오기
 		
 		return reviewDetail;
 	}
@@ -134,7 +135,11 @@ public class ReviewServiceImpl implements ReviewService {
 	 * */
 	@Override
 	public void updateBlind(int reviewNo, String blind) throws SQLException {
-		// TODO Auto-generated method stub
+		int result =reviewDAO.updateBlind(reviewNo, blind);
+		if(result==0) {
+			throw new SQLException("블라인드 처리를 하는 도중 오류가 발생했습니다.");
+		}
+		
 
 	}
 

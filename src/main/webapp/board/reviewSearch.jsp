@@ -191,11 +191,11 @@ pageEncoding="UTF-8"%>
                 </div>
                 <div class="review-search-box">
                     <form class="form-inline" action="${path}/front?key=review&methodName=selectByKeyword" method="post">
-                        <select name="review_search_sort_select" id="review_search_sort_select">
+                        <select name="field" id="review_search_sort_select">
                             <option name="review_search_sort" value="title">제목</option>
                             <option name="review_search_sort" value="content">내용</option>
                         </select>
-                        <input class="review-search-keyword" name="review-keyword" type="text" placeholder="Search" aria-label="Search">
+                        <input class="review-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
                         <button class="btn-search-submit" type="submit" >검색하기</button>
                     </form>
                 </div>
@@ -208,18 +208,18 @@ pageEncoding="UTF-8"%>
 				<c:set var="startPage" value="${pageNum - temp}"/>
 				<ul class="pagination justify-content-center">
 					<c:if test="${(startPage - p.blockcount) > 0}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=review&methodName=selectAll&pageNum=${startPage-1}&field=${requestScope.field}">이전</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=review&methodName=selectByKeyword&pageNum=${startPage-1}&field=${requestScope.field}&keyword=${requestScope.keyword}">이전</a></li>
 					</c:if>
 					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
 						<c:if test="${(i-1) >= p.pageCnt}">
 							<c:set var="isLoop" value="true"/>
 						</c:if> 
 						<c:if test="${not isLoop}" >
-							<li class="page-item ${i == pageNum ? ' active' : page}"><a class="page-link page_num" href="${path}/front?key=review&methodName=selectAll&pageNum=${i}&field=${requestScope.field}">${i}</a></li> 
+							<li class="page-item ${i == pageNum ? ' active' : page}"><a class="page-link page_num" href="${path}/front?key=review&methodName=selectByKeyword&pageNum=${i}&field=${requestScope.field}&keyword=${requestScope.keyword}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
 					<c:if test="${(startPage + p.blockcount) <= p.pageCnt}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=review&methodName=selectAll&pageNum=${startPage+p.blockcount}&field=${requestScope.field}">이후</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=review&methodName=selectByKeyword&pageNum=${startPage+p.blockcount}&field=${requestScope.field}&keyword=${requestScope.keyword}">이후</a></li>
 					</c:if>
 				</ul>
 			</nav>
