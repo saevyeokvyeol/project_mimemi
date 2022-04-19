@@ -2,36 +2,25 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<!doctype html>
-<html lang="en">
-
-<head>
- 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"
-        integrity="sha512-L4qpL1ZotXZLLe8Oo0ZyHrj/SweV7CieswUODAAPN/tnqN3PA1P+4qPu5vIryNor6HQ5o22NujIcAZIfyVXwbQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <title>상품 상세보기</title>
-
-	<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-
-
+	<head>
+		<meta charset="UTF-8">
+	    <title>상품 상세보기</title>
+		<jsp:include page="../common/header.jsp"/>
+    	<link rel="stylesheet" href="${path}/css/datepicker.css">
+		<!-- CSS only -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<!-- jQuery -->
+		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+		<!-- JavaScript Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	    <link rel="stylesheet" href="${path}/css/header.css">
+	    <!-- jQuery ui -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery ui -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<style type="text/css" src=""></style>
+    	<link rel="stylesheet" href="${path}/css/datepicker.css">
     <style>
-        * {
-            font-family: 'Jua', sans-serif;
-        }
 
         .wrap {
             margin: auto;
@@ -66,7 +55,6 @@
             height: 500px;
         }
         
-        
         .goodsname {
         	font-size:4em;
         }
@@ -78,8 +66,8 @@
     
     <script type = "text/javascript">
     	function calcTotalPrice() {
-    		price = $("#quantity").val();
-    		quantity = $("#goodsprice").text();
+    		price = $("#goodsprice").text();
+    		quantity = $("input[name=cartQty]").val();
 			$("#goodstotalprice").text(price * quantity);
     	}
     
@@ -96,14 +84,72 @@
     				success: function(result) {
     					let text ="";
     					item = result[0]
+   						$("input[name=goodsId]").val(item.goodsId);
    						$("#goodsname").text(item.goodsName);
    						$("#goodsdetail").text(item.goodsDetail);
    						$("#goodsprice").text(item.goodsPrice);
+   						$("input[name=goodsPrice]").val(item.goodsPrice);
    						calcTotalPrice();
     				}
-    				
     			})
     		}
+    		
+    		// datepicker 설정
+			$.datepicker.setDefaults({
+				dateFormat: 'yy-mm-dd',
+				prevText: '이전 달',
+				nextText: '다음 달',
+				monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+				dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+				dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+				showMonthAfterYear: true,
+				yearSuffix: '년'
+			});
+			
+    		$("#datePicker").datepicker();
+    		
+    		// 수량 감소 시 DB 업데이트
+			$(document).on("click", "button[name=minus]", function() {
+				let updateNum = parseInt($(this).next().val()) - 1;
+				if(updateNum <= 0){
+					alert("수량을 하나 이상 입력해주세요.");
+					updateNum = 1;
+				}
+				$(this).next().val(updateNum);
+				calcTotalPrice();
+			}); // 수량 감소 업데이트 종료
+			
+			// 수량 증가 시 DB 업데이트
+			$(document).on("click", "button[name=plus]", function() {
+				let updateNum = parseInt($(this).prev().val()) + 1;
+				$(this).prev().val(updateNum);
+				calcTotalPrice();
+			}); // 수량 증가 업데이트 종료
+    		
+			// 장바구니에 담기
+			$("#cart").click(function() {
+				$.ajax({
+					url: "${path}/ajax",
+					type: "post",
+					dataType : "text",
+					data: {key: "cart", methodName: "insertCart", goodsId: $("input[name=goodsId]").val(),
+						cartQty: $("input[name=cartQty]").val(), cartWeekDay: $("select[name=cartWeekDay]").val(),
+						cartPeriod: $("select[name=cartPeriod]").val(), cartStart: $("input[name=cartStart]").val(),
+						goodsPrice:$("input[name=goodsPrice]").val()},
+					success: function(result) {
+						alert(result);
+					},
+					error: function(err) {
+						alert(err + "\n장바구니를 불러올 수 없습니다.");
+					}
+				}) // ajax 종료
+			}) // 장바구니에 담기 종료
+			
+			// 구매하기
+			
+			
     		selectByGoodsId();
     	})
     </script>
@@ -123,47 +169,53 @@
                     <p class="goodsdetail" id="goodsdetail"></p>
 
                 </div>
-                <div class="order-box">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">배송요일</label>
-                        <select class="selectpicker">
-                            <option>주 5회 (월~금)</option>
-                            <option>주 3회 (월/수/금)</option>
-                        </select>
-                    </div>
-                    <div class="order-box">
-                        <label for="exampleInputPassword1">배송기간</label>
-                        <select class="selectpicker">
-                            <option>1주</option>
-                            <option>2주</option>
-                            <option>4주</option>
-                            <option>8주</option>
-                        </select>
-                    </div>
-                    <div class="order-box">
-                        <label for="exampleInputPassword1">수량</label>
-
-                        <div class="spiner-form-container clearfix">
-                            <button class="spiner-minus"><i class="material-icons" id="minus">remove</i></button>
-                            <input type="text" class="spiner-text" id="quantity" value="1" onchange="calcTotalPrice()">
-                            <button class="spiner-plus"><i class="material-icons" id="plus">add</i></button>
-                        </div>
-                    </div>
-                    <div class="order-box">
-                        <label for="exampleInputPassword1">첫 배송일</label>
-                        <input type="password" id="datePicker" class="form-control" placeholder="">
-                    </div>
-                    <div>
-                    	<label for="exampleInputPassword1">금액</label>
-                    	<a class="goodsprice" id="goodsprice"></a>
-                    	<label for="exampleInputPassword1">원</label><br>
-						<label for="exampleInputPassword1">총 주문금액</label>
-						<a class="goodstotalprice" id="goodstotalprice"></a>
-						<label for="exampleInputPassword1">원</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">장바구니 담기</button>
-                    <button type="submit" class="btn btn-primary">주문하기</button>
-                </div>
+                <form action="">
+	                <div class="order-box">
+	                    <div class="form-group">
+	                        <label for="exampleInputEmail1">배송요일</label>
+	                        <select class="selectpicker" name="cartWeekDay">
+	                            <option value="F">주 5회 (월~금)</option>
+	                            <option value="T">주 3회 (월/수/금)</option>
+	                        </select>
+	                    </div>
+	                    <div class="order-box">
+	                        <label for="exampleInputPassword1">배송기간</label>
+	                        <select class="selectpicker" name="cartPeriod">
+	                            <option value="1W">1주</option>
+	                            <option value="2W">2주</option>
+	                            <option value="4W">4주</option>
+	                            <option value="8W">8주</option>
+	                        </select>
+	                    </div>
+	                    <div class="order-box">
+	                        <label for="exampleInputPassword1">수량</label>
+	
+	                        <div class="spiner-form-container clearfix">
+	                            <td>
+	                            	<button type="button" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
+	                            	<input type="number" name="cartQty" min="1" max="9999" step="1" value="1" readonly="readonly">
+	                            	<button type="button" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
+	                            </td>
+	                        </div>
+	                    </div>
+	                    <div class="order-box">
+	                        <label for="exampleInputPassword1">첫 배송일</label>
+	                        <input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
+	                    </div>
+	                    <div>
+	                    <input type="hidden" name="goodsId" value="">
+	                    	<input type="hidden" name="goodsPrice" value="">
+	                    	<label for="exampleInputPassword1">금액</label>
+	                    	<a class="goodsprice" id="goodsprice"></a>
+	                    	<label for="exampleInputPassword1">원</label><br>
+							<label for="exampleInputPassword1">총 주문금액</label>
+							<a class="goodstotalprice" id="goodstotalprice"></a>
+							<label for="exampleInputPassword1">원</label>
+	                    </div>
+	                    <button type="button" class="btn btn-primary" id="cart">장바구니 담기</button>
+	                    <button type="submit" class="btn btn-primary" id="order">주문하기</button>
+	                </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -171,40 +223,5 @@
         </div>
     </div>
 </body>
-
-<!-- <script>
-    $('#datePicker').datepicker({
-        format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-        startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-        endDate: '+10d',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
-        autoclose: true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
-        calendarWeeks: false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
-        clearBtn: false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
-        datesDisabled: ['2019-06-24', '2019-06-26'],//선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.
-        daysOfWeekDisabled: [0, 6],	//선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
-        daysOfWeekHighlighted: [3], //강조 되어야 하는 요일 설정
-        disableTouchKeyboard: false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
-        immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false 
-        multidate: false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false 
-        multidateSeparator: ",", //여러 날짜를 선택했을 때 사이에 나타나는 글짜 2019-05-01,2019-06-01
-        templates: {
-            leftArrow: '&laquo;',
-            rightArrow: '&raquo;'
-        }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징 
-        showWeekDays: true,// 위에 요일 보여주는 옵션 기본값 : true
-        title: "테스트",	//캘린더 상단에 보여주는 타이틀
-        todayHighlight: true,	//오늘 날짜에 하이라이팅 기능 기본값 :false 
-        toggleActive: true,	//이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
-        weekStart: 0,//달력 시작 요일 선택하는 것 기본값은 0인 일요일 
-        language: "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-
-    });//datepicker end
-</script> -->
-<!-- <script>
-    $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 4
-    });
-</script> -->
 
 </html>
