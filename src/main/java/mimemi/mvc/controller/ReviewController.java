@@ -59,6 +59,7 @@ public class ReviewController implements Controller {
 	 * 검색기능
 	 * */
 	public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
 		String curPageNo = request.getParameter("pageNum");
 		if(curPageNo ==null||curPageNo.equals("")) {
 			curPageNo="1";
@@ -71,6 +72,7 @@ public class ReviewController implements Controller {
 		request.setAttribute("pageNum", curPageNo);
 		request.setAttribute("field", field);
 		request.setAttribute("keyword", keyword);
+		System.out.println(keyword+"페이지번호"+curPageNo);
 		return new ModelAndView("/board/reviewSearch.jsp");
 	}
 	
