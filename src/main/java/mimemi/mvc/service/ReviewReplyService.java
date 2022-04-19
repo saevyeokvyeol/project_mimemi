@@ -14,16 +14,16 @@ public interface ReviewReplyService {
 	 * ´ñ±Û µî·Ï
 	 * @param AnswerDTO(int askNo, String userId, String answerContent)
 	 * */
-	void insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
+	int insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
 
 	/**
 	 * ´ñ±Û ¼öÁ¤ 
 	 * @param AnswerDTO(int answerNo, String answerContent)
 	 * */
-	void updateReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
+	int updateReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException;
 	
 	/**
 	 * ´ñ±Û »èÁ¦
 	 * */
-	void deleteReviewReply(int answerNo) throws SQLException;
+	int deleteReviewReply(int answerNo) throws SQLException;
 }

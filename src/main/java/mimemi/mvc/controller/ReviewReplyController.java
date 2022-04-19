@@ -1,11 +1,13 @@
 package mimemi.mvc.controller;
 
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.dto.ReviewReplyDTO;
 import mimemi.mvc.service.ReviewReplyService;
 import mimemi.mvc.service.ReviewReplyServiceImpl;
@@ -24,13 +26,37 @@ public class ReviewReplyController implements Controller {
 	 * */
 	public void select(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
-		System.out.println("replyselect ~~~");
+		//System.out.println("replyselect ~~~");
 		String reviewNo = request.getParameter("reviewNo");
-		List<ReviewReplyDTO> replyList = replyService.selectReplyByReviewNo(Integer.parseInt(reviewNo));
 		
+		List<ReviewReplyDTO> replyList = replyService.selectReplyByReviewNo(Integer.parseInt(reviewNo));		
 		JSONArray replyArr = JSONArray.fromObject(replyList);
 		PrintWriter out = response.getWriter();
 		out.print(replyArr);
+	}
+	
+	public void insert(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		String reviewNo = request.getParameter("reviewNo");
+		String userId = request.getParameter("reply_id");
+		String managerId = request.getParameter("reply_manager_id");
+		String content=request.getParameter("reply_content");
+		System.out.println("replyinsert~~");
+		//LocalDate now = LocalDate.now();
+		//String regDate = now;
+		ReviewReplyDTO reply = new ReviewReplyDTO(Integer.parseInt(reviewNo), userId, managerId, content);
+		int result =replyService.insertReviewReply(reply);
+		System.out.println(result);
+		PrintWriter out= response.getWriter();
+		out.print(result);
+	}
+	
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+	}
+	
+	public void update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 	}
 	
 

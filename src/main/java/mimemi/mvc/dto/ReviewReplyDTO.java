@@ -9,14 +9,18 @@ public class ReviewReplyDTO {
 	private String replyRegdate;
 	
 	public ReviewReplyDTO() {}
-
-	public ReviewReplyDTO(int replyNo, int reviewNo, String userId, String managerId, String replyContent, String replyRegdate) {
+	
+	public ReviewReplyDTO(int reviewNo, String userId, String managerId, String replyContent) {
 		super();
-		this.replyNo = replyNo;
 		this.reviewNo = reviewNo;
 		this.userId = userId;
 		this.managerId = managerId;
 		this.replyContent = replyContent;
+	}
+
+	public ReviewReplyDTO(int replyNo, int reviewNo, String userId, String managerId, String replyContent, String replyRegdate) {
+		this(reviewNo,userId,managerId,replyContent);
+		this.replyNo = replyNo;
 		this.replyRegdate = replyRegdate;
 	}
 	

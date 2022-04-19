@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -44,6 +45,7 @@ public class ReviewReplyDAOImpl implements ReviewReplyDAO {
 						replyFormat.format(rs.getDate(6))
 						);
 				replylist.add(reply);
+				//System.out.println(reply.getReplyContent());
 			}
 
 		}finally {
@@ -58,9 +60,26 @@ public class ReviewReplyDAOImpl implements ReviewReplyDAO {
 	 * */
 	@Override
 	public int insertReviewReply(ReviewReplyDTO reviewreplyDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		//현재날짜 java에서 구해서 넣기
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql="INSERT INTO REVIEW_REPLY(REPLY_NO,REVIEW_NO,USER_ID,MANAGER_ID,REPLY_CONTENT,REPLY_REGDATE) VALUES(REPLY_NO_SEQ.NEXTVAL,?,?,?,?,SYSDATE)";
+		//String sql=proFile.getProperty("");
+		int result =0;
+		
+		try {
+			con=DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reviewreplyDTO.getReviewNo());
+			ps.setString(2, reviewreplyDTO.getUserId());
+			ps.setString(3, reviewreplyDTO.getManagerId());
+			ps.setString(4, reviewreplyDTO.getReplyContent());
+			
+			result = ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		
+		return result;
 	}
 
 	/**
