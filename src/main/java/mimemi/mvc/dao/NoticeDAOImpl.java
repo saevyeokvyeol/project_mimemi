@@ -53,24 +53,105 @@ public class NoticeDAOImpl implements NoticeDAO {
 		
 		return result;
 	}
-
+    /**
+     *  공지사항 업데이트 
+     **/
+	
 	@Override
 	public int updateNotice(NoticeDTO noticeDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql = proFile.getProperty("notice.updateNotice"); 
+		int  result = 0;
+		
+		try { 
+			con= DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps =con.prepareStatement(sql);
+			ps.setString(1, noticeDTO.getNoticeTitle());
+			ps.setString(2, noticeDTO.getNoticeContent());
+			ps.setInt(3, noticeDTO.getNoticeNo());
+			
+			result = ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("공지사항 수정에 실패했습니다.");
+			}else {
+				//수정한 파일이 값이 있다면, 파일 수정한다.
+				if(noticeDTO.getNoticeAttach()!=null) {
+					int re = updateFaqImgCon(con,noticeDTO.getNoticeNo(),noticeDTO.getNoticeAttach());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("후기 파일 수정에 실패했습니다.");
+						}
+				}
+				con.commit();
+			}
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
+    
 
+	/*공지사항 게시글 수정할 때, 이미지만 수정하는 메소드*/
+	public int updateNoticeImgCon(Connection con,int noticeNo, String noticeAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql = proFile.getProperty("notice.updateNoticeImgCon");
+		int result =0;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, noticeAttach);
+			ps.setInt(2, noticeNo);
+			
+			result=ps.executeUpdate();
+			System.out.println("이미지수정 ...dao");
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	} 
+	
+	
 	@Override
 	public int updateNoticeAttach(int noticeNo, String noticeAttach) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	/**
+	 *  공지사항 삭제하기
+	 **/
+	
 	@Override
 	public int deleteNotice(int noticeNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql= proFile.getProperty("notice.deleteNotice");
+		int result=0;
+		
+		try {
+			con =DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, noticeNo);
+			
+			result= ps.executeUpdate();
+			System.out.println("dao: 삭제한 리뷰번호 "+noticeNo);
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
+	
+	
+	
+	
+	
+	
     /**
      *  공지사항 전체 조회 
      **/
@@ -188,10 +269,19 @@ public class NoticeDAOImpl implements NoticeDAO {
 		
 		return noticeDetail;
 	}
-
+  /**
+   *  공지사항 키워드로 검색하기   
+   **/
+	
 	@Override
 	public List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		List<NoticeDTO> noticList = new ArrayList<NoticeDTO>();
+		String sql = proFile.getProperty("notic.selectByKeyword")
+		
 		return null;
 	}
 
