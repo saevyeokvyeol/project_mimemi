@@ -131,7 +131,7 @@ public class FaqController implements Controller {
         MultipartRequest m = new MultipartRequest(request, saveDir,maxSize, encoding, new DefaultFileRenamePolicy());
 		
 		String faqNo= m.getParameter("faqNo");
-		String faqCategory=m.getParameter("faq_categoty");
+		String faqCategory=m.getParameter("faq_category");
 		String faqTitle = m.getParameter("faq_title");
 		String faqContent = m.getParameter("faq_content");
          
@@ -158,9 +158,31 @@ public class FaqController implements Controller {
 	
 	
 }
+
+ 	/**
+ 	 * FAQ 삭제하기
+ 	 **/
+ 	
+      
+      public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  		String faqNo = request.getParameter("faqNo");
+  		FaqDTO faq = faqService.selectByFaqNo(Integer.parseInt(faqNo));
+  		 
+  		//삭제할 경로
+  		String path =request.getServletContext().getRealPath("/img/");
+  		//첨부파일 이름
+  		System.out.println("삭제할 후기 게시물 번호: "+faq.getFaqNo());
+  		faqService.deleteFaq(faq,path);
+ 		
+ 		//삭제를 마치면 게시물 list로 돌아간다.
+ 		return new ModelAndView("front?key=faq&methodName=selectAllFaq",true);
+ 	}
 	
 	
-	
+     
+     
+     
+     
 		
 }
 	

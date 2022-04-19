@@ -34,7 +34,7 @@ body {
 			    <div class="mb-3">
 			         <label for="title">FAQ카테고리</label>
 			          <input type="hidden" name="faqNo" value="${faq.faqNo}">
-			          <input type="hidden" name="faqCategory" value="${faq.faqCategory}">
+			          <input type="hidden" name="faq_Category" value="${faq.faqCategory}">
 			         <select name="faq_category" id = "faq_select_category"> 
 			          <option name="faq_category" value="">FAQ카테고리</option>
 			          <option name="faq_category" value="CR">교환/환불</option>
@@ -50,7 +50,7 @@ body {
 				</div>
 				<div class="mb-3">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="5" name="fq_content" id="content" >${faq.faqContent}</textarea>
+					<textarea class="form-control" rows="5" name="faq_content" id="content" >${faq.faqContent}</textarea>
 				</div>
 				<div class="mb-3">
 					<label for="attach">첨부파일</label>
@@ -59,7 +59,8 @@ body {
 				</div>
 			<div >
 				<input type="submit" value="작성" />
-			    <input type="button" value="목록보기" onclick="location.href='selectFaqAll.jsp'"/>
+			    <span class="back-faq-list"><a href="${path}/front?key=faq&methodName=selectAllFaq">목록</a></span>
+			    <span class="delete-faq"><a href="${path}/front?key=faq&methodName=delete&faqNo=${faq.faqNo}">삭제</a></span>
 			</div>
 		</div>
 	</form>
