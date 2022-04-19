@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>관리자 쿠폰전체조회  - 미미미</title>
+		<title>관리자 쿠폰조회  - 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
@@ -110,13 +109,6 @@
 					
 				});
 				
-				$("#coupon_sort").change(function(){
-        			if($(this).val() != "0"){
-        				let url =`${path}/front?key=coupon&methodName=selectAllUserCp&field=` + $(this).val();
-        				location.replace(url);
-        			}
-        		})
-				
 				
 			}); //ready 끝
 			
@@ -130,6 +122,7 @@
 			<form action="">
         <input type="hidden" name="" id="">
 				<h1>쿠폰조회 </h1>
+
 				
 				<p>
 				
@@ -162,7 +155,7 @@
 				
 				<p>
 				
-				<!--<div style="text-align: left;">
+				<div style="text-align: left;">
 					<form name="search" action="" method="post">
 						<select name="keyField">
 							<option value="0">--검색조건--</option>
@@ -174,7 +167,7 @@
 						<input type="button" value="검색" />  
 					
 					</form>
-				</div>  -->
+				</div>
 				
 			</form>
 		</section>

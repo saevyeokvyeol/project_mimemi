@@ -76,66 +76,7 @@ function sample6_execDaumPostcode() {
 	
 	$(".datepicker").datepicker();
 	
-
-</script>
-<script type="text/javascript">
-$(function(){
-	function id_overlap_check(){
-// 		$(".userId_input").change(function () {
-// 		    $("#id_check_success").hide();
-// 		    $(".id_overlap_button").show();
-// 		    $(".userId_input").attr("check_result", "fail");
-// 		  })
-		  
-		  if ($(".userId_input").val() == '') {
-	     	 alert("아이디를 입력해주세요.")
-	     	 return;
-	    }
-// 		 id_overlap_input = document.querySelector('input[id="userId"]');
-
-		    $.ajax({
-		      url: "${path}/ajax",
-		      data: {key: "user", methodName: "idCheck" , userId: $("input[id=userId]").val()}, //key랑 methodname 넣기
-		      datatype: "json",
-		  
-// 		      id_overlap_check(request){
-// 		    	  userId = request.GET.get('userId');
-// 		     try
-// 		       //중복 검사 실패
-// 		       user = User.objects.get(userId=userId)
-// 		     except
-// 		       // 중복 검사 성공
-// 		       user = None
-// 		       if {user is None:
-// 		          overlap = "pass"
-// 		       }else{
-// 		          overlap = "fail"
-// 		          context = {'overlap': overlap};
-// 		          return JsonResponse(context);
-// 		       }  
-		        success: function (data) {//데이터가 true
-		              if (data == "true") {
-		                alert("이미 존재하는 아이디 입니다.");
-		                $(".userId_input").focus();
-		                return;
-		              } else {
-		                alert("사용가능한 아이디 입니다.");
-// 		                $('.userId_input').attr("check_result", "success");
-// 		                $('#id_check_success').show();
-// 		                $(".id_overlap_button").hide();
-		                return;
-		              }
-		            }//success 끝
-		      })//ajax 끝
-		          } //function 끝
-//	         if ($('.userId_input').attr("check_result") == "fail"){
-//	     	    alert("아이디 중복체크를 해주시기 바랍니다.");
-//	     	    $('.userId_input').focus();
-//	     	    return false;
-//	     	  }
-	})//function 끝
-
-
+})
 </script>
 
 </head>
@@ -145,10 +86,7 @@ $(function(){
 	<table cellspacing="0" align="center">
 		<tr>
 			<th>아이디</th>
-			<td colspan="3"><input type="text" class="userId_input" name="userId" check_result="fail" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
-			<button type="button" class="id_overlap_button" onclick="id_overlap_check()">중복검사</button>
-<!-- 			<img id="id_check_success" style="display: none;"> -->
-<!-- 			<input type="text" name="ID" size="50" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요"/><input type="submit" value="중복확인"></td> -->
+			<td colspan="3"><input type="text" name="ID" size="50" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요"/><input type="submit" value="중복확인"></td>
 		</tr>
 		<tr>
 			<th>비밀번호</th>
@@ -164,6 +102,16 @@ $(function(){
 		<tr>
 			<th>휴대폰 번호</th>
 			<td colspan="3"><input type="text" name="phone" size="50" placeholder="-를 제외하고 입력해주세요"><input type="submit" value="중복확인"></td>
+		</tr>
+		<tr>
+			<th>이메일 주소</th>
+			<td colspan="3"><input type="text" name="E-MAIL" size="30">@
+				<select name="domain" size="1">
+					<option value="0">선택하세요</option>
+					<option value="naver.com">naver.com</option>
+					<option value="gmail.com">gmail.com</option>
+					<option value="daum.net">daum.net</option>
+			</select></td>
 		</tr>
 		<tr>
 			<td>배송지 주소</td>
@@ -182,17 +130,17 @@ $(function(){
 				<input type="text" readonly="readonly" class="datepicker">
 			</td>
 		</tr>
-<!-- 		<tr> -->
-<!-- 			<th>우편번호</th> -->
-<!-- 			<td colspan="3"><input type="text" name="zip-code" size="10">- -->
-<!-- 				<input type="text" name="zip-code" size="10"> <input -->
-<!-- 				type="submit" value="우편번호검색"></td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<!-- 			<th>주소</th> -->
-<!-- 			<td colspan="3"><input type="text" name="address" size="50"> -->
-<!-- 			</td> -->
-<!-- 		</tr>	 -->
+		<tr>
+			<th>우편번호</th>
+			<td colspan="3"><input type="text" name="zip-code" size="10">-
+				<input type="text" name="zip-code" size="10"> <input
+				type="submit" value="우편번호검색"></td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td colspan="3"><input type="text" name="address" size="50">
+			</td>
+		</tr>	
 		<tr>
 			<td><input type="submit" value="취소"> <input type="submit" value="회원가입"></td>
 		</tr>

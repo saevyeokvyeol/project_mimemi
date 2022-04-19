@@ -8,19 +8,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
-
+    <!-- 부트스트랩 CSS CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		
+	<!-- 부트스트랩 JS CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title>미미미</title>
 
     <style>
@@ -51,18 +43,17 @@
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
-                            <th scope="col">상품번호</th>
-                            <th scope="col">상품명</th>
-                            <th scope="col">날짜</th>
+                            <th scope="col">식단번호</th>
+                            <th scope="col">상품카테고리</th>
                             <th scope="col">도시락ID</th>
                             <th scope="col">도시락명</th>
-                            <th scope="col">가격</th>
+                            <th scope="col">날짜</th>       
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>H</td>
+                            <td>1</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>
@@ -71,7 +62,7 @@
                             <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
                         </tr>
                         <tr>
-                            <td>H</td>
+                            <td>2</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>
@@ -80,7 +71,7 @@
                             <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
                         </tr>
                         <tr>
-                            <td>H</td>
+                            <td>3</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>
@@ -89,7 +80,7 @@
                             <td><button type="button" class="btn btn-default" data-dismiss="modal">수정</button></td>
                         </tr>
                         <tr>
-                            <td>H</td>
+                            <td>4</td>
                             <td>맛있는 한식</td>
                             <td>2022.04.20</td>
                             <td>H01</td>

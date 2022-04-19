@@ -10,7 +10,6 @@ import mimemi.mvc.dao.CouponDAO;
 import mimemi.mvc.dao.CouponDAOImpl;
 import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.LiveCouponDTO;
-import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.RgCouponDTO;
 import mimemi.mvc.dto.UserCouponDTO;
 import mimemi.mvc.util.DbUtil;
@@ -101,12 +100,8 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void insertUserCp(UserCouponDTO userCoupon, String couponType) throws SQLException {
-		int result = couponDAO.insertUserCp(userCoupon, couponType);
-		
-		if(result == 0) {
-			throw new SQLException();
-		}
-		
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -115,11 +110,7 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void updateCpState(int usercouId, String state) throws SQLException {
-		int result = couponDAO.updateCpState(usercouId, state);
-		
-		if(result == 0) {
-			throw new SQLException();
-		}
+		// TODO Auto-generated method stub
 
 	}
 
@@ -131,9 +122,8 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public List<UserCouponDTO> selectAllUserCp(String field) throws SQLException {
-		List<UserCouponDTO> userCouponList = couponDAO.selectAllUserCp(field);
-		
-		return userCouponList;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

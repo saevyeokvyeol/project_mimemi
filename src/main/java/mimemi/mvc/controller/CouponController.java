@@ -170,6 +170,7 @@ public class CouponController implements Controller {
 	public ModelAndView updateRgCpForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String rgcouId = request.getParameter("id");
+		System.out.println(rgcouId);
 		
 		RgCouponDTO rgCoupon = couponService.selectRgCouByCouId(rgcouId);
 		
@@ -178,85 +179,5 @@ public class CouponController implements Controller {
 		return new ModelAndView("manager/couponUpdate2.jsp");
 	}
 	
-	/**
-
-	 * 사용자별 쿠폰 등록
-	 * */
-	public ModelAndView insertUserCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		
-		String userId = request.getParameter("userId");
-		String selectCouponType = request.getParameter("select_CouponType");
-		String selectCoupon = request.getParameter("select_Coupon");
-		String usercouUsable = request.getParameter("usercouUsable");
-		String usercouPubdate = request.getParameter("usercouPubdate");
-		String usercouEnddate = request.getParameter("usercouPubdate");
-		
-		UserCouponDTO userCouponDTO=null;
-		
-		if(selectCouponType.equals("LiveCp")) {
-			userCouponDTO = new UserCouponDTO(userId, selectCoupon, null , usercouUsable, usercouPubdate, usercouEnddate );
-		}else if(selectCouponType.equals("RgCp")) {
-			userCouponDTO = new UserCouponDTO(userId, null, selectCoupon , usercouUsable, usercouPubdate, usercouEnddate );
-		}
-		
-		couponService.insertUserCp(userCouponDTO, selectCouponType);
-		
-		return new ModelAndView("manager/selectCouponUserAll.jsp", true);
-		
-	}
 	
-	/**
-	 * 전체 사용자 쿠폰 조회
-	 * */
-	public ModelAndView selectAllUserCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		String field = request.getParameter("field");
-		
-		
-		List<UserCouponDTO> userCouponList = couponService.selectAllUserCp(field);
-		
-		request.setAttribute("userCouponList", userCouponList);
-		
-		return new ModelAndView("manager/selectCouponUserAll.jsp");
-	}
-	
-	/**
-	 * 사용자별 쿠폰 사용여부 수정
-	 * @param: int usercouId, String state(유저 아이디와 쿠폰 사용 여부)
-	 * */
-
-	public void updateCpState(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		String userCouId = request.getParameter("userCouId");
-		String usercouUsable = request.getParameter("usercouUsable");
-		
-			
-		couponService.updateCpState(Integer.parseInt(userCouId), usercouUsable);
-		
-		
-	}
-	
-
-	 /* 아이디로 실시간 쿠폰/정기 쿠폰 조회
-	 * */
-	public void selectCouByCouId(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("text/html;charset=UTF-8");
-		
-		String CouId = request.getParameter("CouId");
-		LiveCouponDTO LvCou = null;
-		RgCouponDTO RgCou = null;
-		JSONArray arr = null;
-		if(CouId.substring(0, 1).equals("L")) {
-			LvCou = couponService.selectLvCouByCouId(CouId);
-			arr = JSONArray.fromObject(LvCou);
-		} else {
-			RgCou = couponService.selectRgCouByCouId(CouId);
-			arr = JSONArray.fromObject(RgCou);
-		}
-		
-		PrintWriter out = response.getWriter();
-		out.print(arr);
-	}
-
 }

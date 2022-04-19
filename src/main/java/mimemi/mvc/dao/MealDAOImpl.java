@@ -16,7 +16,15 @@ import mimemi.mvc.dto.MealDTO;
 
 public class MealDAOImpl implements MealDAO {
 	
-	private Properties proFile = DbUtil.getProFile();
+	private Properties proFile;
+	
+	public MealDAOImpl() {
+		try {
+			proFile.load(getClass().getClassLoader().getResourceAsStream("dbQuery.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 	/**
@@ -90,7 +98,7 @@ public class MealDAOImpl implements MealDAO {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				MealDTO meal = new MealDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10).equals("Y"));
+				MealDTO meal = new MealDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10));
 				list.add(meal);
 			}
 			
@@ -116,7 +124,7 @@ public class MealDAOImpl implements MealDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 
-				MealDTO meal = new MealDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10).equals("Y"));
+				MealDTO meal = new MealDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10));
 			}
 		} finally {
 			DbUtil.dbClose(rs, ps, con);

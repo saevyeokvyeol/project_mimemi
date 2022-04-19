@@ -47,7 +47,7 @@ public interface ReviewDAO {
 	 * 후기 키워드별 검색
 	 * 제목, 내용에서 검색 가능할 수 있게
 	 * */
-	List<ReviewDTO> selectByKeyword(String reviewKeyword, String field) throws SQLException;
+	List<ReviewDTO> selectByKeyword(String reviewKeyword, String field, int pageNo) throws SQLException;
 	
 	/**
 	 * 후기번호로 검색하기
@@ -62,10 +62,7 @@ public interface ReviewDAO {
 	 * */
 	int increamentByReadnum(int reviewNo) throws SQLException;
 	
-	/**
-	 * 각 후기에 해당하는 댓글 정보 가져오기
-	 * */
-	List<ReviewReplyDTO> selectReplyByReviewNo(int reviewNo) throws SQLException;
+	
 	
 	/**
 	 * 관리자 - 후기 전체 검색(페이지 처리)

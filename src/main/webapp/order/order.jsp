@@ -10,14 +10,9 @@
 		<title>주문/결제 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
-			section {width: 800px; margin: auto;}
+			section {width: 1200px; margin: auto;}
 			table {width: 100%; caption-side: top;}
-			form > table td:nth-child(1) {width: 170px; padding: 30px;}
-			#oldAddrBox {padding: 5px 0;}
-			#oldAddrBox > * {vertical-align: middle;}
-			#oldAddrBox > select {display:inline; width: 50%;}
-			td {vertical-align: middle;}
-			.card-pay {width: 23%}
+			form > table td:nth-child(1) {width: 200px; padding: 30px;}
 		</style>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
@@ -70,262 +65,16 @@
 		        }).open();
 		    }
 		</script>
-		<!-- 주소 관련 함수 -->
 		<script type="text/javascript">
 			$(function() {
-				// 배송지 라디오 박스를 확인해 주소 뿌려주기
-				function addrRadioCheck() {
-					if($("input[name=addrNum]:checked").val() == 'oldAddr'){
-						$.ajax({
-							url: "${path}/ajax",
-							type: "post",
-							dataType: "json",
-							data: {key: "addr", methodName: "selectByUserId"},
-							success: function(result) {
-								let text = "";
-								$("select[name=oldAddrList] option:gt(0)").remove();
-								if(JSON.stringify(result) == "[]"){
-									text = `<option value="0">최근 배송지가 없습니다</option>`;
-								} else {
-									$.each(result, function(index, item) {
-										text += `<option value="\${item.addrId}">\${item.addrAddr}</option>`;
-									})
-								}
-								$("input[name=zipcode]").val("");
-								$("input[name=addrAddr]").val("");
-								$("input[name=addrDetailAddr]").val("");
-								$("input[name=addrRefAddr]").val("");
-								$("input[name=receiverName]").val("");
-								$("input[name=receiverPhone]").val("");
-								$("input[name=addrId]").val("0");
-								$("select[name=oldAddrList]").append(text);
-								$("select[name=oldAddrList]").removeAttr("disabled");
-							}, // 성공 메소드
-							error : function(err) {
-								alert(err + "\n장바구니를 불러올 수 없습니다.");
-							} // 에러 메소드
-						}) // ajax 종료
-					} else if($("input[name=addrNum]:checked").val() == 'newAddr'){
-						$("input[name=zipcode]").val("");
-						$("input[name=addrAddr]").val("");
-						$("input[name=addrDetailAddr]").val("");
-						$("input[name=addrRefAddr]").val("");
-						$("input[name=receiverName]").val("");
-						$("input[name=receiverPhone]").val("");
-						$("input[name=addrId]").val("0");
-					} else {
-						$.ajax({
-							url: "${path}/ajax",
-							type: "post",
-							dataType: "json",
-							data: {key: "addr", methodName: "selectByAddrName"},
-							success: function(result) {
-								$.each(result, function(index, item) {
-									$("input[name=zipcode]").val(`\${item.zipcode}`);
-									$("input[name=addrAddr]").val(`\${item.addrAddr}`);
-									$("input[name=addrDetailAddr]").val(`\${item.addrDetailAddr}`);
-									$("input[name=addrRefAddr]").val(`\${item.addrRefAddr}`);
-									$("input[name=receiverName]").val(`\${item.receiverName}`);
-									$("input[name=receiverPhone]").val(`\${item.receiverPhone}`);
-									$("input[name=addrId]").val(`\${item.addrId}`);
-								})
-							}, // 성공 메소드
-							error : function(err) {
-								alert(err + "\n주소를 불러올 수 없습니다.");
-							} // 에러 메소드
-						}) // ajax 종료
-					}
-				} // 배송지 라디오 박스 확인 종료
-				
-				// 셀렉트 박스로 주소 선택
-				$("select[name=oldAddrList]").change(function() {
-					$.ajax({
-						url: "${path}/ajax",
-						type: "post",
-						dataType: "json",
-						data: {key: "addr", methodName: "selectByAddrId", addrId: $(this).val()},
-						success: function(result) {
-							$.each(result, function(index, item) {
-								$("input[name=zipcode]").val(`\${item.zipcode}`);
-								$("input[name=addrAddr]").val(`\${item.addrAddr}`);
-								$("input[name=addrDetailAddr]").val(`\${item.addrDetailAddr}`);
-								$("input[name=addrRefAddr]").val(`\${item.addrRefAddr}`);
-								$("input[name=receiverName]").val(`\${item.receiverName}`);
-								$("input[name=receiverPhone]").val(`\${item.receiverPhone}`);
-								$("input[name=addrId]").val(`\${item.addrId}`);
-							})
-						}, // 성공 메소드
-						error : function(err) {
-							alert(err + "\n주소를 불러올 수 없습니다.");
-						} // 에러 메소드
-					}) // ajax 종료
-				})
-				
-				// 배송지 라디오 버튼 누르면 메소드 자동 호출
-				$("input[name=addrNum]").click(function() {
-					addrRadioCheck();
-				})
-				
-				// 주소 부분을 누르면 자동으로 우편번호 작성
-				$("input[readonly=readonly]").click(function() {
-					sample6_execDaumPostcode();
-				})
-				
-				addrRadioCheck();
-			})
-		</script>
-		<!-- 쿠폰 및 적립금 관련 함수 -->
-		<script type="text/javascript">
-			$(function() {
-				// 사용자별 쿠폰 조회
-				function selectCpByUserId() {
-					$.ajax({
-						url: "${path}/ajax",
-						type: "post",
-						dataType: "json",
-						data: {key: "coupon", methodName: "selectCpByUserId", userId: "happy01"},
-						success: function(result) {
-							let text = "";
-							let count = 0;
-							$.each(result, function(index, item) {
-								if(item.usercouUsable == "N"){
-									alert
-									if(item.livecouId == ""){
-										text = `<option value="\${item.userCouId}" class="\${item.rgcouId}"></option>`;
-									} else {
-										text = `<option value="\${item.userCouId}" class="\${item.livecouId}"></option>`;
-									}
-									
-									count++;
-									
-									$("#couponList").append(text);
-									
-									if(item.livecouId == ""){
-										selectCouByCouId(item.rgcouId);
-									} else {
-										selectCouByCouId(item.livecouId);
-									}
-								}
-							})
-							if(count == 0){
-								text += '<option value="0">사용 가능한 쿠폰이 없습니다.</option>';
-							}
-						}, // 성공 메소드
-						error : function(err) {
-							alert(err + "\n쿠폰을 불러올 수 없습니다.");
-						} // 에러 메소드
-					}) // ajax 종료
-				}
-				
-				// 쿠폰 아이디로 쿠폰 정보 가져오기
-				function selectCouByCouId(CouId) {
-					$.ajax({
-						url: "${path}/ajax",
-						type: "post",
-						dataType: "json",
-						data: {key: "coupon", methodName: "selectCouByCouId", CouId: CouId},
-						success: function(result) {
-							$.each(result, function(index, item) {
-								if(item.rgcouName == undefined) {
-									$("." + CouId).text(`\${item.livecouName}`);
-								} else {
-									$("." + CouId).text(`\${item.rgcouName}`);
-								}
-							})
-						}, // 성공 메소드
-						error : function(err) {
-							alert(err + "\n쿠폰 상세 정보를 불러올 수 없습니다.");
-						} // 에러 메소드
-					})
-				}
-				
-				selectCpByUserId();
-			})
-		</script>
-		<!-- 주문/결제 관련 함수 -->
-		<script type="text/javascript">
-			$(function() {
-				
-				// 금액 합계
 				function calTotalPrice() {
 					let totalPrice = 0;
 					$(".orderForm-cartTable > tbody").children().each(function() {
 						totalPrice += parseInt($(this).children(".goodsPrice").text());
 					})
 					$("#totalPrice").text("₩" + totalPrice);
-					$("input[name=totalPrice]").val(totalPrice);
 				} // calTotalPrice() 종료
-				
-				// 결제 방법 선택
-				$(".selectPayMethod").click(function() {
-					let methodCode = "";
-					if($(this).attr("id") == "C"){
-						methodCode = "C";
-					} else if ($(this).attr("id") == "S"){
-						methodCode = "S";
-					} else {
-						methodCode = "M";
-					}
-					$("input[name=payMethod]").val(methodCode);
-				}) // 결제 방법 선택 종료
-				
-				
-
 				calTotalPrice();
-			}) // jQuery 종료
-		</script>
-		<!-- 유효성 검사 관련 함수 -->
-		<script type="text/javascript">
-			$(function() {
-				$("#orderForm").submit(function() {
-					if($("input[name=addrId]").val() == 0){
-						if($("input[name=receiverName]").val() == ""){
-							alert("상품 수령자 이름을 입력해주세요.");
-							$("input[name=receiverName]").focus();
-							return false;
-						}
-						if($("input[name=receiverPhone]").val() == ""){
-							alert("상품 수령자 연락처를 입력해주세요.");
-							$("input[name=receiverPhone]").focus();
-							return false;
-						}
-						if($("input[name=zipcode]").val() == ""){
-							alert("상품을 받으실 주소를 입력해주세요.");
-							return false;
-						}
-					} // 주소 확인 종료
-					
-					if($("input[name=payMethod]").val() == ""){
-						alert("결제 방법을 선택해주세요");
-						return false;
-					} else {
-						if($("input[name=payMethod]").val() == "C"){
-							if($("input[id=cardNum1]").val() == ""){
-								alert("카드 번호를 입력해주세요");
-								return false;
-							} else if($("input[id=cardNum2]").val() == ""){
-								alert("카드 번호를 입력해주세요");
-								return false;
-							} else if($("input[id=cardNum3]").val() == ""){
-								alert("카드 번호를 입력해주세요");
-								return false;
-							} else if($("input[id=cardNum4]").val() == ""){
-								alert("카드 번호를 입력해주세요");
-								return false;
-							}
-						} else if ($("input[name=payMethod]").val() == "S"){
-							if($("input[id=bankName]").val() == ""){
-								alert("입금하실 은행명을 입력해주세요");
-								return false;
-							} else if($("input[id=bankNum]").val() == ""){
-								alert("계좌 번호를 입력해주세요");
-								return false;
-							}
-						}
-					}
-					
-					return true;
-				})
 			})
 		</script>
 	</head>
@@ -333,7 +82,7 @@
 		<section>
 			<h1>주문/결제</h1>
 			<div>
-				<table class="table table-border orderForm-cartTable">
+				<table class="orderForm-cartTable">
 					<thead>
 						<tr>
 							<th>상품명</th>
@@ -353,11 +102,9 @@
 									<td>
 										<c:choose>
 											<c:when test="${cart.cartWeekday == 'T'}">
-												<c:set var="days" value="3"/>
 												주 3회
 											</c:when>
 											<c:otherwise>
-												<c:set var="days" value="5"/>
 												주 5회
 											</c:otherwise>
 										</c:choose>
@@ -365,27 +112,23 @@
 									<td>
 										<c:choose>
 											<c:when test="${cart.cartPeriod == '1W'}">
-												<c:set var="period" value="1"/>
 												1주
 											</c:when>
 											<c:when test="${cart.cartPeriod == '2W'}">
-												<c:set var="period" value="2"/>
 												2주
 											</c:when>
 											<c:when test="${cart.cartPeriod == '4W'}">
-												<c:set var="period" value="4"/>
 												4주
 											</c:when>
 											<c:otherwise>
-												<c:set var="period" value="8"/>
 												8주
 											</c:otherwise>
 										</c:choose>
 									</td>
 									<td>${cart.cartQty}</td>
 									<td><c:out value="${fn:substring(cart.cartStart, 0, 10)}" /></td>
-									<td>${cart.goodsPrice}</td>
-									<td class="goodsPrice">${cart.cartQty * cart.goodsPrice * days * period}</td>
+									<td>${cart.cartQty}</td>
+									<td class="goodsPrice">${cart.cartQty * cart.cartQty}</td>
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -396,59 +139,52 @@
 						</tr>
 					</tfoot>
 				</table>
-				<form action="${path}/front?key=order&methodName=insertOrder" id="orderForm" method="post">
-				<input type="hidden" name="totalPrice" value="">
+				<form action="${path}/front?key=order&methodName=insertOrder" method="post">
 					<table class="table">
 						<caption>배송 정보 입력</caption>
 						<tr>
 							<td>배송지 선택</td>
 							<td>
-								<input class="form-check-input" type="radio" name="addrNum" checked="checked" value="happy01"> 주문 고객 정보와 동일
-								
-								<div id="oldAddrBox">
+								<input class="form-check-input" type="radio" name="addrName" checked="checked" value="happy01"> 주문 고객 정보와 동일<br>
 								<input class="form-check-input" type="radio" name="addrNum" id="oldAddr" value="oldAddr">
-									<select name="oldAddrList" disabled="disabled" class="form-select">
-										<option value="0">배송지 선택</option>
-									</select>
-								</div>
+								<select name="addrId" class="form-select" id="">
+									<option value="0">배송지 목록</option>
+								</select><br>
 								<input class="form-check-input" type="radio" name="addrNum" id="newAddr" value="newAddr"> 새 배송지 입력
 							</td>
 						</tr>
 						<tr>
 							<td>받으시는 분</td>
-							<td><input type="text" class="form-control" name="receiverName" id=""></td>
+							<td><input type="text" class="form-control" class="form-control" class="form-control" name="receiverName" id=""></td>
 						</tr>
 						<tr>
 							<td>연락처</td>
-							<td><input type="text" class="form-control" name="receiverPhone" id=""></td>
+							<td><input type="text" class="form-control" class="form-control" class="form-control" name="receiverPhone" id=""></td>
 						</tr>
 						<tr>
 							<td>배송지 주소</td>
 							<td>
-								<input type="text" class="form-control" id="sample6_postcode" name="zipcode" readonly="readonly"><input type="button" value="우편번호" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark"><p>
-								<input type="text" class="form-control" id="sample6_address" name="addrAddr" readonly="readonly"><br>
-								<div>
-									<input type="text" class="form-control" id="sample6_detailAddress" name="addrDetailAddr">
-									<input type="text" class="form-control" id="sample6_extraAddress" name="addrRefAddr" readonly="readonly">
-								</div>
-								<input type="hidden" name="addrId" value="">
+								<input type="text" class="form-control" class="form-control" class="form-control" id="sample6_postcode" name="zipcode"><input type="button" value="우편번호" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark"><p>
+								<input type="text" class="form-control" class="form-control" class="form-control" id="sample6_address" name="addrAddr"><br>
+								<input type="text" class="form-control" class="form-control" class="form-control" id="sample6_detailAddress" name="addrDetailAddr">
+								<input type="text" class="form-control" class="form-control" class="form-control" id="sample6_extraAddress" name="addrName">
 							</td>
 						</tr>
 						<tr>
 							<td>수령 방법</td>
 							<td>
-								<input class="form-check-input" type="radio" name="takeMethod" checked="checked" value="현관 앞에 놔주세요"> 현관 앞에 놔주세요<br>
-								<input class="form-check-input" type="radio" name="takeMethod" value="경비실에 맡겨주세요"> 경비실에 맡겨주세요<br>
-								<input class="form-check-input" type="radio" name="takeMethod" value=""> 배송 메세지에 쓸게요
+								<input class="form-check-input" type="radio" name="takeMethod" id=""> 현관 앞에 놔주세요<br>
+								<input class="form-check-input" type="radio" name="takeMethod" id=""> 경비실에 맡겨주세요<br>
+								<input class="form-check-input" type="radio" name="takeMethod" id=""> 배송 메세지에 쓸게요
 							</td>
 						</tr>
 						<tr>
 							<td>출입 비밀번호</td>
-							<td><input type="text" class="form-control" name="enterPwd" id=""></td>
+							<td><input type="text" class="form-control" class="form-control" class="form-control" name="enterPwd" id=""></td>
 						</tr>
 						<tr>
 							<td>배송 요청 사항</td>
-							<td><textarea name="orderMemo" class="form-control" id=""></textarea></td>
+							<td><textarea name="orderMemo" id="" cols="100" rows="10"></textarea></td>
 						</tr>
 					</table>
 					<table class="table">
@@ -456,14 +192,15 @@
 						<tr>
 							<td>쿠폰</td>
 							<td>
-								<select name="usercouId" class="form-select" id="couponList">
+								<select name="usercouId" class="form-select" id="">
 									<option value="0">쿠폰 목록</option>
+									<option value="0">사용 가능한 쿠폰이 없습니다.</option>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td>적립금</td>
-							<td><input type="text" class="form-control" name="payPoint" id=""></td>
+							<td><input type="text" class="form-control" class="form-control" class="form-control" name="payPoint" id=""></td>
 						</tr>
 					</table>
 					<table class="table">
@@ -472,69 +209,48 @@
 							<td>
 								<div class="accordion" id="accordionExample">
 									<div class="accordion-item">
-										<h2 class="accordion-header">
-											<button class="accordion-button collapsed shadow-none selectPayMethod" id="C" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+										<h2 class="accordion-header" id="headingOne">
+											<button class="accordion-button shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 												카드 결제
 											</button>
 										</h2>
-										<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+										<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 											<div class="accordion-body">
-												<select class="form-select">
-													<option>국민카드</option>
-													<option>현대카드</option>
-													<option>삼성카드</option>
-													<option>롯데카드</option>
-													<option>비씨카드</option>
-													<option>신한카드</option>
-													<option>우리카드</option>
-													<option>하나카드</option>
-													<option>NH농협카드</option>
-													<option>한국씨티은행</option>
-													<input type="text" class="card-pay form-control" id="cardNum1">-
-													<input type="text" class="card-pay form-control" id="cardNum2">-
-													<input type="text" class="card-pay form-control" id="cardNum3">-
-													<input type="text" class="card-pay form-control" id="cardNum4">
-												</select>
+												<strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
 											</div>
 										</div>
 									</div>
 									<div class="accordion-item">
-										<h2 class="accordion-header">
-											<button class="accordion-button collapsed shadow-none selectPayMethod" id="S" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										<h2 class="accordion-header" id="headingTwo">
+											<button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 												실시간 계좌이체
 											</button>
 										</h2>
 										<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
 											<div class="accordion-body">
-												<input type="text" class="transfer form-control" id="bankName">
-												<input type="text" class="transfer form-control" id="bankNum">
+												<strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
 											</div>
 										</div>
 									</div>
 									<div class="accordion-item">
-										<h2 class="accordion-header">
-											<button class="accordion-button collapsed shadow-none selectPayMethod" id="M" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										<h2 class="accordion-header" id="headingThree">
+											<button class="accordion-button collapsed shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
 												가상계좌
 											</button>
 										</h2>
 										<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
 											<div class="accordion-body">
-												<select class="form-select">
-													<option value="1">신한은행 986-156-361865</option>
-													<option value="2">우리은행 5641-185-123456</option>
-													<option value="3">국민은행 836-202204-1808</option>
-												</select>
+												<strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
 											</div>
 										</div>
 									</div>
 								</div>
 							</td>
 							<input type="hidden" name="payMethod" value="">
-							<input type="hidden" name="mode" value="${param.mode}">
 						</tr>
 					</table>
-					<input type="button" class="btn btn-outline-dark" value="주문 취소">
-					<input type="submit" class="btn btn-dark" value="주문하기">
+					<input type="button" value="주문 취소">
+					<input type="submit" value="주문하기">
 				</form>
 			</div>
 		</section>

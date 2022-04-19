@@ -10,25 +10,6 @@ public class UserCouponDTO {
 	private String usercouEnddate;
 	
 	public UserCouponDTO() {}
-	
-	public UserCouponDTO(int userCouId, String usercouUsable) {
-		super();
-		this.userCouId = userCouId;
-		this.usercouUsable = usercouUsable;
-	}
-
-	public UserCouponDTO(String userId, String livecouId, String rgcouId, String usercouUsable, String usercouPubdate,
-			String usercouEnddate) {
-		super();
-		this.userId = userId;
-		this.livecouId = livecouId;
-		this.rgcouId = rgcouId;
-		this.usercouUsable = usercouUsable;
-		this.usercouPubdate = usercouPubdate;
-		this.usercouEnddate = usercouEnddate;
-	}
-
-
 
 	public UserCouponDTO(int userCouId, String userId, String livecouId, String rgcouId, String usercouUsable,
 			String usercouPubdate, String usercouEnddate) {

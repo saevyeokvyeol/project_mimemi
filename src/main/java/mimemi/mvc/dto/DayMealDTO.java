@@ -1,13 +1,13 @@
 package mimemi.mvc.dto;
 
-public class DayMenuDTO {
+public class DayMealDTO {
 	private int dayMenuId;
 	private String mealId;
 	private String goodsId;
 	private String dayMenuDate;
 	
-	public DayMenuDTO() {}
-	public DayMenuDTO(int dayMenuId, String mealId, String goodsId, String dayMenuDate) {
+	public DayMealDTO() {}
+	public DayMealDTO(int dayMenuId, String mealId, String goodsId, String dayMenuDate) {
 		super();
 		this.dayMenuId = dayMenuId;
 		this.mealId = mealId;
