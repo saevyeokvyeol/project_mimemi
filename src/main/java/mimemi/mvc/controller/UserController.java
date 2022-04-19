@@ -37,17 +37,20 @@ public class UserController implements Controller {
 		String userPhone = request.getParameter("userPhone");
 		String userBirth = request.getParameter("userBirth");
 
-		String addrName = request.getParameter("addrName");
-		int zipcode = Integer.parseInt(request.getParameter("zipcode"));
+		String addrName = userId;
+		String zipcode = request.getParameter("zipcode");
+		System.out.println(userId);
+		
 		String addrAddr = request.getParameter("addrAddr");
 		String addrDetailAddr = request.getParameter("addrDetailAddr");
 		String addrRefAddr = request.getParameter("addrRefAddr");
 		
-		
 		UserDTO user = new UserDTO(userId, userName, userPwd, userPhone, 0, userId, false, userBirth);
-		AddrDTO addr = new AddrDTO(userId, addrName, zipcode, addrAddr, addrDetailAddr, addrRefAddr, userName, userPhone);
-
-		return new ModelAndView("user/join02.jsp");
+		AddrDTO addr = new AddrDTO(userId, addrName, Integer.parseInt(zipcode) , addrAddr, addrDetailAddr, addrRefAddr, userName, userPhone);
+		
+		userService.insertUser(user, addr);
+		
+		return new ModelAndView("user/join04.jsp");
 	}
 	
 	/**
@@ -124,7 +127,7 @@ public class UserController implements Controller {
 		
 		UserDTO userDTO = new UserDTO(userId, userPwd);
 		
-		userService.updateUserPwd(userId, userPwd, userPwd);
+		userService.updateUserPwd(userPwd);
 		
 		logoutUser(request, response); //??????
 		
@@ -150,9 +153,26 @@ public class UserController implements Controller {
 		String userName = request.getParameter("userName");
 		String userPhone = request.getParameter("userPhone");
 		
-		userService.updateUserPwd(userId, userPhone, userPhone);
+		userService.selectUserPwd(userId, userName, userPhone);
 		
 		return new ModelAndView("user/login.jsp");
+	}
+	/**
+	 * id로 유저 찾기
+	 * */
+	public void selectById(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String userId=request.getParameter("userId");
+		
+		userService.selectByID(userId);		
+	}
+	
+	/**
+	 * phone으로 유저 찾기
+	 * */
+	public void selectByPhone(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String userPhone=request.getParameter("userPhone");
+		
+		userService.selectByPhone(userPhone);		
 	}
 	
 	/**
@@ -166,6 +186,7 @@ public class UserController implements Controller {
 		
 		return new ModelAndView("index.jsp", true);
 	}
+
 
 	/**
 	 * 아이디 중복 체크
