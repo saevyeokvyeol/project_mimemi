@@ -74,12 +74,12 @@ public interface UserDAO {
 	
 	/**
 	 * 아이디 중복 체크
-	 
+	 */
 	boolean idCheck(String userId) throws SQLException;
 	
-	
+	/**
 	 * 휴대폰 번호 중복 체크
-	 
+	 */
 	boolean phoneCheck(String userPhone) throws SQLException;
-	*/
+	
 }
