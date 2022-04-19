@@ -1,6 +1,7 @@
 package mimemi.mvc.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import mimemi.mvc.dao.AddrDAO;
 import mimemi.mvc.dao.AddrDAOImpl;
@@ -21,6 +22,13 @@ public class AddrServiceImpl implements AddrService {
 		AddrDTO addr = addrDAO.selectByAddrId(addrId);
 
 		return addr;
+	}
+
+	@Override
+	public List<AddrDTO> selectByUserId(String userId) throws SQLException {
+		List<AddrDTO> list = addrDAO.selectByUserId(userId);
+
+		return list;
 	}
 
 }

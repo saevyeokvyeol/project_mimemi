@@ -43,7 +43,7 @@
 									
 									text += "<td><input type='text' name='cartStart' value='" + item.cartStart.substr(0, 10) + "' readonly='readonly'>"
 									
-									text += `<td name="goodsPrice">\${item.cartQty}</td>`;
+									text += `<td name="goodsPrice">\${item.goodsPrice}</td>`;
 									text += `<td name="goodsTotalPrice"></td>`;
 									text += "</tr>";
 									$("#cartTable > tbody").append(text);

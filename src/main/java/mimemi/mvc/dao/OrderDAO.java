@@ -6,9 +6,9 @@ import java.text.ParseException;
 import java.util.List;
 
 import mimemi.mvc.dto.AddrDTO;
+import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
-import mimemi.mvc.dto.OrderLineDTO;
 
 public interface OrderDAO {
 	/**
@@ -57,7 +57,7 @@ public interface OrderDAO {
 	 * @param Connection con, List<OrderLineDTO> OrderLineDTO
 	 * @return int(등록된 데이터 수)
 	 * */
-	int[] insertOrderLine(Connection con, List<OrderLineDTO> OrderLineDTO) throws SQLException, ParseException;
+	int[] insertOrderLine(Connection con, List<CartDTO> OrderLineDTO) throws SQLException, ParseException;
 	
 	/**
 	 * 6. 쿠폰 사용한 경우 쿠폰 사용 여부 변경(update)
@@ -71,7 +71,7 @@ public interface OrderDAO {
 	 * @param String userId, String goodsId
 	 * @return int(삭제한 레코드 수)
 	 * */
-	int deleteSelectedCart(Connection con, String userId, String goodsId) throws SQLException;
+	int deleteSelectedCart(Connection con, int cardId) throws SQLException;
 	
 	/**
 	 * 주문 취소
