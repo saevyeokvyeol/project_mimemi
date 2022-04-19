@@ -60,6 +60,8 @@ function sample6_execDaumPostcode() {
     }).open();
 }</script>
 <script type="text/javascript">
+$(function() {
+
 	//datepicker 설정
 	$.datepicker.setDefaults({
 		dateFormat: 'yy-mm-dd',
@@ -75,113 +77,198 @@ function sample6_execDaumPostcode() {
 	});
 	
 	$(".datepicker").datepicker();
+})
 	
 
 </script>
 <script type="text/javascript">
+
+	$(function() {
+		/*
+		  아이디 중복체크
+		*/
+		$("#idCheck").click(function() {
+
+			if ($(".userId_input").val() == '') {
+				alert("아이디를 입력해주세요.")
+				return;
+			}
+			$.ajax({
+				url : "${path}/ajax",
+				data : {
+					key : "user",
+					methodName : "idCheck",
+					userId : $("input[id=userId]").val()
+				}, 
+				datatype : "text",
+				success : function(data) {
+					
+					if (data == "true") {
+						alert("이미 존재하는 아이디 입니다.");
+						$(".userId_input").focus();
+						return;
+					} else {
+						alert("사용가능한 아이디 입니다.");
+						return;
+					}
+				}//success 끝
+			})//ajax 끝
+		}) //function 끝
+		
+		/*
+		핸드폰 번호 중복 체크
+		*/
+		$("#phoneCheck").click(function() {
+
+			if ($(".userPhone_input").val() == '') {
+				alert("휴대폰번호를 입력해주세요.")
+				return;
+			}
+			if ($(".userPhone_input").val().includes("-")){
+				alert("-를 제외한 번호 11자리를 입력해주세요")
+				return;
+			}
+			$.ajax({
+				url : "${path}/ajax",
+				data : {
+					key : "user",
+					methodName : "phoneCheck",
+					userPhone : $("input[id=userPhone]").val()
+				}, 
+				datatype : "text",
+
+				success : function(data) {
+					if (data == "true") {
+						alert("이미 가입한 이력이 있는 번호입니다.<br>아이디 찾기를 이용해주세요");
+						$(".userPhone_input").focus();
+						return;
+					} else {
+						alert("사용가능한 번호입니다.");
+						return;
+					}
+				}//success 끝
+			})//ajax 끝
+		}) //번호 중복 체크 끝
+		
+		/*
+		가입하기
+		*/
+		
+
+	})
+</script>
+<script type="text/javascript">
+
 $(function(){
-	function id_overlap_check(){
-// 		$(".userId_input").change(function () {
-// 		    $("#id_check_success").hide();
-// 		    $(".id_overlap_button").show();
-// 		    $(".userId_input").attr("check_result", "fail");
-// 		  })
-		  
-		  if ($(".userId_input").val() == '') {
-	     	 alert("아이디를 입력해주세요.")
-	     	 return;
-	    }
-// 		 id_overlap_input = document.querySelector('input[id="userId"]');
-
-		    $.ajax({
-		      url: "${path}/ajax",
-		      data: {key: "user", methodName: "idCheck" , userId: $("input[id=userId]").val()}, //key랑 methodname 넣기
-		      datatype: "json",
-		  
-// 		      id_overlap_check(request){
-// 		    	  userId = request.GET.get('userId');
-// 		     try
-// 		       //중복 검사 실패
-// 		       user = User.objects.get(userId=userId)
-// 		     except
-// 		       // 중복 검사 성공
-// 		       user = None
-// 		       if {user is None:
-// 		          overlap = "pass"
-// 		       }else{
-// 		          overlap = "fail"
-// 		          context = {'overlap': overlap};
-// 		          return JsonResponse(context);
-// 		       }  
-		        success: function (data) {//데이터가 true
-		              if (data == "true") {
-		                alert("이미 존재하는 아이디 입니다.");
-		                $(".userId_input").focus();
-		                return;
-		              } else {
-		                alert("사용가능한 아이디 입니다.");
-// 		                $('.userId_input').attr("check_result", "success");
-// 		                $('#id_check_success').show();
-// 		                $(".id_overlap_button").hide();
-		                return;
-		              }
-		            }//success 끝
-		      })//ajax 끝
-		          } //function 끝
-//	         if ($('.userId_input').attr("check_result") == "fail"){
-//	     	    alert("아이디 중복체크를 해주시기 바랍니다.");
-//	     	    $('.userId_input').focus();
-//	     	    return false;
-//	     	  }
-	})//function 끝
-
-
+	
+	/*
+	비밀번호 일치 여부 체크
+	*/
+	$("#userPwd2").focusout(function() {
+		let pwd1 = $("#userPwd").val();
+		let pwd2 = $("#userPwd2").val();
+		
+// 		alert("")
+		
+		if(pwd1 != "" && pwd2 ==""){
+			null;
+		}else if(pwd1 != "" || pwd2 != ""){
+			if(pwd1 == pwd2){
+				$("#pwdCheck_Success").css("display","inline-block");
+				$("#pwdCheck_Fail").css("display","none");
+			}else{
+				$("#pwdCheck_Success").css("display","none");
+				$("#pwdCheck_Fail").css("display","inline-block");
+			}	
+		}
+	})
+	
+	/*
+	필수 정보 입력 체크
+	*/
+	$("#joinBtn").click(function(){
+		
+		let state = true;
+		
+		$("input[type=text]").each(function(index,item){
+			if($(this).val()==""){
+				alert("값을 입력해주세요");
+				$(this).focus();
+				
+				state=false;
+				return false;
+			}
+		})//text타입 입력
+// 		$("input[type=password]").each(function(index,item){
+// 			if($(this).val()==""){
+// 				alert("값을 입력해주세요");
+// 				$(this).focus();
+				
+// 				state=false;
+// 				return false;
+// 			}
+// 		})//password타입 입력
+		
+	})//필수정보 입력체크 끝
+	
+})
 </script>
 
 </head>
 <body>
-<form>
+<form name="joinForm" method="post" id="joinForm" action="${path}/front?key=user&methodName=insertUser">
 	<h1>회원가입</h1>
 	<table cellspacing="0" align="center">
 		<tr>
 			<th>아이디</th>
-			<td colspan="3"><input type="text" class="userId_input" name="userId" check_result="fail" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
-			<button type="button" class="id_overlap_button" onclick="id_overlap_check()">중복검사</button>
-<!-- 			<img id="id_check_success" style="display: none;"> -->
+			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" check_result="fail" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
+			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
+			<img id="id_check_success" style="display: none;">
 <!-- 			<input type="text" name="ID" size="50" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요"/><input type="submit" value="중복확인"></td> -->
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" name="pwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요"></td>
+			<td><input type="password" id="userPwd" name="pwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요"></td>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" name="pwd2" size="50" placeholder="한번 더 입력해주세요"></td>
+			<td><input type="password" id="userPwd2"name="pwd2" size="50" placeholder="한번 더 입력해주세요">
+			<span id="pwdCheck_Success" style="display:none;">비밀번호가 일치합니다</span>
+			<span id="pwdCheck_Fail" style="display:none;">비밀번호가 일치하지 않습니다.</span></td>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<td colspan="3"><input type="text" name="name" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요"></td>
+			<td colspan="3"><input type="text" id="userName" name="name" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요"></td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호</th>
-			<td colspan="3"><input type="text" name="phone" size="50" placeholder="-를 제외하고 입력해주세요"><input type="submit" value="중복확인"></td>
-		</tr>
-		<tr>
-			<td>배송지 주소</td>
-			<td>
-				<input type="text" id="sample6_postcode">
-				<input type="button" onclick="sample6_execDaumPostcode()"><br>
-				<input type="text" id="sample6_address"><br>
-				<input type="text" id="sample6_detailAddress">
-				<input type="text" id="sample6_extraAddress">
-
-			</td>
+			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요">
+			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
 			<td>
-				<input type="text" readonly="readonly" class="datepicker">
+				<input type="text" readonly="readonly" class="datepicker" placeholder="날짜를 골라주세요">
 			</td>
 		</tr>
+		<tr>
+			<th>배송지 주소</th>
+			<td>
+				<input type="text" id="addrName" placeholder="배송지별명" ><br>
+				<input type="text" id="sample6_postcode" readonly="readonly">
+				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호검색"><br>
+				<input type="text" id="sample6_address"><br>
+				<input type="text" id="sample6_detailAddress">
+				<input type="text" id="sample6_extraAddress">
+			</td>
+		</tr>
+<!-- 		<tr> -->
+<!-- 			<th>식단 수령자 정보</th> -->
+<!-- 			<td> -->
+<!-- 				<input type="text" id="receiverName" placeholder="수령자 성함" ><br> -->
+<!-- 				<input type="text" id="receiverPhone" class="receiverPhone_input" placeholder="수령자 번호" > -->
+<!-- 			</td> -->
+<!-- 		</tr> -->
+
 <!-- 		<tr> -->
 <!-- 			<th>우편번호</th> -->
 <!-- 			<td colspan="3"><input type="text" name="zip-code" size="10">- -->
@@ -194,7 +281,7 @@ $(function(){
 <!-- 			</td> -->
 <!-- 		</tr>	 -->
 		<tr>
-			<td><input type="submit" value="취소"> <input type="submit" value="회원가입"></td>
+			<td><input type="submit" value="취소"> <input type="submit" id="joinBtn" value="회원가입"></td>
 		</tr>
 
 	</table>
