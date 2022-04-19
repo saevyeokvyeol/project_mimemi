@@ -8,6 +8,7 @@ public class CartDTO {
 	private String cartWeekday;
 	private String cartPeriod;
 	private String cartStart;
+	private int goodsPrice;
 	
 	public CartDTO() {}
 
@@ -89,6 +90,14 @@ public class CartDTO {
 
 	public void setCartStart(String cartStart) {
 		this.cartStart = cartStart;
+	}
+
+	public int getGoodsPrice() {
+		return goodsPrice;
+	}
+
+	public void setGoodsPrice(int goodsPrice) {
+		this.goodsPrice = goodsPrice;
 	}
 	
 }
