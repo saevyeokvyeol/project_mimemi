@@ -16,8 +16,11 @@ public class EventServiceImpl implements EventService {
 	 * 			String eventStartdate, String eventEnddate)
 	 * */
 	@Override
-	public void insert(EventDTO event) throws SQLException {
-		// TODO Auto-generated method stub
+	public void insert(EventDTO event, String saveDir) throws SQLException {
+		int result = eventDAO.insert(event);
+		if(result==0) {
+			throw new SQLException("이벤트가 등록되지 않았습니다.");
+		}
 
 	}
 	
@@ -61,8 +64,8 @@ public class EventServiceImpl implements EventService {
 	 * @return: List<EventDTO>
 	 * */
 	@Override
-	public List<EventDTO> selectAll() throws SQLException {
-		List<EventDTO> eventList = eventDAO.selectAll();
+	public List<EventDTO> selectAll(String state ,int pageNo) throws SQLException {
+		List<EventDTO> eventList = eventDAO.selectAll(state, pageNo);
 
 		return eventList;
 	}
@@ -100,6 +103,18 @@ public class EventServiceImpl implements EventService {
 	public List<EventDTO> getEventList(int pageNo) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<EventDTO> selectAll() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insert(EventDTO event) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

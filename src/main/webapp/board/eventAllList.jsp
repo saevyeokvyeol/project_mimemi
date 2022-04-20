@@ -26,13 +26,30 @@
 		</style>
 		<script type="text/javascript">
 			$(function(){
-				
+				$(".btn-check").click(function() {
+					if($(this).val()!=""){
+						let url = `${path}/front?key=event&methodName=selectAll&field=` + $(this).val();
+						location.replace(url);
+					}
+				});
 			});
 		</script>
 	</head>
 	<body>
 		<section>
 			<h1>이벤트 전체</h1>
+			<div>
+				<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+				  <input type="button" class="btn-check" id="btncheck1" name="" value="preEvent" >
+				  <label class="btn btn-outline-primary" for="btncheck1">진행예정</label>
+				
+				  <input type="button" class="btn-check" id="btncheck2" name="" value="Eventing" >
+				  <label class="btn btn-outline-primary" for="btncheck2">진행중</label>
+				
+				  <input type="button" class="btn-check" id="btncheck3" name="" value="afterEvent" >
+				  <label class="btn btn-outline-primary" for="btncheck3">진행완료</label>
+				</div>
+			</div>
 			<table class="" id="">
 				<thead>
 					<tr>
@@ -47,6 +64,16 @@
 					</tr>
 				</thead>
 				<tbody>
+				<c:choose>
+					<c:when test="${empty requestScope.eventList}">
+						<tr>
+							<th colspan="8">
+								<span>등록된 이벤트가 없습니다. </span>
+							</th>
+						</tr>
+					</c:when>
+				
+				<c:otherwise>
 					<c:forEach items="${requestScope.eventList}" var="event">
                     	<tr>
                         	<td>
@@ -75,8 +102,34 @@
                             </td>
                        </tr>
                 	</c:forEach>
+				</c:otherwise>
+			</c:choose>	
 				</tbody>
 			</table>
 		</section>
+		<!-- 페이징 처리 -->
+            <nav aria-label="Page navigation example">
+				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 
+				<c:set var="isLoop" value="false"/>
+				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
+				<c:set var="startPage" value="${pageNum - temp}"/>
+				<ul class="pagination justify-content-center">
+					<c:if test="${(startPage - p.blockcount) > 0}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=event&methodName=selectAll&pageNum=${startPage-1}&field=${requestScope.field}">이전</a></li>
+					</c:if>
+					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
+						<c:if test="${(i-1) >= p.pageCnt}">
+							<c:set var="isLoop" value="true"/>
+						</c:if> 
+						<c:if test="${not isLoop}" >
+							<li class="page-item ${i == pageNum ? ' active' : page}"><a class="page-link page_num" href="${path}/front?key=event&methodName=selectAll&pageNum=${i}&field=${requestScope.field}">${i}</a></li> 
+						</c:if>
+					</c:forEach>
+					<c:if test="${(startPage + p.blockcount) <= p.pageCnt}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=event&methodName=selectAll&pageNum=${startPage+p.blockcount}&field=${requestScope.field}">이후</a></li>
+					</c:if>
+				</ul>
+			</nav>
+		
 	</body>
 </html>
