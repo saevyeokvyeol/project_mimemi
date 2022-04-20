@@ -28,12 +28,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void insertUser(UserDTO user, AddrDTO addr) throws SQLException {
-		int result = userDAO.insertUser(user,addr);
-		if(result==0) {throw new SQLException("회원가입에 실패했습니다.");
-		}
 		if( !validId(user.getUserId()) || !validPwd(user.getUserPwd()) || !validPhone(user.getUserPhone()) ) {
 			throw new SQLException("회원가입에 실패했습니다.");
 		}
+		int result = userDAO.insertUser(user,addr);
+		if(result==0) {throw new SQLException("회원가입에 실패했습니다.");
+		}
+		
 	}
 
 	@Override

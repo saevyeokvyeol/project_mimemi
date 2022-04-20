@@ -142,7 +142,7 @@ public class UserController implements Controller {
 		
 		userService.selectUserId(userName, userPhone);
 		
-		return new ModelAndView("user/login.jsp");
+		return new ModelAndView("user/find_id_Ok.jsp");
 		
 	}
 	/**
@@ -155,7 +155,7 @@ public class UserController implements Controller {
 		
 		userService.selectUserPwd(userId, userName, userPhone);
 		
-		return new ModelAndView("user/login.jsp");
+		return new ModelAndView("user/editPwd.jsp");
 	}
 	/**
 	 * id로 유저 찾기
