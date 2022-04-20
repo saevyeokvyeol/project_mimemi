@@ -155,21 +155,8 @@
 				
 				<p>
 				
-				<div style="text-align: left;">
-					<form name="search" action="" method="post">
-						<select name="keyField">
-							<option value="0">--검색조건--</option>
-							<option value="couponId">쿠폰번호</option>
-							<option value="couponName">쿠폰명</option>
-						</select>
-						 
-						<input type="text" name="keyWord"/>
-						<input type="button" value="검색" />  
-					
-					</form>
-				</div>
-				
 			</form>
 		</section>
 	</body>
+	<jsp:include page="../common/footer.jsp"/>
 </html>
