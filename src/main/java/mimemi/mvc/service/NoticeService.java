@@ -52,5 +52,11 @@ public interface NoticeService {
 	 * 
 	 * 제목과 내용에서 키워드 검색
 	 * */
-	List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException;
+	List<NoticeDTO> selectByKeyword(String noticeKeyword, String field, int pageNo) throws SQLException;
+	
+	/**
+	 * <고객>공지사항 키워드 검색
+	 **/
+	List<NoticeDTO> selectByKeywordClient(String noticeKeyword, String field, int pageNo) throws SQLException;
+	
 }

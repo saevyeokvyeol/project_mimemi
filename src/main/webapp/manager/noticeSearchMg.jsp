@@ -27,7 +27,7 @@
 		
 		<script type="text/javascript">
 			$(function(){
-				$("select").change(function() {
+				$("select[name=notice_sort]").change(function() {
 					if($(this).val() != "0"){
 						let url = `${path}/front?key=notice&methodName=selectNoticeAllNotice&field=` + $(this).val();
 						location.replace(url);
@@ -59,13 +59,13 @@
 				</thead>
 				<tbody>
 					<c:choose>
-						<c:when test="${empty NoticeList}">
+						<c:when test="${empty requestScope.list}">
 							<tr>
 								<td colspan="6">공지사항이 없습니다.</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${NoticeList}" var="notice">
+							<c:forEach items="${requestScope.list}" var="notice">
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td>${notice.noticeTitle}</td>
@@ -84,35 +84,36 @@
 			<div style="float:right;">
 				 <span class="write-bnt"> <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a></span>
 		    </div>
-              <form class="form-inline" action="${path}/" method="post">
-                   <select name="field" id="notice_search_sort_select">
+              <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeyword" method="post">
+                   <select name="field" id="notice_search_sort_keyWord">
                        <option name="notice_search_sort" value="title">제목</option>
                        <option name="notice_search_sort" value="content">내용</option>
                    </select>
-                   <input class="notice-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
-                   <button class="btn-search-submit" type="submit" >검색하기</button>
+                   <input class="notice-keyWord-search" name="keyword" type="text" placeholder="Search" aria-label="Search">
+                   <button class="btn-keyWord-submit" type="submit" >검색하기</button>
                </form>    
 		    </nav>		    	    
+		    
 		    <!-- 페이징 처리 -->
 			<nav aria-label="Page navigation example">
-				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 
+				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>
 				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
 				<c:set var="startPage" value="${pageNum - temp}"/>
 				<ul class="pagination justify-content-center">
 					<c:if test="${(startPage - p.blockcount) > 0}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectAllNotice&pageNum=${startPage-1}">이전</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectByKeyword&pageNum=${startPage-1}&field=${requestScope.field}&keyword=${requestScope.keyword}">이전</a></li>
 					</c:if>
 					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
 						<c:if test="${(i-1) >= p.pageCnt}">
 							<c:set var="isLoop" value="true"/>
 						</c:if> 
 						<c:if test="${not isLoop}" >
-							<li class="page-item ${i == pageNum ? ' active' : 'page'}"><a class="page-link page_num" href="${path}/front?key=notice&methodName=selectAllNotice&pageNum=${i}">${i}</a></li> 
+							<li class="page-item ${i == pageNum ? ' active' : 'page'}"><a class="page-link page_num" href="${path}/front?key=notice&methodName=selectByKeyword&pageNum=${i}&field=${requestScope.field}&keyword=${requestScope.keyword}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
 					<c:if test="${(startPage + p.blockcount) <=p.pageCnt}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectAllNotice&pageNum=${startPage+p.blockcount}">이후</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectByKeyword&pageNum=${startPage+p.blockcount}&field=${requestScope.field}&keyword=${requestScope.keyword}">이후</a></li>
 					</c:if>
 				</ul>
 			</nav>

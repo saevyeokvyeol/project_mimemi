@@ -26,8 +26,8 @@
 		</style>
 		
 		<script type="text/javascript">
-			$(function(){
-				$("select").change(function() {
+		$(function(){
+				$("select[name=notice_sort]").change(function() {
 					if($(this).val() != "0"){
 						let url = `${path}/front?key=notice&methodName=selectNoticeAllNotice&field=` + $(this).val();
 						location.replace(url);
@@ -78,21 +78,25 @@
 					</c:choose>
 				</tbody>
 			</table>
-			
+		
+		
 			<!-- 작성하기/검색하기 -->
-			<nav class="navbar navbar-light bg-light">
+		<nav class="navbar navbar-light bg-light">
 			<div style="float:right;">
 				 <span class="write-bnt"> <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a></span>
 		    </div>
-              <form class="form-inline" action="${path}/" method="post">
+		    <div>
+              <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeyword" method="post">
                    <select name="field" id="notice_search_sort_select">
                        <option name="notice_search_sort" value="title">제목</option>
                        <option name="notice_search_sort" value="content">내용</option>
                    </select>
                    <input class="notice-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
                    <button class="btn-search-submit" type="submit" >검색하기</button>
-               </form>    
-		    </nav>		    	    
+               </form>  
+            </div>  
+		 </nav>		    	    
+		    
 		    <!-- 페이징 처리 -->
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 

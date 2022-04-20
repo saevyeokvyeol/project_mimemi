@@ -286,16 +286,17 @@ public class NoticeDAOImpl implements NoticeDAO {
 		SimpleDateFormat noticeFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		if(field.equals("title")){
-			sql="select * from (select a.*, rownum from (select* from NOTICE where NOTICE_TITLE like ? order by notice_no desc) a) where rownum>=? and rownum<=?";
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_TITLE like ? order by notice_no desc) a) where rn>=? and rn<=?";
 			//sql=proFile.getProperty("");
 		}else if(field.equals("content")) {
-			sql="select * from (select a.*, rownum from (select* from NOTICE where NOTICE_CONTENT like ? order by notice_no desc) a) where rownum>=? and rownum<=?";
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_CONTENT like ? order by notice_no desc) a) where rn>=? and rn<=?";
 			//sql=proFile.getProperty("");
 		}
 		
 	try {
 		int totalCount = this.getTotalCountByKeyword(noticeKeyword,field);
-		int totalPage = totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
+		
+		int totalPage = totalCount % PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  ((totalCount/PageCnt.getPagesize())+1);
 		PageCnt pagecnt = new PageCnt();
 		pagecnt.setPageCnt(totalPage);
 		pagecnt.setPageNo(pageNo);
@@ -307,6 +308,12 @@ public class NoticeDAOImpl implements NoticeDAO {
 		//페이지 처리 : ?에 들어갈 값 설정하기
 		ps.setInt(2, ((pageNo-1)*PageCnt.pagesize)+1);
 		ps.setInt(3, pageNo*PageCnt.pagesize);
+
+		System.out.println("totalPage = " + totalPage);
+		System.out.println("pagecnt = " + pagecnt);
+		System.out.println("pageNo = " + pageNo);
+		System.out.println("((pageNo-1)*PageCnt.pagesize)+1 = " + (((pageNo-1)*PageCnt.pagesize)+1));
+		System.out.println("pageNo*PageCnt.pagesize = " + pageNo*PageCnt.pagesize);
 		
 		rs= ps.executeQuery();
 		while(rs.next()) {
@@ -362,10 +369,101 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return totalCount;
 	}
 
+	  /**
+	   *  (고객) 공지사항 키워드로 검색하기   
+	   **/
+	@Override
+	public List<NoticeDTO> selectByKeywordClient(String noticeKeyword, String field, int pageNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql="";
+		//String sql = proFile.getProperty("notic.selectByKeyword")
+		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
+		SimpleDateFormat noticeFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if(field.equals("title")){
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_TITLE like ? order by notice_no desc) a) where rn>=? and rn<=?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_CONTENT like ? order by notice_no desc) a) where rn>=? and rn<=?";
+			//sql=proFile.getProperty("");
+		}
+		
+	try {
+		int totalCount = this.getTotalCountClient(noticeKeyword,field);
+		
+		int totalPage = totalCount % PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  ((totalCount/PageCnt.getPagesize())+1);
+		PageCnt pagecnt = new PageCnt();
+		pagecnt.setPageCnt(totalPage);
+		pagecnt.setPageNo(pageNo);
+		
+		con = DbUtil.getConnection();
+		ps = con.prepareStatement(sql);
+		ps.setString(1, "%"+noticeKeyword+"%");
+		
+		//페이지 처리 : ?에 들어갈 값 설정하기
+		ps.setInt(2, ((pageNo-1)*PageCnt.pagesize)+1);
+		ps.setInt(3, pageNo*PageCnt.pagesize);
+
+		System.out.println("totalPage = " + totalPage);
+		System.out.println("pagecnt = " + pagecnt);
+		System.out.println("pageNo = " + pageNo);
+		System.out.println("((pageNo-1)*PageCnt.pagesize)+1 = " + (((pageNo-1)*PageCnt.pagesize)+1));
+		System.out.println("pageNo*PageCnt.pagesize = " + pageNo*PageCnt.pagesize);
+		
+		rs= ps.executeQuery();
+		while(rs.next()) {
+			NoticeDTO notice = new NoticeDTO(
+					rs.getInt(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5)
+			        );
+			list.add(notice); 
+			//System.out.println(review.getReviewRegdate());
+		}
+	}finally {
+		DbUtil.dbClose(rs, ps, con);
+	}
+	return list;
+    }
 	
-	
-	
-	
+	/**
+	 * (고객)전체 레코드 수 가져오기
+	 * */
+	private int getTotalCountClient(String keyword, String field) throws SQLException{
+		Connection con =null;
+		PreparedStatement ps=null;
+		ResultSet rs =null;
+		int totalCount=0;
+		String sql="";
+		//String sql=proFile.getProperty("noticce.totalCount");
+		
+		
+		if(field.equals("title")){
+			sql="select count(*) from notice where NOTICE_TITLE like ?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select count(*) from notice where NOTICE_CONTENT like ?";
+			//sql=proFile.getProperty("");
+		}
+		
+		
+		try {
+			con=DbUtil.getConnection();
+			ps =con.prepareStatement(sql);
+			ps.setString(1, "%"+keyword+"%");
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return totalCount;
+	}
 	
 	
 	

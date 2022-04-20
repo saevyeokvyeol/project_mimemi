@@ -46,10 +46,18 @@ public interface NoticeDAO {
 	
 	/**
 	 * 공지사항 키워드 검색
-	 * @param String noticeKeyword
-	 * 
+ * 
 	 * 제목과 내용에서 키워드 검색
-	 * 제목, 내용에서 검색 가능
 	 * */
 	List<NoticeDTO> selectByKeyword(String noticeKeyword, String field, int pageNo) throws SQLException;
+	
+	/**
+	 * 고객(공지사항 키워드 검색)
+ * 
+	 * 제목과 내용에서 키워드 검색
+	 * */
+	List<NoticeDTO> selectByKeywordClient(String noticeKeyword, String field, int pageNo) throws SQLException;
+	
+	
+	
 }

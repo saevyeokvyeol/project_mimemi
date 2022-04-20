@@ -56,16 +56,6 @@
 <!-- body -->
 <div class="body"> 
 	<div><h1>FAQ</h1></div>
-		<form>
-		<div class="search">
-			<select>
-				<option value="TITLE">제목</option>
-				<option value="CONTENT">내용</option>
-			</select>
-			<input type="text" class="ipt" name="keyword" maxlength="30" value="" />
-			<button type="submit" class="btn btn-success">검색</button>
-		</div>
-		</form>
 	<hr>
 	<table class="table" style="text-align:center" id="noticeList">
 	 <tbody>
