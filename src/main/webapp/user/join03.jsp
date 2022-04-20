@@ -83,6 +83,9 @@ $(function() {
 <script type="text/javascript">
 
 	$(function() {
+		isIdChecked = false;
+		isPhoneChecked = false;
+		
 		/*
 		  아이디 중복체크
 		*/
@@ -107,11 +110,32 @@ $(function() {
 						$(".userId_input").focus();
 					} else {
 						alert("사용가능한 아이디 입니다.");
+						isIdChecked = true;
 						return;
 					}
-				}//success 끝
+				},//success 끝
+				error : function(err){  
+		   			alert(err+"에러 발생했어요.");
+		   		}
 			})//ajax 끝
 		}) //function 끝
+		
+		
+		/*
+		핸드폰 번호 형식 체크
+		*/
+		$("#userPhone").focusout(function(){
+			var userPhone = $(this).val();
+			var isValidPhone = /^010?([0-9]{8})$/;
+			
+			if(!isValidPhone.test(userPhone)){
+				alert("'-'를 제외하고 010으로 시작하는 휴대폰 번호 11자리를 입력해주세요");
+				return false;
+				$(".userPhone_input").focus();
+			}
+			return true;
+		})//휴대폰 번호 형식 체크 끝
+		
 		
 		/*
 		핸드폰 번호 중복 체크
@@ -142,6 +166,7 @@ $(function() {
 						return;
 					} else {
 						alert("사용가능한 번호입니다.");
+						isPhoneChecked=true;
 						return;
 					}
 				}//success 끝
@@ -149,10 +174,40 @@ $(function() {
 		}) //번호 중복 체크 끝
 		
 		/*
-		가입하기
+		id, phone 값 변경하면 중복체크 다시
 		*/
+		$("input[id=userId]").keyup(function(){
+			isIdChecked=false;
+		})
+		$("input[id=userPhone]").keyup(function(){
+			isPhoneChecked=false;
+		})
 		
-
+		/*
+		아이디 형식 체크
+		*/
+		$("#userId").focusout(function(){
+			var isValidId = /^[a-z0-9]{6,15}$/;
+			if( !isValidId.test($(this).val())){
+				alert("아이디는 영문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요");
+				return false;
+				$(".userId_input").focus();
+			}
+			return true;
+		})
+		/*
+		비밀번호 형식 체크
+		*/
+		$("#userPwd").focusout(function(){
+			var isValidPwd = /^[a-zA-Z0-9]{8,20}$/;
+			if( !isValidPwd.test($(this).val())){
+				alert("비밀번호는 영대소문자와 숫자를 조합하여 8자리 이상 최대 20자리 이하로 입력해주세요");
+				return false;
+				$(".userPwd_input").focus();
+			}
+			return true;
+		})
+		
 	})
 </script>
 <script type="text/javascript">
@@ -183,34 +238,26 @@ $(function(){
 
 </script>
 <script type="text/javascript">
-// $(function(){
-// 	/*
-// 	필수 정보 입력 체크
-// 	*/
-// 	$("#joinBtn").click(function(){
-		
-// 		let state = true;
-		
-// 		$("input[type=text]").each(function(index,item){
-// 			if($(this).val()==""){
-// 				alert("값을 입력해주세요");
-// 				$(this).focus();
-				
-// 				state=false;
-// 				return false;
-// 			}
-// 		})//text타입 입력
-// 	})
-// })
+$(function(){
+	$("#joinForm").submit(function(){
+		/*
+		아이디, 핸드폰번호 중복체크 여부 확인 기능
+		*/
+		if(!isIdChecked || isPhoneChecked)
+		return false;
+		alert("id와 핸드폰번호 중복체크를 진행해주세요.")
+	})
+})
 </script>
 </head>
 <body>
 <form name="joinForm" method="post" id="joinForm" action="${path}/front?key=user&methodName=insertUser">
 	<h1>회원가입</h1>
 	<table cellspacing="0" align="center">
+	
 		<tr>
 			<th>아이디</th>
-			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
+			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자와 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
 			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
 			<img id="id_check_success" style="display: none;">
 		</tr>
@@ -250,7 +297,7 @@ $(function(){
 			</td>
 		</tr>
 		<tr>
-			<td><input type="button" value="취소"> <input type="submit" id="joinBtn" value="회원가입"></td>
+			<td><a href = "../index.jsp" id="cancelBtn">취소</a> <input type="submit" id="joinBtn" value="회원가입"></td>
 		</tr>
 
 	</table>

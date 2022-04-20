@@ -25,12 +25,16 @@
 			.orderList-main {width: 1200px; margin: auto;}
 			table {width: 100%;}
 			.order_sort{text-align: right;}
+			
+		   
 		</style>
+		  
+		
 		<script type="text/javascript">
 			$(function(){
-				$("select").change(function() {
+				$("#faq_categry_select").change(function() {
 					if($(this).val() != "0"){
-						let url = `${path}/front?key=faq&methodName=selectFaqAllFaq&field=` + $(this).val();
+						let url = `${path}/front?key=faq&methodName=selectAllFaq&field=` + $(this).val();
 						location.replace(url);
 					}
 				})
@@ -41,13 +45,13 @@
 	<section class="faqList-main">
 			<h1><a href="${path}/front?key=faq&methodName=selectAllFaq">FAQ 관리</a></h1>
 			<section class="faq_sort">
-				<select name="faq_sort" id="">
+				<select name="faq_sort" id="faq_categry_select" >
 					<option value="0">--정렬방식--</option>
-					<option value="faq_category" value="CR">교환환불</option>
-					<option value="faq_category" value="US">회원관련</option>
-					<option value="faq_category" value="OP">주문/결제</option>
-					<option value="faq_category" value="DE">배송관련</option>
-					<option value="ffaq_category" value="EC">기타</option>
+					<option name="faq_category" value="cr">교환환불</option>
+					<option name="faq_category" value="us">회원관련</option>
+					<option name="faq_category" value="op">주문/결제</option>
+					<option name="faq_category" value="de">배송관련</option>
+					<option name="faq_category" value="ec">기타</option>
 					
 				</select>
 			</section>
@@ -99,18 +103,18 @@
 				<c:set var="startPage" value="${pageNum - temp}"/>
 				<ul class="pagination justify-content-center">
 					<c:if test="${(startPage - p.blockcount) > 0}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=faq&methodName=selectAllFaq&pageNum=${startPage-1}">이전</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=faq&methodName=selectAllFaq&pageNum=${startPage-1}&field=${requestScope.field}">이전</a></li>
 					</c:if>
 					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
 						<c:if test="${(i-1) >= p.pageCnt}">
 							<c:set var="isLoop" value="true"/>
 						</c:if> 
 						<c:if test="${not isLoop}" >
-							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=faq&methodName=selectAllFaq&pageNum=${i}">${i}</a></li> 
+							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=faq&methodName=selectAllFaq&pageNum=${i}&field=${requestScope.field}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
 					<c:if test="${(startPage + p.blockcount) <=p.pageCnt}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=faq&methodName=selectAllFaq&pageNum=${startPage+p.blockcount}">이후</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=faq&methodName=selectAllFaq&pageNum=${startPage+p.blockcount}&field=${requestScope.field}">이후</a></li>
 					</c:if>
 				</ul>
 			</nav>
