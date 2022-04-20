@@ -47,35 +47,35 @@
 		            <p><b><span>제목</span></b></p>
 		        </td>
 		        <td><b><span>
-				<input type=text name="event_title" size="50"></span></b></td>
+				<input type=text name="eventTitle" size="50"></span></b></td>
 		    </tr>
 		    <tr>
 		        <td>
 		            <p><b><span>내용</span></b></p>
 		        </td>
 		        <td><b><span>
-				<textarea name="event_content" cols="50" rows="10"></textarea></span></b></td>
+				<textarea name="eventContent" cols="50" rows="10"></textarea></span></b></td>
 		    </tr>
 		    <tr>
 		        <td>
 		            <p><b><span>*첨부파일</span></b></p>
 		        </td>
 		        <td><b><span>
-				<input type="file" name="file" maxlength="60" size="40"></span></b></td>
+				<input type="file" name="eventAttach" maxlength="60" size="40"></span></b></td>
 		    </tr>
 		    <tr>
 		        <td>
 		            <p><b><span>썸네일이미지</span></b></p>
 		        </td>
 		        <td><b><span>
-				<input type="file" name="file" maxlength="60" size="40"></span></b></td>
+				<input type="file" name="eventImg" maxlength="60" size="40"></span></b></td>
 		    </tr>
 		    <tr>
 		        <td>
 		            <p><b><span>이벤트 시작일</span></b></p>
 		        </td>
 		        <td><b><span>
-				<input type=text name="event_startdate" size="50"></span></b></td>
+				<input type=text name="eventStartdate" size="50"></span></b></td>
 		    </tr>
 		    
 		     <tr>
@@ -84,7 +84,7 @@
 		        </td>
 		        <td>
 		        	<b><span>
-		        		 <input type=text name="event_enddate" size="50">
+		        		 <input type=text name="eventEnddate" size="50">
 		        	   </span></b>
 		        </td>
 		    </tr>

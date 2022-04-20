@@ -68,14 +68,15 @@ public class ReviewController implements Controller {
 		String field= request.getParameter("field");
 		String keyword= request.getParameter("keyword");
 		List<ReviewDTO> reviewList=reviewService.selectByKeyword(keyword, field, Integer.parseInt(curPageNo));
+		//System.out.println("개수 : " + reviewList.size());
 		request.setAttribute("list", reviewList);
 		request.setAttribute("pageNum", curPageNo);
 		request.setAttribute("field", field);
 		request.setAttribute("keyword", keyword);
-		System.out.println(keyword+"페이지번호"+curPageNo);
+		System.out.println(keyword+" = 페이지번호: "+curPageNo);
 		return new ModelAndView("/board/reviewSearch.jsp");
 	}
-	
+	//http://localhost:8000/mimemi/front?key=review&methodName=selectByKeyword&pageNum=2&field=title&keyword=%EB%A7%9B
 	/**
 	 * 리뷰 상세보기
 	 * */

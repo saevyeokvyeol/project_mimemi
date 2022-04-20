@@ -59,7 +59,7 @@ public class EventController implements Controller {
 		String eventEnddate =m.getParameter("eventEnddate");
 
 		
-		System.out.println("후기등록하려는 상품아이디: "+ eventTitle);
+		System.out.println("이벤트등록하려는 제목: "+ eventTitle);
 		
 		EventDTO event = new EventDTO(eventTitle, eventContent, eventStartdate, eventEnddate);
 		

@@ -68,9 +68,91 @@ public class EventDAOImpl implements EventDAO {
 	 * */
 	@Override
 	public int updateEvent(EventDTO event) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql ="update event set EVENT_TITLE=?, EVENT_CONTENT=?, EVENT_STARTDATE=?, EVENT_ENDDATE=? where EVENT_NO=?";
+		//String sql=proFile.getProperty("");
+		int result = 0;
+		try {
+			con= DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps =con.prepareStatement(sql);
+			ps.setString(1, event.getEventTitle());
+			ps.setString(2, event.getEventContent());
+			ps.setString(3, event.getEventStartdate());
+			ps.setString(4, event.getEventEnddate());
+			ps.setInt(5, event.getEventNo());
+			
+			result = ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("이벤트 수정에 실패했습니다.");
+			}else {
+				//수정한 파일이 값이 있다면, 파일 수정한다.
+				if(event.getEventAttach()!=null) {
+					int re = updateFaqAttachCon(con,event.getEventNo(),event.getEventAttach());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("이미지 파일 수정에 실패했습니다.");
+						}
+				}
+				
+				if(event.getEventImg()!=null) {
+					int re = updateFaqImgCon(con,event.getEventNo(),event.getEventImg());
+						if(re!=1) {
+							con.rollback();
+							throw new SQLException("썸네일 파일 수정에 실패했습니다.");
+						}
+				}
+				con.commit();
+			}
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
+	
+	/*이벤트 게시글 수정할 때, 첨부파일만 수정하는 메소드*/
+	public int updateFaqAttachCon(Connection con, int eventNo, String eventAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql ="update event set EVENT_ATTACH =? where EVENT_NO =?";
+		//String sql=proFile.getProperty("");
+		int result =0;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, eventAttach);
+			ps.setInt(2, eventNo);
+			
+			result=ps.executeUpdate();
+			System.out.println("첨부파일수정 ...dao");
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	} 
+	
+	/*이벤트 게시글 수정할 때, 썸네일만 수정하는 메소드*/
+	public int updateFaqImgCon(Connection con, int eventNo, String evenImg) throws SQLException {
+		PreparedStatement ps =null;
+		String sql ="update event set EVENT_IMG =? where EVENT_NO =?";
+		//String sql=proFile.getProperty("");
+		int result =0;
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, evenImg);
+			ps.setInt(2, eventNo);
+			
+			result=ps.executeUpdate();
+			System.out.println("썸네일수정 ...dao");
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		return result;
+	} 
 
 	/**
 	 * 이벤트 게시글 썸네일 이미지 수정
