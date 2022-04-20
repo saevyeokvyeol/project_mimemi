@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 	<title>1 : 1문의 - 미미미</title>
-	<jsp:include page="../common.header.sjp"/>
+	<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
