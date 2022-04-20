@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	public boolean selectUserPwd(String userId, String userName, String userPhone) throws SQLException {
 		boolean result = userDAO.selectUserPwd(userId, userName, userPhone);
 		
-		if(result == false) {throw new SQLException("해당 정보가 존재하지 않습니다.");
+		if(!result) {throw new SQLException("해당 정보가 존재하지 않습니다.");
 
 		}else {
 			return true;
@@ -85,16 +85,22 @@ public class UserServiceImpl implements UserService {
 		if(userDTO==null) {throw new SQLException("입력하진 번호에 대한 정보가 존재하지 않습니다.");}
 		return userDTO;
 	}
+	
 	@Override
-	public void updateUser(UserDTO user) throws SQLException {
+	public void updateUser(UserDTO user, AddrDTO addr) throws SQLException {
+		int result = userDAO.updateUser(user, addr);
 		
+		if(result == 0) {
+			throw new SQLException("회원정보 수정에 실패했습니다.");		
+		}
 
 	}
 
 	@Override
-	public void updateUserPwd(String userPwd) throws SQLException {
-		int result = userDAO.updateUserPwd(userPwd, userPwd);
-		if(result != 1) {
+	public void updateUserPwd(String userId, String userPwd) throws SQLException {
+		int result = userDAO.updateUserPwd(userId, userPwd);
+		System.out.println(result);
+		if(result == 0) {
 			throw new SQLException("비밀번호 변경에 실패했습니다.");
 		}
 

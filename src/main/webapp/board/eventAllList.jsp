@@ -83,7 +83,7 @@
                                 ${event.eventTitle}
                             </td>
                             <td>
-                                ${event.eventContent}
+                            	<span><a href="${path}/front?key=event&methodName=selectByEventNo&eventNo=${event.eventNo}">${event.eventContent}</a></span>
                             </td>
                             
                             <td>
@@ -112,7 +112,7 @@
 			  <div class="card-body">
 			    <h5 class="card-title">${event.eventTitle}</h5>
 			    <p class="card-text">${event.eventContent}</p>
-			    <a href="${path}/front?key=event&methodName=selectByEventNo" class="btn btn-primary">Go somewhere</a>
+			    <a href="${path}/front?key=event&methodName=selectByEventNo&eventNo=${event.eventNo}" class="btn btn-primary">Go somewhere</a>
 			  </div>
 			</div>
 		</c:forEach>

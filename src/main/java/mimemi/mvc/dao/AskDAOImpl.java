@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import kosta.mvc.dto.Electronics;
+
 import mimemi.mvc.dto.AnswerDTO;
 import mimemi.mvc.dto.AskDTO;
 import mimemi.mvc.paging.AskListPageCnt;
@@ -35,18 +35,91 @@ public class AskDAOImpl implements AskDAO {
 		Connection con=null;
 		PreparedStatement ps=null;
 		int result=0;
-		String sql = "INSERT INTO ASK(ASK_NO,USER_ID,ASK_TITLE,ASK_CONTENT,ASK_ATTACH,ASK_REGDATE,ASK_CATEGORY,ASK_COMPLETE)VALUES(ASK_NO_SEQ.NEXTVAL,?,?,?,?,SYSDATE,?,?";
+		String sql = proFile.getProperty("ask.insert");	
 		
+		try {
+			con = DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+		
+		System.out.println(askDTO.getAskTitle());
+			ps.setString(1, askDTO.getUserId());
+			ps.setString(2, askDTO.getAskTitle());
+			ps.setString(3, askDTO.getAskContent());
+			
+			ps.setString(4, askDTO.getAskAttach());
+			ps.setString(5, askDTO.getAskCategory());
+			
+			
+			result= ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
 		
 		
 		
 		return result;
 	}
-
+	/**
+	 * 1:1문의 업데이트
+	 * */
 	@Override
 	public int updateAsk(AskDTO askDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=proFile.getProperty("ask.update");
+		int result = 0;
+		
+		try {
+			con=DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, askDTO.getAskTitle());
+			ps.setString(2, askDTO.getAskContent());
+			ps.setInt(3, askDTO.getAskNo());
+			
+			result=ps.executeUpdate();
+			if(result==0) {
+				con.rollback();
+				throw new SQLException("문의수정에 실패하였습니다.");
+			}else {
+				if(askDTO.getAskAttach()!=null) {
+					int re = updateAskAttachCon(con,askDTO.getAskNo(),askDTO.getAskAttach());
+						if(re!=1) {
+						con.rollback();	
+							throw new SQLException("후기 파일 수정에 실패했습니다.");
+						}
+				}
+				con.commit();
+			}
+			
+		}finally {
+			con.commit();
+			DbUtil.dbClose(ps, con);
+			
+		}
+		
+		
+		return result;
+	}
+	
+	//1:1문의 첨부파일 수정
+	public int updateAskAttachCon(Connection con,int askNo, String askAttach) throws SQLException {
+		PreparedStatement ps =null;
+		String sql = proFile.getProperty("ask.updateAskAttachCon");
+		int result =0;
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setString(1, askAttach);
+			ps.setInt(2, askNo);
+			
+			result=ps.executeUpdate();
+			
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -156,14 +229,62 @@ public class AskDAOImpl implements AskDAO {
 
 	@Override
 	public AskDTO selectByAskNo(int askNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		AskDTO askDto=null;
+		String sql = proFile.getProperty("ask.detail");
+
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, askNo);
+			
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				askDto = new AskDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5));
+			}
+			
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+
+		
+		return askDto;
 	}
 
 	@Override
-	public int updateState(int askNo, String state) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateState(AskDTO askDto) throws SQLException {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=proFile.getProperty("ask.updateAskComplete");
+		int result = 0;
+		
+		try {
+			con=DbUtil.getConnection();
+			
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, askDto.getAskComplete());
+			ps.setInt(2, askDto.getAskNo());
+			
+			
+			result=ps.executeUpdate();
+			
+		}finally {
+			
+			DbUtil.dbClose(ps, con);
+			
+		}
+		
+		
+		
+		return result;
 	}
 
 	@Override
@@ -172,18 +293,7 @@ public class AskDAOImpl implements AskDAO {
 		return null;
 	}
 
-	//1:1상세보기(userId)
-	@Override
-	public AskDTO selectByuserId(String userId) throws SQLException {
-		Connection con=null;
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		AskDTO askDto=null;
-		String sql = proFile.getProperty("ask.detail");
-		
-		return null;
-	}
-
+	
 	
 
 }

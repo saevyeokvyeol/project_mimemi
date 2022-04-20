@@ -136,7 +136,6 @@ $(function() {
 				return false;
 				$(".userPhone_input").focus();
 			}
-			return true;
 		})//휴대폰 번호 형식 체크 끝
 		
 		
@@ -172,7 +171,10 @@ $(function() {
 						isPhoneChecked=true;
 						return;
 					}
-				}//success 끝
+				},//success 끝
+				error : function(err){  
+		   			alert(err+"에러 발생했어요.");
+		   		}
 			})//ajax 끝
 		}) //번호 중복 체크 끝
 		
@@ -272,13 +274,19 @@ $(function(){
 <script type="text/javascript">
 $(function(){
 	$("#joinForm").submit(function(){
+// 		console.log(1);
 		/*
 		아이디, 핸드폰번호 중복체크 여부 확인 기능
 		*/
-		if(!isIdChecked || isPhoneChecked)
-		return false;
-		alert("id와 핸드폰번호 중복체크를 진행해주세요.")
+		if(!isIdChecked || !isPhoneChecked){
+			alert("id와 핸드폰번호 중복체크를 진행해주세요.");
+			return false;
+		}
+		return true;
+		
 	})
+	
+
 })
 </script>
 </head>

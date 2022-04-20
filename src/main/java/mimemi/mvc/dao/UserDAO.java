@@ -74,7 +74,12 @@ public interface UserDAO {
 	 * 회원정보 수정
 	 * : 주소, 번호 
 	 * */
-	int updateUser(UserDTO user) throws SQLException;
+	int updateUser(UserDTO user, AddrDTO addr) throws SQLException;
+	
+	/**
+	 * 회원정보 수정 (주소)
+	 * */
+	int updateAddr(Connection con, AddrDTO addr) throws SQLException;
 	
 	/**
 	 * 비밀번호 변경

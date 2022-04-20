@@ -1,5 +1,6 @@
 package mimemi.mvc.service;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,9 +24,26 @@ public class AskServiceImpl implements AskService {
 
 
 	@Override
-	public void updateAsk(AskDTO askDTO) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void updateAsk(AskDTO askDTO,String path) throws SQLException {
+		AskDTO askDto = askDao.selectByAskNo(askDTO.getAskNo());
+		
+		if(askDto==null) throw new SQLException("문의를 찾을 수 없습니다.");
+		
+		
+		String dbAttach=askDto.getAskAttach();
+		
+		int result = askDao.updateAsk(askDTO);
+		
+		if(result==0) {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete();
+			}
+			throw new SQLException("수정되지 않았습니다");
+		}else {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
+			}
+		}
 	}
 
 	@Override
@@ -35,10 +53,14 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public void deleteAsk(int askNo, String path) throws SQLException {
+	public void deleteAsk(AskDTO ask, String path) throws SQLException {
 		
-			int result = askDao.deleteAsk(askNo);
+			int result = askDao.deleteAsk(ask.getAskNo());
 			if(result == 0) throw new SQLException("삭제되지 않았습니다");
+			
+			if(ask.getAskAttach()!=null) {
+				new java.io.File(path+"/"+ask.getAskAttach()).delete();
+			}
 			
 			
 	}
@@ -61,29 +83,41 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public AskDTO selectByAskNo(int askNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateState(int askNo, String state) throws SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	/**
-	 * 1:1 상세보기
-	 * */
-	@Override
-	public AskDTO selectByUserId(String userId) throws SQLException {
 		
-		AskDTO askDto = askDao.selectByuserId(userId);
+		AskDTO askDto = askDao.selectByAskNo(askNo);
 		
 		if(askDto==null)throw new SQLException("상세보기에 오류가 발생했습니다");
 		
 		
 		return askDto;
+		
 	}
+
+	@Override
+	public void updateState(AskDTO askDto) throws SQLException {
+		
+		/*
+		 * String dbAttach=askDTO.getAskAttach();
+		
+		int result = askDao.updateAsk(askDTO);
+		
+		if(result==0) {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete();
+			}
+			throw new SQLException("수정되지 않았습니다");
+		}else {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
+			}
+		}
+		 * */	
+		int result=askDao.updateState(askDto);
+		if(result==0)throw new SQLException("수정되지 않았습니다.");
+		
+	}
+
+
+	
 
 }

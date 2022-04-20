@@ -1,108 +1,184 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+      <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 
 	span{font-size:9pt;}
+	 a{}
 
 </style>
+	<!--ë¶€íŠ¸ìŠ¤íŠ¸ë© CSS CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                
+        <!--ë¶€íŠ¸ìŠ¤íŠ¸ë© JS CDN-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        
+        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+ 
 <script type="text/javascript">
 
-function sendUpdate(){
-	document.requestForm.methodName.value ="updateForm";
-	document.requestForm.submit();
-}
 
-
-
-function sendDelete(){
-	if(document.requestForm.password.value==""){
-		alert("ºñ¹Ğ¹øÈ£ ÀÔ·ÂÇÏ¼¼¿ä.");
-		document.requestForm.password.focus();
-		return;
-	}
 	
-	document.requestForm.methodName.value ="delete";
-	document.requestForm.submit();
-}
+	$(function(){
+		var target = '${askDto.askNo}'
+		
+		function selectReply(){
+            $.ajax({
+				url: "${path}/ajax" , //ì„œë²„ìš”ì²­ì£¼ì†Œ
+				type: "post" , //ìš”ì²­ë°©ì‹ (get,post...)
+				dataType: "json" , //ì„œë²„ê°€ ë³´ë‚´ì˜¨ ë°ì´í„°(ì‘ë‹µ)type(text | html | xml | json)
+				data: {key:"answer", methodName:"selectAnswerReplyManager", askNo: target} , //ì„œë²„ì—ê²Œ ë³´ë‚¼ ë°ì´í„°ì •ë³´(parameterì •ë³´)
+				
+				success: function(result){
+					
+					let str="";														
+					$.each(result,function(index,reply){					
+                        str+=`<div class="reply-user-info">`;
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerNo}</span>&nbsp;`
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerRegdate}</span>`
+                            
+                        str+=`</div>`;
+                        str+=`<div class="reply-content">`;
+                            str+=`<span class="reply-content-text">\${reply.answerContent}</span>`
+               
+                        str+=`</div>`;
+                    })
+                   	$("#askReplyOutPut").html(askReplyOutPut)
+                   	$("#askReplyOutPut").append(str)
+				},
+
+				error: function(err){//ì‹¤íŒ¨í–ˆì„ ë•Œ ì½œë°±í•¨ìˆ˜
+				  alert(err+"ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.")
+				} 
+
+			    })//ajaxë
+            }	//selectReplyë
+				
+			selectReply();
+		})//functionë
 
 </script>
 </head>
 <body>
-<h1>»ó¼¼º¸±â ÆäÀÌÁöÀÔ´Ï´Ù.</h1>
+<h1>ìƒì„¸ë³´ê¸° í˜ì´ì§€ì…ë‹ˆë‹¤.</h1>
 
 <table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
     <tr>
         <td width="1220" height="20" colspan="4" >
-            <p align="center"><size="3"><b>
-             »ó¼¼ º¸±â</b></font></p>
+            <size="3"><b>
+             ìƒì„¸ ë³´ê¸°</b></font>
         </td>
     </tr>
     <tr>
         <td width="100" height="20" >
-            <p align="right"><b><span>±Û¹øÈ£</span></b></p>
+            <b><span>ê¸€ë²ˆí˜¸</span></b>
         </td>
         <td width="450" height="20" colspan="3">
-        	<span><b>${ask.modelNum}</b></span>
+        	<div><b>${askDto.askNo}</b></div>
         </td>
     </tr>
     <tr>
         <td width="100" height="20" >
-            <p align="right"><b><span>ÀÛ¼º³¯Â¥</span></b></p>
+            <b><span>íšŒì› ID</span></b>
         </td>
         <td width="300" height="20">
-        	<span ><b>${requestScope.ask.askRegdate}</b></span>
+        	<span ><b>${askDto.userId}</b></span>
         </td>
         
     </tr>
     
     <tr>
-		<td width="100" height="200" valign="top">
-            <p align="right"><b><span>³»¿ë</span></b></p>
+		<td width="100" height="20" valign="top">
+            <b><span>ì œëª©</span></b>
         </td>
-		<!-- ºê¶ó¿ìÀú¿¡ ±Û ³»¿ëÀ» »Ñ·ÁÁÙ ¶§´Â °³Çà¹®ÀÚ(\n)°¡ <br>ÅÂ±×·Î º¯È¯µÈ ¹®ÀÚ¿­À» º¸¿©Áà¾ß ÇÑ´Ù. -->
-        <td width="450" height="200" valign="top" colspan="3">
-        <span><b><pre>${requestScope.elec.description}</pre></b></span></td>
+		<!-- ë¸Œë¼ìš°ì €ì— ê¸€ ë‚´ìš©ì„ ë¿Œë ¤ì¤„ ë•ŒëŠ” ê°œí–‰ë¬¸ì(\n)ê°€ <br>íƒœê·¸ë¡œ ë³€í™˜ëœ ë¬¸ìì—´ì„ ë³´ì—¬ì¤˜ì•¼ í•œë‹¤. -->
+        <td width="300" height="20">
+        	<span ><b>${askDto.askTitle}</b></span>
+        </td>
+   	
     </tr>
     
-      <c:if test="${ask.askAttach!=null}">
+      
        <tr>
         <td width="100" height="20">
-            <p align="right"><b><span>Ã·ºÎÆÄÀÏ¸í</span></b></p>
+            <b><span>ë‚´ìš©</span></b>
         </td>
-        <td width="450" height="20" colspan="3">
-        	<span><b>
-        	<a href='${path}/downLoad?fileName=${ask.askAttach}'>
-    			${ask.askAttach} 
-      		</a>
-      		  
-        </b></span>
-        </td> 
+        <td width="450" height="200" colspan="3">
+        <span><b>${askDto.askContent}</b></span>
+        </td>
+        
+        
     </tr>
-    </c:if>
+    <tr>
+    	<td><span>ì²¨ë¶€íŒŒì¼</span></td>
+    	<td><span>${askDto.askAttach}</span></td>
+    
+    </tr>
+    
+     <h3>ëŒ“ê¸€ ì •ë³´</h3>
+	<div>
+		<div>
+			<div id="askReplyOutPut">
+				
+			</div>
+		</div>
+	</div>
+	<div>
+	<hr>
+				<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">ì‚­ì œí•˜ê¸°</a>
+				<a href="${path}/manager/managerAsk.jsp">ëŒì•„ê°€ê¸°</a>
+	</div>
+	<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=updateState"
+       onsubmit='return checkValid()' enctype="multipart/form-data">
+	<div class="mb-3">
+				<input type=hidden name="askNo" value="${askDto.askNo}">
+				
+			      
+			        
+			         <select name="ask_complete" id = "ask_select_category"> 
+			          <option name="ask_complete" value="">ë‹µë³€ìœ ë¬´</option>
+			          <option name="ask_complete" value="T">True</option>
+			           <option name="ask_complete" value="F">False</option>
+			        
+			         </select>
+	</div>
+	</form>
+	
     
    
    
-    <form name="requestForm" method=post action="${path}/board/askupdate.jsp">
+    <form name="requestForm" method=post action="${path}/front">
  
     
     <tr>
         <td height="20" colspan="4" align="center" valign="middle">
-			<!-- ¼öÁ¤½Ã ÇÊ¿äÇÑ µ¥ÀÌÅÍµéÀ» hiddenÀ¸·Î ¼û°Ü³õ°í Æû µ¥ÀÌÅÍ·Î º¸³»ÁØ´Ù. -->
-				<input type=hidden name="askNo" value="${ask.askNo}">
+			<!-- ìˆ˜ì •ì‹œ í•„ìš”í•œ ë°ì´í„°ë“¤ì„ hiddenìœ¼ë¡œ ìˆ¨ê²¨ë†“ê³  í¼ ë°ì´í„°ë¡œ ë³´ë‚´ì¤€ë‹¤. -->
+				<input type=hidden name="askNo" value="${askDto.askNo}">
 				<input type=hidden name="key" value="ask">
 				<input type=hidden name="methodName" >
 				<input type=hidden name="pageNo" value="${pageNo}" >
-				<input type=button value="¼öÁ¤ÇÏ±â" onClick="sendUpdate()">
-				<input type=button value="»èÁ¦ÇÏ±â" onClick="sendDelete()">
-    </form>
-			
+								
+				<a href="${path}/manager/askAnswer2.jsp?key=answer&methodName=updateAnswerReply&askNo=${askDto.askNo}">ë‹µê¸€ë‹¬ê¸°</a>
+				
+				<a href="${path}/front?key=ask&methodName=deleteAsk&askNo=${askDto.askNo}">ì‚­ì œí•˜ê¸°</a>
 		</td>
-    </tr>
+	 </tr>	
+	
+    </form>
+    <hr>
+    <!-- ëŒ“ê¸€ì°½ ì¡°íšŒ -->
+    
+			
+		
+   
 </table>
 </body>
 </html>
