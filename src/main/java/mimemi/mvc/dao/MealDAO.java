@@ -28,21 +28,26 @@ public interface MealDAO {
 	 * @param: MealDTO(String mealId, boolean mealSale)
 	 * @return: int(수정된 데이터 수)
 	 * */
-	int mealUpdateForSale(MealDTO meal) throws SQLException;
+	int mealUpdateForSale(String mealId, String mealSale) throws SQLException;
 	
 	/**
 	 * 전체 도시락 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<MealDTO>(전체 상품의 모든 데이터를 가지고 옴)
 	 * */
-	List<MealDTO> mealSelectAll(String sort) throws SQLException;
+	List<MealDTO> mealSelectAll() throws SQLException;
 	
 	/**
 	 * 판매 중인 도시락 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<MealDTO>(goodsSale이 true인 상품)
 	 * */
-	List<MealDTO> mealSelectForSale(String sort) throws SQLException;
+	List<MealDTO> mealSelectForSale() throws SQLException;
 	
-
+	/**
+	 * 도시락 ID로 조회
+	 * @return
+	 * @throws SQLException
+	 */
+	List<MealDTO> mealSelectByMealId(String keyword) throws SQLException;
 }
