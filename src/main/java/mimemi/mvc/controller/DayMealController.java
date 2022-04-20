@@ -10,12 +10,14 @@ import mimemi.mvc.dto.DayMealDTO;
 import mimemi.mvc.dto.MealDTO;
 import mimemi.mvc.service.DayMealService;
 import mimemi.mvc.service.DayMealServiceImpl;
+import mimemi.mvc.service.MealService;
+import mimemi.mvc.service.MealServiceImpl;
 import net.sf.json.JSONArray;
 
 public class DayMealController implements Controller {
 
 	private DayMealService dayMealService = new DayMealServiceImpl();
-	
+	private MealService mealService = new MealServiceImpl();
 	
 	public ModelAndView getDayMealList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mv = new ModelAndView("manager/dayMeal.jsp");
@@ -27,8 +29,25 @@ public class DayMealController implements Controller {
 		String month = request.getParameter("month");
 		List<DayMealDTO> dayMealList = dayMealService.selectByMonth(month);
 		JSONArray dayMealArr = JSONArray.fromObject(dayMealList);
-		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();		
 		out.print(dayMealArr);
+	}
+	
+	public void dayMealInsert(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int dayMenuId = Integer.parseInt(request.getParameter("dayMenuId"));
+		String goodsId = request.getParameter("goodsId");
+		String mealId = request.getParameter("mealId");
+		String dayMenuDate = request.getParameter("dayMenuDate");
+		DayMealDTO dayMeal = new DayMealDTO(dayMenuId, mealId, goodsId, dayMenuDate);
+		dayMealService.dayMealInsert(dayMeal);
+	}
+
+	public void dayMealUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int dayMenuId = Integer.parseInt(request.getParameter("dayMenuId"));
+		String mealId = request.getParameter("mealId");
+		String dayMenuDate = request.getParameter("dayMenuDate");
+		DayMealDTO dayMeal = new DayMealDTO(dayMenuId, mealId, null, dayMenuDate);
+		dayMealService.dayMealUpdate(dayMeal);
 	}
 	
 	@Override
