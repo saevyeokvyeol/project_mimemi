@@ -76,8 +76,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeDTO> selectAllNotice(int pageNum, String filed) throws SQLException {
-		List<NoticeDTO> list = noticeDao.selectAllNotice(pageNum, filed);
+	public List<NoticeDTO> selectAllNotice(int pageNum, String field) throws SQLException {
+		List<NoticeDTO> list = noticeDao.selectAllNotice(pageNum, field);
 		
 		return list;
 	}

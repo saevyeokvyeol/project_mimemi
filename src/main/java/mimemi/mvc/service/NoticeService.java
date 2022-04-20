@@ -33,7 +33,7 @@ public interface NoticeService {
 	/**
 	 * 공지사항 전체 검색
 	 * */
-    List<NoticeDTO> selectAllNotice(int pageNum, String filed) throws SQLException;
+    List<NoticeDTO> selectAllNotice(int pageNum, String field) throws SQLException;
 	
 	
 	/**

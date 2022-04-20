@@ -32,7 +32,7 @@ public interface NoticeDAO {
 	/**
 	 * 공지사항 전체 검색
 	 * */
-	List<NoticeDTO> selectAllNotice(int pageNum, String filed) throws SQLException;
+	List<NoticeDTO> selectAllNotice(int pageNum, String field) throws SQLException;
 	
 	/**
 	 * 공지사항 전체 검색(페이지 처리)
@@ -49,6 +49,7 @@ public interface NoticeDAO {
 	 * @param String noticeKeyword
 	 * 
 	 * 제목과 내용에서 키워드 검색
+	 * 제목, 내용에서 검색 가능
 	 * */
-	List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException;
+	List<NoticeDTO> selectByKeyword(String noticeKeyword, String field, int pageNo) throws SQLException;
 }
