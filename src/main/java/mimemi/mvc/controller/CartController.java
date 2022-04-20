@@ -38,12 +38,6 @@ public class CartController implements Controller {
 		String cartPeriod = request.getParameter("cartPeriod");
 		String cartStart = request.getParameter("cartStart");
 		String goodsPrice = request.getParameter("goodsPrice");
-		System.out.println(goodsId);
-		System.out.println(cartQty);
-		System.out.println(cartWeekDay);
-		System.out.println(cartPeriod);
-		System.out.println(cartStart);
-		System.out.println(goodsPrice);
 		
 		CartDTO cart = new CartDTO(userId, goodsId, Integer.parseInt(cartQty), cartWeekDay, cartPeriod, cartStart, Integer.parseInt(goodsPrice));
 		cartService.insert(cart);
@@ -72,7 +66,23 @@ public class CartController implements Controller {
 				cartList.add(cart);
 			}
 		} else if(mode.equals("D")) { // 상품란에서 바로 구매
-			
+			cartList = new ArrayList<CartDTO>();
+			String userId = "happy01";
+			String goodsId = request.getParameter("goodsId");
+			String cartQty = request.getParameter("cartQty");
+			String cartWeekDay = request.getParameter("cartWeekDay");
+			String cartPeriod = request.getParameter("cartPeriod");
+			String cartStart = request.getParameter("cartStart");
+			String goodsPrice = request.getParameter("goodsPrice");
+			System.out.println(userId);
+			System.out.println(goodsId);
+			System.out.println(cartQty);
+			System.out.println(cartWeekDay);
+			System.out.println(cartPeriod);
+			System.out.println(cartStart);
+			System.out.println(goodsPrice);
+			CartDTO cart = new CartDTO(userId, goodsId, Integer.parseInt(cartQty), cartWeekDay, cartPeriod, cartStart, Integer.parseInt(goodsPrice));
+			cartList.add(cart);
 		}
 		
 		session.removeAttribute("cartList");
