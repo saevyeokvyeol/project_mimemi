@@ -76,7 +76,7 @@ public class ReviewController implements Controller {
 		System.out.println(keyword+" = 페이지번호: "+curPageNo);
 		return new ModelAndView("/board/reviewSearch.jsp");
 	}
-	//http://localhost:8000/mimemi/front?key=review&methodName=selectByKeyword&pageNum=2&field=title&keyword=%EB%A7%9B
+	
 	/**
 	 * 리뷰 상세보기
 	 * */
@@ -95,16 +95,17 @@ public class ReviewController implements Controller {
 	public ModelAndView updateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String reviewNo= request.getParameter("reviewNo");
 		ReviewDTO review = reviewService.selectByReviewNo(Integer.parseInt(reviewNo), false);
-		//String dbUserId=review.getUserId();
+		String dbUserId=review.getUserId();
 		
 		//현재 로그인한 유저의 아이디를 세션에서 가져온다.
-		//HttpSession session = request.getSession();
-		//String UserId =session.getAttribute("loginUser");
+		HttpSession session = request.getSession();
+		UserDTO user =(UserDTO)session.getAttribute("loginUser");
+		String userid =user.getUserId();
 		
 		//db에서 가져온 데이터와 일치하는지 확인한다.
-		/*if(!dbUserId.equals(UserId)||dbUserId==UserId) {
+		if(!dbUserId.equals(userid)||dbUserId==userid) {
 			throw new Exception("아이디가 일치하지 않습니다.게시물 수정 권한이 없습니다.");
-		}*/
+		}
 		request.setAttribute("review", review);
 		//System.out.println(review.getReviewContent());
 		
@@ -128,13 +129,15 @@ public class ReviewController implements Controller {
 		String reviewRate = m.getParameter("rate");
 		String reviewContent =m.getParameter("review_contents");
 		
-		//HttpSession session = request.getSession();s
-		//String reviewUser = session.getAttribute("loginUser");
-		String reviewUser = "happy01";
+		//현재 로그인한 유저의 아이디를 세션에서 가져온다.
+		HttpSession session = request.getSession();
+		UserDTO user =(UserDTO)session.getAttribute("loginUser");
+		String userid =user.getUserId();
+		//String reviewUser = "happy01";
 		
 		System.out.println("수정하는 리뷰번호: "+reviewNo+"상품이름: "+reviewGoods);
 		
-		ReviewDTO review = new ReviewDTO(Integer.parseInt(reviewNo),reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
+		ReviewDTO review = new ReviewDTO(Integer.parseInt(reviewNo),userid,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일첨부를 했다면(파일을 수정했다면)
 			if(m.getFilesystemName("review_image")!=null) {
@@ -188,7 +191,7 @@ public class ReviewController implements Controller {
 		//String reviewUser = "happy01";
 		System.out.println(userid);
 		
-		System.out.println("후기등록하려는 상품아이디: "+reviewGoods);
+		System.out.println("후기등록하려는 사람:"+userid+ "상품아이디: "+reviewGoods);
 		
 		ReviewDTO review = new ReviewDTO(0,userid,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
@@ -213,13 +216,9 @@ public class ReviewController implements Controller {
 		//String dbUserId=review.getUserId();
 		
 		//현재 로그인한 유저의 아이디를 세션에서 가져온다.
-		//HttpSession session = request.getSession();
-		//String UserId =session.getAttribute("loginUser");
-		
-		//db에서 가져온 데이터와 일치하는지 확인한다.
-		/*if(!dbUserId.equals(UserId)||dbUserId==UserId) {
-			throw new Exception("아이디가 일치하지 않습니다.게시물 수정 권한이 없습니다.");
-		}*/
+		HttpSession session = request.getSession();
+		UserDTO reviewUser = (UserDTO)session.getAttribute("loginUser");
+		String userid = reviewUser.getUserId();
 		
 		//첨부파일도 삭제할 경로를 구한다.
 		String path =request.getServletContext().getRealPath("/img/save");
