@@ -235,13 +235,56 @@ public class NoticeController implements Controller {
 		return new ModelAndView("front?key=notice&methodName=selectAllNotice",true);
 	}
 	
+    /**
+     *  검색기능  
+     **/
      
+     public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
+ 		response.setContentType("text/html;charset=UTF-8");
+ 		String curPageNo = request.getParameter("pageNum");
+ 		if(curPageNo ==null||curPageNo.equals("")) {
+ 			curPageNo="1";
+ 		}
      
+ 		String field= request.getParameter("field");
+		String keyword= request.getParameter("keyword");
+		List<NoticeDTO> noticeList=noticeService.selectByKeyword(keyword, field, Integer.parseInt(curPageNo));
+         
+		
+		
+		request.setAttribute("list", noticeList);
+		request.setAttribute("pageNum", curPageNo);
+		request.setAttribute("field", field);
+		request.setAttribute("keyword", keyword);
+		System.out.println(keyword+" = 페이지번호: "+curPageNo);
+		return new ModelAndView("/manager/noticeSearchMg.jsp");
+	}
      
+     /**
+      *  (고객)검색기능  
+      **/
+      
      
+     public ModelAndView selectByKeywordClient(HttpServletRequest request, HttpServletResponse response) throws Exception {
+ 		response.setContentType("text/html;charset=UTF-8");
+ 		String curPageNo = request.getParameter("pageNum");
+ 		if(curPageNo ==null||curPageNo.equals("")) {
+ 			curPageNo="1";
+ 		}
      
-     
-     
+ 		String field= request.getParameter("field");
+		String keyword= request.getParameter("keyword");
+		List<NoticeDTO> noticeList=noticeService.selectByKeywordClient(keyword, field, Integer.parseInt(curPageNo));
+         
+		
+		
+		request.setAttribute("list", noticeList);
+		request.setAttribute("pageNum", curPageNo);
+		request.setAttribute("field", field);
+		request.setAttribute("keyword", keyword);
+		System.out.println(keyword+" = 페이지번호: "+curPageNo);
+		return new ModelAndView("/board/noticeSearchCl.jsp");
+	}
      
      
      

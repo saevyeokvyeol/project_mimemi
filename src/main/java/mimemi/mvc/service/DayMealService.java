@@ -7,25 +7,25 @@ import mimemi.mvc.dto.DayMealDTO;
 import mimemi.mvc.dto.MealDTO;
 import mimemi.mvc.dto.MealDTO;
 
-public interface DayMenuService {
+public interface DayMealService {
 	/**
 	 * 월간 식단 등록
 	 * @param: DayMenuDTO(int dayMenuId, String mealId, String goodsId, String dayMenuDate)
 	 * */
-	void insert(DayMealDTO dayMenu) throws SQLException;
+	void dayMealInsert(DayMealDTO dayMeal) throws SQLException;
 	
 	/**
 	 * 월간 식단 수정
 	 * @param: int dayMenuId, String mealId
 	 * */
-	void update(int dayMenuId, String mealId) throws SQLException;
+	void dayMealUpdate(DayMealDTO dayMeal) throws SQLException;
 	
 	/**
 	 * 이달의 월간 식단 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<MealDTO>(goodsSale이 true인 상품)
 	 * */
-	List<DayMealDTO> selectForSale(String sort, String date) throws SQLException;
+	List<DayMealDTO> selectByMonth(String date) throws SQLException;
 	
 	/**
 	 * 배송 식단 조회

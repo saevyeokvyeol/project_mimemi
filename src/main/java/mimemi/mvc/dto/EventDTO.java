@@ -11,6 +11,17 @@ public class EventDTO {
 	private String eventEnddate;
 	
 	public EventDTO() {}
+	
+	
+	public EventDTO(String eventTitle, String eventContent, String eventStartdate, String eventEnddate) {
+		super();
+		this.eventTitle = eventTitle;
+		this.eventContent = eventContent;
+		this.eventStartdate = eventStartdate;
+		this.eventEnddate = eventEnddate;
+	}
+
+
 	public EventDTO(int eventNo, String eventTitle, String eventContent, String eventAttach,  String eventImg, String eventRegdate,
 			String eventStartdate, String eventEnddate) {
 		super();

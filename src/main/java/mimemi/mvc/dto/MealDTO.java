@@ -15,7 +15,7 @@ public class MealDTO {
 	
 	public MealDTO() {}	
 	public MealDTO(String mealId, String goodsId, String mealName, int mealWeight, int mealKcal, int mealCarbo, int mealProtein,
-			int mealFat, String mealImg, String mealSale ) {
+			int mealFat, String mealImg, String mealSale) {
 		super();
 		this.mealId = mealId;
 		this.goodsId = goodsId;
