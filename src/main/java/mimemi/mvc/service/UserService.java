@@ -96,4 +96,18 @@ public interface UserService {
 	 */
 	boolean phoneCheck(String userPhone) throws SQLException;
 	
+	/**
+	 * 아이디 형식 체크
+	 * */
+	boolean validId(String userId) throws SQLException;
+	
+	/**
+	 * 비밀번호 형식 체크
+	 * */
+	boolean validPwd(String userPwd) throws SQLException;
+	
+	/**
+	 * 휴대폰번호 형식 체크
+	 * */
+	boolean validPhone(String userPhone) throws SQLException;
 }

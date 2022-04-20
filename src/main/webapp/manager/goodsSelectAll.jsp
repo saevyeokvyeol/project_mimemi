@@ -52,8 +52,7 @@
 				text+='<td>' + item.goodsPrice + '</td>';
 				text+='<td>' + item.goodsSale + '</td>';
 				text+='<td>' + item.goodsDetail + '</td>';
-				text+="<td><button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateGoodsModal\" onclick=\"fillUpdateModal(\'" + item.goodsId + "\', \'" + item.goodsName + "\', \'" + item.goodsThumbnail + "\', " + item.goodsPrice + ", \'" + item.goodsSale + "\', \'" + item.goodsDetail + "\')\">수정</button><td>";
-				text+='<td>';
+				text+="<td><button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateGoodsModal\" onclick=\"fillUpdateModal(\'" + item.goodsId + "\', \'" + item.goodsName + "\', \'" + item.goodsThumbnail + "\', " + item.goodsPrice + ", \'" + item.goodsSale + "\', \'" + item.goodsDetail + "\')\">수정</button></td>";
 				text+='</tr>';
 			});
 			$("#goodsTable tr:gt(0)").remove();
@@ -71,6 +70,7 @@
 				}
 			})
 		}
+		
     	/* 상품추가 */
     	function goodsInsert() {
     		let goodsId = $("#goodsId").val()
@@ -100,7 +100,8 @@
   				}
 			})
    		}
-    	/*상품 추가하기*/
+    	
+    	/*상품 수정하기*/
     	function goodsUpdate() {
     		let goodsId = $("#updateGoodsIdHidden").val()
 				goodsName = $("#updateGoodsNameHidden").val()
@@ -127,10 +128,6 @@
 					location.reload()
 				}
 			})
-    		   
-    		 
-    		
-    		
     	}
     	
 
@@ -159,6 +156,7 @@
 			})
  
     	}
+   		
     	/*상품이름으로 검색하기*/
     	function goodsSelectByKeyword() {
     		let keyword = $("#searchkeyword").val()
@@ -335,6 +333,7 @@
                 </div>
             </div>
     </div>  
+    
    <!-- 수정 모달 -->      
     <div id="updateGoodsModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -400,7 +399,7 @@
 
                 </div>
             </div>            
-</div>
+	</div>
 </body>
 
 </html>

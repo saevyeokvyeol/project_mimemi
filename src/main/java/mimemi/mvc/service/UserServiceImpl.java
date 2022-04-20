@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserService {
 	public void insertUser(UserDTO user, AddrDTO addr) throws SQLException {
 		int result = userDAO.insertUser(user,addr);
 		if(result==0) {throw new SQLException("회원가입에 실패했습니다.");
-		
 		}
-		
-
+		if( !validId(user.getUserId()) || !validPwd(user.getUserPwd()) || !validPhone(user.getUserPhone()) ) {
+			throw new SQLException("회원가입에 실패했습니다.");
+		}
 	}
 
 	@Override
@@ -126,4 +126,58 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public boolean validId(String userId) throws SQLException {
+		boolean hasDigit = false;
+		boolean hasLower = false;
+		boolean isLength = userId.length() >= 6 && userId.length() <= 20;
+		
+		for(int i=0; i<userId.length(); i++) {
+			char c = userId.charAt(i);
+			if(c>='0' && c<= '9') {
+				hasDigit = true;
+			}else if(c>='a' && c<='z') {
+				hasLower = true;
+			}
+		}
+		if( !hasDigit || !hasLower || !isLength) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean validPwd(String userPwd) throws SQLException {
+		boolean hasDigit = false;
+		boolean hasLower = false;
+		boolean hasUpper = false;
+		boolean islength = userPwd.length() >= 8 && userPwd.length() <= 15;
+
+		for (int i = 0; i < userPwd.length(); i++) {
+			char c = userPwd.charAt(i);
+			if (c >= '0' && c <= '9') {
+				hasDigit = true;
+			} else if (c >= 'a' && c <= 'z') {
+				hasLower = true;
+        	} else if(c >= 'A' && c<='Z') {
+        		hasUpper = true;
+			}
+		}
+
+		if (!hasDigit || !hasLower || !hasUpper || !islength ) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean validPhone(String userPhone) throws SQLException {
+		if(!userPhone.startsWith("010")){
+			return false;
+		}
+		if(userPhone.length() != 11) {
+			return false;
+		}
+		return true;
+	}
 }
