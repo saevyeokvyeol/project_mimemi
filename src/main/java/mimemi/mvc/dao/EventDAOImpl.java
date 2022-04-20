@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Properties;
 
 import mimemi.mvc.dto.EventDTO;
+import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.paging.PageCnt;
 import mimemi.mvc.util.DbUtil;
 
@@ -307,8 +308,39 @@ public class EventDAOImpl implements EventDAO {
 	 * */
 	@Override
 	public EventDTO selectByEventNo(int eventNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con =null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql="select * from event where EVENT_NO=?";
+		//String sql=proFile.getProperty("");
+		EventDTO event = null; 
+		SimpleDateFormat eventFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			con=DbUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, eventNo);
+			rs=ps.executeQuery();
+			
+			if(rs.next()) {
+				event = new EventDTO(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						eventFormat.format(rs.getDate(6)),
+						eventFormat.format(rs.getDate(7)),
+						eventFormat.format(rs.getDate(8))
+						
+						);
+				 
+				
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return event;
 	}
 
 	/**
@@ -326,6 +358,28 @@ public class EventDAOImpl implements EventDAO {
 	public List<EventDTO> selectAll() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int delete(int eventNo) throws SQLException {
+		Connection con =null;
+		PreparedStatement ps = null;
+		String sql="delete from event where EVENT_NO=?";
+		//String sql=proFile.getProperty("");
+		int result=0;
+		
+		try {
+			con =DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, eventNo);
+			
+			result= ps.executeUpdate();
+			System.out.println("dao: 삭제한 이벤트번호 "+eventNo);
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 	
 

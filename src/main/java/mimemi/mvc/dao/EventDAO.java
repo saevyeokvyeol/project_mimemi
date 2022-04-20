@@ -71,5 +71,7 @@ public interface EventDAO {
 	 * @return: List<EventDTO>
 	 * */
 	List<EventDTO> selectAll(String state, int pageNo) throws SQLException;
+
+	int delete(int eventNo)throws SQLException;
 	
 }
