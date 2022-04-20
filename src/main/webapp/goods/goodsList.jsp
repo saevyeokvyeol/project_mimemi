@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>goodsList</title>
+<jsp:include page="../common/header.jsp"/>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,6 +30,7 @@
         }
         .card {
         	width: 18rem;
+        	margin: 10px auto;
         }
     </style>
     
@@ -57,7 +59,8 @@
     	    		$.each(result, function(index, item){
     	    			console.log(item)
     	    			/* text += "<div class=\"card\" onclick=\"location=\'goodsView.jsp\'\">" */
-   	    				text += "<div class=\"card\" onclick=\"showDetail(\'" + item.goodsId +  "\')\">"
+    	    			text += "<div class=\"col\">"
+   	    				text += "<div class=\"card h-100\" onclick=\"showDetail(\'" + item.goodsId +  "\')\">"
     	    			text += "<img class=\"card-img-top\""
     	    			text += "src=\"" + item.goodsThumbnail + "\""
     	    			text += "alt=\"Card image cap\">"
@@ -65,6 +68,7 @@
     	    			text += "<h5 class=\"card-title\">" + item.goodsName + "</h5>"
     	    			text += "<p class=\"card-text\">1일 1식/ 1주 (월~금, 총 5회)</p>"
     	    			text += "<span>" + item.goodsPrice + "</span> 원"
+    	    			text += "</div>"
     	    			text += "</div>"
     	    			text += "</div>"
     	    		});
@@ -99,7 +103,7 @@
             </p>
         </div>
 
-        <div class="card-columns" id="goodsCard">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="goodsCard">
         </div>
     </div>
 
