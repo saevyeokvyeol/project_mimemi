@@ -172,12 +172,13 @@ public class EventController implements Controller {
 	 * 상세보기
 	 * */
 	public ModelAndView selectByEventNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String pageNo = request.getParameter("pageNum");
 		String eventNo = request.getParameter("eventNo");
-		String path = request.getServletContext().getRealPath("/img/save");
 		
 		EventDTO event = eventService.selectByEventNo(Integer.parseInt(eventNo));	
-		eventService.delete(event, path);
+		request.setAttribute("pageNum", pageNo);
+		request.setAttribute("eventDetail", event);
 		
-		return new ModelAndView("front?key=event&methodName=selectAllManager",true);
+		return new ModelAndView("/board/eventRead.jsp");
 	}
 }
