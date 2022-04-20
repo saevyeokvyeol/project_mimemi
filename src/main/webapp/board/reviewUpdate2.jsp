@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
+        <jsp:include page="../common/header.jsp"/>
         <style>
             div{
                 width: 1000px;
@@ -188,4 +189,5 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </body>
+    <jsp:include page="../common/footer.jsp"/>
 </html>

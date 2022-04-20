@@ -1,28 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
 	span{font-size:9pt;}
 
 </style>
-
+ 		<!--ë¶€íŠ¸ìŠ¤íŠ¸ë© CSS CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                
+        <!--ë¶€íŠ¸ìŠ¤íŠ¸ë© JS CDN-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        
+        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
 function checkValid() {
 	var f = window.document.updateForm;
 	if ( f.askTitle.value == "" ) {
-		alert( "¸ğµ¨ÀÌ¸§À» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." );
+		alert( "ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." );
 		f.askTitle.focus();
 		return false;
 	}
 	
 	if ( f.askContent.value == "" ) {
-        alert( "³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä." );
+        alert( "ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”." );
         f.askContent.focus();
         return false;
     }
@@ -30,48 +39,115 @@ function checkValid() {
 	    
 }
 
+	$(function(){
+		var target = '${askDto.askNo}'
+		//alert(target);
+		function selectReply(){
+            $.ajax({
+				url: "${path}/ajax" , //ì„œë²„ìš”ì²­ì£¼ì†Œ
+				type: "post" , //ìš”ì²­ë°©ì‹ (get,post...)
+				dataType: "json" , //ì„œë²„ê°€ ë³´ë‚´ì˜¨ ë°ì´í„°(ì‘ë‹µ)type(text | html | xml | json)
+				data: {key:"answer", methodName:"selectAnswerReply", askNo: target} , //ì„œë²„ì—ê²Œ ë³´ë‚¼ ë°ì´í„°ì •ë³´(parameterì •ë³´)
+				
+				success: function(result){
+					//alert("ê²€ìƒ‰ì„±ê³µ~")
+					let str="";														
+					$.each(result,function(index,reply){					
+                        str+=`<div class="reply-user-info">`;
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerNo}</span>&nbsp;`
+                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.answerRegdate}</span>`
+                            
+                        str+=`</div>`;
+                        str+=`<div class="reply-content">`;
+                            str+=`<span class="reply-content-text">\${reply.answerContent}</span>`
+               
+                        str+=`</div>`;
+                    })
+                   	$("#askReplyOutPut").html(askReplyOutPut)
+                   	$("#askReplyOutPut").append(str)
+				},
+
+				error: function(err){//ì‹¤íŒ¨í–ˆì„ ë•Œ ì½œë°±í•¨ìˆ˜
+				  alert(err+"ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.")
+				} 
+
+			    })//ajaxë
+            }	//selectReplyë
+				
+			selectReply();
+		})//functionë
+		
+	
+
 
 
 </script>
 </head>
 <body>
-<h1>°Ô½Ã¹° ¼öÁ¤ÇÏ±â ÆäÀÌÁöÀÔ´Ï´Ù.</h1>
+<h1>ê²Œì‹œë¬¼ ìˆ˜ì •í•˜ê¸° í˜ì´ì§€ì…ë‹ˆë‹¤.</h1>
 
-<form name=updateForm method=post action="${path}//board/ask.jsp" onSubmit="return checkValid()">
-    <input type="hidden" name="key" value="elec" >
-    <input type="hidden" name="methodName" value="update" >
-    <input type='hidden' name='modelNum' value="${ask.modelNum}">
-	<table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
+<form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
+onSubmit='return checkValid()' enctype="multipart/form-data">
+    <input type="hidden" name="askNo" value="${askDto.askNo}" >
+   <div>
+   <table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
     <tr>
         <td width="1220" height="20" colspan="2">
-            <p align="center"><font size="3"><b>  °Ô½Ã¹° ¼öÁ¤ÇÏ±â</b></font></p>
+            <p align="center"><font size="3"><b>  ê²Œì‹œë¬¼ ìˆ˜ì •í•˜ê¸°</b></font></p>
         </td>
     </tr>
     <tr>
         <td width="150" height="20">
-            <b><span >Á¦¸ñ</span></b>
+            <span >ì œëª©</span>
+           
         </td>
-        <td width="450" height="20"><b><span style="font-size:9pt;">
-		<input type=text name="askTitle" size="30"
-		 value="${ask.askTitle}"></span></b></td>
+        <td>
+         <textarea class="form-control" rows="1" name="askTitle" id="title" >${askDto.askTitle}</textarea>
+        </td>
+       
     </tr>
     
     <tr>
         <td width="150" height="20" >
-            <b><span >³» ¿ë</span></b>
+            <b><span >ë‚´ ìš©</span></b>
         </td>
-        <td width="450" height="20" ><b><span style="font-size:9pt;">
-		<textarea name="askContent" cols="50" rows="10">${ask.askContent}</textarea></span></b></td>
+        <td>
+        <textarea class="form-control" rows="5" name="askContent" id="content" >${askDto.askContent}</textarea>
+    	</td>
     </tr>
+    <tr>
+    	<td width="150" height="20" >
+    		<span>
+    			ì²¨ë¶€íŒŒì¼
+    		</span>
+    	</td>
+    	<td>	
+    		<input type="file" name="askAttach" size="30">
+			<p id="file-status">${askDto.askAttach}</p>
+    	</td>
+    
+    </tr>
+    
     
     <tr>
         <td width="450" height="20" colspan="2" align="center"><b><span>
-		<input type="submit" value="¼öÁ¤ÇÏ±â"> <input type="reset" value="´Ù½Ã¾²±â"></span></b></td>
+		<input type="submit" value="ìˆ˜ì •í•˜ê¸°"> <input type="reset" value="ë‹¤ì‹œì“°ê¸°"></span></b></td>
     </tr>
 </table>
-
+</div>
+	
 </form>
+	<h3>ëŒ“ê¸€ ì •ë³´</h3>
+	
+<!-- ëŒ“ê¸€ì°½ ì¡°íšŒ -->
+<div>
+	<div>
+		<div id="askReplyOutPut">
+			
+		</div>
+	</div>
+</div>
 <hr>
-<div align=right><span >&lt;<a href="${path}/board/ask.jsp">¸®½ºÆ®·Î µ¹¾Æ°¡±â</a>&gt;</span></div>
+<div align=right><span >&lt;<a href="${path}/board/ask2.jsp">ë¦¬ìŠ¤íŠ¸ë¡œ ëŒì•„ê°€ê¸°</a>&gt;</span></div>
 </body>
 </html>
