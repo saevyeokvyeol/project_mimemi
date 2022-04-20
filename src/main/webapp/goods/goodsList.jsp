@@ -78,6 +78,7 @@
     	    		$("#goodsCard").append(text);
     			}
     		})
+    		src ="${path}/img/goodsthumbnail/"
     	}
     	
     	function initialize() {
