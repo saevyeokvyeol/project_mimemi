@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- <h1>일치하는 정보가 없습니다.</h1>
+
 </body>
 </html>

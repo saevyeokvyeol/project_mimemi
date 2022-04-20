@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- <h1>~회원님의 Id는 ~입니다.</h1>
+ <h1>${userName} 회원님의 ID는 ${userId}입니다.</h1>
 </body>
 </html>
