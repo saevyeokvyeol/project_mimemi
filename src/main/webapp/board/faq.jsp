@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>FAQ</title>
+
 </head>
 <style type="text/css">
  .left side {width : 300px;
@@ -21,6 +24,11 @@
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+</script>
+
+
 <body>
 <table>
 <tr>	
@@ -29,15 +37,15 @@
 <div class="left side"> 
 	<div class="title">고객센터</div><hr width="100px">
 	<ul class="menu">
-		<li><a href="notice.jsp">공지사항</a></li>
+		<li><a href="${path}/front?key=notice&methodName=selectAll">공지사항</a></li>
 		<li class="">
-			<a href="faq.jsp">FAQ</a>
+			<a href="${path}/front?key=faq&methodName=selectAll">FAQ</a>
 			<ul>
-				<li class=""><a href="">교환/환불</a></li>
-				<li class=""><a href="">회원관련</a></li>
-				<li class=""><a href="">주문/결제</a></li>
-				<li class=""><a href="">배송관련</a></li>
-				<li class=""><a href="">기타</a></li>
+				<li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=cr">교환/환불</a></li>
+				<li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=us">회원관련</a></li>
+				<li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=op">주문/결제</a></li>
+				<li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=de">배송관련</a></li>
+				<li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=ec">기타</a></li>
 			</ul>
 		</li>
 		<li><a href="ask.jsp">1:1문의</a></li>
@@ -59,41 +67,59 @@
 		</div>
 		</form>
 	<hr>
-	<div class="accordion accordion-flush" id="accordionFlushExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingOne">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        Q . 제품을 중간에 변경할수있나요?
-      </button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">아니요</div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        Q .  회원탈퇴는 어떻게 하나요?
-      </button>
-    </h2>
-    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">나갈수없습니다.</div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-           Q .  쿠폰은 어떻게 사용하나요?
-      </button>
-    </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">FAQ를 참고해주세요.</div>
-    </div>
-  </div>
+	<table class="table" style="text-align:center" id="noticeList">
+	 <tbody>
+	  <section class="faqList-main">
+	  <c:choose>
+			<c:when test="${empty FaqList}">
+				 <tr>
+					<td colspan="6">공지사항이 없습니다.</td>
+				 </tr>
+			 </c:when>
+			 <c:otherwise>
+			 	<c:forEach items="${FaqList}" var="faq">
+				    <h2 class="" id="">
+				      <button class="faq-title" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
+				        Q . ${faq.faqTitle}
+				      </button>
+				    </h2>
+				    <div id="flush-collapseOne${faq.faqNo}" class="faq-content" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				       <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
+				    </div>			  
+	  			</c:forEach>
+	  		</c:otherwise>
+		</c:choose>
+ </tbody>
+ </table>
 </div>
-</div>
+
 </td>
 </tr>
 </table>
 </body>
+			<nav aria-label="Page navigation example">
+				<jsp:useBean class="mimemi.mvc.paging.FaqListPageCnt" id="p"/> 
+				<c:set var="isLoop" value="false"/>
+				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
+				<c:set var="startPage" value="${pageNum - temp}"/>
+				<ul class="pagination justify-content-center">
+					<c:if test="${(startPage - p.blockcount) > 0}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=faq&methodName=selectAll&pageNum=${startPage-1}&field=${requestScope.field}">이전</a></li>
+					</c:if>
+					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
+						<c:if test="${(i-1) >= p.pageCnt}">
+							<c:set var="isLoop" value="true"/>
+						</c:if> 
+						<c:if test="${not isLoop}" >
+							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=faq&methodName=selectAll&pageNum=${i}&field=${requestScope.field}">${i}</a></li> 
+						</c:if>
+					</c:forEach>
+					<c:if test="${(startPage + p.blockcount) <=p.pageCnt}">
+						<li class="page-item"><a class="page-link" href="${path}/front?key=faq&methodName=selectAll&pageNum=${startPage+p.blockcount}&field=${requestScope.field}">이후</a></li>
+					</c:if>
+				</ul>
+			</nav>
+		</section>
+	</body>
 </html>
+

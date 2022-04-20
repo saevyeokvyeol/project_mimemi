@@ -13,6 +13,19 @@ public class AddrDTO {
 	
 	public AddrDTO() {}
 
+	public AddrDTO(String userId, String addrName, int zipcode, String addrAddr, String addrDetailAddr,
+			String addrRefAddr, String receiverName, String receiverPhone) {
+		super();
+		this.userId = userId;
+		this.addrName = addrName;
+		this.zipcode = zipcode;
+		this.addrAddr = addrAddr;
+		this.addrDetailAddr = addrDetailAddr;
+		this.addrRefAddr = addrRefAddr;
+		this.receiverName = receiverName;
+		this.receiverPhone = receiverPhone;
+	}
+
 	public AddrDTO(int addrId, String userId, String addrName, int zipcode, String addrAddr, String addrDetailAddr,
 			String addrRefAddr, String receiverName, String receiverPhone) {
 		super();

@@ -66,7 +66,7 @@ pageEncoding="UTF-8"%>
     <div class="notice-view">
            <div class=" notice-Info">
                     <div class="notice-img">
-               <!--         <img src="{path}/img/noticeimg"> 이미지경로 저장 만들기-->
+                    <img src="${path}/img/noticeimg/${noticeDetail.noticeAttach}">
                     </div>
                     <div class="notice-content">
                         <strong class ="noticeContent">${noticeDetail.noticeContent}</strong>
@@ -74,13 +74,13 @@ pageEncoding="UTF-8"%>
             </div>
    </div>
             <div class="base-btn">
-                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()">목록으로 돌아가기<img src="목록아이콘"></a></span>
+                <span class="bLeft"><a href="javascript:history.back(-1)"><button>목록으로 돌아가기</button></a></span>
                 <span class="bRight">
-                	<a href="javascript:void(0);">삭제<img src="삭제아이콘"></a>
+                	<a href="${path}/front?key=notice&methodName=delete&noticeNo=${noticeDetail.noticeNo}" ><button>삭제하기</button></a>
                 </span>
         
                 <span class="bRight">
-               	<a href="${path}/front?key=notice&methodName=updateForm&noticeNo=${noticeDetail.noticeNo}" >수정<img src="수정아이콘"></a>
+               	<a href="${path}/front?key=notice&methodName=updateForm&noticeNo=${noticeDetail.noticeNo}" ><button>수정하기</button></a>
                 </span>
             
             </div>

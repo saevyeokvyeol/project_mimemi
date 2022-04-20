@@ -26,12 +26,6 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 	}
 
 	@Override
-	public int insert(OrderLineDTO orderLine) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int delete(int orderLineId) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;

@@ -191,11 +191,11 @@ pageEncoding="UTF-8"%>
                 </div>
                 <div class="review-search-box">
                     <form class="form-inline" action="${path}/front?key=review&methodName=selectByKeyword" method="post">
-                        <select name="review_search_sort_select" id="review_search_sort_select">
+                        <select name="field" id="review_search_sort_select">
                             <option name="review_search_sort" value="title">제목</option>
                             <option name="review_search_sort" value="content">내용</option>
                         </select>
-                        <input class="review-search-keyword" name="review-keyword" type="text" placeholder="Search" aria-label="Search">
+                        <input class="review-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
                         <button class="btn-search-submit" type="submit" >검색하기</button>
                     </form>
                 </div>
