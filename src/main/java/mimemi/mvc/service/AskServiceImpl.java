@@ -96,22 +96,7 @@ public class AskServiceImpl implements AskService {
 	@Override
 	public void updateState(AskDTO askDto) throws SQLException {
 		
-		/*
-		 * String dbAttach=askDTO.getAskAttach();
 		
-		int result = askDao.updateAsk(askDTO);
-		
-		if(result==0) {
-			if(dbAttach!=null) {
-				new java.io.File(path+"/"+dbAttach).delete();
-			}
-			throw new SQLException("수정되지 않았습니다");
-		}else {
-			if(dbAttach!=null) {
-				new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
-			}
-		}
-		 * */	
 		int result=askDao.updateState(askDto);
 		if(result==0)throw new SQLException("수정되지 않았습니다.");
 		

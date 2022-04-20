@@ -28,6 +28,8 @@
 
 	
 	$(function(){
+		
+
 		var target = '${askDto.askNo}'
 		
 		function selectReply(){
@@ -64,6 +66,8 @@
 				
 			selectReply();
 		})//function끝
+		
+		
 
 </script>
 </head>
@@ -134,25 +138,33 @@
 	<div>
 	<hr>
 				<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">삭제하기</a>
-				<a href="${path}/manager/managerAsk.jsp">돌아가기</a>
+				<a href="${path}/front?key=ask&methodName=selectAllManager">돌아가기</a>
 	</div>
-	<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=updateState"
-       onsubmit='return checkValid()' enctype="multipart/form-data">
+	<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=updateState">
 	<div class="mb-3">
-				<input type=hidden name="askNo" value="${askDto.askNo}">
+		<table>
+			<tr>
+				<td>
+					<input type=hidden name="askNo" value="${askDto.askNo}">
 				
 			      
+			        	<div class="mb-3">
+			        		 <select name="ask_complete" id = "ask_select_category"> 
+			          			<option name="ask_complete" value="">답변유무</option>
+			          			<option name="ask_complete" value="T">True</option>
+			           			<option name="ask_complete" value="F">False</option>
 			        
-			         <select name="ask_complete" id = "ask_select_category"> 
-			          <option name="ask_complete" value="">답변유무</option>
-			          <option name="ask_complete" value="T">True</option>
-			           <option name="ask_complete" value="F">False</option>
-			        
-			         </select>
+			         		</select>
+			            </div>
+			         <div>
+			         	<input type="submit" value="답변변경하기" />
+			        </div>
+			      </td>
+			  </tr>
+		</table>	        
 	</div>
 	</form>
-	
-    
+	      
    
    
     <form name="requestForm" method=post action="${path}/front">
@@ -163,9 +175,7 @@
 			<!-- 수정시 필요한 데이터들을 hidden으로 숨겨놓고 폼 데이터로 보내준다. -->
 				<input type=hidden name="askNo" value="${askDto.askNo}">
 				<input type=hidden name="key" value="ask">
-				<input type=hidden name="methodName" >
-				<input type=hidden name="pageNo" value="${pageNo}" >
-								
+			
 				<a href="${path}/manager/askAnswer2.jsp?key=answer&methodName=updateAnswerReply&askNo=${askDto.askNo}">답글달기</a>
 				
 				<a href="${path}/front?key=ask&methodName=deleteAsk&askNo=${askDto.askNo}">삭제하기</a>

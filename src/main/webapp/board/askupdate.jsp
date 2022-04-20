@@ -84,7 +84,7 @@ function checkValid() {
 </script>
 </head>
 <body>
-<h1>게시물 수정하기 페이지입니다.</h1>
+<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
 
 <form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
 onSubmit='return checkValid()' enctype="multipart/form-data">
