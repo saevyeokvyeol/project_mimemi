@@ -191,7 +191,7 @@ public class FaqDAOImpl implements FaqDAO {
 					
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, ((pageNum - 1) * FaqListPageCnt.pagesize) + 1); 
+			ps.setInt(1, ((pageNum - 1) * (FaqListPageCnt.pagesize) + 1)); 
 			ps.setInt(2, pageNum * FaqListPageCnt.pagesize); 
             
 			rs = ps.executeQuery();
@@ -215,10 +215,32 @@ public class FaqDAOImpl implements FaqDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
-		String sql = proFile.getProperty("faq.getTotalCount");
+		//select count(*) from faq
+		String sql="";
+		//String sql = proFile.getProperty("faq.getTotalCount");
 		int totalCount = 0;
 		
+		if(field !=null) {
+			 if(field.equals("selectAll")) {
+				sql = "select count(*) from faq";
+				//sql = sql=proFile=proFile.getProperty("");	
+			}else if (field.equals("cr")) { //교환/환불
+				sql = "select count(*) from faq where faq_category = 'CR'";
+				//sql = sql=proFile=proFile.getProperty("");				
+			}else if (field.equals("us")) {//회원관련
+				sql = "select count(*) from faq where faq_category = 'US'";
+				//sql = sql=proFile=proFile.getProperty("");	
+			} else if (field.equals("op")) {//주문/결제
+				sql = "select count(*) from faq where faq_category = 'OP'";
+				//sql = sql=proFile=proFile.getProperty("");	
+			} else if (field.equals("de")) {//배송관련
+				sql = "select count(*) from faq where faq_category = 'DE'";
+				//sql = sql=proFile=proFile.getProperty("");	
+			} else if (field.equals("ec")) {//기타
+				sql = "select count(*) from faq where faq_category = 'EC'";	
+			}  	//sql = sql=proFile=proFile.getProperty("");	
+		
+		}
 		
 		try {
 			con = DbUtil.getConnection();

@@ -89,13 +89,14 @@
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
-								<td>${notice.noticeRegdate}</td>
+								<td>${notice.noticeRegdate.substring(0,10)}</td>
 							</tr>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
+					</section>
 				</tbody>
-			</table>
+			</table>	
 	</div>
 	</table>
 	</body>
