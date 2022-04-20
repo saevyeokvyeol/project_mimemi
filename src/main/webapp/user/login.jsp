@@ -13,7 +13,7 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		$("#login").on("click", function() {
+		$("#login").click(function() {
 			$.ajax({
 				url:"${path}/ajax",
 				type: "post",
