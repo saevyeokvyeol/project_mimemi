@@ -72,13 +72,13 @@ public interface UserService {
 	 * 회원정보 수정
 	 * : 주소, 번호 
 	 * */
-	void updateUser(UserDTO user) throws SQLException;
+	void updateUser(UserDTO user, AddrDTO addr) throws SQLException;
 	
 	/**
 	 * 비밀번호 수정
 	 * @param userId, userPwd
 	 * */
-	void updateUserPwd(String userPwd) throws SQLException;
+	void updateUserPwd(String userId, String userPwd) throws SQLException;
 	
 	/**
 	 * 회원 탈퇴
@@ -96,4 +96,18 @@ public interface UserService {
 	 */
 	boolean phoneCheck(String userPhone) throws SQLException;
 	
+	/**
+	 * 아이디 형식 체크
+	 * */
+	boolean validId(String userId) throws SQLException;
+	
+	/**
+	 * 비밀번호 형식 체크
+	 * */
+	boolean validPwd(String userPwd) throws SQLException;
+	
+	/**
+	 * 휴대폰번호 형식 체크
+	 * */
+	boolean validPhone(String userPhone) throws SQLException;
 }

@@ -245,16 +245,17 @@ public class ReviewDAOImpl implements ReviewDAO {
 		SimpleDateFormat reviewFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		if(field.equals("title")){
-			sql="select * from (select rv.*, rownum from (select* from review where REVIEW_TITLE like ? order by review_no desc) rv) where rownum>=? and rownum<=?";
+			sql="select * from (select rv.*, rownum rn from (select* from review where REVIEW_TITLE like ? order by review_no desc) rv) where rn>=? and rn<=?";
 			//sql=proFile.getProperty("");
 		}else if(field.equals("content")) {
-			sql="select * from (select rv.*, rownum from (select* from review where REVIEW_CONTENT like ? order by review_no desc) rv) where rownum>=? and rownum<=?";
+			sql="select * from (select rv.*, rownum rn from (select* from review where REVIEW_CONTENT like ? order by review_no desc) rv) where rn>=? and rn<=?";
 			//sql=proFile.getProperty("");
 		}
 		
 		try {
 			int totalCount =this.getTotalCountByKeyword(reviewKeyword,field);
-			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
+			
+			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  (totalCount/PageCnt.getPagesize())+1;
 			PageCnt pagecnt = new PageCnt();
 			pagecnt.setPageCnt(totalPage);
 			pagecnt.setPageNo(pageNo);
@@ -262,12 +263,17 @@ public class ReviewDAOImpl implements ReviewDAO {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setString(1, "%"+reviewKeyword+"%");
-			
+
 			//페이지 처리 : ?에 들어갈 값 설정하기
 			ps.setInt(2, ((pageNo-1)*PageCnt.pagesize)+1);
 			ps.setInt(3, pageNo*PageCnt.pagesize);
+			//System.out.println("totalCount = " + totalCount);
+			//System.out.println("totalPage = " + totalPage);
+			//System.out.println("2 = " + (((pageNo-1)*PageCnt.pagesize)+1));
+			//System.out.println("3 = " + pageNo*PageCnt.pagesize);
 			
 			rs= ps.executeQuery();
+			
 			while(rs.next()) {
 				ReviewDTO review = new ReviewDTO(
 						rs.getInt(1),
@@ -283,6 +289,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 						);
 				review.getGoodsDTO().setGoodsName("상품이름");
 				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
+				
 				list.add(review);
 				//System.out.println(review.getReviewRegdate());
 			}

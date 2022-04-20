@@ -16,7 +16,7 @@ import mimemi.mvc.dto.MealDTO;
 
 public class MealDAOImpl implements MealDAO {
 	
-	private Properties proFile;
+	private Properties proFile = new Properties();
 	
 	public MealDAOImpl() {
 		try {
@@ -31,7 +31,28 @@ public class MealDAOImpl implements MealDAO {
 	 * 판매 도시락 등록
 	 * */
 	public int mealInsert(MealDTO meal) throws SQLException {
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		String sql = proFile.getProperty("meal.insert");
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, meal.getMealId());
+			ps.setString(2, meal.getGoodsId());
+			ps.setString(3, meal.getMealName());
+			ps.setInt(4, meal.getMealWeight());
+			ps.setInt(5, meal.getMealKcal());
+			ps.setInt(6, meal.getMealCarbo());
+			ps.setInt(7, meal.getMealProtein());
+			ps.setInt(8, meal.getMealFat());
+			ps.setString(9, meal.getMealImg());
+			ps.setString(10, meal.getMealSale());
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 	
 	/**
@@ -42,17 +63,18 @@ public class MealDAOImpl implements MealDAO {
 		PreparedStatement ps = null;
 		int result = 0;
 		String sql = proFile.getProperty("meal.update");
-		// goods.update = update goods set goods_name = ?, goods_detail = ?, goods_thumbnail = ?, goods_price = ?, goods_sale = ?, goods_detail_image = ? where goods_id = ?
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(7, meal.getMealId());
 			ps.setString(1, meal.getMealName());
-//			ps.setString(2, meal.getMealDetail());
-//			ps.setString(3, meal.getGoodsThumbnail());
-//			ps.setInt(4, meal.getGoodsPrice());
-//			ps.setBoolean(5, meal.isGoodsSale());
-//			ps.setString(6,meal.getGoodsDetailImg());
+			ps.setInt(2, meal.getMealWeight());
+			ps.setInt(3, meal.getMealKcal());
+			ps.setInt(4, meal.getMealCarbo());
+			ps.setInt(5, meal.getMealProtein());
+			ps.setInt(6, meal.getMealFat());
+			ps.setString(7, meal.getMealImg());
+			ps.setString(8, meal.getMealSale());
+			ps.setString(9, meal.getMealId());
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, con);
@@ -66,11 +88,10 @@ public class MealDAOImpl implements MealDAO {
 	 * 판매 도시락 판매 여부 수정
 	 * */
 	public int mealUpdateForSale(String mealId, String mealSale) throws SQLException {
-		
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = proFile.getProperty("goods.updateForSale");
+		String sql = proFile.getProperty("meal.updateForSale");
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
@@ -92,7 +113,7 @@ public class MealDAOImpl implements MealDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<MealDTO> list = new ArrayList<MealDTO>();
-		String sql = proFile.getProperty("meal.mealSelectAll");
+		String sql = proFile.getProperty("meal.selectAll");
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
@@ -112,7 +133,7 @@ public class MealDAOImpl implements MealDAO {
 	/**
 	 * 판매 중인 도시락 조회
 	 * */
-	List<MealDTO> mealSelectForSale() throws SQLException {
+	public List<MealDTO> mealSelectForSale() throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -123,8 +144,8 @@ public class MealDAOImpl implements MealDAO {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-
 				MealDTO meal = new MealDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10));
+				list.add(meal);
 			}
 		} finally {
 			DbUtil.dbClose(rs, ps, con);
@@ -133,28 +154,26 @@ public class MealDAOImpl implements MealDAO {
 		return list;
 	}
 
-	@Override
-	public int mealUpdateForSale(MealDTO meal) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
-	public List<MealDTO> mealSelectAll(String sort) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MealDTO> mealSelectByMealId(String keyword) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<MealDTO> list = new ArrayList<MealDTO>();
+		String sql = proFile.getProperty("meal.selectByMealId");
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%" + keyword + "%");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				MealDTO meal = new MealDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10));
+				list.add(meal);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return list;
 	}
-
-	@Override
-	public List<MealDTO> mealSelectForSale(String sort) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
-	
-	
-	
-
 }

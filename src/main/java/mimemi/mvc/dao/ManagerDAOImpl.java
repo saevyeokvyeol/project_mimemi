@@ -29,7 +29,7 @@ public class ManagerDAOImpl implements ManagerDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 				
-		String sql = "select * from manager where manager_id=? and manager_pwd=?";
+		String sql = "select * from managers where manager_id=? and manager_pwd=?";
 		ManagerDTO managerDTO = null;
 		try {
 			con = DbUtil.getConnection();
@@ -39,7 +39,7 @@ public class ManagerDAOImpl implements ManagerDAO {
 			
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				managerDTO = new ManagerDTO(rs.getString(1), rs.getString(2));
+				managerDTO = new ManagerDTO(rs.getString(1), rs.getString(3));
 			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);

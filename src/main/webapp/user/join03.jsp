@@ -8,7 +8,10 @@
 
 <jsp:include page="../common/header.jsp" />
 <style type="text/css">
-
+	span{display: none; color: red;}
+	
+	#pwdCheck_Success{color: blue;}
+	
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
@@ -83,6 +86,9 @@ $(function() {
 <script type="text/javascript">
 
 	$(function() {
+		isIdChecked = false;
+		isPhoneChecked = false;
+		
 		/*
 		  아이디 중복체크
 		*/
@@ -107,12 +113,31 @@ $(function() {
 						$(".userId_input").focus();
 					} else {
 						alert("사용가능한 아이디 입니다.");
+						isIdChecked = true;
 						return;
 					}
-				}//success 끝
-				error : 
+				},//success 끝
+				error : function(err){  
+		   			alert(err+"에러 발생했어요.");
+		   		}
 			})//ajax 끝
 		}) //function 끝
+		
+		
+		/*
+		핸드폰 번호 형식 체크
+		*/
+		$("#userPhone").focusout(function(){
+			var userPhone = $(this).val();
+			var isValidPhone = /^010?([0-9]{8})$/;
+			
+			if(!isValidPhone.test(userPhone)){
+				$("#blankPhone").css("display","inline-block");
+				return false;
+				$(".userPhone_input").focus();
+			}
+		})//휴대폰 번호 형식 체크 끝
+		
 		
 		/*
 		핸드폰 번호 중복 체크
@@ -143,17 +168,80 @@ $(function() {
 						return;
 					} else {
 						alert("사용가능한 번호입니다.");
+						isPhoneChecked=true;
 						return;
 					}
-				}//success 끝
+				},//success 끝
+				error : function(err){  
+		   			alert(err+"에러 발생했어요.");
+		   		}
 			})//ajax 끝
 		}) //번호 중복 체크 끝
 		
 		/*
-		가입하기
+		id, phone 값 변경하면 중복체크 다시
 		*/
+		$("input[id=userId]").keyup(function(){
+			isIdChecked=false;
+		})
+		$("input[id=userPhone]").keyup(function(){
+			isPhoneChecked=false;
+		})
 		
-
+		/*
+		아이디 형식 체크
+		*/
+		$("#userId").focusout(function(){
+			var id = $("#userId").val();
+			
+			var isNum = id.search(/[0-9]/g);	//g는 대소문자 가려서 전역비교, ig는 대소문자 가리지 않고 전역비교
+			var isLower = id.search(/[a-z]/g);
+			
+			if(id.length<6 || id.length>15){	//길이체크
+				$("#notValidId").css("display", "inline-block");
+				return false;			
+				$("#userId").focus();
+			}else if(id.search(/\s/) != -1){	//공백체크
+				$("#notValidId").css("display", "inline-block");
+				return false;
+				$("#userId").focus();
+			}else if(isNum<0 || isLower<0){		//문자,숫자 포함 체크
+				$("#notValidId").css("display", "inline-block");
+				return false;
+				$("#userId").focus();
+			}else{
+				$("#notValidId").css("display", "none");
+				return true;
+			}
+		})
+		/*
+		비밀번호 형식 체크
+		*/
+		$("#userPwd").focusout(function(){
+			var pwd = $("#userPwd").val();
+			
+			var isNum = pwd.search(/[0-9]/g);
+			var isLower = pwd.search(/[a-z]/g);
+			var isUpper = pwd.search(/[A-Z]/g);
+			
+			if(pwd.length<8 || pwd.length>20){		//길이체크
+				$("#notValidPwd").css("display","inline-block");
+				return false;
+				$(".userPwd_input").focus();
+			}else if(pwd.search(/\s/) != -1 ){		//공백체크
+				$("#notValidPwd").css("display","inline-block");
+				return false;
+				$(".userPwd_input").focus();
+			}else if(isNum<0 || isLower<0 || isUpper<0){	//영대,소문자 숫자 체크
+				$("#notValidPwd").css("display","inline-block");
+				return false;
+				$(".userPwd_input").focus();
+			}else{
+				$("#notValidPwd").css("display","none");
+				return true;
+			}
+		})
+		
 	})
 </script>
 <script type="text/javascript">
@@ -184,25 +272,22 @@ $(function(){
 
 </script>
 <script type="text/javascript">
-// $(function(){
-// 	/*
-// 	필수 정보 입력 체크
-// 	*/
-// 	$("#joinBtn").click(function(){
+$(function(){
+	$("#joinForm").submit(function(){
+// 		console.log(1);
+		/*
+		아이디, 핸드폰번호 중복체크 여부 확인 기능
+		*/
+		if(!isIdChecked || !isPhoneChecked){
+			alert("id와 핸드폰번호 중복체크를 진행해주세요.");
+			return false;
+		}
+		return true;
 		
-// 		let state = true;
-		
-// 		$("input[type=text]").each(function(index,item){
-// 			if($(this).val()==""){
-// 				alert("값을 입력해주세요");
-// 				$(this).focus();
-				
-// 				state=false;
-// 				return false;
-// 			}
-// 		})//text타입 입력
-// 	})
-// })
+	})
+	
+
+})
 </script>
 </head>
 <body>
@@ -211,18 +296,19 @@ $(function(){
 	<table cellspacing="0" align="center">
 		<tr>
 			<th>아이디</th>
-			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
+			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자와 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
 			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
-			<img id="id_check_success" style="display: none;">
+			<span id="notValidId">아이디는 공백 없이 영소문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요</span></td>
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" id="userPwd" name="userPwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요" required></td>
+			<td><input type="password" id="userPwd" name="userPwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요" required>
+			<span id="notValidPwd">비밀번호는 공백 없이 영대문자, 영소문자와 숫자를 조합하여 8자리 이상 최대 20자리 이하로 입력해주세요</span></td>
 		<tr>
 			<th>비밀번호 확인</th>
 			<td><input type="password" id="userPwd2" size="50" placeholder="한번 더 입력해주세요" required>
-			<span id="pwdCheck_Success" style="display:none;">비밀번호가 일치합니다</span>
-			<span id="pwdCheck_Fail" style="display:none;">비밀번호가 일치하지 않습니다.</span></td>
+			<span id="pwdCheck_Success">비밀번호가 일치합니다</span>
+			<span id="pwdCheck_Fail">비밀번호가 일치하지 않습니다.</span></td>
 		</tr>
 		<tr>
 			<th>이름</th>
@@ -232,7 +318,8 @@ $(function(){
 			<th>휴대폰 번호</th>
 
 			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요" required>
-			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button></td>
+			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button>
+			<span id="blankPhone">'-'를 제외하고 010으로 시작하는 휴대폰 번호 11자리를 입력해주세요</span></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
@@ -251,7 +338,7 @@ $(function(){
 			</td>
 		</tr>
 		<tr>
-			<td><input type="button" value="취소"> <input type="submit" id="joinBtn" value="회원가입"></td>
+			<td><a href = "../index.jsp" id="cancelBtn">취소</a> <input type="submit" id="joinBtn" value="회원가입"></td>
 		</tr>
 
 	</table>

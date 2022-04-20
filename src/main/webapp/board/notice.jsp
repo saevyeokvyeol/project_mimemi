@@ -52,17 +52,21 @@
 	<!-- body -->
 	<div class="body"> 
 		<div><h1>공지사항</h1></div>
-			<form>
-			<div class="search">
-				<select>
-					<option value="TITLE">제목</option>
-					<option value="CONTENT">내용</option>
-				</select>
-				<input type="text" class="ipt" name="keyword" maxlength="30" value="" />
-				<button type="submit" class="btn btn-success">검색</button>
-			</div>
-			</form>
+				<!-- 검색하기 -->	
+		    <nav class="navbar navbar-light bg-light">
+			 <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeywordClient" method="post">
+			  <div class="search">
+				  <select name="field" id="notice_search_sort_keyWordCl">
+					<option name="notice_search_sort_keyWordCl" value="title">제목</option>
+					<option name="notice_search_sort_keyWordCl" value="content">내용</option>
+			      </select>
+				 <input class="notice-keyWord-search" name="keyword" type="text" placeholder="Search" aria-label="Search">
+				<button type="submit" class="btn-keyWordCl-submit">검색</button>
+			  </div>
+			 </form>
+			</nav>	
 		<hr>
+		
 	<table class="table" style="text-align:center" id="noticeList">
 	  <thead>
 	    <tr>

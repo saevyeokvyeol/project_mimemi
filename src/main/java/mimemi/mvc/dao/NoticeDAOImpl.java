@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Properties;
 
 import mimemi.mvc.dto.NoticeDTO;
+import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.paging.NoticeListPageCnt;
 import mimemi.mvc.paging.OrderListPageCnt;
+import mimemi.mvc.paging.PageCnt;
 import mimemi.mvc.util.DbUtil;
 
 public class NoticeDAOImpl implements NoticeDAO {
@@ -80,7 +82,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 			}else {
 				//수정한 파일이 값이 있다면, 파일 수정한다.
 				if(noticeDTO.getNoticeAttach()!=null) {
-					int re = updateFaqImgCon(con,noticeDTO.getNoticeNo(),noticeDTO.getNoticeAttach());
+					int re = updateNoticeImgCon(con,noticeDTO.getNoticeNo(),noticeDTO.getNoticeAttach());
 						if(re!=1) {
 							con.rollback();
 							throw new SQLException("후기 파일 수정에 실패했습니다.");
@@ -156,7 +158,7 @@ public class NoticeDAOImpl implements NoticeDAO {
      *  공지사항 전체 조회 
      **/
 	@Override
-	public List<NoticeDTO> selectAllNotice(int pageNum, String filed) throws SQLException {
+	public List<NoticeDTO> selectAllNotice(int pageNum, String field) throws SQLException {
 		
 		Connection con=null;
 		PreparedStatement ps=null;
@@ -165,17 +167,17 @@ public class NoticeDAOImpl implements NoticeDAO {
 		String sql = proFile.getProperty("notice.selectAllNotice");
 		List<NoticeDTO> NoticeList = new ArrayList<NoticeDTO>();
 		
-		if(filed !=null) {
-			if (filed.equals("notice_title")) {
+		if(field !=null) {
+			if (field.equals("notice_title")) {
 				sql = proFile.getProperty("notice.selectAllTitle");
-			} else if (filed.equals("notice_content")) { 
+			} else if (field.equals("notice_content")) { 
 				sql = proFile.getProperty("notice.selectAllContent");
 			}
 		}
 			
 		try {
 			// 전체 레코드 수를 반환하는 메소드로 db에 저장된 총 레코드 수를 구함
-			int totalCount = this.getTotalCount();
+			int totalCount = this.getTotalCount(field);
 			
 			// 구한 전체 레코드 수로 전체 페이지 수를 구함
 			int totalPage = totalCount % NoticeListPageCnt.getPagesize() == 0 ? totalCount / NoticeListPageCnt.getPagesize() : (totalCount / NoticeListPageCnt.getPagesize()) + 1;
@@ -206,7 +208,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 	 * 전체 레코드 수 반환
 	 * */
 
-	private int getTotalCount() throws SQLException {
+	private int getTotalCount(String field) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -274,15 +276,196 @@ public class NoticeDAOImpl implements NoticeDAO {
    **/
 	
 	@Override
-	public List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException {
+	public List<NoticeDTO> selectByKeyword(String noticeKeyword, String field, int pageNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		String sql="";
+		//String sql = proFile.getProperty("notic.selectByKeyword")
+		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
+		SimpleDateFormat noticeFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		List<NoticeDTO> noticList = new ArrayList<NoticeDTO>();
-		String sql = proFile.getProperty("notic.selectByKeyword")
+		if(field.equals("title")){
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_TITLE like ? order by notice_no desc) a) where rn>=? and rn<=?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_CONTENT like ? order by notice_no desc) a) where rn>=? and rn<=?";
+			//sql=proFile.getProperty("");
+		}
 		
-		return null;
+	try {
+		int totalCount = this.getTotalCountByKeyword(noticeKeyword,field);
+		
+		int totalPage = totalCount % PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  ((totalCount/PageCnt.getPagesize())+1);
+		PageCnt pagecnt = new PageCnt();
+		pagecnt.setPageCnt(totalPage);
+		pagecnt.setPageNo(pageNo);
+		
+		con = DbUtil.getConnection();
+		ps = con.prepareStatement(sql);
+		ps.setString(1, "%"+noticeKeyword+"%");
+		
+		//페이지 처리 : ?에 들어갈 값 설정하기
+		ps.setInt(2, ((pageNo-1)*PageCnt.pagesize)+1);
+		ps.setInt(3, pageNo*PageCnt.pagesize);
+
+		System.out.println("totalPage = " + totalPage);
+		System.out.println("pagecnt = " + pagecnt);
+		System.out.println("pageNo = " + pageNo);
+		System.out.println("((pageNo-1)*PageCnt.pagesize)+1 = " + (((pageNo-1)*PageCnt.pagesize)+1));
+		System.out.println("pageNo*PageCnt.pagesize = " + pageNo*PageCnt.pagesize);
+		
+		rs= ps.executeQuery();
+		while(rs.next()) {
+			NoticeDTO notice = new NoticeDTO(
+					rs.getInt(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5)
+			        );
+			list.add(notice); 
+			//System.out.println(review.getReviewRegdate());
+		}
+	}finally {
+		DbUtil.dbClose(rs, ps, con);
+	}
+	return list;
+    }
+	
+	/**
+	 * 전체 레코드 수 가져오기
+	 **/
+	  
+	private int getTotalCountByKeyword(String keyword, String field) throws SQLException{
+		Connection con =null;
+		PreparedStatement ps=null;
+		ResultSet rs =null;
+		int totalCount=0;
+		String sql="";
+		//String sql=proFile.getProperty("noticce.totalCount");
+		
+		
+		if(field.equals("title")){
+			sql="select count(*) from notice where NOTICE_TITLE like ?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select count(*) from notice where NOTICE_CONTENT like ?";
+			//sql=proFile.getProperty("");
+		}
+		
+		
+		try {
+			con=DbUtil.getConnection();
+			ps =con.prepareStatement(sql);
+			ps.setString(1, "%"+keyword+"%");
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return totalCount;
 	}
 
+	  /**
+	   *  (고객) 공지사항 키워드로 검색하기   
+	   **/
+	@Override
+	public List<NoticeDTO> selectByKeywordClient(String noticeKeyword, String field, int pageNo) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql="";
+		//String sql = proFile.getProperty("notic.selectByKeyword")
+		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
+		SimpleDateFormat noticeFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if(field.equals("title")){
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_TITLE like ? order by notice_no desc) a) where rn>=? and rn<=?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select * from (select a.*, rownum rn from (select* from NOTICE where NOTICE_CONTENT like ? order by notice_no desc) a) where rn>=? and rn<=?";
+			//sql=proFile.getProperty("");
+		}
+		
+	try {
+		int totalCount = this.getTotalCountClient(noticeKeyword,field);
+		
+		int totalPage = totalCount % PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  ((totalCount/PageCnt.getPagesize())+1);
+		PageCnt pagecnt = new PageCnt();
+		pagecnt.setPageCnt(totalPage);
+		pagecnt.setPageNo(pageNo);
+		
+		con = DbUtil.getConnection();
+		ps = con.prepareStatement(sql);
+		ps.setString(1, "%"+noticeKeyword+"%");
+		
+		//페이지 처리 : ?에 들어갈 값 설정하기
+		ps.setInt(2, ((pageNo-1)*PageCnt.pagesize)+1);
+		ps.setInt(3, pageNo*PageCnt.pagesize);
+
+		System.out.println("totalPage = " + totalPage);
+		System.out.println("pagecnt = " + pagecnt);
+		System.out.println("pageNo = " + pageNo);
+		System.out.println("((pageNo-1)*PageCnt.pagesize)+1 = " + (((pageNo-1)*PageCnt.pagesize)+1));
+		System.out.println("pageNo*PageCnt.pagesize = " + pageNo*PageCnt.pagesize);
+		
+		rs= ps.executeQuery();
+		while(rs.next()) {
+			NoticeDTO notice = new NoticeDTO(
+					rs.getInt(1),
+					rs.getString(2),
+					rs.getString(3),
+					rs.getString(4),
+					rs.getString(5)
+			        );
+			list.add(notice); 
+			//System.out.println(review.getReviewRegdate());
+		}
+	}finally {
+		DbUtil.dbClose(rs, ps, con);
+	}
+	return list;
+    }
+	
+	/**
+	 * (고객)전체 레코드 수 가져오기
+	 * */
+	private int getTotalCountClient(String keyword, String field) throws SQLException{
+		Connection con =null;
+		PreparedStatement ps=null;
+		ResultSet rs =null;
+		int totalCount=0;
+		String sql="";
+		//String sql=proFile.getProperty("noticce.totalCount");
+		
+		
+		if(field.equals("title")){
+			sql="select count(*) from notice where NOTICE_TITLE like ?";
+			//sql=proFile.getProperty("");
+		}else if(field.equals("content")) {
+			sql="select count(*) from notice where NOTICE_CONTENT like ?";
+			//sql=proFile.getProperty("");
+		}
+		
+		
+		try {
+			con=DbUtil.getConnection();
+			ps =con.prepareStatement(sql);
+			ps.setString(1, "%"+keyword+"%");
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				totalCount=rs.getInt(1);
+			}
+		}finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		return totalCount;
+	}
+	
+	
+	
+	
 }

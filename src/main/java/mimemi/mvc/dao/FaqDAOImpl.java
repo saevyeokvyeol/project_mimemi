@@ -145,26 +145,43 @@ public class FaqDAOImpl implements FaqDAO {
      *  FAQ 전체 조회
      **/
 	@Override
-	public List<FaqDTO> selectAllFaq(int pageNum, String filed) throws SQLException {
+	public List<FaqDTO> selectAllFaq(int pageNum, String field) throws SQLException {
 		
 		Connection con=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		
-		String sql = proFile.getProperty("faq.selectAllFaq");
+		String sql = null;
 		List<FaqDTO> FaqList = new ArrayList<FaqDTO>();
 		
-		if(filed !=null) {
-			if (filed.equals("faq_title")) {
-				sql = proFile.getProperty("faq.selectAllTitle");
-			} else if (filed.equals("faq_content")) { 
-				sql = proFile.getProperty("faq.selectAllContent");
-			}
+		if(field !=null) {
+			 if(field.equals("no")) {
+				sql = "select * from (select faq.*, rownum rnum from(select * from faq order by faq_no desc) faq) where rnum>=? and rnum<=?";
+				//sql = sql=proFile=proFile.getProperty("faq.selectAllreg);	
+			}else if (field.equals("cr")) { //교환/환불
+				sql = "select * from (select faq.*, rownum  rnum from(select * from faq where faq_category='CR' order by faq_no desc) faq) where rnum>=? and rnum<=?";
+				//sql = sql=proFile=proFile.getProperty("faq.selectCr");				
+			}else if (field.equals("us")) {//회원관련
+				sql = "select * from (select faq.*, rownum  rnum from(select * from faq where faq_category='US' order by faq_no desc) faq) where rnum>=? and rnum<=?";
+				//sql = sql=proFile=proFile.getProperty("faq.selectUs");	
+			} else if (field.equals("op")) {//주문/결제
+				sql = "select * from (select faq.*, rownum  rnum from(select * from faq where faq_category='OP' order by faq_no desc) faq) where rnum>=? and rnum<=?";
+				//sql = sql=proFile=proFile.getProperty("faq.selectOp");	
+			} else if (field.equals("de")) {//배송관련
+				sql = "select * from (select faq.*, rownum  rnum from(select * from faq where faq_category='DE' order by faq_no desc) faq) where rnum>=? and rnum<=?";
+				//sql = sql=proFile=proFile.getProperty("faq.selectDe");	
+			} else if (field.equals("ec")) {//기타
+				sql = "select * from (select faq.*, rownum  rnum from(select * from faq where faq_category='EC' order by faq_no desc) faq) where rnum>=? and rnum<=?";
+			}  	//sql = sql=proFile=proFile.getProperty("faq.selectEc");	
+			  else if (field.equals("selectAll")) {//기타
+					sql = "select * from (SELECT faq.*, ROWNUM rnum FROM (SELECT * FROM faq order by faq_no desc) faq) where rnum >= ? and rnum <= ?";
+				}  	//sql = sql=proFile=proFile.getProperty("faq.selectEc");		
+			
 		}
 			
 		try {
 			// 전체 레코드 수를 반환하는 메소드로 db에 저장된 총 레코드 수를 구함
-			int totalCount = this.getTotalCount();
+			int totalCount = this.getTotalCount(field);
 			// 구한 전체 레코드 수로 전체 페이지 수를 구함
 			int totalPage = totalCount % FaqListPageCnt.getPagesize() == 0 ? totalCount / FaqListPageCnt.getPagesize() : (totalCount / FaqListPageCnt.getPagesize()) + 1;
 			
@@ -174,7 +191,7 @@ public class FaqDAOImpl implements FaqDAO {
 					
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, (pageNum - 1) * FaqListPageCnt.pagesize + 1); 
+			ps.setInt(1, ((pageNum - 1) * FaqListPageCnt.pagesize) + 1); 
 			ps.setInt(2, pageNum * FaqListPageCnt.pagesize); 
             
 			rs = ps.executeQuery();
@@ -194,13 +211,15 @@ public class FaqDAOImpl implements FaqDAO {
 	 * 전체 레코드 수 반환
 	 * */
 
-	private int getTotalCount() throws SQLException {
+	private int getTotalCount(String field) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		String sql = proFile.getProperty("faq.getTotalCount");
 		int totalCount = 0;
+		
+		
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
@@ -218,17 +237,21 @@ public class FaqDAOImpl implements FaqDAO {
 	
 	
 	
-	
-	
-	
-	
-	
+
 	@Override
 	public List<FaqDTO> selectAllByPaging(int pageNo) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 *  
+	 **/
+	
+	
 
+	
+	
 	@Override
 	public List<FaqDTO> selectByKeyword(String faqKeyword, String field) throws SQLException {
 		// TODO Auto-generated method stub

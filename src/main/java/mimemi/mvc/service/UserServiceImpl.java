@@ -28,12 +28,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void insertUser(UserDTO user, AddrDTO addr) throws SQLException {
+		if( !validId(user.getUserId()) || !validPwd(user.getUserPwd()) || !validPhone(user.getUserPhone()) ) {
+			throw new SQLException("회원가입에 실패했습니다.");
+		}
 		int result = userDAO.insertUser(user,addr);
 		if(result==0) {throw new SQLException("회원가입에 실패했습니다.");
-		
 		}
 		
-
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	public boolean selectUserPwd(String userId, String userName, String userPhone) throws SQLException {
 		boolean result = userDAO.selectUserPwd(userId, userName, userPhone);
 		
-		if(result == false) {throw new SQLException("해당 정보가 존재하지 않습니다.");
+		if(!result) {throw new SQLException("해당 정보가 존재하지 않습니다.");
 
 		}else {
 			return true;
@@ -84,16 +85,22 @@ public class UserServiceImpl implements UserService {
 		if(userDTO==null) {throw new SQLException("입력하진 번호에 대한 정보가 존재하지 않습니다.");}
 		return userDTO;
 	}
+	
 	@Override
-	public void updateUser(UserDTO user) throws SQLException {
+	public void updateUser(UserDTO user, AddrDTO addr) throws SQLException {
+		int result = userDAO.updateUser(user, addr);
 		
+		if(result == 0) {
+			throw new SQLException("회원정보 수정에 실패했습니다.");		
+		}
 
 	}
 
 	@Override
-	public void updateUserPwd(String userPwd) throws SQLException {
-		int result = userDAO.updateUserPwd(userPwd, userPwd);
-		if(result != 1) {
+	public void updateUserPwd(String userId, String userPwd) throws SQLException {
+		int result = userDAO.updateUserPwd(userId, userPwd);
+		System.out.println(result);
+		if(result == 0) {
 			throw new SQLException("비밀번호 변경에 실패했습니다.");
 		}
 
@@ -126,4 +133,58 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public boolean validId(String userId) throws SQLException {
+		boolean hasDigit = false;
+		boolean hasLower = false;
+		boolean isLength = userId.length() >= 6 && userId.length() <= 20;
+		
+		for(int i=0; i<userId.length(); i++) {
+			char c = userId.charAt(i);
+			if(c>='0' && c<= '9') {
+				hasDigit = true;
+			}else if(c>='a' && c<='z') {
+				hasLower = true;
+			}
+		}
+		if( !hasDigit || !hasLower || !isLength) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean validPwd(String userPwd) throws SQLException {
+		boolean hasDigit = false;
+		boolean hasLower = false;
+		boolean hasUpper = false;
+		boolean islength = userPwd.length() >= 8 && userPwd.length() <= 15;
+
+		for (int i = 0; i < userPwd.length(); i++) {
+			char c = userPwd.charAt(i);
+			if (c >= '0' && c <= '9') {
+				hasDigit = true;
+			} else if (c >= 'a' && c <= 'z') {
+				hasLower = true;
+        	} else if(c >= 'A' && c<='Z') {
+        		hasUpper = true;
+			}
+		}
+
+		if (!hasDigit || !hasLower || !hasUpper || !islength ) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean validPhone(String userPhone) throws SQLException {
+		if(!userPhone.startsWith("010")){
+			return false;
+		}
+		if(userPhone.length() != 11) {
+			return false;
+		}
+		return true;
+	}
 }

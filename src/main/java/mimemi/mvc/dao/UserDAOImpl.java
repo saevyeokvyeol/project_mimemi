@@ -76,6 +76,7 @@ public class UserDAOImpl implements UserDAO {
 			if(this.insertAddr(con, addr)==0) {
 				throw new SQLException("회원가입에 실패했습니다");
 			}
+			
 			con.commit();
 		}finally {
 			con.rollback();
@@ -94,7 +95,7 @@ public class UserDAOImpl implements UserDAO {
 		String sql = proFile.getProperty("user.insertAddr");
 		// insert into addr values(ADDR_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)
 		try {
-			con=DbUtil.getConnection();
+			
 			ps=con.prepareStatement(sql);
 			ps.setString(1, addr.getUserId());
 			ps.setString(2, addr.getAddrName());
@@ -270,22 +271,49 @@ public class UserDAOImpl implements UserDAO {
 
 		
 	@Override
-	public int updateUser(UserDTO user) throws SQLException {
+	public int updateUser(UserDTO user, AddrDTO addr) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		int result = 0;
 		
-		String sql = proFile.getProperty("user.updateUser");//update users set user_phone=?
+		String sql = proFile.getProperty("user.updateUser");//update users set user_phone=? where user_id=?
 		
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
 			ps.setString(1, user.getUserPhone());
+			ps.setString(2, user.getUserId());
 			result = ps.executeUpdate();
+			
+			
 		}finally {
 			DbUtil.dbClose(ps, con);
 		}
+		return result;
+	}
+
+	@Override
+	public int updateAddr(Connection con, AddrDTO addr) throws SQLException {
+		PreparedStatement ps = null;
+		int result = 0;
+		
+		String sql = proFile.getProperty("user.updateAddr"); //update addr set zipcode=?, addr_addr=?, addr_detail_addr=?, addr_ref_addr=?, receiver_phone=? where user_id=?
+		
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, addr.getZipcode());
+			ps.setString(2, addr.getAddrAddr());
+			ps.setString(3, addr.getAddrDetailAddr());
+			ps.setString(4, addr.getAddrRefAddr());
+			ps.setString(5, addr.getReceiverPhone());
+			ps.setString(6, addr.getUserId());
+			
+			result=ps.executeUpdate();
+		}finally {
+			DbUtil.dbClose(ps, null);
+		}
+		
 		return result;
 	}
 
@@ -301,7 +329,10 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
-			ps.setString(1, userId);
+//			System.out.println(userPwd);
+//			System.out.println(userId);
+			ps.setString(1, userPwd);
+			ps.setString(2, userId);
 			result = ps.executeUpdate();
 		}finally {
 			DbUtil.dbClose(ps, con);

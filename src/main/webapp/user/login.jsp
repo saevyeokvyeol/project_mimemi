@@ -13,20 +13,46 @@
 </style>
 <script type="text/javascript">
 	$(function() {
-		$("#login").on("click", function() {
-			$.ajax({
+		$("#login").click(function() {
+			
+			var id = $("#userId").val();
+		
+			if(id.substr(0,5) == "admin"){
+				$("form").attr("action", "${path}/front?key=manager&methodName=loginManager");
+				
+				/* $.ajax({
+					url:"${path}/ajax",
+					type: "post",
+					datatype: "text",
+					data: {key:"manager", methodName:"loginManager", managerId: $("#userId").val(), managerPwd:$("#userPwd").val()},
+					success: function(result) {
+						alert(1);
+					},
+					error: function(err) {
+						alert(err);
+					}
+				}) */
+			}
+			 // }else{
+			
+			/* $.ajax({
 				url:"${path}/ajax",
 				type: "post",
 				datatype: "text",
-				data: {key:"user", methodName:"loginUser", userId: $("#userId"), userPwd:$("#userPwd")},
+				data: {key:"user", methodName:"loginUser", userId: $("#userId").val(), userPwd:$("#userPwd").val()},
 				success: function(result) {
 					alert(1);
 				},
 				error: function(err) {
 					alert(err);
 				}
-			})
+			}) */
+		//}
 		})
+		
+		
+		
+		
 	})
 </script>
 </head>
@@ -35,7 +61,7 @@
 	<h1 >로그인</h1>
 <c:choose>
 	<c:when test="${empty loginUser}">
-	<form class="inner" method="post" action="${pageContext.request.contextPath}/front?key=user&methodName=loginUser">
+	<form class="inner" method="post" action="${path}/front?key=user&methodName=loginUser">
 		<input type="hidden" name="key" value = "user"/>
 		<input type="hidden" name="methodName" value="loginUser"/><!-- dispatcherservlet -->
 		<div class="loginForm">
@@ -50,27 +76,27 @@
 			</div>
 		</div>
 		<button type="submit" class="loginBtn" id="login">로그인</button>
-		<div class="loginOpt">
-			<table>
-				<tr>
-					<td><a href="">아이디 찾기</a></td>
-					<td><a href="">비밀번호 찾기</a></td>
-					<td><a href="">회원가입</a></td>
-				</tr>
-			</table>
-		</div>
+<!-- 		<div class="loginOpt"> -->
+<!-- 			<table> -->
+<!-- 				<tr> -->
+<!-- 					<td><a href="">아이디 찾기</a></td> -->
+<!-- 					<td><a href="">비밀번호 찾기</a></td> -->
+<!-- 					<td><a href="">회원가입</a></td> -->
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
 
-		<fieldset>
-			<div class="snsLogin">
-				SNS 로그인
-				<tr>
-					<td><a href="" id="naverLogin"><img src="">
-						<p>네이버로 로그인하기</p></a></td>
-					<td><a href="" id="kakaoLogin"><img src="">
-						<p>카카오로 로그인하기</p></a></td>
-				</tr>
-			</div>
-		</fieldset>
+<!-- 		<fieldset> -->
+<!-- 			<div class="snsLogin"> -->
+<!-- 				SNS 로그인 -->
+<!-- 				<tr> -->
+<!-- 					<td><a href="" id="naverLogin"><img src=""> -->
+<!-- 						<p>네이버로 로그인하기</p></a></td> -->
+<!-- 					<td><a href="" id="kakaoLogin"><img src=""> -->
+<!-- 						<p>카카오로 로그인하기</p></a></td> -->
+<!-- 				</tr> -->
+<!-- 			</div> -->
+<!-- 		</fieldset> -->
 
 	</form>
 	</c:when>
