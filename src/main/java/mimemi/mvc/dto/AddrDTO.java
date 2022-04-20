@@ -40,6 +40,16 @@ public class AddrDTO {
 		this.receiverPhone = receiverPhone;
 	}
 
+
+	public AddrDTO(String addrName, int zipcode, String addrAddr, String addrDetailAddr, String addrRefAddr, String receiverPhone) {
+		super();
+		this.zipcode = zipcode;
+		this.addrAddr = addrAddr;
+		this.addrDetailAddr = addrDetailAddr;
+		this.addrRefAddr = addrRefAddr;
+		this.receiverPhone = receiverPhone;
+	}
+
 	public int getAddrId() {
 		return addrId;
 	}

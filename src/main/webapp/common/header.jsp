@@ -77,7 +77,8 @@
 						<li>
 							<h5>마이페이지</h5>
 							<ul>
-								<li><a>주문 내역 보기</a></li>
+								<li><a href="">주문 내역 보기</a></li>
+								<li><a href="">주문 내역 보기</a></li>
 							</ul>
 						</li>
 						<li>
@@ -87,7 +88,7 @@
 							<h5>이벤트</h5>
 						</li>
 						<li>
-							<h5>FAQ</h5>
+							<h5><a href="${path}//board/faq.jsp">FAQ</a></h5>
 						</li>
 						<li>
 							<h5><a href="${path}/front?key=review&methodName=selectAll">후기 게시판</a></h5>
