@@ -182,13 +182,15 @@ public class ReviewController implements Controller {
 		String reviewContent =m.getParameter("review_contents");
 		
 		//리뷰 작성자 아이디와 로그인한 아이디 비교하기
-		//HttpSession session = request.getSession();
-		//String reviewUser = session.getAttribute("loginUser");
-		String reviewUser = "happy01";
+		HttpSession session = request.getSession();
+		UserDTO reviewUser = (UserDTO)session.getAttribute("loginUser");
+		String userid = reviewUser.getUserId();
+		//String reviewUser = "happy01";
+		System.out.println(userid);
 		
 		System.out.println("후기등록하려는 상품아이디: "+reviewGoods);
 		
-		ReviewDTO review = new ReviewDTO(0,reviewUser,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
+		ReviewDTO review = new ReviewDTO(0,userid,reviewGoods,reviewTitle,reviewContent,Integer.parseInt(reviewRate));
 		
 			//파일 첨부 했다면(필수요소가 아니기때문에 생성자에 없으므로 추가해준다)
 			if(m.getFilesystemName("review_image")!=null) {
