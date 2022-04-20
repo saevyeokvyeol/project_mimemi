@@ -14,4 +14,7 @@
   	<param-name>fileName</param-name>
   	<param-value>actionMapping</param-value>
   </context-param>
+  <session-config>
+  	<session-timeout>60</session-timeout>
+  </session-config>
 </web-app>
