@@ -52,7 +52,7 @@ body {
 				</div>
 				<div class="mb-3">
 					<label for="attach">첨부파일</label>
-				 <input type="file" name="file" maxlength="" size="40">
+				 <input type="file" name="faqAttach" maxlength="" size="40">
 				</div>
 			<div >
 				<input type="submit" value="작성" />

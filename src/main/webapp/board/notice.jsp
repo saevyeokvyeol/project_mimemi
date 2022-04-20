@@ -7,7 +7,8 @@
 <html>
  <head>
  <meta charset="UTF-8">
- <title>공지사항 고객뷰어</title>
+ <title>공지사항</title>
+ <jsp:include page="../common/header.jsp"/>
 	</head>
 	<style type="text/css">
 	.left side {width : 300px;
@@ -88,13 +89,14 @@
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
-								<td>${notice.noticeRegdate}</td>
+								<td>${notice.noticeRegdate.substring(0,10)}</td>
 							</tr>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
+					</section>
 				</tbody>
-			</table>
+			</table>	
 	</div>
 	</table>
 	</body>
@@ -122,6 +124,7 @@
 				</ul>
 			</nav>
 	</body>
+	<jsp:include page="../common/footer.jsp"/>
 </html>
 
 

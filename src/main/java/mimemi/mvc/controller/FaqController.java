@@ -46,6 +46,7 @@ public class FaqController implements Controller {
     		}	
     		faqService.insertFaq(faqDto, saveDir);
     		
+    		System.out.println("¿ÃπÃ¡ˆ" +faqDto.getFaqAttach()); 
     		
     		return new ModelAndView("front?key=faq&methodName=selectAllFaq", true);
     		
@@ -109,6 +110,8 @@ public class FaqController implements Controller {
 		
 		request.setAttribute("FaqList", faqList);
 		request.setAttribute("pageNum", pageNum); 
+		request.setAttribute("field", field);
+		
 		ModelAndView mv = new ModelAndView("board/faq.jsp");
 		
 		return mv;

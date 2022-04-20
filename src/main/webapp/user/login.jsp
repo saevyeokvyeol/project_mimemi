@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../common/header.jsp" />
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>login</title>
+<jsp:include page="../common/header.jsp" />
 <style type="text/css">
 	section{width: 1200px; margin: auto;}
 </style>
@@ -19,35 +20,6 @@
 		
 			if(id.substr(0,5) == "admin"){
 				$("form").attr("action", "${path}/front?key=manager&methodName=loginManager");
-				
-				/* $.ajax({
-					url:"${path}/ajax",
-					type: "post",
-					datatype: "text",
-					data: {key:"manager", methodName:"loginManager", managerId: $("#userId").val(), managerPwd:$("#userPwd").val()},
-					success: function(result) {
-						alert(1);
-					},
-					error: function(err) {
-						alert(err);
-					}
-				}) */
-			}
-			 // }else{
-			
-			/* $.ajax({
-				url:"${path}/ajax",
-				type: "post",
-				datatype: "text",
-				data: {key:"user", methodName:"loginUser", userId: $("#userId").val(), userPwd:$("#userPwd").val()},
-				success: function(result) {
-					alert(1);
-				},
-				error: function(err) {
-					alert(err);
-				}
-			}) */
-		//}
 		})
 		
 		
@@ -105,4 +77,5 @@
 <!-- section 으로 감싸서 css에서 section값으로 width 1200px margin auto로 -->
 
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>
