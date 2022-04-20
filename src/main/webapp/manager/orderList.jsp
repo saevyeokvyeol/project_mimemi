@@ -8,6 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Document</title>
+		<jsp:include page="../common/sidebar.jsp"/>
 		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<!-- jQuery -->
@@ -20,7 +21,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<style type="text/css" src=""></style>
 		<style>
-			.orderList-main {width: 1200px; margin: auto;}
+			.orderList-main {width: 100%; padding: 370px 50px 0 275px;}
 			table {width: 100%;}
 			.order_sort{text-align: right;}
 		</style>
