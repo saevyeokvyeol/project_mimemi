@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
-       
+       <jsp:include page="../common/header.jsp"/>
         <style>
             section{
                 
@@ -339,7 +339,7 @@ pageEncoding="UTF-8"%>
                     </div>
                 </div>
             </div>
-            <!-- <!--리뷰 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
+            <!-- <리뷰 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
             <div class="base-btn">
                 <span class="bLeft"><a href="javascript:void(0);" onclick="backList()" id="back-list-btn">목록으로 돌아가기</a></span>
                 <span class="bRight"><a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}" id="delete-btn">삭제</a></span>
@@ -385,4 +385,5 @@ pageEncoding="UTF-8"%>
         </div>
         </section>
     </body>
+    <jsp:include page="../common/footer.jsp"/>
 </html>

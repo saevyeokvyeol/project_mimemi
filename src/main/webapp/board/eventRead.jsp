@@ -69,9 +69,9 @@ pageEncoding="UTF-8"%>
                 </div>
             </div>
         
-            <!--이벤트 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
+            <!--이벤트 정보 하단 -->
             <div class="base-btn">
-                <span class="bLeft"><a href="${path}/front?key=event&methodName=selectAll" id="back-list-btn">목록으로 돌아가기</a></span>
+                <span class="bLeft"><a href="${path}/front?key=event&methodName=selectAll&pageNum=${pageNum}" id="back-list-btn">목록으로 돌아가기</a></span>
             </div>
 
         </section>    
