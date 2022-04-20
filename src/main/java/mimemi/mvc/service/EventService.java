@@ -74,4 +74,13 @@ public interface EventService {
 	 * 			String eventStartdate, String eventEnddate)
 	 * */
 	void insert(EventDTO event, String saveDir) throws SQLException;
+
+	/**
+	 * 이벤트 게시글 수정
+	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventStartdate,
+	 * 			String eventEnddate)
+	 * 			게시글 제목과 내용, 시작일과 종료일만 변경
+	 * @return: int(수정 성공한 레코드 수)
+	 * */
+	void updateEvent(EventDTO event, String saveDir) throws SQLException;
 }
