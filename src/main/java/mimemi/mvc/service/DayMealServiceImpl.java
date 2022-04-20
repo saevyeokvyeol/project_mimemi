@@ -19,10 +19,9 @@ public class DayMealServiceImpl implements DayMealService {
 			throw new SQLException("도시락이 등록되지 않았습니다");
 		}
 	}
-
-	@Override
-	public void dayMealUpdate(int dayMealId, String mealId) throws SQLException {
-		int result = dayMealDAO.dayMealUpdate(dayMealId, mealId);
+	
+	public void dayMealUpdate(DayMealDTO dayMeal) throws SQLException {
+		int result = dayMealDAO.dayMealUpdate(dayMeal);
 		if(result == 0) {
 			throw new SQLException("도시락이 수정되지 않았습니다");
 		}

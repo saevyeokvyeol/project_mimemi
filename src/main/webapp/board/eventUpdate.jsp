@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트등록 - 미미미</title>
+<title>이벤트수정 - 미미미</title>
 <style>
   table {border: double 5px gray; width:500px}
   td,th{border:1px black solid ;  padding:10px}
@@ -33,13 +33,14 @@
 
  -->
 <div class="review-writeForm">
-	<form name="writeReview" method="post" action="${path}/front?key=event&methodName=insert"
+	<form name="writeReview" method="post" action="${path}/front?key=event&methodName=updateEvent"
      onSubmit='return checkValid()' enctype="multipart/form-data">
+     <input type="hidden" name="eventNo" value="${event.eventNo }"/>
 		<table>
 		
 		    <tr>
 		        <td colspan="2">
-		            <p><font><b> 이벤트 등록 </b></font></p>
+		            <p><font><b> 이벤트 수정 </b></font></p>
 		        </td>
 		    </tr>
 		    <tr>
@@ -47,14 +48,14 @@
 		            <p><b><span>제목</span></b></p>
 		        </td>
 		        <td><b><span>
-				<input type=text name="eventTitle" size="50"></span></b></td>
+				<input type=text name="eventTitle" value="${event.eventTitle}" size="50"></span></b></td>
 		    </tr>
 		    <tr>
 		        <td>
 		            <p><b><span>내용</span></b></p>
 		        </td>
 		        <td><b><span>
-				<textarea name="eventContent" cols="50" rows="10"></textarea></span></b></td>
+				<textarea name="eventContent" cols="50" rows="10" >${event.eventContent}</textarea></span></b></td>
 		    </tr>
 		    <tr>
 		        <td>
@@ -134,7 +135,7 @@
 		            <p><b><span>이벤트 시작일</span></b></p>
 		        </td>
 		        <td><b><span>
-				<input type=text name="eventStartdate" size="50"></span></b></td>
+				<input type=text name="eventStartdate" size="50" value="${event.eventStartdate }"></span></b></td>
 		    </tr>
 		    
 		     <tr>
@@ -143,12 +144,12 @@
 		        </td>
 		        <td>
 		        	<b><span>
-		        		 <input type=text name="eventEnddate" size="50">
+		        		 <input type=text name="eventEnddate" size="50" value="${event.eventEnddate }">
 		        	   </span></b>
 		        </td>
 		    </tr>
 		    <tr>
-		        <td colspan="2"><b><span><input type=submit value=등록하기> 
+		        <td colspan="2"><b><span><input type=submit value=수정하기> 
 		        <input type=reset value=취소하기></span></b></td>
 		    </tr>
 		</table>

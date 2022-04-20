@@ -83,4 +83,6 @@ public interface EventService {
 	 * @return: int(수정 성공한 레코드 수)
 	 * */
 	void updateEvent(EventDTO event, String saveDir) throws SQLException;
+
+	void delete(EventDTO event, String path) throws SQLException;
 }

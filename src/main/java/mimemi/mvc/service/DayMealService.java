@@ -12,13 +12,13 @@ public interface DayMealService {
 	 * 월간 식단 등록
 	 * @param: DayMenuDTO(int dayMenuId, String mealId, String goodsId, String dayMenuDate)
 	 * */
-	void dayMealInsert(DayMealDTO dayMenu) throws SQLException;
+	void dayMealInsert(DayMealDTO dayMeal) throws SQLException;
 	
 	/**
 	 * 월간 식단 수정
 	 * @param: int dayMenuId, String mealId
 	 * */
-	void dayMealUpdate(int dayMenuId, String mealId) throws SQLException;
+	void dayMealUpdate(DayMealDTO dayMeal) throws SQLException;
 	
 	/**
 	 * 이달의 월간 식단 조회

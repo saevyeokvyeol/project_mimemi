@@ -131,8 +131,12 @@ public class EventServiceImpl implements EventService {
 	 * */
 	@Override
 	public EventDTO selectByEventNo(int eventNo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		EventDTO event = eventDAO.selectByEventNo(eventNo);
+		
+		if(event==null) {
+			throw new SQLException("상세보기를 불러올 수 없습니다.");
+		}
+		return event;
 	}
 	
 	/**
@@ -163,6 +167,24 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void updateEvent(EventDTO event) throws SQLException {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void delete(EventDTO event, String path) throws SQLException{
+		int result = eventDAO.delete(event.getEventNo());
+		
+		if(result==0) {
+			throw new SQLException("삭제되지 않았습니다.");
+		}
+		if(event.getEventAttach()!=null) {
+			new java.io.File(path + "/" + event.getEventAttach()).delete();
+		}
+		if(event.getEventImg()!=null) {
+			new java.io.File(path + "/" + event.getEventImg()).delete();
+		}
 		
 	}
 

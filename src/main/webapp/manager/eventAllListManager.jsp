@@ -56,18 +56,20 @@
 						<th>글번호</th>
 						<th>제목</th>
 						<th>내용</th>
-						
+						<th>첨부파일명</th>
 						<th>썸네일</th>
 						<th>작성날짜</th>
 						<th>이벤트시작일</th>
 						<th>이벤트종료일</th>
+						<th>수정</th>
+						<th>삭제</th>
 					</tr>
 				</thead>
 				<tbody>
 				<c:choose>
 					<c:when test="${empty requestScope.eventList}">
 						<tr>
-							<th colspan="7">
+							<th colspan="10">
 								<span>등록된 이벤트가 없습니다. </span>
 							</th>
 						</tr>
@@ -85,7 +87,9 @@
                             <td>
                                 ${event.eventContent}
                             </td>
-                            
+                            <td>
+                                ${event.eventAttach}
+                            </td>
                             <td>
                                 ${event.eventImg}
                             </td>
@@ -98,6 +102,8 @@
                             <td>
                                 ${event.eventEnddate}
                             </td>
+                            <td><a href="${path}/front?key=event&methodName=updateEventForm&eventNo=${event.eventNo}" >수정</a></td>
+                            <td><a href="${path}/front?key=event&methodName=delete&eventNo=${event.eventNo}"  >삭제</a></td>
                        </tr>
                 	</c:forEach>
 				</c:otherwise>
@@ -105,19 +111,6 @@
 				</tbody>
 			</table>
 		</section>
-		<div>
-		<c:forEach items="${requestScope.eventList}" var="event">
-			<div class="card" style="width: 18rem;">
-			  <img src="${path}/img/save/${event.eventImg}" class="card-img-top" alt="...">
-			  <div class="card-body">
-			    <h5 class="card-title">${event.eventTitle}</h5>
-			    <p class="card-text">${event.eventContent}</p>
-			    <a href="${path}/front?key=event&methodName=selectByEventNo" class="btn btn-primary">Go somewhere</a>
-			  </div>
-			</div>
-		</c:forEach>
-		</div>
-		
 		<!-- 페이징 처리 -->
             <nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 

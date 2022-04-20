@@ -11,14 +11,14 @@ public interface DayMealDAO {
 	 * @param: DayMenuDTO(int dayMenuId, String mealId, String goodsId, String dayMenuDate)
 	 * @return: int(등록된 데이터 수)
 	 * */
-	int dayMealInsert(DayMealDTO dayMenu) throws SQLException;
+	int dayMealInsert(DayMealDTO dayMeal) throws SQLException;
 	
 	/**
 	 * 월간 식단 수정
 	 * @param: int dayMenuId, String mealId
 	 * @return: int(수정된 데이터 수)
 	 * */
-	int dayMealUpdate(int dayMenuId, String mealId) throws SQLException;
+	int dayMealUpdate(DayMealDTO dayMeal) throws SQLException;
 	
 	/**
 	 * 이달의 월간 식단 조회

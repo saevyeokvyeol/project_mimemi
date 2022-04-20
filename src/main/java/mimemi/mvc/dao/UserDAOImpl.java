@@ -76,6 +76,7 @@ public class UserDAOImpl implements UserDAO {
 			if(this.insertAddr(con, addr)==0) {
 				throw new SQLException("회원가입에 실패했습니다");
 			}
+			
 			con.commit();
 		}finally {
 			con.rollback();
@@ -94,7 +95,7 @@ public class UserDAOImpl implements UserDAO {
 		String sql = proFile.getProperty("user.insertAddr");
 		// insert into addr values(ADDR_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)
 		try {
-			con=DbUtil.getConnection();
+			
 			ps=con.prepareStatement(sql);
 			ps.setString(1, addr.getUserId());
 			ps.setString(2, addr.getAddrName());
