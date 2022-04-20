@@ -33,7 +33,7 @@ public class DayMealDAOImpl implements DayMealDAO {
 	/**
 	 * 월간 식단 등록 
 	 */
-	public int dayMealInsert(DayMealDTO dayMenu) throws SQLException {
+	public int dayMealInsert(DayMealDTO dayMeal) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
@@ -41,10 +41,10 @@ public class DayMealDAOImpl implements DayMealDAO {
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, dayMenu.getDayMenuId());
-			ps.setString(2, dayMenu.getMealId());
-			ps.setString(3, dayMenu.getMealId());
-			ps.setString(4, dayMenu.getDayMenuDate());
+			ps.setInt(1, dayMeal.getDayMenuId());
+			ps.setString(2, dayMeal.getMealId());
+			ps.setString(3, dayMeal.getMealId());
+			ps.setString(4, dayMeal.getDayMenuDate());
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, con);
@@ -57,24 +57,47 @@ public class DayMealDAOImpl implements DayMealDAO {
 	 * @param: int dayMenuId, String mealId
 	 * @return: int(수정된 데이터 수)
 	 * */
-	public int dayMealUpdate(int dayMenuId, String mealId) throws SQLException {
+//	public int dayMealUpdate(int dayMenuId, String mealId) throws SQLException {
+//		Connection con = null;
+//		PreparedStatement ps = null;
+//		int result = 0;
+//		String sql = proFile.getProperty("daymeal.update");
+//		try {
+//			con = DbUtil.getConnection();
+//			ps = con.prepareStatement(sql);
+//			ps.setString(1, mealId);
+//			ps.setString(2, mealId);
+//			ps.setInt(3, dayMenuId);
+//			result = ps.executeUpdate();
+//		} finally {
+//			DbUtil.dbClose(ps, con);
+//			
+//		}
+//		return result;
+//	}
+	
+	/**
+	 * 월간 식단 수정
+	 * @param: int dayMenuId, String mealId
+	 * @return: int(수정된 데이터 수)
+	 * */
+	public int dayMealUpdate(DayMealDTO dayMeal) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = proFile.getProperty("daymeal.update");
+		String sql = proFile.getProperty("daymeal.update"); 
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, mealId);
-			ps.setString(2, mealId);
-			ps.setInt(3, dayMenuId);
+			ps.setString(1, dayMeal.getMealId());
+			ps.setString(2, dayMeal.getMealId());
+			ps.setString(3, dayMeal.getDayMenuDate());
+			ps.setInt(4, dayMeal.getDayMenuId());
 			result = ps.executeUpdate();
 		} finally {
 			DbUtil.dbClose(ps, con);
-			
 		}
 		return result;
-		
 	}
 	
 	/**
