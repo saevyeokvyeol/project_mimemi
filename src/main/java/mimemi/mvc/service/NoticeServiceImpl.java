@@ -76,8 +76,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeDTO> selectAllNotice(int pageNum, String filed) throws SQLException {
-		List<NoticeDTO> list = noticeDao.selectAllNotice(pageNum, filed);
+	public List<NoticeDTO> selectAllNotice(int pageNum, String field) throws SQLException {
+		List<NoticeDTO> list = noticeDao.selectAllNotice(pageNum, field);
 		
 		return list;
 	}
@@ -98,11 +98,21 @@ public class NoticeServiceImpl implements NoticeService {
 			return noticeDetail;
 		}
 		
-
+    /**
+     * 키워드 전체 조회
+     **/
 	@Override
-	public List<NoticeDTO> selectByKeyword(String noticeKeyword, String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<NoticeDTO> selectByKeyword(String noticeKeyword, String field, int pageNo) throws SQLException {
+		List<NoticeDTO> list = noticeDao.selectByKeyword(noticeKeyword, field ,pageNo);
+	    return list;
 	}
 
+	@Override
+	public List<NoticeDTO> selectByKeywordClient(String noticeKeyword, String field, int pageNo) throws SQLException {
+		List<NoticeDTO> list = noticeDao.selectByKeywordClient(noticeKeyword, field ,pageNo);
+	    return list;
+	}
+
+	
+	
 }

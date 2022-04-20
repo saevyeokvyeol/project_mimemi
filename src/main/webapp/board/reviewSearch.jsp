@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
-        
+        <jsp:include page="../common/header.jsp"/>
         <!-- jQuery -->        
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
          <!-- Bootstrap CSS -->
@@ -229,4 +229,5 @@ pageEncoding="UTF-8"%>
             
         </div>
     </body>
+    <jsp:include page="../common/footer.jsp"/>
 </html>

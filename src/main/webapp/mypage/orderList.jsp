@@ -6,21 +6,15 @@
 		<meta charset="UTF-8">
 		<title>주문/배송 조회 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
-		<!-- CSS only -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		<!-- jQuery -->
-		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
-		<!-- JavaScript Bundle with Popper -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <!-- jQuery ui -->
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<!-- jQuery ui -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<style type="text/css">
-			section {width: 1200px; margin: auto;}
+			.orderlist-view {width: 1212px; margin: 50px auto;}
+			.orderlist-sideview {width: 200px; margin-right: 50px; z-index: 0;}
+			.orderlist-sideview h3 {margin: 0 0 20px 10px;}
+			.orderlist-mainview {width: 950px;}
 			table {width: 100%;}
 			td {padding: 30px;}
-			a {color: black;}
+			.accordion-body {padding: 0;}
+			
 		</style>
 		<script type="text/javascript">
 			$(function(){
@@ -106,26 +100,52 @@
 					location.href = "${path}/front?key=order&methodName=selectByOrderId&orderId=" + $(this).parent().attr("id");
 				})
 				
+				$(".accordion-button").click(function() {
+					if($(this).attr("aria-expanded") == true){
+						$(this).attr("aria-expanded", false);
+					} else {
+						$(this).attr("aria-expanded", true);
+					}
+					
+				})
+				
 				selectOrderByUserId();
 			})
 		</script>
 	</head>
 	<body>
-		<section>
-			<h1>주문/배송 조회</h1>
-			<table class="table table-hover" id="orderTable">
-				<thead>
-					<tr>
-						<td>주문번호</td>
-						<td>주문일자</td>
-						<td>상품명</td>
-						<td>결제금액</td>
-						<td>주문 취소</td>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+		<section class="orderlist-view d-flex p-2 bd-highlight">
+			<aside class="orderlist-sideview">
+				<h3>마이페이지</h3>
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+						나의 주문 내역
+					</a>
+					<a href="${path}/mypage/orderView.jsp" class="list-group-item list-group-item-action">취소/환불/교환 내역</a>
+					<a href="#" class="list-group-item list-group-item-action">나의 배송 캘린더</a>
+					<a href="#" class="list-group-item list-group-item-action">쿠폰 조회</a>
+					<a href="#" class="list-group-item list-group-item-action">1:1 문의 내역</a>
+					<a href="#" class="list-group-item list-group-item-action">회원 정보 수정</a>
+					<a href="#" class="list-group-item list-group-item-action">회원 탈퇴</a>
+				</div>
+			</aside>
+			<div class="orderlist-mainview">
+				<h1>주문/배송 조회</h1>
+				<table class="table table-hover" id="orderTable">
+					<thead>
+						<tr>
+							<td>주문번호</td>
+							<td>주문일자</td>
+							<td>상품명</td>
+							<td>결제금액</td>
+							<td>주문 취소</td>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 		</section>
 	</body>
+	<jsp:include page="../common/footer.jsp"/>
 </html>

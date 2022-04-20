@@ -68,7 +68,7 @@ public class UserController implements Controller {
 		session.setAttribute("loginUser", dbDTO);
 		session.setAttribute("loginName", dbDTO.getUserName());
 		
-		return new ModelAndView("userTest.jsp", true);
+		return new ModelAndView("index.jsp", true);
 	}
 //	public void loginUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
 //		response.setContentType("text/html;charset=UTF-8");
@@ -110,28 +110,43 @@ public class UserController implements Controller {
 	 * 회원정보 수정 기능
 	 * */
 	public ModelAndView updateUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
 		String userPhone = request.getParameter("userPhone");
 		
-		UserDTO userDTO = new UserDTO(userPhone);
+		String zipcode = request.getParameter("zipcode");
+		String addrAddr = request.getParameter("addrAddr");
+		String addrDetailAddr = request.getParameter("addrDetailAddr");
+		String addrRefAddr = request.getParameter("addrRefAddr");
+		String receiverPhone = userPhone;
 		
-		userService.updateUser(userDTO);
+		UserDTO userDTO = new UserDTO(userPhone);
+		AddrDTO addrDTO = new AddrDTO(zipcode, Integer.parseInt(zipcode), addrAddr, addrDetailAddr, addrRefAddr, receiverPhone);
+		
+		userService.updateUser(userDTO, addrDTO);
 		
 		return new ModelAndView("mypage/mypageMain.jsp");
 	}
+	
 	/**
 	 * 비밀변호 변경 기능
 	 * */
-	public ModelAndView updatePwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void updatePwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		
-		UserDTO userDTO = new UserDTO(userId, userPwd);
+		HttpSession session = request.getSession();
 		
-		userService.updateUserPwd(userPwd);
+		userService.updateUserPwd(userId, userPwd);
 		
-		logoutUser(request, response); //??????
+//		if(session.getAttribute("loginUser") != null) {
+//			logoutUser(request, response); 
+//		}
 		
-		return new ModelAndView("user/login.jsp");
+		PrintWriter out = response.getWriter();
+		out.print("비밀번호 변경이 완료되었습니다.");
+		
 	}
 	/**
 	 * id찾기
@@ -140,7 +155,12 @@ public class UserController implements Controller {
 		String userName=request.getParameter("userName");
 		String userPhone=request.getParameter("userPhone");
 		
-		userService.selectUserId(userName, userPhone);
+		
+		
+		String userId = userService.selectUserId(userName, userPhone);
+		
+		request.setAttribute("userId", userId);
+		request.setAttribute("userName", userName);
 		
 		return new ModelAndView("user/find_id_Ok.jsp");
 		
@@ -154,6 +174,8 @@ public class UserController implements Controller {
 		String userPhone = request.getParameter("userPhone");
 		
 		userService.selectUserPwd(userId, userName, userPhone);
+		
+		request.setAttribute("userId", userId);
 		
 		return new ModelAndView("user/editPwd.jsp");
 	}

@@ -6,19 +6,21 @@ public class AskListPageCnt {
 	public static int pageNo = 1; 
 	public int blockcount = 5;
 	
-	public AskListPageCnt() {}
+	public AskListPageCnt() {
+		super();
+	}
 	
 	public AskListPageCnt(int pageCnt) {
 		super();
 		this.pageCnt=pageCnt;
 	}
-	
-	public static int getPageCnt() {
+
+	public int getPageCnt() {
 		return pageCnt;
 	}
 
-	public static void setPageCnt(int pageCnt) {
-		AskListPageCnt.pageCnt = pageCnt;
+	public void setPageCnt(int pageCnt) {
+		this.pageCnt = pageCnt;
 	}
 
 	public static int getPagesize() {
@@ -26,7 +28,7 @@ public class AskListPageCnt {
 	}
 
 	public static void setPagesize(int pagesize) {
-		AskListPageCnt.pagesize = pagesize;
+		NoticeListPageCnt.pagesize = pagesize;
 	}
 
 	public static int getPageNo() {
@@ -34,7 +36,7 @@ public class AskListPageCnt {
 	}
 
 	public static void setPageNo(int pageNo) {
-		AskListPageCnt.pageNo = pageNo;
+		NoticeListPageCnt.pageNo = pageNo;
 	}
 
 	public int getBlockcount() {

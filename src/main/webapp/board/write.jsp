@@ -7,9 +7,16 @@
 <title>Insert title here</title>
 <style type="text/css">
 	span{font-size: 9pt; }
-
+	body { padding-top: 70px;padding-bottom: 30px;}
 
 </style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!--JQgrid CDN-->
+<script src="../util/js/jquery-3.6.0.min.js"></script>
+
+
 <script type="text/javascript">
 
 function checkValid() {
@@ -37,88 +44,43 @@ function checkValid() {
 </head>
 <body>
 <h1>문의하기페이지입니다.</h1>
-
-<form name="writeForm" method="post"  action="${path}/board/ask2.jsp?key=ask&methodName=insertAsk"
-  onSubmit='return checkValid()' enctype="multipart/form-data">
-<table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
-
-
-
-    <tr>
-        <td width="1220" height="20" colspan="2" >
-            <p align="center"><fontsize="3"><b> 문의 하기 </b></font></p>
-        </td>
-    </tr>
-    <tr>
-    	<td>
-    		<p><span>글 번호</span></p>
-    	</td>
-    	<td><span></span></td>
-    </tr>
-    <tr>
-    	<td>
-    		<span>회원 ID</span>
-    	</td>
-    	<td>
-    		<span>
- 				<input type="text" name="userId" size="15" id="">   	
-    		</span>
-    	</td>
-    </tr>
-    
-    <tr>
-        <td width="150" height="20" >
-            <p align="center"><b><span>제목</span></b></p>
-        </td>
-        <td width="450" height="20"><b><span>
-		<input type=text name="askTitle" size="20" id=""></span></b></td>
-    </tr>
-      <tr>
-        <td width="150" height="20" >
-            <p align="right"><b><span>내 용</span></b></p>
-        </td>
-        <td ><b><span style="font-size:9pt;">
-		<textarea name="askContent" cols="50" rows="10"></textarea></span></b></td>
-    </tr>
- 
-     <tr>
-        <td width="150" height="20">
-            <p align="center"><b><span>*파일첨부</span></b></p>
-        </td>
-        <td width="450" height="20">
-        	<b><span>
-        		 <input type="askAttach" name="file" maxlength="60" size="40">
-        	   </span></b>
-        </td>
-    </tr>
-    <tr>
-    	<span>작성날짜</span>
-    </tr>
-    <tr>
-    	<span></span>
-    </tr>
-    <tr>
-    	<td>
-    	<select>
-    		<option value="0">--카테고리종류--</option>
-			<option value="id_b">구매문의</option>
-			<option value="id_a">기타문의</option>
-		</select>
-    	</td>
-    	<td>
-    		<input type="text" placeholder="직접 입력해주세요" >
-    	</td>
-    </tr>
-   
-    
-    <tr>
-        <td width="450" height="20" colspan="2" align="center"><b><span><input type=submit value=문의하기 id="submit"> 
-        <input type=reset value=다시쓰기></span></b></td>
-    </tr>
-</table>
-
+ <form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=insertAsk"
+       onsubmit='return checkValid()' enctype="multipart/form-data">
+		<div class="container" role="main">
+			
+				<div class="mb-3">
+					<label for="title">회원 ID</label>
+					<input type="text" class="form-control" name="user_id" id="title" placeholder="회원의 ID를 입력해주세요">
+				</div>
+				<div class="mb-3">
+					<label for="title">제목</label>
+					<input type="text" class="form-control" name="ask_title" id="title" placeholder="제목을 입력해 주세요">
+				</div>
+				<div class="mb-3">
+					<label for="content">문의 내용</label>
+					<textarea class="form-control" rows="5" name="ask_content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+				</div>
+				<div class="mb-3">
+					<label for="attach">첨부파일</label>
+				 <input type="file" name="notice_attach" maxlength="" size="40">
+				</div>
+				<div class="mb-3">
+			         <label for="title">카테고리</label>
+			        
+			         <select name="ask_category" id = "ask_select_category"> 
+			          <option name="ask_category" value="">FAQ카테고리</option>
+			          <option name="ask_category" value="구매관련">구매관련</option>
+			           <option name="ask_category" value="구독관련">구독관련</option>
+			          <option name="ask_category" value="기타">기타</option>
+			        
+			         </select>
+			    </div>
+     			<div >
+     				<input type="submit" value="문의하기" />
+				    <input type="button" value="목록보기" onclick="location.href='ask2.jsp'"/>
+			</div>
+		</div>
 </form>
-
 <hr>
 <div align=right><span style="font-size:9pt;">&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>

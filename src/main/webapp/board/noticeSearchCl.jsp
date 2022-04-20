@@ -52,7 +52,7 @@
 	<!-- body -->
 	<div class="body"> 
 		<div><h1>공지사항</h1></div>
-				<!-- 검색하기 -->	
+		<!-- 검색하기 -->	
 		    <nav class="navbar navbar-light bg-light">
 			 <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeywordClient" method="post">
 			  <div class="search">
@@ -67,63 +67,57 @@
 			</nav>	
 		<hr>
 		
-	<table class="table" style="text-align:center" id="noticeList">
-	  <thead>
-	    <tr>
-	      <th>순서</th> 
-	      <th>제목</th>
-	      <th>날짜</th>
-	    </tr>
-	     </thead>
-         	<tbody>
-         		<section class="noticeList-main">
- 			   <c:choose>
-						<c:when test="${empty NoticeList}">
-							<tr>
-								<td colspan="6">공지사항이 없습니다.</td>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<c:forEach items="${NoticeList}" var="notice">
-							<tr>
-								<td>${notice.noticeNo}</td>
-								<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
-								<td>${notice.noticeRegdate}</td>
-							</tr>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
+	  <table class="table" style="text-align:center" id="noticeList">
+	    <thead>
+	      <tr>
+	       <th>순서</th> 
+	       <th>제목</th>
+	       <th>날짜</th>
+	      </tr>
+	    </thead>
+        <tbody>
+ 	      <c:choose>
+				<c:when test="${empty requestScope.list}">
+					<tr>
+						<td colspan="6">공지사항이 없습니다.</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${requestScope.list}" var="notice">
+					<tr>
+						<td>${notice.noticeNo}</td>
+						<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
+						<td>${notice.noticeRegdate}</td>
+					</tr>
+					</c:forEach>
+				</c:otherwise>
+		  </c:choose>
+		</tbody>
+	  </table>
 	</div>
 	</table>
 	</body>
-	
 			<nav aria-label="Page navigation example">
-				<jsp:useBean class="mimemi.mvc.paging.NoticeListPageCnt" id="p"/> 
+				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>
 				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
 				<c:set var="startPage" value="${pageNum - temp}"/>
 				<ul class="pagination justify-content-center">
 					<c:if test="${(startPage - p.blockcount) > 0}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectAll&pageNum=${startPage-1}">이전</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectByKeywordClient&pageNum=${startPage-1}&field=${requestScope.field}&keyword=${requestScope.keyword}">이전</a></li>
 					</c:if>
 					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
 						<c:if test="${(i-1) >= p.pageCnt}">
 							<c:set var="isLoop" value="true"/>
 						</c:if> 
 						<c:if test="${not isLoop}" >
-							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=notice&methodName=selectAll&pageNum=${i}">${i}</a></li> 
+							<li class="page-item ${i == pageNum ? ' active' : ''}"><a class="page-link page_num" href="${path}/front?key=notice&methodName=selectByKeywordClient&pageNum=${i}&field=${requestScope.field}&keyword=${requestScope.keyword}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
 					<c:if test="${(startPage + p.blockcount) <=p.pageCnt}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectAll&pageNum=${startPage+p.blockcount}">이후</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=notice&methodName=selectByKeywordClient&pageNum=${startPage+p.blockcount}&field=${requestScope.field}&keyword=${requestScope.keyword}">이후</a></li>
 					</c:if>
 				</ul>
 			</nav>
 	</body>
 </html>
-
-
- 
-

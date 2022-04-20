@@ -19,7 +19,7 @@ public interface AskService {
 	 * @param AskDTO(int askNo, String userId, String askTitle, String askContent, 
 			String askCategory)
 	 * */
-	void updateAsk(AskDTO askDTO) throws SQLException;
+	void updateAsk(AskDTO askDTO, String path) throws SQLException;
 	
 	/**
 	 * 1:1 문의 게시글 첨부파일 수정
@@ -32,17 +32,12 @@ public interface AskService {
 	 * 1:1 문의 삭제
 	 * @param int askNo
 	 * */
-	void deleteAsk(int askNo,String path) throws SQLException;
+	void deleteAsk(AskDTO ask,String path) throws SQLException;
 	
 	/**
 	 * 1:1 문의 전체 검색
 	 * */
 	List<AskDTO> selectAllAsk(int pageNum, String field) throws SQLException;
-	
-	/**
-	 * 1:1 문의 상세보기
-	 * */
-	AskDTO selectByUserId(String userId)throws SQLException;
 	
 	/**
 	 * 1:1 문의 전체 검색(페이지 처리)
@@ -59,6 +54,6 @@ public interface AskService {
 	/**
 	 * 1:1 문의 답변 여부 수정 기능
 	 * */
-	void updateState(int askNo, String state) throws SQLException;
+	void updateState(AskDTO askDto) throws SQLException;
 	
 }
