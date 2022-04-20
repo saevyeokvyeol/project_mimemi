@@ -7,7 +7,8 @@
 <html>
  <head>
  <meta charset="UTF-8">
- <title>공지사항 고객뷰어</title>
+ <title>공지사항</title>
+ <jsp:include page="../common/header.jsp"/>
 	</head>
 	<style type="text/css">
 	.left side {width : 300px;
@@ -121,6 +122,7 @@
 				</ul>
 			</nav>
 	</body>
+	<jsp:include page="../common/footer.jsp"/>
 </html>
 
 

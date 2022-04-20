@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FAQ</title>
-
+<title>FAQ게시판</title>
+<jsp:include page="../common/header.jsp"/>
 </head>
 <style type="text/css">
  .left side {width : 300px;
@@ -109,7 +109,7 @@
 					</c:if>
 				</ul>
 			</nav>
-		</section>
 	</body>
+<jsp:include page="../common/footer.jsp"/>	
 </html>
 

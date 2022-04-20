@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 <head>
 <meta charset="UTF-8">
 <title>공지사항 상세페이지</title>
+<jsp:include page="../common/header.jsp"/>
 </head>
 <style type="text/css">
  .left side {width : 300px;
@@ -91,4 +92,5 @@ pageEncoding="UTF-8"%>
 </tr>
 </table>
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>
