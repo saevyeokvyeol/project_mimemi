@@ -81,10 +81,30 @@ public class AnswerDAOImpl implements AnswerDAO {
 		return answerDto;
 	}
 
+	/**
+	 * 1:1 ´ñ±Û ¼öÁ¤
+	 * */
 	@Override
 	public int updateAnswerReply(AnswerDTO answerDTO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=proFile.getProperty("answer.update");
+		int result=0;
+		
+		try {
+			con = DbUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, answerDTO.getAnswerContent());
+			ps.setInt(2, answerDTO.getAskNo());
+			
+			result=ps.executeUpdate();
+			
+		}finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	/**

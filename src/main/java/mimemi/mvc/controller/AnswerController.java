@@ -78,11 +78,29 @@ public class AnswerController implements Controller {
 	}
 	
 	/**
+	 * 수정페이지이동
+	 * */
+	public ModelAndView updateAnswerReplyForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String askNo=request.getParameter("askNo");
+		AnswerDTO answerDto=answerService.selectByAskNo(Integer.parseInt(askNo));
+		request.setAttribute("answerDto", answerDto);
+		
+		return new ModelAndView("/manager/askAnswer2.jsp");
+	}
+	
+	/**
 	 * 댓글 수정
 	 * */
 	public ModelAndView updateAnswerReply(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		return null;
+		String askNo=request.getParameter("askNo");
+		String answerContent=request.getParameter("answerContent");
+		
+		AnswerDTO answerDto = new AnswerDTO(Integer.parseInt(askNo), answerContent);
+	
+		answerService.updateAnswerReply(answerDto);
+		
+		return new ModelAndView("/manager/managerAsk.jsp");
 	}
 	
 	/**

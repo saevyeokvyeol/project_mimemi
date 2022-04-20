@@ -123,7 +123,7 @@
     
     </tr>
     
-     <h3>댓글 정보1</h3>
+     <h3>댓글 정보</h3>
 	<div>
 		<div>
 			<div id="askReplyOutPut">
@@ -131,10 +131,26 @@
 			</div>
 		</div>
 	</div>
-	<div >
-					<a href="${path}/front?key=answer&methodName=updateAnswerReply&askNo=${askDto.askNo}">수정하기</a>
-						<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">삭제하기</a>
+	<div>
+	<hr>
+				<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">삭제하기</a>
+				<a href="${path}/manager/managerAsk.jsp">돌아가기</a>
 	</div>
+	<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=updateState"
+       onsubmit='return checkValid()' enctype="multipart/form-data">
+	<div class="mb-3">
+				<input type=hidden name="askNo" value="${askDto.askNo}">
+				
+			      
+			        
+			         <select name="ask_complete" id = "ask_select_category"> 
+			          <option name="ask_complete" value="">답변유무</option>
+			          <option name="ask_complete" value="T">True</option>
+			           <option name="ask_complete" value="F">False</option>
+			        
+			         </select>
+	</div>
+	</form>
 	
     
    

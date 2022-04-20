@@ -54,7 +54,7 @@ public interface AskDAO {
 	/**
 	 * 1:1 문의 답변 여부 수정 기능
 	 * */
-	int updateState(int askNo, String state) throws SQLException;
+	int updateState(AskDTO askDto) throws SQLException;
 	
 	/**
 	 * 문의에 대한 답변(댓글) 정보 가져오기

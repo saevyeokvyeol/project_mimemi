@@ -18,7 +18,12 @@ public class AskDTO {
 	
 	public AskDTO() {}
 	
-	public AskDTO(int askNo, String askTitle, String Content) {
+	public AskDTO(int askNo, String askComplete) {
+		this.askNo=askNo;
+		this.askComplete=askComplete;
+	}
+	
+	public AskDTO(int askNo, String askTitle, String askContent) {
 		this.askNo=askNo;
 		this.askTitle=askTitle;
 		this.askContent=askContent;

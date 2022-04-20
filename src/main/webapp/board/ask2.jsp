@@ -88,14 +88,7 @@
 								<td>${ask.askAttach}</td>
 								<td>${ask.askRegdate}</td>
 								<td>${ask.askCategory}</td>
-								
-								<td>
-								<span>
-								<a href="${path}/front?key=ask&methodName=selectByAskNo&askNo=${ask.askNo}">
-								${ask.askComplete}
-								</a>
-								</span>
-								</td>
+								<td>${ask.askComplete}</td>
 							</tr>
 							
 							</c:forEach>

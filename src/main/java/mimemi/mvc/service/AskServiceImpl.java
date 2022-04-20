@@ -25,10 +25,12 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public void updateAsk(AskDTO askDTO,String path) throws SQLException {
-		AskDTO dbAsk = askDao.selectByAskNo(askDTO.getAskNo());
-		if(dbAsk==null)throw new SQLException("해당번호의 글을 찾을 수 없습니다");
+		AskDTO askDto = askDao.selectByAskNo(askDTO.getAskNo());
 		
-		String dbAttach=dbAsk.getAskAttach();
+		if(askDto==null) throw new SQLException("문의를 찾을 수 없습니다.");
+		
+		
+		String dbAttach=askDto.getAskAttach();
 		
 		int result = askDao.updateAsk(askDTO);
 		
@@ -92,9 +94,27 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public void updateState(int askNo, String state) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public void updateState(AskDTO askDto) throws SQLException {
+		
+		/*
+		 * String dbAttach=askDTO.getAskAttach();
+		
+		int result = askDao.updateAsk(askDTO);
+		
+		if(result==0) {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete();
+			}
+			throw new SQLException("수정되지 않았습니다");
+		}else {
+			if(dbAttach!=null) {
+				new java.io.File(path+"/"+dbAttach).delete(); //경로확인하기
+			}
+		}
+		 * */	
+		int result=askDao.updateState(askDto);
+		if(result==0)throw new SQLException("수정되지 않았습니다.");
+		
 	}
 
 

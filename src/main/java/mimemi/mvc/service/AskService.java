@@ -54,6 +54,6 @@ public interface AskService {
 	/**
 	 * 1:1 문의 답변 여부 수정 기능
 	 * */
-	void updateState(int askNo, String state) throws SQLException;
+	void updateState(AskDTO askDto) throws SQLException;
 	
 }

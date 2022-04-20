@@ -24,14 +24,17 @@ public class AnswerServiceImpl implements AnswerService {
 	public AnswerDTO selectByAskNo(int askNo) throws SQLException {
 		
 		AnswerDTO answerDto = answerDao.selectByAskNo(askNo);
-		if(answerDto==null)throw new SQLException("댓글보기에 오류가 발생했습니다");
+	
 		
 		return answerDto;
 	}
 	
 	@Override
 	public void updateAnswerReply(AnswerDTO answerDTO) throws SQLException {
-		// TODO Auto-generated method stub
+		AnswerDTO dbAnswer = answerDao.selectByAskNo(answerDTO.getAskNo());
+		if(dbAnswer==null)throw new SQLException("해당번호의 글을 찾을 수 없습니다.");
+		
+		int result=answerDao.updateAnswerReply(answerDTO);
 
 	}
 

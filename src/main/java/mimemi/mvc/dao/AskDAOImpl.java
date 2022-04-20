@@ -86,15 +86,17 @@ public class AskDAOImpl implements AskDAO {
 				if(askDTO.getAskAttach()!=null) {
 					int re = updateAskAttachCon(con,askDTO.getAskNo(),askDTO.getAskAttach());
 						if(re!=1) {
-							con.rollback();
+						con.rollback();	
 							throw new SQLException("후기 파일 수정에 실패했습니다.");
 						}
 				}
+				con.commit();
 			}
 			
 		}finally {
 			con.commit();
 			DbUtil.dbClose(ps, con);
+			
 		}
 		
 		
@@ -257,9 +259,32 @@ public class AskDAOImpl implements AskDAO {
 	}
 
 	@Override
-	public int updateState(int askNo, String state) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateState(AskDTO askDto) throws SQLException {
+		Connection con=null;
+		PreparedStatement ps=null;
+		String sql=proFile.getProperty("ask.updateAskComplete");
+		int result = 0;
+		
+		try {
+			con=DbUtil.getConnection();
+			
+			
+			ps=con.prepareStatement(sql);
+			ps.setString(1, askDto.getAskComplete());
+			ps.setInt(2, askDto.getAskNo());
+			
+			
+			result=ps.executeUpdate();
+			
+		}finally {
+			
+			DbUtil.dbClose(ps, con);
+			
+		}
+		
+		
+		
+		return result;
 	}
 
 	@Override

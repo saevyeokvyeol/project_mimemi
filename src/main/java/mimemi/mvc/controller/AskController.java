@@ -124,7 +124,7 @@ public class AskController implements Controller {
 				//수정폼
 				//
 		
-		return new ModelAndView("board/askupdate.jsp");
+		return new ModelAndView("/board/askupdate.jsp");
 	}
 	
 	/**
@@ -142,7 +142,7 @@ public class AskController implements Controller {
 		String askNo=m.getParameter("askNo");
 		String askTitle=m.getParameter("askTitle");
 		String askContent=m.getParameter("askContent");
-		
+		System.out.println(askContent);
 		AskDTO ask = new AskDTO(Integer.parseInt(askNo), askTitle, askContent);
 		
 
@@ -150,10 +150,14 @@ public class AskController implements Controller {
 			String askAttach=m.getFilesystemName("askAttach");
 			
 			ask.setAskAttach(askAttach);
+			System.out.println("수정하려는 첨부파일이름 "+askAttach);
 		}
 		askService.updateAsk(ask,saveDir);
+		
+		
 	
-		return new ModelAndView("board/ask2.jsp");
+		return new ModelAndView("front?key=ask&methodName=selectAll",true);
+		
 	}
 	
 	/**
@@ -222,9 +226,21 @@ public class AskController implements Controller {
 	/**
 	 * 1:1 문의 답변 여부 수정 기능
 	 * */
-	public int updateState(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView updateState(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		return 0;
+
+		response.setContentType("text/html;charset=UTF-8"); 
+		
+		String askNo=request.getParameter("askNo");
+		String askComplete=request.getParameter("ask_complete");
+		
+		AskDTO ask = new AskDTO(Integer.parseInt(askNo), askComplete);
+		
+		askService.updateState(ask);
+		
+		
+		
+		return new ModelAndView("/manager/managerAsk.jsp");
 	}
 }//AskController End
 

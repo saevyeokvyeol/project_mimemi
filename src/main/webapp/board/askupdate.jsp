@@ -41,7 +41,7 @@ function checkValid() {
 
 	$(function(){
 		var target = '${askDto.askNo}'
-		alert(target);
+		//alert(target);
 		function selectReply(){
             $.ajax({
 				url: "${path}/ajax" , //서버요청주소
@@ -50,7 +50,7 @@ function checkValid() {
 				data: {key:"answer", methodName:"selectAnswerReply", askNo: target} , //서버에게 보낼 데이터정보(parameter정보)
 				
 				success: function(result){
-					alert("검색성공~")
+					//alert("검색성공~")
 					let str="";														
 					$.each(result,function(index,reply){					
                         str+=`<div class="reply-user-info">`;
