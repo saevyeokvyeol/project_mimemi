@@ -40,8 +40,8 @@
 		<header class="main-header">
 			<div class="main-header-top-right">
 				<ul>
-					<li><a href="#">회원가입</a></li>
-					<li><a href="#">로그인</a></li>
+					<li><a href="${path}/user/join01.jsp">회원가입</a></li>
+					<li><a href="${path}/user/login.jsp">로그인</a></li>
 				</ul>
 			</div>
 			<h1><a href="${path}/index.jsp"><img src="${path}/img/ui/main_logo.png" alt="미미미 로고"></a></h1>
@@ -52,7 +52,7 @@
 					<li><a href="#" id="allCategory">전체 카테고리</a></li>
 					<li><a href="${path}/goods/goodsList.jsp">도시락 정기배송</a></li>
 					<li><a href="#">이달의 식단</a></li>
-					<li><a href="#">이벤트</a></li>
+					<li><a href="${path}/front?key=event&methodName=selectAll">이벤트</a></li>
 				</ul>
 				<ul>
 					<li><a href="#">검색</a></li>
@@ -77,8 +77,9 @@
 						<li>
 							<h5>마이페이지</h5>
 							<ul>
-								<li><a href="">주문 내역 보기</a></li>
-								<li><a href="">주문 내역 보기</a></li>
+								<li><a href="${path}/mypage/orderView.jsp">나의 주문 내역</a></li>
+								<li><a href="${path}/mypage/calendar.jsp">나의 배송 캘린더</a></li>
+								<li><a href="${path}/board/ask2.jsp">1:1 문의 내역</a></li>
 							</ul>
 						</li>
 						<li>
