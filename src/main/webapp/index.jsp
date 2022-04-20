@@ -15,6 +15,21 @@
 		<style type="text/css">
 			.index-view {width: 100%;}
 			.carousel, .carousel-inner {height: 512px;}
+			
+			.vertical-center {
+			  margin: 0;
+			  position: absolute;
+			  top: 50%;
+			  -ms-transform: translateY(-50%);
+			  transform: translateY(-50%);
+			}
+			
+			.center-button{
+		        width:300px;
+		        margin:auto !important;
+		        display:block !important;
+		        border:20px;
+		    }
 		</style>
 	</head>
 	<body>
@@ -46,6 +61,12 @@
 		  </button>
 		</div>
     </section>
+	<jsp:include page="goods/goodsList.jsp"/>
+	<div class="container-fluid">
+		<button class="btn btn-success center-button" onclick="location.href='${path}/front?key=daymeal&methodName=getDayMenuCalendar'">이달의 식단으로 이동하기
+			<span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span class="visually-hidden">unread messages</span></span>
+		</button>
+	</div>
 	</body>
 	<jsp:include page="common/footer.jsp"/>
 </html>

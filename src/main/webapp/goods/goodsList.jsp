@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>goodsList</title>
 
-<jsp:include page="../common/header.jsp"/>
+<%-- <jsp:include page="../common/header.jsp"/> --%>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -85,9 +85,9 @@
     		selectGoodsList()
     	}
 
-		if (window.location.href.endsWith('.jsp')) {
+		/* if (!window.location.href.endsWith('index.jsp') && window.location.href.endsWith('.jsp')) {
 			window.location.href='${path}/front?key=goods&methodName=goodsList';	
-		}
+		} */
     	initialize()
     	
     })
@@ -96,19 +96,8 @@
 </head>
 <body>
 <div class="wrap">
-        <div class="jumbotron">
-            <h1 class="display-4">미미미 입니다!</h1>
-            <p class="lead">미미미 정기 배송 서비스를 이용해 주셔서 감사합니다.</p>
-            <!-- <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </p>
-        </div>
-
-        <div class="row row-cols-1 row-cols-md-3 g-4" id="goodsCard">
-        </div>
-    </div>
-
+	<div class="row row-cols-1 row-cols-md-3 g-4" id="goodsCard">
+	</div>
+</div>
 </body>
 </html>
