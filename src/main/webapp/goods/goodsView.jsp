@@ -147,9 +147,6 @@
 				}) // ajax 종료
 			}) // 장바구니에 담기 종료
 			
-			// 구매하기
-			
-			
     		selectByGoodsId();
     	})
     </script>
@@ -167,9 +164,8 @@
                 <div class="goodsinformation">
                     <a class="goodsname" id="goodsname"></a>
                     <p class="goodsdetail" id="goodsdetail"></p>
-
                 </div>
-                <form action="">
+                <form action="${path}/front?key=cart&methodName=viewOrderForm&mode=D" method="post">
 	                <div class="order-box">
 	                    <div class="form-group">
 	                        <label for="exampleInputEmail1">배송요일</label>
@@ -203,7 +199,8 @@
 	                        <input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
 	                    </div>
 	                    <div>
-	                    <input type="hidden" name="goodsId" value="">
+	                    	<input type="hidden" name="goodsId" value="">
+	                    	<input type="hidden" name="mode" value="D">
 	                    	<input type="hidden" name="goodsPrice" value="">
 	                    	<label for="exampleInputPassword1">금액</label>
 	                    	<a class="goodsprice" id="goodsprice"></a>

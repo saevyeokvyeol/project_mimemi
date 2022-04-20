@@ -110,7 +110,6 @@ $(function() {
 						return;
 					}
 				}//success 끝
-				error : 
 			})//ajax 끝
 		}) //function 끝
 		
