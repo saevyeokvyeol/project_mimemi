@@ -23,6 +23,18 @@ public class DayMealController implements Controller {
 		ModelAndView mv = new ModelAndView("manager/dayMeal.jsp");
 		return mv;
 	}
+	
+	/**
+	 * 상품조회(사용자 페이지)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ModelAndView getDayMenuCalendar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mv = new ModelAndView("goods/dayMenuCalendar.jsp");
+		return mv;
+	}
 
 	public void dayMealSelectByMonth(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");

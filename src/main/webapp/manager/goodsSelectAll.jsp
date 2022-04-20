@@ -47,7 +47,7 @@
 			$.each(result, function(index, item){
 				text+="<tr>"
 				text+='<td>' + item.goodsId + '</td>';
-				text+='<td>' + item.goodsThumbnail + '</td>';
+				text+='<td><img src=\"' + item.goodsThumbnail + '\"></td>';
 				text+='<td>' + item.goodsName + '</td>';
 				text+='<td>' + item.goodsPrice + '</td>';
 				text+='<td>' + item.goodsSale + '</td>';

@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>FAQ</title>
-
+<jsp:include page="../common/header.jsp"/>
 </head>
 <style type="text/css">
  .left side {width : 300px;
@@ -22,8 +22,7 @@
  table {width:1200px;}
  th, td {border : 1px solid white;}
 </style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
 
 </script>
@@ -74,7 +73,12 @@
                   </button>
                 </h2>
                 <div id="flush-collapseOne${faq.faqNo}" class="faq-content" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                   <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
+                    <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent} 
+                     <c:if test="${not empty faq.faqAttach}">
+                     <div> 
+                     <span class="faq-list-img-preview-area">
+                     <img src="${path}/img/${faq.faqAttach}"></span></div>
+                     </c:if>
                 </div>           
               </c:forEach>
            </c:otherwise>
@@ -111,4 +115,5 @@
          </nav>
       </section>
    </body>
+   <jsp:include page="../common/footer.jsp"/>
 </html>

@@ -184,7 +184,7 @@ public class UserDAOImpl implements UserDAO {
 			rs=ps.executeQuery();
 			if(rs.next()) {
 				user = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
-						rs.getBoolean(7), rs.getString(8));
+						rs.getString(7), rs.getString(8));
 			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
@@ -206,7 +206,7 @@ public class UserDAOImpl implements UserDAO {
 			rs=ps.executeQuery();
 			if(rs.next()) {
 				user = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
-						rs.getBoolean(7), rs.getString(8));
+						rs.getString(7), rs.getString(8));
 			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);
@@ -258,7 +258,7 @@ public class UserDAOImpl implements UserDAO {
 			
 			if(rs.next()) {
 				UserDTO user = new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
-						rs.getBoolean(7), rs.getString(8));
+						rs.getString(7), rs.getString(8));
 				
 				userList.add(user);
 			}
@@ -341,20 +341,18 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int deleteUser(String userId, String userPwd) throws SQLException {
+	public int deleteUser(String userId) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		int result = 0;
 		
-		String sql = proFile.getProperty("user.deleteUser");//update users set user_quit=? where user_id=? and user_pwd=?
+		String sql = proFile.getProperty("user.deleteUser");//update users set user_quit='T' where user_id=?
 		
 		try {
 			con=DbUtil.getConnection();
 			ps=con.prepareStatement(sql);
-			ps.setString(1, "T");
-			ps.setString(2, userId);
-			ps.setString(3, userPwd);
+			ps.setString(1, userId);
 			result = ps.executeUpdate();
 		}finally {
 			DbUtil.dbClose(ps, con);

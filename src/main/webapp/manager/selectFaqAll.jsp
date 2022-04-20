@@ -81,7 +81,7 @@
 							<tr>
 								<td>${faq.faqNo}</td>
 								<td>${faq.faqTitle}</td>
-								<td>${faq.faqContent}</td>
+								<td><a href="${path}/front?key=faq&methodName=selectAll">${faq.faqContent}</a></td>
 								<td>${faq.faqAttach}</td>
 								<td>${faq.faqRegdate}</td>
 								<td>${faq.faqModidate}</td>
