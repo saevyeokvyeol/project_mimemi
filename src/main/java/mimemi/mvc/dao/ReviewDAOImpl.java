@@ -254,7 +254,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		try {
 			int totalCount =this.getTotalCountByKeyword(reviewKeyword,field);
-			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  totalCount/PageCnt.getPagesize()+1;
+			int totalPage =totalCount%PageCnt.getPagesize()==0 ? totalCount/PageCnt.getPagesize() :  (totalCount/PageCnt.getPagesize())+1;
 			PageCnt pagecnt = new PageCnt();
 			pagecnt.setPageCnt(totalPage);
 			pagecnt.setPageNo(pageNo);

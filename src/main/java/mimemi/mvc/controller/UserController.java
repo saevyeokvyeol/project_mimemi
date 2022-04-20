@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mimemi.mvc.dao.UserDAO;
+import mimemi.mvc.dao.UserDAOImpl;
+import mimemi.mvc.dto.AddrDTO;
+
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AddrService;
 import mimemi.mvc.service.AddrServiceImpl;
@@ -16,6 +20,7 @@ import net.sf.json.JSONArray;
 public class UserController implements Controller {
 	private UserService userService = new UserServiceImpl();
 	private AddrService addrService = new AddrServiceImpl();
+	private UserDAO userDAO = new UserDAOImpl();
 	
 	@Override
 	public ModelAndView hendlerRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -30,11 +35,22 @@ public class UserController implements Controller {
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		String userPhone = request.getParameter("userPhone");
-		String userBirth = request.getParameter("userBirth"); //주소값 따로 처리하는 방법 다시한번 설명해주세요...
+		String userBirth = request.getParameter("userBirth");
+
+		String addrName = userId;
+		String zipcode = request.getParameter("zipcode");
+		System.out.println(userId);
 		
+		String addrAddr = request.getParameter("addrAddr");
+		String addrDetailAddr = request.getParameter("addrDetailAddr");
+		String addrRefAddr = request.getParameter("addrRefAddr");
 		
+		UserDTO user = new UserDTO(userId, userName, userPwd, userPhone, 0, userId, false, userBirth);
+		AddrDTO addr = new AddrDTO(userId, addrName, Integer.parseInt(zipcode) , addrAddr, addrDetailAddr, addrRefAddr, userName, userPhone);
 		
-		return new ModelAndView("user/join02.jsp");
+		userService.insertUser(user, addr);
+		
+		return new ModelAndView("user/join04.jsp");
 	}
 	
 	/**
@@ -111,7 +127,7 @@ public class UserController implements Controller {
 		
 		UserDTO userDTO = new UserDTO(userId, userPwd);
 		
-		userService.updateUserPwd(userId, userPwd, userPwd);
+		userService.updateUserPwd(userPwd);
 		
 		logoutUser(request, response); //??????
 		
@@ -137,9 +153,26 @@ public class UserController implements Controller {
 		String userName = request.getParameter("userName");
 		String userPhone = request.getParameter("userPhone");
 		
-		userService.updateUserPwd(userId, userPhone, userPhone);
+		userService.selectUserPwd(userId, userName, userPhone);
 		
 		return new ModelAndView("user/login.jsp");
+	}
+	/**
+	 * id로 유저 찾기
+	 * */
+	public void selectById(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String userId=request.getParameter("userId");
+		
+		userService.selectByID(userId);		
+	}
+	
+	/**
+	 * phone으로 유저 찾기
+	 * */
+	public void selectByPhone(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String userPhone=request.getParameter("userPhone");
+		
+		userService.selectByPhone(userPhone);		
 	}
 	
 	/**
@@ -154,4 +187,32 @@ public class UserController implements Controller {
 		return new ModelAndView("index.jsp", true);
 	}
 
+
+	/**
+	 * 아이디 중복 체크
+	 * */
+	public void idCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String userId = request.getParameter("userId");
+		boolean result = userDAO.idCheck(userId);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result) {out.print("true");
+		}else {out.print("false");
+		}
+	}
+	
+	/**
+	 * 핸드폰번호 중복 체크
+	 * */
+	public void phoneCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String userPhone = request.getParameter("userPhone");
+		boolean result = userDAO.idCheck(userPhone);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result) {out.print("true");
+		}else {out.print("false");
+		}
+	}
 }

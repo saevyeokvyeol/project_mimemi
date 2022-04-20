@@ -35,7 +35,7 @@
 		<ul class="menu">
 			<li><a href="${path}/front?key=notice&methodName=selectAll">공지사항</a></li>
 			<li class="">
-				<a href="faq.jsp">FAQ</a>
+				<a href="${path}/front?key=faq&methodName=selectAll">FAQ</a>
 				<ul>
 					<li class=""><a href="">교환/환불</a></li>
 					<li class=""><a href="">회원관련</a></li>
@@ -116,10 +116,9 @@
 					</c:if>
 				</ul>
 			</nav>
-		</section>
 	</body>
 </html>
-	</html>
+
 
  
 

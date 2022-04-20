@@ -61,4 +61,17 @@ public interface EventService {
 	 * 특정 페이지를 클릭했을 때 그 페이지로 넘어간다.
 	 * */
 	List<EventDTO> getEventList(int pageNo) throws SQLException;
+
+	/**
+	 * 이벤트 게시글 전체 조회
+	 * @return: List<EventDTO>
+	 * */
+	List<EventDTO> selectAll(String state, int pageNo) throws SQLException;
+
+	/**
+	 * 이벤트 게시글 등록
+	 * @param: EventDTO(int eventId, String eventTitle, String eventContent, String eventAttach, String eventImg,
+	 * 			String eventStartdate, String eventEnddate)
+	 * */
+	void insert(EventDTO event, String saveDir) throws SQLException;
 }

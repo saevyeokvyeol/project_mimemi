@@ -60,6 +60,8 @@ function sample6_execDaumPostcode() {
     }).open();
 }</script>
 <script type="text/javascript">
+$(function() {
+
 	//datepicker 설정
 	$.datepicker.setDefaults({
 		dateFormat: 'yy-mm-dd',
@@ -75,74 +77,227 @@ function sample6_execDaumPostcode() {
 	});
 	
 	$(".datepicker").datepicker();
-	
+})
+
+</script>
+<script type="text/javascript">
+
+	$(function() {
+		isIdChecked = false;
+		isPhoneChecked = false;
+		
+		/*
+		  아이디 중복체크
+		*/
+		$("#idCheck").click(function() {
+
+			if ($(".userId_input").val() == '') {
+				alert("아이디를 입력해주세요.")
+				return;
+			}
+			$.ajax({
+				url : "${path}/ajax",
+				data : {
+					key : "user",
+					methodName : "idCheck",
+					userId : $("input[id=userId]").val()
+				}, 
+				datatype : "text",
+				success : function(data) {
+					
+					if (data == "true") {
+						alert("이미 존재하는 아이디 입니다.");
+						$(".userId_input").focus();
+					} else {
+						alert("사용가능한 아이디 입니다.");
+						isIdChecked = true;
+						return;
+					}
+				},//success 끝
+				error : function(err){  
+		   			alert(err+"에러 발생했어요.");
+		   		}
+			})//ajax 끝
+		}) //function 끝
+		
+		
+		/*
+		핸드폰 번호 형식 체크
+		*/
+		$("#userPhone").focusout(function(){
+			var userPhone = $(this).val();
+			var isValidPhone = /^010?([0-9]{8})$/;
+			
+			if(!isValidPhone.test(userPhone)){
+				alert("'-'를 제외하고 010으로 시작하는 휴대폰 번호 11자리를 입력해주세요");
+				return false;
+				$(".userPhone_input").focus();
+			}
+			return true;
+		})//휴대폰 번호 형식 체크 끝
+		
+		
+		/*
+		핸드폰 번호 중복 체크
+		*/
+		$("#phoneCheck").click(function() {
+
+			if ($(".userPhone_input").val() == '') {
+				alert("휴대폰번호를 입력해주세요.")
+				return;
+			}
+			if ($(".userPhone_input").val().includes("-")){
+				alert("-를 제외한 번호 11자리를 입력해주세요")
+				return;
+			}
+			$.ajax({
+				url : "${path}/ajax",
+				data : {
+					key : "user",
+					methodName : "phoneCheck",
+					userPhone : $("input[id=userPhone]").val()
+				}, 
+				datatype : "text",
+
+				success : function(data) {
+					if (data == "true") {
+						alert("이미 가입한 이력이 있는 번호입니다.<br>아이디 찾기를 이용해주세요");
+						$(".userPhone_input").focus();
+						return;
+					} else {
+						alert("사용가능한 번호입니다.");
+						isPhoneChecked=true;
+						return;
+					}
+				}//success 끝
+			})//ajax 끝
+		}) //번호 중복 체크 끝
+		
+		/*
+		id, phone 값 변경하면 중복체크 다시
+		*/
+		$("input[id=userId]").keyup(function(){
+			isIdChecked=false;
+		})
+		$("input[id=userPhone]").keyup(function(){
+			isPhoneChecked=false;
+		})
+		
+		/*
+		아이디 형식 체크
+		*/
+		$("#userId").focusout(function(){
+			var isValidId = /^[a-z0-9]{6,15}$/;
+			if( !isValidId.test($(this).val())){
+				alert("아이디는 영문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요");
+				return false;
+				$(".userId_input").focus();
+			}
+			return true;
+		})
+		/*
+		비밀번호 형식 체크
+		*/
+		$("#userPwd").focusout(function(){
+			var isValidPwd = /^[a-zA-Z0-9]{8,20}$/;
+			if( !isValidPwd.test($(this).val())){
+				alert("비밀번호는 영대소문자와 숫자를 조합하여 8자리 이상 최대 20자리 이하로 입력해주세요");
+				return false;
+				$(".userPwd_input").focus();
+			}
+			return true;
+		})
+		
+	})
+</script>
+<script type="text/javascript">
+
+$(function(){
+	/*
+	비밀번호 일치 여부 체크
+	*/
+	$("#userPwd2").focusout(function() {
+		let pwd1 = $("#userPwd").val();
+		let pwd2 = $("#userPwd2").val();
+		
+// 		alert("")
+		
+		if(pwd1 != "" && pwd2 ==""){
+			null;
+		}else if(pwd1 != "" || pwd2 != ""){
+			if(pwd1 == pwd2){
+				$("#pwdCheck_Success").css("display","inline-block");
+				$("#pwdCheck_Fail").css("display","none");
+			}else{
+				$("#pwdCheck_Success").css("display","none");
+				$("#pwdCheck_Fail").css("display","inline-block");
+			}	
+		}
+	})
+})
+
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#joinForm").submit(function(){
+		/*
+		아이디, 핸드폰번호 중복체크 여부 확인 기능
+		*/
+		if(!isIdChecked || isPhoneChecked)
+		return false;
+		alert("id와 핸드폰번호 중복체크를 진행해주세요.")
+	})
 })
 </script>
-
 </head>
 <body>
-<form>
+<form name="joinForm" method="post" id="joinForm" action="${path}/front?key=user&methodName=insertUser">
 	<h1>회원가입</h1>
 	<table cellspacing="0" align="center">
+	
 		<tr>
 			<th>아이디</th>
-			<td colspan="3"><input type="text" name="ID" size="50" placeholder="영문자 숫자를 조합하여 최소 6자리 이상 입력해주세요"/><input type="submit" value="중복확인"></td>
+			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자와 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
+			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
+			<img id="id_check_success" style="display: none;">
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" name="pwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요"></td>
+			<td><input type="password" id="userPwd" name="userPwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요" required></td>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" name="pwd2" size="50" placeholder="한번 더 입력해주세요"></td>
+			<td><input type="password" id="userPwd2" size="50" placeholder="한번 더 입력해주세요" required>
+			<span id="pwdCheck_Success" style="display:none;">비밀번호가 일치합니다</span>
+			<span id="pwdCheck_Fail" style="display:none;">비밀번호가 일치하지 않습니다.</span></td>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<td colspan="3"><input type="text" name="name" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요"></td>
+			<td colspan="3"><input type="text" id="userName" name="userName" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요" required></td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호</th>
-			<td colspan="3"><input type="text" name="phone" size="50" placeholder="-를 제외하고 입력해주세요"><input type="submit" value="중복확인"></td>
-		</tr>
-		<tr>
-			<th>이메일 주소</th>
-			<td colspan="3"><input type="text" name="E-MAIL" size="30">@
-				<select name="domain" size="1">
-					<option value="0">선택하세요</option>
-					<option value="naver.com">naver.com</option>
-					<option value="gmail.com">gmail.com</option>
-					<option value="daum.net">daum.net</option>
-			</select></td>
-		</tr>
-		<tr>
-			<td>배송지 주소</td>
-			<td>
-				<input type="text" id="sample6_postcode">
-				<input type="button" onclick="sample6_execDaumPostcode()"><br>
-				<input type="text" id="sample6_address"><br>
-				<input type="text" id="sample6_detailAddress">
-				<input type="text" id="sample6_extraAddress">
 
-			</td>
+			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요" required>
+			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
 			<td>
-				<input type="text" readonly="readonly" class="datepicker">
+				<input type="text" name="userBirth" readonly="readonly" class="datepicker" placeholder="날짜를 골라주세요" required>
 			</td>
 		</tr>
 		<tr>
-			<th>우편번호</th>
-			<td colspan="3"><input type="text" name="zip-code" size="10">-
-				<input type="text" name="zip-code" size="10"> <input
-				type="submit" value="우편번호검색"></td>
+			<th>배송지 주소</th>
+			<td>
+				<input type="text" id="sample6_postcode" name="zipcode" readonly="readonly" required>
+				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호검색"><br>
+				<input type="text" id="sample6_address" name="addrAddr" required><br>
+				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" placeholder="상세주소1(선택)">
+				<input type="text" id="sample6_extraAddress" name="addrRefAddr" placeholder="상세주소2(선택)">
+			</td>
 		</tr>
 		<tr>
-			<th>주소</th>
-			<td colspan="3"><input type="text" name="address" size="50">
-			</td>
-		</tr>	
-		<tr>
-			<td><input type="submit" value="취소"> <input type="submit" value="회원가입"></td>
+			<td><a href = "../index.jsp" id="cancelBtn">취소</a> <input type="submit" id="joinBtn" value="회원가입"></td>
 		</tr>
 
 	</table>
