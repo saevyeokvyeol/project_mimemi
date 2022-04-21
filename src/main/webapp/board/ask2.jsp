@@ -27,6 +27,7 @@
 				vertical-align:middle;}
 			.side-minibar {padding: 0;}
 			.side-minibar > a {font-size: 14px; padding-left: 40px;}
+			table{font-size: 15px;}
 			
 		</style>
      	
