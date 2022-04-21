@@ -183,7 +183,7 @@
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "json",
-						data: {key: "coupon", methodName: "selectCpByUserId", userId: "happy01"},
+						data: {key: "coupon", methodName: "selectCpByUserId"},
 						success: function(result) {
 							let text = "";
 							let count = 0;

@@ -8,14 +8,6 @@ pageEncoding="UTF-8"%>
         <title>Document</title>
        <jsp:include page="../common/header.jsp"/>
         <style>
-<<<<<<< HEAD
-=======
-            
-            .container{
-                width: 1000px;
-                margin: auto;
-            }
->>>>>>> 740efad638ce99b843966dc819e65d01c10eed29
             .review-view{
                 width: 1200px; margin: auto; padding: 50px 0;
             }
@@ -26,8 +18,14 @@ pageEncoding="UTF-8"%>
 
 			.review-content-title > div {margin: 20px 0 0; display: flex; justify-content: space-between;}
             
+            .review-content-title > div > span > span:last-child {margin-left: 30px;}
+            
 			.review-contentview {
 				width: 1000px; margin: 50px auto;
+			}
+			
+			.review-Image {
+				max-width: 100%;
 			}
 
             .reivew-writer{
@@ -40,12 +38,6 @@ pageEncoding="UTF-8"%>
                 width:130px;
                 height: auto;
                 padding-bottom: 5px;                
-            }
-            .review-contentTitle{
-                box-sizing: border-box;
-                height: 40px;
-                font-size: large;
-                font-weight: bold;
             }
             
             .review-goods{
@@ -112,7 +104,6 @@ pageEncoding="UTF-8"%>
                 padding-bottom: 5px;
             }
             .reply-content-text{
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 width: fit-content;
                 padding: 10px;
                 border-radius: 15px;
@@ -261,7 +252,7 @@ pageEncoding="UTF-8"%>
             $(document).on("click","#delete-btn",function(){
                 var reivewId = $(this).attr("name")
                 //alert(reivewId)
-                if(loginUser!=reivewId|| !loginUser){
+                if(loginUser!=reivewId || !loginUser){
                     alert("게시물은 자신이 작성한 게시물만 삭제 가능합니다.")
                 }else{
                     let url = `${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}`
@@ -287,21 +278,16 @@ pageEncoding="UTF-8"%>
 
             selectAllReply();
         })
-        
-        	
         </script>
-        
-
     </head>
     <body>
-<<<<<<< HEAD
         <section class="review-view">
 		<h1>후기 게시판</h1>
 		<div class="review-content-title">
 			<h4>${reviewDetail.reviewTitle}</h4>
 			<div>
 				<span>
-					<strong class="userName">${reviewDetail.userDTO.userName}작성자이름</strong>
+					<strong class="userName">${reviewDetail.userId.substring(0,4)}****</strong>
 					<span class="review-rate">
 						<c:choose>
 							<c:when test="${reviewDetail.reviewRate==1}">
@@ -323,7 +309,7 @@ pageEncoding="UTF-8"%>
 					</span>
 				</span>
 				<span>
-					<span>조회수</span><span>${reviewDetail.reviewViews}</span>
+					<span>조회수</span> <span>${reviewDetail.reviewViews}</span>
 					<span>${reviewDetail.reviewRegdate}</span>
 				</span>
 				
@@ -348,71 +334,6 @@ pageEncoding="UTF-8"%>
 				</div>
 			</div>
             <!-- <리뷰 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
-=======
-        <section>
-        <div class="container">
-            <div class="review-title">
-                <h4>후기 게시판</h4>
-                <hr>
-            </div>
-            <div class="review-view">
-                <div class="review-Image">
-                    <c:choose>
-                        <c:when test ="${not empty reviewDetail.reviewAttach}">
-                            <span>
-                            	<img src="${path}/img/save/${reviewDetail.reviewAttach}" alt="회원이 올린 후기 사진입니다." name="reviewImg" id="reviewImg">
-                            </span>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="review-Image-isEmpty">
-                                <img src="${path}/img/goods/${reviewDetail.goodsDTO.goodsThumbnail}" alt="후기를 작성한 상품의 썸네일 이미지입니다." name="reveiwImg-when-empty" id="reveiwImg-when-empty">
-                            </span>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-                <div class="review-userInfo">
-                    <div class="reivew-writer">
-                        <div class="review-rate">
-                            <c:choose>
-                                <c:when test="${reviewDetail.reviewRate==1}">
-                                    <span> <img src="${path}/img/ui/starRate1.jpg" class="starRateImg"></span>
-                                </c:when>
-                                <c:when test="${reviewDetail.reviewRate==2}">
-                                    <span><img src="${path}/img/ui/starRate2.jpg" class="starRateImg"></span>
-                                </c:when>
-                                <c:when test="${reviewDetail.reviewRate==3}">
-                                    <span><img src="${path}/img/ui/starRate3.jpg" class="starRateImg"></span>
-                                </c:when>
-                                <c:when test="${reviewDetail.reviewRate==4}">
-                                    <span><img src="${path}/img/ui/starRate4.jpg" class="starRateImg"></span>
-                                </c:when>
-                                <c:when test="${reviewDetail.reviewRate==5}">
-                                    <span><img src="${path}/img/ui/starRate5.jpg" class="starRateImg"></span>
-                                </c:when>
-                            </c:choose>
-                        </div>
-                        <div>
-                            <strong class="userName">${reviewDetail.userId.substring(0,4)}****</strong>
-                            <span>${reviewDetail.reviewRegdate}</span>
-                        </div>
-                    </div>
-                    <div class="review-contentTitle">
-                        <p>${reviewDetail.reviewTitle}</p>
-                    </div>
-                    <div class="review-content">
-                        <pre>${reviewDetail.reviewContent}</pre>
-                    </div>
-                    <div>
-                        <span>조회수</span><span>${reviewDetail.reviewViews}</span>
-                    </div>
-                    <div class="review-goods">
-                            <img src="${path}/img/goods/${reviewDetail.goodsDTO.goodsThumbnail}" alt="상품 이미지입니다." name="goodsImg" id="goodsImg">
-                            <a href="#">${reviewDetail.goodsDTO.goodsName}</a>
-                    </div>
-                </div>
-            </div>
-            <!-- 리뷰 정보 하단-->
->>>>>>> 740efad638ce99b843966dc819e65d01c10eed29
             <div class="base-btn">
                 <span class="bLeft"><a href="#" id="back-list-btn">목록으로 돌아가기</a></span>
                 <span class="bRight"><a href="#" id="delete-btn" name="${reviewDetail.userId}">삭제</a></span>

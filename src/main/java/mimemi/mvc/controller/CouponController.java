@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.LiveCouponDTO;
 import mimemi.mvc.dto.RgCouponDTO;
 import mimemi.mvc.dto.UserCouponDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.CouponService;
 import mimemi.mvc.service.CouponServiceImpl;
 import net.sf.json.JSONArray;
@@ -62,7 +64,10 @@ public class CouponController implements Controller {
 	public void selectCpByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		
-		String userId = request.getParameter("userId");
+		HttpSession session = request.getSession();
+		
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		List<UserCouponDTO> list = couponService.selectCpByUserId(userId);
 		
 		JSONArray arr = JSONArray.fromObject(list);
