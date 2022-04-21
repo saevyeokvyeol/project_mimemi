@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>1 : 1문의 - 미미미</title>
+<title>1 : 1문의 - 미미미</title>
 	<jsp:include page="../common/header.jsp"/>
 		 	
 		<!-- CSS only -->
@@ -50,11 +50,11 @@
                 text-align: center;
             }
 		</style>
-     	
 </head>
 <body>
+
 <section class="askList-main">
-	<h1><a href="${path}/front?key=ask&methodName=selectAll">1 : 1 문의 목록</a></h1>
+	<h1><a href="${path}/front?key=ask&methodName=selectByKeyword">1 : 1 문의 목록</a></h1>
 			
 		<div>
 			 <nav class="navbar navbar-light bg-light">
@@ -135,18 +135,18 @@
 				<c:set var="startPage" value="${pageNum - temp}"/>
 				<ul class="pagination justify-content-center">
 					<c:if test="${(startPage - p.blockcount) > 0}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=ask&methodName=selectAll&pageNum=${startPage-1}">이전</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=ask&methodName=selectByKeyword&pageNum=${startPage-1}">이전</a></li>
 					</c:if>
 					<c:forEach var='i' begin='${startPage}' end='${(startPage-1) + p.blockcount}'> 
 						<c:if test="${(i-1) >= p.pageCnt}">
 							<c:set var="isLoop" value="true"/>
 						</c:if> 
 						<c:if test="${not isLoop}" >
-							<li class="page-item ${i == pageNum ? ' active' : 'page'}"><a class="page-link page_num" href="${path}/front?key=ask&methodName=selectAll&pageNum=${i}">${i}</a></li> 
+							<li class="page-item ${i == pageNum ? ' active' : 'page'}"><a class="page-link page_num" href="${path}/front?key=ask&methodName=selectByKeyword&pageNum=${i}">${i}</a></li> 
 						</c:if>
 					</c:forEach>
 					<c:if test="${(startPage + p.blockcount) <=p.pageCnt}">
-						<li class="page-item"><a class="page-link" href="${path}/front?key=ask&methodName=selectAll&pageNum=${startPage+p.blockcount}">이후</a></li>
+						<li class="page-item"><a class="page-link" href="${path}/front?key=ask&methodName=selectByKeyword&pageNum=${startPage+p.blockcount}">이후</a></li>
 					</c:if>
 				</ul>
 			</nav>
