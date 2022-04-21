@@ -37,7 +37,7 @@
 		</script>
   </head>
    <body>
-	<section class="noticeList-main">
+	<section class="noticeList-main d-flex p-2 bd-highlight">
 			<h1><a href="${path}/front?key=notice&methodName=selectAllNotice">공지사항 관리</a></h1>
 			<section class="notice_sort">
 				<select name="notice_sort" id="">
