@@ -35,14 +35,6 @@ public class DispatcherServlet extends HttpServlet {
 		String key = request.getParameter("key");
 		String methodName = request.getParameter("methodName");
 		
-		if(key == null) {
-			key = "elec";
-		}
-		
-		if(methodName == null) {
-			methodName = "select";
-		}
-		
 		System.out.println("key = " + key + ", methodName = " + methodName);
 		try {
 			// clzMap에서 키 값에 해당하는 밸류(클래스) 가져와 저장
