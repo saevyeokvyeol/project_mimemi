@@ -20,9 +20,7 @@
          height : 50px; 
          text-align:center;
          vertical-align:middle;}
- 
- table {width:1200px;}
- th, td {border : 1px solid white;}
+ .ac {margin: 40px 0;}
  .list-group {}
  .side-minibar {padding: 0;}
  .side-minibar > a {font-size: 14px; padding-left: 40px;}
@@ -77,17 +75,23 @@
 					 </tr>
 				 </c:when>
 				 <c:otherwise>
-				 	<c:forEach items="${FaqList}" var="faq">
-					    <h4 class="" id="">
-					      <button class="faq-title" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
-					        Q . ${faq.faqTitle}
-					      </button>
-					    </h4>
-					    <div id="flush-collapseOne${faq.faqNo}" class="faq-content" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-					        <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
-					        <br><br><img src="${path}/img/${faq.faqAttach}">
-					    </div>							     
-		  			</c:forEach>
+					 <div class="accordion ac" id="accordionExample">
+					 	<c:forEach items="${FaqList}" var="faq">
+					 		<div class="accordion-item">
+							    <h4 class="accordion-header" id="flush-headingOne">
+							      <button class="faq-title accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
+							        Q . ${faq.faqTitle}
+							      </button>
+							    </h4>
+						    </div>
+						    <div id="flush-collapseOne${faq.faqNo}" class="faq-content accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+						        <div class="accordion-body">
+							        <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
+							        <br><br><img src="${path}/img/${faq.faqAttach}">
+							    </div>
+						    </div>							     
+			  			</c:forEach>
+			  		</div>
 		  		</c:otherwise>
 			</c:choose>
 			
