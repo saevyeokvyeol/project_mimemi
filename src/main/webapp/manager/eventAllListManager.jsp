@@ -32,6 +32,12 @@
 						location.replace(url);
 					}
 				});
+				
+				$(document).on("click","#insert-btn",function(){   
+	                 location.replace('manager/insertEvent.jsp');
+	                
+	            })
+				
 			});
 		</script>
 	</head>
@@ -109,6 +115,11 @@
 				</c:otherwise>
 			</c:choose>	
 				</tbody>
+				<tfoot>
+					<div style="text-align: right;">
+						<input type="submit" id="insert-btn" value="이벤트등록">
+					</div>
+				</tfoot>
 			</table>
 		</section>
 		<!-- 페이징 처리 -->
