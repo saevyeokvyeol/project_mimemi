@@ -8,17 +8,12 @@ pageEncoding="UTF-8"%>
     <title>공지사항 상세페이지</title>
     <jsp:include page="../common/header.jsp"/>
         <style type="text/css">
-            .notice-view{
-                width: 1200px; margin: auto; padding: 50px 0;
-            }
-            table{
-            	width:100%;
-            }
-            .left side{
-                width: 100%;
-              
-            }
-            
+            .FAQ-view {width: 1200px; margin: 50px auto;}
+            .FAQ-sideview {width: 200px; margin-right: 50px; z-index: 0;}
+            .FAQ-sideview h3 {margin: 0 0 20px 10px;}
+            .Notice-mainview {width: 950px;}
+            .side-minibar {padding: 0;}
+ 		    .side-minibar > a {font-size: 14px; padding-left: 40px;}
             .notice-contentTitle{
                 padding: 25px 30px; margin: 20px 0; border-top: 2px black solid; border-bottom: 1px grey solid;
 			}
@@ -32,7 +27,8 @@ pageEncoding="UTF-8"%>
 				max-width: 100%;
 			}
             .base-btn {display: flex; justify-content: space-between; padding: 25px;}
-            a{ text-decoration: none; }
+
+            
         </style>
 
         <!-- Bootstrap CSS -->
@@ -51,59 +47,53 @@ pageEncoding="UTF-8"%>
 
     </head>
 
-   
+    
 <body>
-<section class="notice-view">
-    <table>
-        <tr>	
-            <td>
-                <!-- left side -->
-                <div class="left side"> 
-                    <div class="title">고객센터</div><hr width="100px">
-                        <ul class="nav flex-column">
-                            <li class="nav-item"><a class="nav-link" href="${path}/front?key=notice&methodName=selectAll">공지사항</a></liclass=>
-                                <li class="nav-item"><a class="nav-link" href="${path}/front?key=faq&methodName=selectAll">FAQ</a> 
-                                    <li class="nav-item"><a class="nav-link" href="${path}/front?key=faq&methodName=selectAll&field=cr">교환/환불</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="${path}/front?key=faq&methodName=selectAll&field=us">회원관련</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="${path}/front?key=faq&methodName=selectAll&field=op">주문/결제</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="${path}/front?key=faq&methodName=selectAll&field=de">배송관련</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="${path}/front?key=faq&methodName=selectAll&field=ec">기타</a></li>
-                                </li>
-                            <li class="nav-item"><a href="ask.jsp">1:1문의</a></li>
-                        </ul>
-                    </div>
+    <section class="FAQ-view d-flex p-2 bd-highlight">
+        <aside class="FAQ-sideview">
+            <h3>고객센터</h3>
+            <div class="list-group">
+            <a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action active">
+                공지사항
+            </a>
+                <a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                FAQ
+                </a>
+                <div class="side-minibar">
+                    <a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
+                    <a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>
+                    <a href="${path}/front?key=faq&methodName=selectAll&field=op" class="list-group-item list-group-item-action" id="op">주문/결제</a>
+                    <a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
+                    <a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
                 </div>
-            </td>
-            <td>
-                <!--공지 상세보기-->
-                <div> 
-                    <div class="notice-view-detail"> 
-                        <div class="notice-title"><h1>공지사항 상세페이지</h1></div><hr>
-                            <div class ="notice-contentTitle">
-                                <h4><strong class="noticeTitle">${noticeDetail.noticeTitle}제목</strong></h4>
-                                <span><strong class="noticeRegdate">${noticeDetail.noticeRegdate}등록일</strong></span>
-                            </div>
-                           
-                        </div>
-                        <div class="notice-contentview">
-                            <div class="notice-Image">
-                                <img src="${path}/img/${noticeDetail.noticeAttach}">
-                            </div>
-                            <div class="notice-content">
-                                <strong class ="noticeContent">${noticeDetail.noticeContent}</strong>
-                            </div>
-                        </div>
-                        <div class="base-btn">
-                            <span class="bLeft"><a href="javascript:history.back(-1)"class="btn btn-outline-dark shadow-none">목록으로 돌아가기</a></span>
-                            <span class="bRight"><a href="${path}/front?key=notice&methodName=delete&noticeNo=${noticeDetail.noticeNo}" class="btn btn-outline-dark shadow-none">삭제하기</a></span>
-                            <span class="bRight"><a href="${path}/front?key=notice&methodName=updateForm&noticeNo=${noticeDetail.noticeNo}" class="btn btn-outline-dark shadow-none">수정하기</a></span>
-                        </div>                    
-                    </div>
+            <a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action">1:1문의</a>
+            </div>
+        </aside>
+        <!--공지 상세보기-->
+        <div class="Notice-mainview"> 
+            <div class="notice-view-detail"> 
+                <div class="notice-title"><h1>공지사항 상세페이지</h1></div><hr>
+                <div class ="notice-contentTitle">
+                    <h4><strong class="noticeTitle">${noticeDetail.noticeTitle}</strong></h4>
+                    <span><strong class="noticeRegdate">${noticeDetail.noticeRegdate}</strong></span>
                 </div>
-            </td>
-        </tr>
-    </table>
-</section>
+            </div>
+            <div class="notice-contentview">
+                <div class="notice-Image">
+                    <img src="${path}/img/${noticeDetail.noticeAttach}">
+                </div>
+                <div class="notice-content">
+                    <strong class ="noticeContent">${noticeDetail.noticeContent}</strong>
+                </div>
+            </div>
+            <div class="base-btn">
+                <span class="bLeft"><a href="javascript:history.back(-1)"class="btn btn-outline-dark shadow-none">목록으로 돌아가기</a></span>
+                <span class="bRight"><a href="${path}/front?key=notice&methodName=delete&noticeNo=${noticeDetail.noticeNo}" class="btn btn-outline-dark shadow-none">삭제하기</a>
+                <a href="${path}/front?key=notice&methodName=updateForm&noticeNo=${noticeDetail.noticeNo}" class="btn btn-outline-dark shadow-none">수정하기</a></span>
+            </div>                    
+        </div>
+                
+    </section>
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>
