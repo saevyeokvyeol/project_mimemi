@@ -1,24 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>관리자 쿠폰조회  - 미미미</title>
-		<jsp:include page="../common/header.jsp"/>
-		<style type="text/css">
-			section {width: 1200px; margin: auto;}
-			table {width: 1200px;}
-			th, td {border: 1px solid black;}
-			table tr:first-child {border: 1px solid black;}
-		</style>
+		<title>Document</title>
 		
-		<!-- CSS only -->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
-		
+	 <!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        
 		<!-- JavaScript Bundle with Popper -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        
+        <!-- jQuery -->        
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+		
+		<style>
+           div{
+                width: 1000px;
+                margin: auto;
+            }
+            table th,td{
+                text-align: center;
+            }
+            nav{
+            	text-align: right;
+            }
+            
+       </style>
+		
+		
+		
+		
 		
 		<script type="text/javascript">
 			$(function() {
@@ -125,16 +141,16 @@
 		
 	</head>
 	<body>
-		<section>
-			<form action="">
-        <input type="hidden" name="" id="">
-				<h1>쿠폰조회 </h1>
-
+		
+		<div class="container">
+        	<div class="">
+				<h3>쿠폰조회 </h3>
+			</div>
 				
 				<p>
 				
 				<table class="table" id="couponTalbe">
-					<thead>
+					<thead class="thead-dark">
 						<tr>
 							<th>쿠폰번호</th>
 							<th>쿠폰명</th>
@@ -154,16 +170,15 @@
 					</tfoot>
 					
 				</table>
-				
-				<div style="text-align: right;">
-					<input type="button" id="live" value="실시간쿠폰등록">
-					<input type="button" id="rg" value="정기쿠폰등록">
-				</div>
-				
+			</div>
+			<div style="text-align: right;">
+					<input  class=" "  type="button" id="live" value="실시간쿠폰등록">
+					<input  class=""   type="button" id="rg" value="정기쿠폰등록">
+			</div>
 				<p>
 				
-			</form>
-		</section>
+			
+		
 	</body>
 	<jsp:include page="../common/footer.jsp"/>
 </html>
