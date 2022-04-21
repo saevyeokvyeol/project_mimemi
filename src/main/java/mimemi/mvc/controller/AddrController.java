@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.GoodsDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AddrService;
 import mimemi.mvc.service.AddrServiceImpl;
 import net.sf.json.JSONArray;
@@ -27,7 +28,8 @@ public class AddrController implements Controller {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		HttpSession session = request.getSession();
-		String userId = "happy01";
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		
 		List<AddrDTO> list = addrService.selectByUserId(userId);
 		
@@ -41,7 +43,8 @@ public class AddrController implements Controller {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		HttpSession session = request.getSession();
-		String userId = "happy01";
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		
 		List<AddrDTO> list = new ArrayList<AddrDTO>();
 		AddrDTO addr = addrService.selectByAddrName(userId);

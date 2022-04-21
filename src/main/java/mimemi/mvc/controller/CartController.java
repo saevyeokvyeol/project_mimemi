@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.CartDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.CartService;
 import mimemi.mvc.service.CartServiceImpl;
 import net.sf.json.JSONArray;
@@ -30,7 +31,8 @@ public class CartController implements Controller {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		HttpSession session = request.getSession();
-		String userId = "happy01";
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		
 		String goodsId = request.getParameter("goodsId");
 		String cartQty = request.getParameter("cartQty");
@@ -55,7 +57,9 @@ public class CartController implements Controller {
 		List<CartDTO> cartList = null;
 
 		if(mode.equals("C")) { // 장바구니 전체 구매
-			String userId = "happy01";
+			UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+			String userId = loginUser.getUserId();
+			
 			cartList = cartService.selectCartByUserId(userId);
 		} else if(mode.equals("S")) { // 장바구니 부분 구매
 			String[] cartIds = request.getParameterValues("cartSelect");
@@ -67,7 +71,8 @@ public class CartController implements Controller {
 			}
 		} else if(mode.equals("D")) { // 상품란에서 바로 구매
 			cartList = new ArrayList<CartDTO>();
-			String userId = "happy01";
+			UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+			String userId = loginUser.getUserId();
 			String goodsId = request.getParameter("goodsId");
 			String cartQty = request.getParameter("cartQty");
 			String cartWeekDay = request.getParameter("cartWeekDay");

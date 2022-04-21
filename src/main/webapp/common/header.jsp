@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -40,8 +42,16 @@
 		<header class="main-header">
 			<div class="main-header-top-right">
 				<ul>
-					<li><a href="${path}/user/join01.jsp">회원가입</a></li>
-					<li><a href="${path}/user/login.jsp">로그인</a></li>
+					<c:choose>
+						<c:when test="${sessionScope.loginUser == null}">
+							<li><a href="${path}/user/join01.jsp">회원가입</a></li>
+							<li><a href="${path}/user/login.jsp">로그인</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="${path}/user/join01.jsp">마이페이지</a></li>
+							<li><a href="${path}/user/login.jsp">로그아웃</a></li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 			<h1><a href="${path}/index.jsp"><img src="${path}/img/ui/main_logo.png" alt="미미미 로고"></a></h1>
@@ -77,7 +87,7 @@
 						<li>
 							<h5>마이페이지</h5>
 							<ul>
-								<li><a href="${path}/mypage/orderView.jsp">나의 주문 내역</a></li>
+								<li><a href="${path}/mypage/orderList.jsp">나의 주문 내역</a></li>
 								<li><a href="${path}/mypage/calendar.jsp">나의 배송 캘린더</a></li>
 								<li><a href="${path}/board/ask2.jsp">1:1 문의 내역</a></li>
 							</ul>

@@ -118,7 +118,7 @@
 				// 배송일 가져오기
 				function printDeli() {
 					let paramMonth = month + 1;
-					if (paramMonth < 10) paramMonth = paramMonth.toString().padStart(2, '0') + ""
+					if (paramMonth < 10) paramMonth = paramMonth.toString().padStart(2, '0') + "";
 					let paramDay;
 					$.ajax({
 						url: "${path}/ajax",
@@ -127,15 +127,13 @@
 						data: {key: "order", methodName: "selectMlyDeli", goodsId: "${param.goodsId}", date: "" + year + paramMonth},
 						success: function(result) {
 							$.each(result, function(index, item) {
-								delidate = item.orderDeliDate.substr(5, 2);
+								delidate = item.orderDeliDate.substr(8, 2);
 								text = "<div class='deliMenu'>식단 준비 중</div>"
-								
 								$("#" + delidate).append(text);
-								
 							})
 						}, // 성공 메소드
 						error : function(err) {
-							alert(err + "\n구매 내역을 불러올 수 없습니다.");
+							alert(err + "\n배송 내역을 불러올 수 없습니다.");
 						} // 에러 메소드
 					}) // ajax 종료
 				}
@@ -145,17 +143,23 @@
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
-						dataType: "text",
+						dataType: "json",
 						data: {key: "goods", methodName: "selectOrderGoods"},
 						success: function(result) {
-							alert(result);
-							/* $.each(result, function(index, item) {
-								delidate = item.orderDeliDate.substr(5, 2);
-								text = "<div class='deliMenu'>식단 준비 중</div>"
-								
-								$("#" + delidate).append(text);
-								
-							}) */
+							let text = '';
+							if(JSON.stringify(result) == "[]"){
+								text += '<option value="">구매하신 내역이 없습니다.</option>';
+							} else {
+								$.each(result, function(index, item) {
+									text += `<option value="\${item.goodsId}">\${item.goodsName}</option>`;
+								})
+							}
+							$("select").append(text);
+							$("select").val("${param.goodsId}");
+							
+							if($("select").val() == ""){
+								$("select").val("");
+							}
 						}, // 성공 메소드
 						error : function(err) {
 							alert(err + "\n구매 내역을 불러올 수 없습니다.");
@@ -163,11 +167,19 @@
 					}) // ajax 종료
 				}
 				
+				function checkGoodsId() {
+					$("select").val("${param.goodsId}");
+				}
+
 				
+				$("select").change(function() {
+					location.href = "${path}/mypage/calendar.jsp?goodsId=" + $(this).val();
+				})
 				
 				printCalendar();
 				printDeli();
 				selectOrderGoods();
+				checkGoodsId();
 			})
 		</script>
 		<script type="text/javascript">
@@ -178,8 +190,7 @@
 		<section>
 			<h1>나의 배송 캘린더</h1>
 			<div id="selectBox">
-				<select name="" id="">
-					<option value="">구매하신 내역이 없습니다.</option>
+				<select>
 				</select>
 			</div>
 			<table class="table table-bordered caption-top" id="deliCalendar">
@@ -198,4 +209,5 @@
 			</table>
 		</section>
 	</body>
+	<jsp:include page="../common/footer.jsp"/>
 </html>

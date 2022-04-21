@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.GoodsDTO;
 import mimemi.mvc.dto.LiveCouponDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.GoodsService;
 import mimemi.mvc.service.GoodsServiceImpl;
 import net.sf.json.JSONArray;
@@ -132,7 +133,6 @@ public class GoodsController implements Controller {
 		GoodsDTO dto = new GoodsDTO(goodsId, goodsName, goodsDetail, goodsThumbnail, goodsPrice, goodsSale);
 		goodsService.goodsUpdate(dto);
 
-		
 		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
 		return new ModelAndView("manager/goodsSelectAll.jsp");
 	}
@@ -142,7 +142,8 @@ public class GoodsController implements Controller {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		HttpSession session = request.getSession();
-		String userId = "happy01";
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		
 		List<GoodsDTO> goodsList = goodsService.selectOrderGoods(userId);
 		

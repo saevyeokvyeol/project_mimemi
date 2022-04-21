@@ -13,6 +13,7 @@ import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AddrService;
 import mimemi.mvc.service.AddrServiceImpl;
 import mimemi.mvc.service.OrderService;
@@ -32,7 +33,8 @@ public class OrderController implements Controller {
 	public ModelAndView insertOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		
-		String userId = "happy01";
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		int addrId = Integer.parseInt(request.getParameter("addrId"));
 		String payMethod = request.getParameter("payMethod");
 		
@@ -139,7 +141,8 @@ public class OrderController implements Controller {
 	public void selectMlyDeli(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 
-		String userId = "happy01";
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		String goodsId = request.getParameter("goodsId");
 		
 		if(goodsId == null || goodsId == "") {

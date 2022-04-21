@@ -42,7 +42,7 @@ public class EventController implements Controller {
 		request.setAttribute("pageNum", curPageNo);
 		request.setAttribute("field", field);
 		
-		return new ModelAndView("board/eventAllList.jsp");
+		return new ModelAndView("board/eventList.jsp");
 	}
 	
 	public ModelAndView insert(HttpServletRequest request, HttpServletResponse response) throws Exception {
