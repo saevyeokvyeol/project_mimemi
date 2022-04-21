@@ -350,7 +350,7 @@ $(function(){
 				</tr>
 				<tr>
 					<th>생년월일</th>
-					<td>
+					<td class="min-height">
 						<input type="text" name="userBirth" readonly="readonly" class="datepicker form-control" placeholder="날짜를 골라주세요" required>
 					</td>
 				</tr>
