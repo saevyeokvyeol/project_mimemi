@@ -539,4 +539,5 @@
 			</div>
 		</section>
 	</body>
+<jsp:include page="../common/footer.jsp"/>
 </html>
