@@ -24,6 +24,10 @@ $(function() {
 	
 	//아이디박스 비활성화(입력불가능) - atrr()이용
 	$("#id").attr("readonly", "readonly"); //읽기전용
+	
+	$("#btn").click(function() {
+		location.href = '${path}/manager/cou_Main_Mg.jsp';
+	})
 		
 	
 });
@@ -38,8 +42,10 @@ $(function() {
 <input type="hidden" name="key" value="coupon" >
     <input type="hidden" name="methodName" value="updateLiveCp" >
     <input type='hidden' name='id' value="${liveCoupon.livecouId}">
+    
+<caption><h2> 실시간쿠폰수정 Form</h2></caption>
 <table>
-   <caption><h2> 실시간쿠폰수정 Form</h2></caption>
+   
   <tr>
 	<td>쿠폰번호</td>
 	<td><input type="text" name="id" id="id" value="${liveCoupon.livecouId}"/></td>
@@ -74,7 +80,7 @@ $(function() {
 
 <p>
 <div>
-	<a href="selectCouponAll.jsp">&lt;리스트로 돌아가기&gt;</a>
+	<a href="cou_Main_Mg.jsp">&lt;리스트로 돌아가기&gt;</a>
 </div>
 
 

@@ -94,7 +94,7 @@ public class CouponController implements Controller {
 		couponService.insertLiveCp(dto);
 		
 		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
-		return new ModelAndView("manager/selectCouponAll.jsp", true);
+		return new ModelAndView("manager/cou_Main_Mg.jsp", true);
 		
 	}
 	
@@ -115,7 +115,7 @@ public class CouponController implements Controller {
 		couponService.insertRgCp(dto);
 		
 		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
-		return new ModelAndView("manager/selectCouponAll.jsp", true);
+		return new ModelAndView("manager/cou_Main_Mg.jsp", true);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class CouponController implements Controller {
 		couponService.updateLiveCp(liveCoupon);
 		
 		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
-		return new ModelAndView("manager/selectCouponAll.jsp");
+		return new ModelAndView("manager/cou_Main_Mg.jsp");
 	}
 	
 	/**실시간쿠폰 수정폼*/
@@ -148,7 +148,7 @@ public class CouponController implements Controller {
 		
 		request.setAttribute("liveCoupon", liveCoupon);
 		
-		return new ModelAndView("manager/couponUpdate.jsp");
+		return new ModelAndView("manager/cou_Update_Live.jsp");
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class CouponController implements Controller {
 		couponService.updateRgCp(rgCoupon);
 		
 		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
-		return new ModelAndView("manager/selectCouponAll.jsp");
+		return new ModelAndView("manager/cou_Main_Mg.jsp");
 	}
 	
 	/**정기쿠폰 수정폼*/
@@ -181,7 +181,66 @@ public class CouponController implements Controller {
 		
 		request.setAttribute("rgCoupon", rgCoupon);
 		
-		return new ModelAndView("manager/couponUpdate2.jsp");
+		return new ModelAndView("manager/cou_Update_Regular.jsp");
+	}
+	
+	/**
+
+	 * 사용자별 쿠폰 등록
+	 * */
+	public ModelAndView insertUserCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
+		String userId = request.getParameter("userId");
+		String selectCouponType = request.getParameter("select_CouponType");
+		String selectCoupon = request.getParameter("select_Coupon");
+		String usercouUsable = request.getParameter("usercouUsable");
+		String usercouPubdate = request.getParameter("usercouPubdate");
+		String usercouEnddate = request.getParameter("usercouPubdate");
+		
+		UserCouponDTO userCouponDTO=null;
+		
+		if(selectCouponType.equals("LiveCp")) {
+			userCouponDTO = new UserCouponDTO(userId, selectCoupon, null , usercouUsable, usercouPubdate, usercouEnddate );
+		}else if(selectCouponType.equals("RgCp")) {
+			userCouponDTO = new UserCouponDTO(userId, null, selectCoupon , usercouUsable, usercouPubdate, usercouEnddate );
+		}
+		
+		couponService.insertUserCp(userCouponDTO, selectCouponType);
+		
+		return new ModelAndView("manager/cou_Select_User_cou.jsp", true);
+		
+	}
+	
+	/**
+	 * 전체 사용자 쿠폰 조회
+	 * */
+	public ModelAndView selectAllUserCp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String field = request.getParameter("field");
+		
+		
+		List<UserCouponDTO> userCouponList = couponService.selectAllUserCp(field);
+		
+		request.setAttribute("userCouponList", userCouponList);
+		
+		return new ModelAndView("manager/cou_Select_User_cou.jsp");
+	}
+	
+	/**
+	 * 사용자별 쿠폰 사용여부 수정
+	 * @param: int usercouId, String state(유저 아이디와 쿠폰 사용 여부)
+	 * */
+
+	public void updateCpState(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String userCouId = request.getParameter("userCouId");
+		String usercouUsable = request.getParameter("usercouUsable");
+		
+			
+		couponService.updateCpState(Integer.parseInt(userCouId), usercouUsable);
+		
+		
 	}
 	
 	/**
