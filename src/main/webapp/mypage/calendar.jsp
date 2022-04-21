@@ -13,7 +13,11 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		
 		<style type="text/css">
-			section {width: 1200px; margin: auto;}
+			.calendar {width: 1212px; margin: 50px auto;}
+			.sideview {width: 200px; margin-right: 50px; z-index: 0;}
+			.sideview h3 {margin: 0 0 20px 10px;}
+			.view {width: 950px;}
+			table {width: 100%;}
 			#deliCalendar {width: 100%; table-layout: fixed;}
 			#deliCalendar th {text-align: center;}
 			#deliCalendar td {width: 190px; height: 145px; padding: 10px 15px;}
@@ -128,7 +132,7 @@
 						success: function(result) {
 							$.each(result, function(index, item) {
 								delidate = item.orderDeliDate.substr(8, 2);
-								text = "<div class='deliMenu'>식단 준비 중</div>"
+								text = `<div class='deliMenu'>\${item.meal.mealName}</div>`
 								$("#" + delidate).append(text);
 							})
 						}, // 성공 메소드
@@ -182,12 +186,24 @@
 				checkGoodsId();
 			})
 		</script>
-		<script type="text/javascript">
-			$()
-		</script>
+
 	</head>
 	<body>
-		<section>
+		<section class="calendar d-flex p-2 bd-highlight">
+			<aside class="sideview">
+				<h3>마이페이지</h3>
+				<div class="list-group">
+					<a href="${path}/mypage/orderList.jsp" class="list-group-item list-group-item-action" aria-current="true">
+						나의 주문 내역
+					</a>
+					<a href="${path}/mypage/calendar.jsp" class="list-group-item list-group-item-action active">나의 배송 캘린더</a>
+					<a href="#" class="list-group-item list-group-item-action">쿠폰 조회</a>
+					<a href="#" class="list-group-item list-group-item-action">1:1 문의 내역</a>
+					<a href="${path}/mypage/userEdit01.jsp" class="list-group-item list-group-item-action">회원 정보 수정</a>
+					<a href="${path}/mypage/userLeave01.jsp" class="list-group-item list-group-item-action">회원 탈퇴</a>
+				</div>
+			</aside>
+			<div class="view">
 			<h1>나의 배송 캘린더</h1>
 			<div id="selectBox">
 				<select>
@@ -207,6 +223,7 @@
 				<tbody>
 				</tbody>
 			</table>
+			</div>
 		</section>
 	</body>
 	<jsp:include page="../common/footer.jsp"/>

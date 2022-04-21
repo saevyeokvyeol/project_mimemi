@@ -5,7 +5,7 @@ public class OrderDeliDTO {
 	private int orderLineId;
 	private String orderStateId;
 	private String orderDeliDate;
-	
+	private MealDTO meal;
 	public OrderDeliDTO() {}
 	public OrderDeliDTO(int orderDeliId, int orderLineId, String orderStateId, String orderDeliDate) {
 		super();
@@ -37,6 +37,12 @@ public class OrderDeliDTO {
 	}
 	public void setOrderDeliDate(String orderDeliDate) {
 		this.orderDeliDate = orderDeliDate;
+	}
+	public MealDTO getMeal() {
+		return meal;
+	}
+	public void setMeal(MealDTO meal) {
+		this.meal = meal;
 	}
 	
 	

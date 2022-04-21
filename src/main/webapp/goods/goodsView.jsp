@@ -183,6 +183,10 @@
                     <p class="goodsdetail" id="goodsdetail"></p>
                 </div>
                 <form action="${path}/front?key=cart&methodName=viewOrderForm&mode=D" method="post">
+                <input type="hidden" name="goodsThumbnailImage">
+                <input type="hidden" name="goodsName">
+                <input type="hidden" name="goodsPrice">
+                <input type="hidden" name="goodsId">
 	                <table class="table option-table table-borderless">
 		                <tbody>
 		                	<tr>
@@ -259,5 +263,5 @@
         </div>
     </div>
 </body>
-
+<jsp:include page="../common/footer.jsp"/>
 </html>

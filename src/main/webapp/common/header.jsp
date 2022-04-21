@@ -48,7 +48,7 @@
 							<li><a href="${path}/user/login.jsp">로그인</a></li>
 						</c:when>
 						<c:when test="${sessionScope.manager == null}">
-							<li><a href="${path}/mypage/mypageMain.jsp">마이페이지</a></li>
+							<li><a href="${path}/mypage/orderList.jsp">마이페이지</a></li>
 							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>
