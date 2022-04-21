@@ -132,7 +132,7 @@
 						success: function(result) {
 							$.each(result, function(index, item) {
 								delidate = item.orderDeliDate.substr(8, 2);
-								text = `<div class='deliMenu'>\${item.meal.mealName}</div>`
+								text = "<div class='deliMenu'>식단 준비 중</div>"
 								$("#" + delidate).append(text);
 							})
 						}, // 성공 메소드
