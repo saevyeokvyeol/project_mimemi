@@ -76,6 +76,29 @@ function checkValid() {
             }	//selectReply끝
 				
 			selectReply();
+            
+		     var loginUser='${sessionScope.loginUser.userId}' //세션으로 확인한 현재 로그인한 유저
+            
+			 $(document).on("click","#update-btn",function(){
+	                var reivewId = $(this).attr("name")
+	                //alert(reivewId)
+	                if(loginUser!=reivewId || !loginUser){
+	                    alert("게시물은 자신이 작성한 게시물만 수정 가능합니다.")
+	                }else{
+	                    let url = `${path}/front?key=ask&methodName=updateAsk&askNo=`+$(this).attr("askno")
+	        			location.replace(url);
+	                }
+	            })
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 		})//function끝
 		
 	
@@ -132,7 +155,7 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
     
     <tr>
         <td width="450" height="20" colspan="2" align="center"><b><span>
-		<input type="submit" value="수정하기"> <input type="reset" value="다시쓰기"></span></b></td>
+		<input type="submit" id="update-btn" name="${askDto.userId}" value="수정하기" askno="${askDto.askNo}"> <input type="reset" value="다시쓰기"></span></b></td>
     </tr>
 </table>
 </div>

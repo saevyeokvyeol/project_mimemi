@@ -4,12 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>join02</title>
+<title>회원가입 :: 미미미</title>
 
 <jsp:include page="../common/header.jsp" />
 <style type="text/css">
+	.join-view {width: 900px; margin: auto; padding: 50px 0;}
+	.join-view h1 {padding: 0 0 50px 0;}
+	.table th {padding: 15px 30px; width: 160px;}
+	.min-height {height: 80px;}
+	.submit-box {text-align: center;}
+	#userId {width: 87%; display: inline;}
+	#userPhone {width: 87%; display: inline;}
+	#sample6_postcode {display: inline; width: 83%;}
+	#sample6_detailAddress, #sample6_extraAddress {display: inline; width: 49.7%;}
 	span{display: none; color: red;}
-	
 	#pwdCheck_Success{color: blue;}
 	
 </style>
@@ -156,7 +164,7 @@ $(function() {
 						return;
 					} else {
 						alert("사용가능한 번호입니다.");
-						isPhoneChecked=true;
+						isPhoneChecked = true;
 						return;
 					}
 				},//success 끝
@@ -308,59 +316,61 @@ $(function(){
 </script>
 </head>
 <body>
-<form name="joinForm" method="post" id="joinForm" action="${path}/front?key=user&methodName=insertUser">
-	<h1>회원가입</h1>
-	<table cellspacing="0" align="center">
-		<tr>
-			<th>아이디</th>
-			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자와 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
-			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
-			<span id="notValidId">아이디는 공백 없이 영소문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요</span>
-			<span id="adminId">admin으로 시작하는 아이디는 관리자용 아이디입니다. 다른 아이디로 재시도해주세요</span></td>
-		</tr>
-		<tr>
-			<th>비밀번호</th>
-			<td><input type="password" id="userPwd" name="userPwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요" required>
-			<span id="notValidPwd">비밀번호는 공백 없이 영대문자, 영소문자와 숫자를 조합하여 8자리 이상 최대 20자리 이하로 입력해주세요</span></td>
-		<tr>
-			<th>비밀번호 확인</th>
-			<td><input type="password" id="userPwd2" size="50" placeholder="한번 더 입력해주세요" required>
-			<span id="pwdCheck_Success">비밀번호가 일치합니다</span>
-			<span id="pwdCheck_Fail">비밀번호가 일치하지 않습니다.</span></td>
-		</tr>
-		<tr>
-			<th>이름</th>
-			<td colspan="3"><input type="text" id="userName" name="userName" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요" required></td>
-		</tr>
-		<tr>
-			<th>휴대폰 번호</th>
-
-			<td colspan="3"><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요" required>
-			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button>
-			<span id="blankPhone">'-'를 제외하고 010으로 시작하는 휴대폰 번호 11자리를 입력해주세요</span></td>
-		</tr>
-		<tr>
-			<th>생년월일</th>
-			<td>
-				<input type="text" name="userBirth" readonly="readonly" class="datepicker" placeholder="날짜를 골라주세요" required>
-			</td>
-		</tr>
-		<tr>
-			<th>배송지 주소</th>
-			<td>
-				<input type="text" id="sample6_postcode" name="zipcode" readonly="readonly" required>
-				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호검색"><br>
-				<input type="text" id="sample6_address" name="addrAddr" required><br>
-				<input type="text" id="sample6_detailAddress" name="addrDetailAddr" placeholder="상세주소1(선택)">
-				<input type="text" id="sample6_extraAddress" name="addrRefAddr" placeholder="상세주소2(선택)">
-			</td>
-		</tr>
-		<tr>
-			<td><a href = "../index.jsp" id="cancelBtn">취소</a> <input type="submit" id="joinBtn" value="회원가입"></td>
-		</tr>
-
-	</table>
-</form>
+	<section class="join-view">
+		<form name="joinForm" method="post" id="joinForm" action="${path}/front?key=user&methodName=insertUser">
+			<h1>회원가입</h1>
+			<table cellspacing="0" align="center" class="table table-borderless">
+				<tr>
+					<th>아이디</th>
+					<td class="min-height"><input type="text" id="userId" class="userId_input form-control" name="userId" placeholder="영문자와 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
+					<button type="button" class="id_overlap_button btn btn-outline-dark shadow-none" id="idCheck" >중복검사</button>
+					<span id="notValidId">아이디는 공백 없이 영소문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요</span>
+					<!-- <span id="adminId">admin으로 시작하는 아이디는 관리자용 아이디입니다. 다른 아이디로 재시도해주세요</span></td> -->
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td class="min-height"><input type="password" id="userPwd" name="userPwd" size="50" placeholder="영문 대소문자, 숫자를 조합해서 8자리 이상 입력해주세요" class="form-control" required>
+					<span id="notValidPwd">비밀번호는 공백 없이 영대문자, 영소문자와 숫자를 조합하여 8자리 이상 최대 20자리 이하로 입력해주세요</span></td>
+				<tr>
+					<th>비밀번호 확인</th>
+					<td class="min-height"><input type="password" class="form-control" id="userPwd2" size="50" placeholder="한번 더 입력해주세요" required>
+					<span id="pwdCheck_Success">비밀번호가 일치합니다</span>
+					<span id="pwdCheck_Fail">비밀번호가 일치하지 않습니다.</span></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td class="min-height"><input type="text" id="userName" class="form-control" name="userName" size="50" placeholder="한글 5자, 혹은 영문 20자 이내로 입력해주세요" required></td>
+				</tr>
+				<tr>
+					<th>휴대폰 번호</th>
+		
+					<td class="min-height"><input type="text" id="userPhone" class="userPhone_input form-control" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요" required>
+					<button type="button" class="phone_overlap_button btn btn-outline-dark shadow-none" id="phoneCheck" >중복검사</button>
+					<span id="blankPhone">'-'를 제외하고 010으로 시작하는 휴대폰 번호 11자리를 입력해주세요</span></td>
+				</tr>
+				<tr>
+					<th>생년월일</th>
+					<td class="min-height">
+						<input type="text" name="userBirth" readonly="readonly" class="datepicker form-control" placeholder="날짜를 골라주세요" required>
+					</td>
+				</tr>
+				<tr>
+					<th>배송지 주소</th>
+					<td>
+						<input type="text" id="sample6_postcode" name="zipcode" class="form-control" readonly="readonly" required>
+						<input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none" value="우편번호검색">
+						<input type="text" id="sample6_address" name="addrAddr" class="form-control" required>
+						<input type="text" id="sample6_detailAddress" name="addrDetailAddr" class="form-control" placeholder="상세주소1(선택)">
+						<input type="text" id="sample6_extraAddress" name="addrRefAddr" class="form-control" placeholder="상세주소2(선택)">
+					</td>
+				</tr>
+			</table>
+			<div class="submit-box">
+				<a href = "../index.jsp" id="cancelBtn" class="btn btn-outline-dark shadow-none btn-lg">취소</a>
+				<input type="submit" id="joinBtn" class="btn btn-outline-dark shadow-none btn-lg" value="회원가입">
+			</div>
+		</form>
+	</section>
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>

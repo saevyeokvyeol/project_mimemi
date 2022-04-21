@@ -35,6 +35,11 @@ public interface AskDAO {
 	int deleteAsk(int askNo) throws SQLException;
 	
 	/**
+	 * 제목,내용으로 검색
+	 * */
+	List<AskDTO> selectByKeyword(String keyword, String field, int pageNo)throws SQLException;
+	
+	/**
 	 * 1:1 문의 전체 검색
 	 * */
 	List<AskDTO> selectAllAsk(int pageNum, String field) throws SQLException;

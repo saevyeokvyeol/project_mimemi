@@ -55,5 +55,11 @@ public interface AskService {
 	 * 1:1 문의 답변 여부 수정 기능
 	 * */
 	void updateState(AskDTO askDto) throws SQLException;
+
+	
+	/**
+	 * 제목,내용으로 검색
+	 * */
+	List<AskDTO> selectByKeyword(String keyWord, String filed, int pageNo)throws SQLException;
 	
 }

@@ -11,8 +11,7 @@
  <form name="writeNotice" method="post" action="${path}/front?key=answer&methodName=insertAnswerReply"
        onsubmit='return checkValid()' enctype="multipart/form-data">
 		<div class="container" role="main">
-			answerNo, askNo, answerContent, answerRegdate
-			댓글번호,글번호,댓글내용,작성날짜
+		
 				
 				<div class="mb-3">${param.askNo}
 				<input type="hidden" value="${param.askNo}" name="askNo">
@@ -22,7 +21,7 @@
 				
      			<div >
      				<input type="submit" value="댓글달기" />
-				    <input type="button" value="목록보기" onclick="location.href='../manager/managerAsk.jsp'"/>
+				    <input type="button" value="목록보기" onclick="location.href='../manager/ask_Main_Mg.jsp'"/>
 			</div>
 		</div>
 </form>

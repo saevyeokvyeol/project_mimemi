@@ -102,6 +102,19 @@ public class AskServiceImpl implements AskService {
 		
 	}
 
+	
+	/**
+	 * 검색기능-제목, 내용
+	 * */
+
+	@Override
+	public List<AskDTO> selectByKeyword(String keyWord, String filed, int pageNo)throws SQLException {
+		
+		List<AskDTO> list = askDao.selectByKeyword(keyWord, filed, pageNo);
+		
+		return list;
+	}
+
 
 	
 
