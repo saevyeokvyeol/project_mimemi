@@ -64,7 +64,7 @@ function sample6_execDaumPostcode() {
 </script>
 <script type="text/javascript">
 	$(function(){	
-	
+
 	/*
 	비밀번호 일치 여부 체크
 	*/
@@ -73,8 +73,8 @@ function sample6_execDaumPostcode() {
 		let pwd2 = $("#userPwd2").val();
 		
 		if(pwd1 != "" && pwd2 ==""){
-			return false;
 			alert("비밀번호 일치 여부를 진행해주세요");
+			return false;
 		}else if(pwd1 != "" || pwd2 != ""){
 			if(pwd1 == pwd2){
 				$("#pwdCheck_Success").css("display","inline-block");
@@ -89,8 +89,8 @@ function sample6_execDaumPostcode() {
 	})
 	
 	/*
-		비밀번호 형식 체크
-		*/
+	비밀번호 형식 체크
+	*/
 	$("#userPwd").focusout(function(){ isValidPwd();
 	})
 	function isValidPwd(){
@@ -121,31 +121,33 @@ function sample6_execDaumPostcode() {
 </script>
 <script type="text/javascript">
 $(function(){
-	$("#updateUserForm").submit(function(){
-		/*
-		휴대폰 번호 중복체크 여부 확인
-		*/
-		if(!isPhoneChecked){
-			alert("핸드폰번호 중복체크를 진행해주세요.");
-			return false;
+		
+		//사용자별 주소 조회
+		function selectAddrByUserId(){
+			$.ajax({
+				url: "${path}/ajax",
+				type: "post",
+				dataType: "json",
+				data: {key: "addr", methodName: "selectByAddrName"},
+				success: function(result) {	
+					$.each(result, function(index, item){
+
+						$("#sample6_postcode").val(`\${item.zipcode}`);
+						$("#sample6_address").val(`\${item.addrAddr}`);
+						$("#sample6_detailAddress").val(`\${item.addrDetailAddr}`);
+						$("#sample6_extraAddress").val(`\${item.addrRefAddr}`);
+					})
+					
+					
+					
+				}, // 성공 메소드
+				error : function(err) {
+					alert(err);
+				} // 에러 메소드
+			})
 		}
-	})
+		selectAddrByUserId();
 	
-	/*
-		핸드폰 번호 형식 체크
-		*/
-		$("#userPhone").focusout(function(){
-			var userPhone = $(this).val();
-			var isValidPhone = /^010?([0-9]{8})$/;
-			
-			if(!isValidPhone.test(userPhone)){
-				$("#blankPhone").css("display","inline-block");
-				return false;
-				$(".userPhone_input").focus();
-			}
-		})//휴대폰 번호 형식 체크 끝
-		
-		
 		/*
 		핸드폰 번호 중복 체크
 		*/
@@ -186,14 +188,52 @@ $(function(){
 		}) //번호 중복 체크 끝
 	
 	
-	/*
-		phone 값 변경하면 중복체크 다시
-	*/
-	$("input[id=userPhone]").keyup(function(){
-		isPhoneChecked=false;
-	})
+		/*
+		핸드폰 번호 형식 체크
+		*/
+		$("#userPhone").focusout(function(){isValidPhone();
+		})
+			function isValidPhone(){
+			var userPhone = $(this).val();
+			var isValidPhone = /^010?([0-9]{8})$/;
+			
+			if(!isValidPhone.test(userPhone)){
+				$("#blankPhone").css("display","inline-block");
+				return false;
+				$(".userPhone_input").focus();
+			}
+		}
+	
+		/*
+			phone 값 변경하면 중복체크 다시
+		*/
+		isPhoneChecked = true;
+		$("input[id=userPhone]").keyup(function(){
+			isPhoneChecked=false;
+		})
 	
 })
+
+$(function(){
+	$("#updateUserForm").submit(function(){
+		/*
+		휴대폰 번호 중복체크 여부 확인
+		*/
+		if(!isPhoneChecked){
+			alert("값이 변경되었습니다. 휴대폰 번호 중복체크를 진행해주세요");
+			return false;
+		}
+		isValidPhone();
+		
+	})
+	/*
+	비밀번호 형식 체크
+	*/
+	$("#updatePwdBtn").submit(function(){
+		isValidPwd();
+	})
+})
+	
 </script>
 </head>
 <body>
@@ -204,7 +244,7 @@ $(function(){
     <table>
       <tr>
         <th>아이디</th>
-        <td>${userId}</td>
+        <td>${loginUser.userId}</td>
       </tr>
       <tr>
         <th>비밀번호</th>
@@ -218,7 +258,7 @@ $(function(){
 		<span id="pwdCheck_Fail">비밀번호가 일치하지 않습니다.</span></td>
       </tr>
     </table>
-    <div><button class="updatePwd">비밀번호 재설정하기</button></div>
+    <div><input type="submit" id="updatePwdBtn" class="updatePwd">비밀번호 재설정하기</button></div>
     </fieldset>
   </form>
   
@@ -226,23 +266,17 @@ $(function(){
     <table>
        <tr>
         <th>이름</th>
-        <td>${userName}</td>
+        <td>${loginName}</td>
        </tr>
        <tr>
          <th>휴대폰 번호</th>
-         <td><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" placeholder="-를 제외하고 입력해주세요" required>
+         <td><input type="text" id="userPhone" class="userPhone_input" name="userPhone" size="50" value="${loginUser.userPhone}" placeholder="-를 제외하고 입력해주세요" required>
 			<button type="button" class="phone_overlap_button" id="phoneCheck" >중복검사</button>
 			<span id="blankPhone">'-'를 제외하고 010으로 시작하는 휴대폰 번호 11자리를 입력해주세요</span></td>
        </tr>
 		<tr>
 		  <th>생년월일</th>
-		  <td>${userBirth}</td>
-		</tr>
-		<tr>
-			<th>우편번호</th>
-			<td colspan="3"><input type="text" name="zip-code" size="10">-
-				<input type="text" name="zip-code" size="10"> <input
-				type="submit" value="우편번호검색"></td>
+		  <td>${loginUser.userBirth}</td>
 		</tr>
 		<tr>
 			<th>배송지 주소</th>

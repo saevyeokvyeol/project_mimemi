@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import mimemi.mvc.dto.AskDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AskService;
 import mimemi.mvc.service.AskServiceImpl;
 
@@ -67,10 +69,38 @@ public class AskController implements Controller {
 		request.setAttribute("pageNum", pageNum);
 		
 		
-		return new ModelAndView("manager/managerAsk.jsp");
+		return new ModelAndView("manager/ask_Main_Mg.jsp");
 		
 		
 	}
+	
+	/**
+	 * 검색기능
+	 * */
+	public ModelAndView selectByKeyword(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		String pageNum= request.getParameter("pageNum");
+		if(pageNum==null||pageNum.equals("")) {
+			pageNum="1";
+		}
+		String field=request.getParameter("field");//옵션-제목,내용
+		
+		System.out.println("field ="+field);
+		
+		String keyWord= request.getParameter("keyWord");
+		
+		System.out.println("keyword:"+keyWord);
+		List<AskDTO> list=askService.selectByKeyword(keyWord, field, Integer.parseInt(pageNum));
+		
+		request.setAttribute("list", list);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("filed", field);
+		request.setAttribute("keyword", keyWord);
+		
+		
+		return new ModelAndView("/board/askSearch.jsp");
+	}
+	
 	
 	/**
 	 * 1:1 문의 등록
@@ -85,13 +115,17 @@ public class AskController implements Controller {
 		MultipartRequest m = 
 			new MultipartRequest(request, saveDir,maxSize,encoding , new DefaultFileRenamePolicy());
 		
-		String userId ="happy01";
+		
 		String askTitle=m.getParameter("ask_title");
 		String askContent=m.getParameter("ask_content");
 		String askCategory=m.getParameter("ask_category");
 		
+		HttpSession session = request.getSession();
+		UserDTO reviewUser = (UserDTO)session.getAttribute("loginUser");
+		String userid = reviewUser.getUserId();
+		
 		System.out.println(askTitle);
-		AskDTO askDto = new AskDTO(userId, askTitle, askContent,askCategory);
+		AskDTO askDto = new AskDTO(userid, askTitle, askContent,askCategory);
 		
 		//파일첨부가 되었다면..
 		if(m.getFilesystemName("notice_attach") != null) {
