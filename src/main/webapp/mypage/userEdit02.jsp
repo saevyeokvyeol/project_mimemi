@@ -91,30 +91,32 @@ function sample6_execDaumPostcode() {
 	/*
 		비밀번호 형식 체크
 		*/
-		$("#userPwd").focusout(function(){
-			var pwd = $("#userPwd").val();
-			
-			var isNum = pwd.search(/[0-9]/g);
-			var isLower = pwd.search(/[a-z]/g);
-			var isUpper = pwd.search(/[A-Z]/g);
-			
-			if(pwd.length<8 || pwd.length>20){		//길이체크
-				$("#notValidPwd").css("display","inline-block");
-				return false;
-				$(".userPwd_input").focus();
-			}else if(pwd.search(/\s/) != -1 ){		//공백체크
-				$("#notValidPwd").css("display","inline-block");
-				return false;
-				$(".userPwd_input").focus();
-			}else if(isNum<0 || isLower<0 || isUpper<0){	//영대,소문자 숫자 체크
-				$("#notValidPwd").css("display","inline-block");
-				return false;
-				$(".userPwd_input").focus();
-			}else{
-				$("#notValidPwd").css("display","none");
-				return true;
-			}
-		})
+	$("#userPwd").focusout(function(){ isValidPwd();
+	})
+	function isValidPwd(){
+		var pwd = $("#userPwd").val();
+		
+		var isNum = pwd.search(/[0-9]/g);
+		var isLower = pwd.search(/[a-z]/g);
+		var isUpper = pwd.search(/[A-Z]/g);
+		
+		if(pwd.length<8 || pwd.length>20){		//길이체크
+			$("#notValidPwd").css("display","inline-block");
+			$(".userPwd_input").focus();
+			return false;
+		}else if(pwd.search(/\s/) != -1 ){		//공백체크
+			$("#notValidPwd").css("display","inline-block");
+			$(".userPwd_input").focus();
+			return false;
+		}else if(isNum<0 || isLower<0 || isUpper<0){	//영대,소문자 숫자 체크
+			$("#notValidPwd").css("display","inline-block");
+			$(".userPwd_input").focus();	
+			return false;
+		}else{
+			$("#notValidPwd").css("display","none");
+			return true;
+		}
+	}
 })	
 </script>
 <script type="text/javascript">
