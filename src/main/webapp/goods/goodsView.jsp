@@ -53,26 +53,32 @@
             border-radius: 10px;
         }
         
-        .goodsname {
-        	font-size:4.5em;
-        }
-        
-        .goodDetail {
+        #goodsdetail {
         	color: #666666;
-        	border-bottom: 1px solid #eeeeee; 
+        	padding: 10px 0;
+        	border-bottom: 1px solid #cccccc;
         }
         
-        .form-control {
-        	width:150px;
-        
-        }
+        .option-table td {vertical-align: middle;}
+        .option-table td:first-child {width: 120px;}
+        .option-table .num {display: inline; width: 50px; text-align: center; padding: 6px 0 0 10px;}
+        .btn-box {text-align: center; display: flex; justify-content: space-between;}
+        .btn-box > * {display: inline; width: 49%;}
     </style>
     
     <script type = "text/javascript">
     	function calcTotalPrice() {
     		price = $("#goodsprice").text();
     		quantity = $("input[name=cartQty]").val();
-			$("#goodstotalprice").text(price * quantity);
+			cartPeriod = parseInt($("select[name=cartPeriod]").val());
+			cartWeekday = 0;
+			if($("select[name=cartWeekDay]").val() == "T"){
+				cartWeekday = 3/5;
+			} else {
+				cartWeekday = 1;
+			}
+			
+			$("#goodstotalprice").text(price * quantity * cartWeekday * cartPeriod);
     	}
     
     	$(function() {
@@ -154,6 +160,10 @@
 				}) // ajax 종료
 			}) // 장바구니에 담기 종료
 			
+			$(".selectpicker").click(function() {
+				calcTotalPrice();
+			})
+			
     		selectByGoodsId();
     	})
     </script>
@@ -169,76 +179,78 @@
             </div>
             <div class="col-sm-6">
                 <div class="goodsinformation">
-                    <p class="goodsname" id="goodsname"></p>
+                    <h1 class="goodsname" id="goodsname"></h1>
                     <p class="goodsdetail" id="goodsdetail"></p>
                 </div>
                 <form action="${path}/front?key=cart&methodName=viewOrderForm&mode=D" method="post">
-	                <table class="table">
-	                	
+	                <table class="table option-table table-borderless">
+		                <tbody>
+		                	<tr>
+		                		<td>
+		                			배송요일
+		                		</td>
+		                		<td>
+			                        <select class="selectpicker form-select" name="cartWeekDay">
+			                            <option value="F">주 5회 (월~금)</option>
+			                            <option value="T">주 3회 (월/수/금)</option>
+			                        </select>
+		                		</td>
+		                	</tr>
+		                	<tr>
+		                		<td>
+		                			배송기간	
+		                		</td>
+		                		<td>
+			                        <select class="selectpicker form-select" name="cartPeriod">
+			                            <option value="1W">1주</option>
+			                            <option value="2W">2주</option>
+			                            <option value="4W">4주</option>
+			                            <option value="8W">8주</option>
+			                        </select>
+		                		</td>
+		                	</tr>
+		                	<tr>
+		                		<td>
+		                			수량
+		                		</td>
+	                            <td>
+	                            	<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
+	                            	<input type="number" class="form-control-plaintext num" name="cartQty" min="1" max="9999" step="1" value="1" readonly="readonly">
+	                            	<button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
+	                            </td>
+		                	</tr>
+		                	<tr>
+		                		<td>
+		                			배송 요일
+		                		</td>
+		                		<td>
+									<input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
+		                		</td>
+		                	</tr>
+		                	</tbody>
+	                	<tfoot>
+		                	<tr>
+		                		<td>
+			                		금액 
+		                		</td>
+		                		<td>
+			                    	<span class="goodsprice" id="goodsprice"></span>
+		                		</td>
+		                	</tr>
+		                	<tr>
+		                		<td>
+									<h5>총 주문 금액</h5>
+		                		</td>
+		                		<td>
+									<h5><span class="goodstotalprice" id="goodstotalprice"></span></h5>
+		                		</td>
+		                	</tr>
+	                	</tfoot>
 	                </table>
-	                <div class="order-box">
-	                    <div class="form-group row">
-	                    	<div class="col-3">
-	                    		<input type="hidden" name="goodsThumbnailImage">
-	                    		<input type="hidden" name="goodsname">
-	                        	<label for="exampleInputEmail1">배송요일</label>
-	                        </div>
-	                        <div class="col-9">
-		                        <select class="selectpicker" name="cartWeekDay">
-		                            <option value="F">주 5회 (월~금)</option>
-		                            <option value="T">주 3회 (월/수/금)</option>
-		                        </select>
-	                        </div>
-	                    </div>
-	                    <div class="order-box row">
-	                    	<div class="col-3">
-	                        	<label for="exampleInputPassword1">배송기간</label>
-	                        </div>
-	                        <div class="col-9">
-		                        <select class="selectpicker" name="cartPeriod">
-		                            <option value="1W">1주</option>
-		                            <option value="2W">2주</option>
-		                            <option value="4W">4주</option>
-		                            <option value="8W">8주</option>
-		                        </select>
-	                        </div>
-	                    </div>
-	                    <div class="order-box row">
-	                    	<div class="col-3">
-	                       		<label for="exampleInputPassword1">수량</label>
-	                        </div>
-	                        <div class="col-9">
-		                        <div class="spiner-form-container clearfix">
-		                            <td>
-		                            	<button type="button" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
-		                            	<input type="number" name="cartQty" min="1" max="9999" step="1" value="1" readonly="readonly">
-		                            	<button type="button" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
-		                            </td>
-		                        </div>
-	                        </div>
-	                    </div>
-	                    <div class="order-box row">
-	                    	<div class="col-3">
-	                        	<label for="exampleInputPassword1" class="date">첫 배송일</label>
-	                        </div>
-	                        <div class="col-9">
-	                        	<input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
-	                        </div>
-	                    </div>
-	                    <div class="container-fluid">
-	                    	<input type="hidden" name="goodsId" value="">
-	                    	<input type="hidden" name="mode" value="D">
-	                    	<input type="hidden" name="goodsPrice" value="">
-	                    	<label for="exampleInputPassword1">금액</label>
-	                    	<a class="goodsprice" id="goodsprice"></a>
-	                    	<label for="exampleInputPassword1">원</label><br>
-							<label for="exampleInputPassword1">총 주문금액</label>
-							<a class="goodstotalprice" id="goodstotalprice"></a>
-							<label for="exampleInputPassword1">원</label>
-	                    </div>
-	                    <button type="button" class="btn btn-light" id="cart">장바구니 담기</button>
-	                    <button type="submit" class="btn btn-dark" id="order">주문하기</button>
-	                </div>
+	                <div class="btn-box">
+	                    <button type="button" class="form-control btn btn-outline-dark shadow-none btn-lg" id="cart">장바구니 담기</button>
+	                    <button type="submit" class="form-control btn btn-dark shadow-none btn-lg" id="order">주문하기</button>
+                    </div>
                 </form>
             </div>
         </div>
