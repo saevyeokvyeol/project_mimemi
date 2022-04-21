@@ -10,6 +10,8 @@
 <jsp:include page="../common/header.jsp"/>
 
 <style type="text/css">
+
+
 .FAQ-view {width: 1200px; margin: 50px auto;}
 .FAQ-sideview {width: 200px; margin-right: 50px; z-index: 0;}
 .FAQ-sideview h3 {margin: 0 0 20px 10px;}
@@ -24,6 +26,35 @@
  .list-group {}
  .side-minibar {padding: 0;}
  .side-minibar > a {font-size: 14px; padding-left: 40px;}
+ 
+        .review-search-box{
+                display: inline-block;
+                text-align: center;
+            }
+ 
+    .review-search-keyword{
+                border-radius: 4px;
+                padding: 5px;
+                width: 150px;
+                height: 35px;
+                border: 2px solid gray;
+                color: gray;
+                margin: 0px 5px 0px 10px;
+            }     
+ 
+    .btn-search-submit{
+                width: 50px;
+                height: 35px;
+                background-color: cornflowerblue;
+                padding: 5px;
+                border-radius: 4px;
+                border: 2px solid cornflowerblue;
+                color: white;
+            }
+    
+ 
+ 
+ 
 </style>
 
 <script type="text/javascript">
@@ -60,22 +91,28 @@
 	</aside>
 		<div class="FAQ-mainview">
 		<div><h1>FAQ</h1></div>
+		
+		  <!-- 검색하기 -->
+		  
+		 <nav class="navbar navbar-light bg-light" >
 			<form>
-			<div class="search">
-				<select>
-					<option value="TITLE">제목</option>
-					<option value="CONTENT">내용</option>
+			<div class="review-search-box">
+				<select name="field" id="review_search_sort_select">
+					<option name="review_search_sort" value="title">제목</option>
+                    <option name="review_search_sort" value="content">내용</option>
 				</select>
-				<input type="text" class="ipt" name="keyword" maxlength="30" value=""/>
-				<button type="submit" class="btn btn-success">검색</button>
+				<input class="review-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
+				<button class="btn-search-submit" type="submit" >검색하기</button>
 			</div>
 			</form>
+		  </nav>	
 		<hr>
+		
 		  <section class="faqList-main">
 		  <c:choose>
 				<c:when test="${empty FaqList}">
 					 <tr>
-						<td colspan="6">공지사항이 없습니다.</td>
+						<td colspan="6" ><center><h2>등록된 FAQ가 없습니다.</h2></center></td>
 					 </tr>
 				 </c:when>
 				 <c:otherwise>
@@ -86,8 +123,9 @@
 					      </button>
 					    </h4>
 					    <div id="flush-collapseOne${faq.faqNo}" class="faq-content" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-					       <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
-					    </div>			  
+					        <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
+					        <br><br><img src="${path}/img/${faq.faqAttach}">
+					    </div>							     
 		  			</c:forEach>
 		  		</c:otherwise>
 			</c:choose>
