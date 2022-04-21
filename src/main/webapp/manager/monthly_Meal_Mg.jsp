@@ -7,6 +7,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>식단관리</title>
+		<jsp:include page="../common/sidebar.jsp"/>
         <!-- 부트스트랩 CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -169,24 +170,9 @@
     </head>
 
     <body>
-        <section>
+        <section style="width: 100%; padding: 100px 50px 100px 250px;">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="row container-fluid">
-                        <div class="col-9 text-center">
-                            <h2>월간식단 관리</h2>
-                        </div>
-                        <!-- <div class="col-3">
-                    select box
-
-                    <select class="selectpicker">
-                        <option>상품 카테고리 순</option>
-                        <option>날짜순</option>
-                    </select>
-                    <button type="button" class="btn btn-primary" onclick="()">조회</button>
-                    
-                </div> -->
-                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-sm" id="dayMealTable">
                             <thead>

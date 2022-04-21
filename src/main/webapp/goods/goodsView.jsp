@@ -22,9 +22,9 @@
     	<link rel="stylesheet" href="${path}/css/datepicker.css">
     <style>
 
-        .wrap {
+        .goods-view {
             margin: auto;
-            width: 900px;
+            width: 1200px;
         }
 
         .comment {
@@ -34,9 +34,7 @@
 
         .posting-box {
             margin: 10px auto 100px auto;
- 
             border-radius: 5px;
-
             padding: 25px;
         }
 
@@ -52,6 +50,7 @@
         .goods-thumbnail-image {
             width: 500px;
             height: 500px;
+            border-radius: 10px;
         }
         
         .goodsname {
@@ -59,7 +58,13 @@
         }
         
         .goodDetail {
-        	font-size:1.5em;
+        	color: #666666;
+        	border-bottom: 1px solid #eeeeee; 
+        }
+        
+        .form-control {
+        	width:150px;
+        
         }
     </style>
     
@@ -85,10 +90,12 @@
     					item = result[0]
    						$("input[name=goodsId]").val(item.goodsId);
    						$("#goodsname").text(item.goodsName);
+   						$("input[name=goodsName]").val(item.goodsName);
    						$("#goodsdetail").text(item.goodsDetail);
    						$("#goodsprice").text(item.goodsPrice);
    						$("input[name=goodsPrice]").val(item.goodsPrice);
    						$("#goodsThumbnailImage").attr("src", item.goodsThumbnail);
+   						$("input[name=goodsThumbnailImage]").val(item.goodsThumbnail);
    						calcTotalPrice();
     				}
     			})
@@ -153,7 +160,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="goods-view">
         <div class="row" style="padding: 30px">
             <div class="col-sm-6">
                 <div class="goodsthumbnail">
@@ -166,9 +173,14 @@
                     <p class="goodsdetail" id="goodsdetail"></p>
                 </div>
                 <form action="${path}/front?key=cart&methodName=viewOrderForm&mode=D" method="post">
+	                <table class="table">
+	                	
+	                </table>
 	                <div class="order-box">
 	                    <div class="form-group row">
 	                    	<div class="col-3">
+	                    		<input type="hidden" name="goodsThumbnailImage">
+	                    		<input type="hidden" name="goodsname">
 	                        	<label for="exampleInputEmail1">배송요일</label>
 	                        </div>
 	                        <div class="col-9">
@@ -207,7 +219,7 @@
 	                    </div>
 	                    <div class="order-box row">
 	                    	<div class="col-3">
-	                        	<label for="exampleInputPassword1">첫 배송일</label>
+	                        	<label for="exampleInputPassword1" class="date">첫 배송일</label>
 	                        </div>
 	                        <div class="col-9">
 	                        	<input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
@@ -224,8 +236,8 @@
 							<a class="goodstotalprice" id="goodstotalprice"></a>
 							<label for="exampleInputPassword1">원</label>
 	                    </div>
-	                    <button type="button" class="btn btn-primary" id="cart">장바구니 담기</button>
-	                    <button type="submit" class="btn btn-primary" id="order">주문하기</button>
+	                    <button type="button" class="btn btn-light" id="cart">장바구니 담기</button>
+	                    <button type="submit" class="btn btn-dark" id="order">주문하기</button>
 	                </div>
                 </form>
             </div>

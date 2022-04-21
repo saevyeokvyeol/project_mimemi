@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
+        <title>후기 :: 미미미</title>
         <jsp:include page="../common/header.jsp"/>
          <!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
@@ -35,16 +35,13 @@ pageEncoding="UTF-8"%>
            .review-view{
                 width: 1200px; margin: auto; padding: 50px 0;
             }
+            .thead-dark th { text-align: center;}
             
-            .review-table th {
-                text-align: center;
-            }
-            
-            .review-table th:first-child {width: 50px;}
-            .review-table th:nth-child(2),
-            .review-table th:nth-child(4),
-            .review-table th:nth-child(5),
-            .review-table th:nth-child(6) {width: 150px;}
+            .review-table td:first-child {width: 50px; text-align: center;}
+            .review-table td:nth-child(2),
+            .review-table td:nth-child(4),
+            .review-table td:nth-child(5),
+            .review-table td:nth-child(6) {width: 150px; text-align: center;}
             
             .review-table td{
                 vertical-align: middle;
@@ -56,46 +53,12 @@ pageEncoding="UTF-8"%>
                 width:70px; padding-bottom: 10px;
             }
             
-            select{
-                width: 130px;
-                height: 35px;
-                background-color: white;
-                padding: 5px;
-                border-radius: 4px;
-                border: 2px solid cornflowerblue;
-                color: cornflowerblue;
-            }
-            select option{
-                background-color: cornflowerblue;
-                color: white;
-                padding: 5px;
-            }
-            select icoArrow{
-                border-left: 2px solid cornflowerblue;
-                transition: .3s;
-                width: 50%;
-            }
-            #review_sort_select{
-            	float:right;
-            }
-            .review-search-keyword{
-                border-radius: 4px;
-                padding: 5px;
-                width: 150px;
-                height: 35px;
-                border: 2px solid gray;
-                color: gray;
-                margin: 0px 5px 0px 10px;
-            }
-            .btn-search-submit{
-                width: 50px;
-                height: 35px;
-                background-color: cornflowerblue;
-                padding: 5px;
-                border-radius: 4px;
-                border: 2px solid cornflowerblue;
-                color: white;
-            }
+            .selectbar {display: flex; justify-content: space-between; padding-bottom: 15px;}
+            .selectbar h1 {display: inline;}
+            .selectbar select {width: 200px; height:38px; display: inline;}
+            
+            .form-inline .form-select {width: 100px;}
+            body > div > nav.navbar > div.review-search-box > form > input {margin: 0 5px;}
             
        </style>
         
@@ -103,10 +66,10 @@ pageEncoding="UTF-8"%>
     </head>
     <body>
         <div class="review-view">
-            <h1>후기 게시판</h1>
             <!--정렬 카테고리-->
-            <nav class="navbar">
-	            <select name="review_sort_select" id="review_sort_select">
+            <nav class="selectbar">
+            	<h1>후기 게시판</h1>
+	            <select class="form-select" name="review_sort_select" id="review_sort_select">
 	                <option name="review_sort" value="0" selected='selected'>정렬방식</option>
 	                <option name="review_sort" value="reg">등록순</option>
 	                <option name="review_sort" value="higirate">별점 높은순</option>
@@ -139,8 +102,8 @@ pageEncoding="UTF-8"%>
                             <c:otherwise>
                                 <c:forEach items="${requestScope.list}" var="review">
                                     <tr>
-                                        <th><span>${review.reviewNo}</span></th>
-                                        <th><span>${review.goodsDTO.goodsName}</span></th>
+                                        <td><span>${review.reviewNo}</span></td>
+                                        <td><span>${review.goodsDTO.goodsName}</span></td>
                                         <td>
                                         	<a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a>
                                             <c:if test="${not empty review.reviewAttach}">
@@ -150,9 +113,9 @@ pageEncoding="UTF-8"%>
 												</svg>
                                            </c:if>
                                      	</td>
-                                        <th><span>${review.userId.substring(0,4)}****</span></th>
-                                        <th><span>${review.reviewRegdate}</span></th>
-                                        <th>
+                                        <td><span>${review.userId.substring(0,4)}****</span></td>
+                                        <td><span>${review.reviewRegdate}</span></td>
+                                        <td>
                                             <c:choose>
                                                 <c:when test="${review.reviewRate eq 1}"><img src="${path}/img/ui/starRate1.jpg" class="starRateImg"></c:when>
                                                 <c:when test="${review.reviewRate eq 2}"><img src="${path}/img/ui/starRate2.jpg" class="starRateImg"></c:when>
@@ -160,7 +123,7 @@ pageEncoding="UTF-8"%>
                                                 <c:when test="${review.reviewRate eq 4}"><img src="${path}/img/ui/starRate4.jpg" class="starRateImg"></c:when>
                                                 <c:when test="${review.reviewRate eq 5}"><img src="${path}/img/ui/starRate5.jpg" class="starRateImg"></c:when>
                                             </c:choose>
-                                        </th>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -170,18 +133,18 @@ pageEncoding="UTF-8"%>
             </div>
             
             <!--리뷰쓰기/검색하기-->
-            <nav class="navbar navbar-light bg-light">
+            <nav class="navbar">
                 <div class="reivew-wirte-bnt">
-                    <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp" id="write-btn">후기 작성하기</a></span>
+                    <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp" id="write-btn" class="btn btn-outline-dark shadow-none">후기 작성하기</a></span>
                 </div>
                 <div class="review-search-box">
                     <form class="form-inline" action="${path}/front?key=review&methodName=selectByKeyword" method="post">
-                        <select name="field" id="review_search_sort_select">
+                        <select name="field" id="review_search_sort_select" class="form-select">
                             <option name="review_search_sort" value="title">제목</option>
                             <option name="review_search_sort" value="content">내용</option>
                         </select>
-                        <input class="review-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn-search-submit" type="submit" >검색하기</button>
+                        <input class="form-control" name="keyword" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark shadow-none" type="submit" >검색하기</button>
                     </form>
                 </div>
             </nav>

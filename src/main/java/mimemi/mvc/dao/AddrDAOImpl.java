@@ -14,6 +14,18 @@ import mimemi.mvc.util.DbUtil;
 public class AddrDAOImpl implements AddrDAO {
 	private Properties proFile = new Properties();
 	
+	/**
+	 * dbQuery.properties 로딩해 Properties 객체에 저장
+	 * */
+	public AddrDAOImpl() {
+		try {
+			proFile.load(getClass().getClassLoader().getResourceAsStream("dbQuery.properties"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@Override
 	public AddrDTO selectByAddrName(String addrName) throws SQLException {
 		Connection con = null;
@@ -21,7 +33,7 @@ public class AddrDAOImpl implements AddrDAO {
 		ResultSet rs = null;
 		AddrDTO addr = null;
 		
-		String sql = "select * from addr where addr_name=?";
+		String sql = proFile.getProperty("addr.selectByAddrName");
 		
 		try {
 			con=DbUtil.getConnection();
@@ -46,7 +58,7 @@ public class AddrDAOImpl implements AddrDAO {
 		ResultSet rs = null;
 		AddrDTO addr = new AddrDTO();
 		
-		String sql = "select * from addr where addr_id=?";
+		String sql = proFile.getProperty("addr.selectByAddrId");
 		
 		try {
 			con=DbUtil.getConnection();
