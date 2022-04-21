@@ -57,6 +57,7 @@ public class AddrController implements Controller {
 	}
 
 	public void selectByAddrId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
 		String addrId = request.getParameter("addrId");
 		
 		List<AddrDTO> list = new ArrayList<AddrDTO>();
