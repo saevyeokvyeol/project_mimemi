@@ -72,8 +72,6 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="${path}/front?key=notice&methodName=selectAllNotice">공지사항</a>
 
-                                    <a class="nav-link" href="${path}/manager/faq_Main_Mg.jsp">FAQ</a>
-
                                     <a class="nav-link" href="${path}/front?key=faq&methodName=selectAllFaq"">FAQ</a>
 
                                     <a class="nav-link" href="${path}/manager/event_Main_Mg.jsp">이벤트</a>
