@@ -166,7 +166,7 @@ pageEncoding="UTF-8"%>
                                         </th>
                                         <th><span>${review.goodsDTO.goodsName}</span></th>
                                         <td><span class="review-list-content-link"><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></span></td>
-                                        <th><span>${review.userDTO.userName}</span></th>
+                                        <th><span>${review.userId.substring(0,4)}****</span></th>
                                         <th><span>${review.reviewRegdate}</span></th>
                                         <th>
                                             <c:choose>

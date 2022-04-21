@@ -140,7 +140,7 @@ pageEncoding="UTF-8"%>
             .reply-content{
             	padding:10px 10px 10px 0px;
             }
-            #reply-update-bnt, #reply-delete-bnt{
+            #reply-delete-bnt{
             	color:gray;
             }
             
@@ -161,8 +161,9 @@ pageEncoding="UTF-8"%>
         <script>
         $(function(){
             var target ='${reviewDetail.reviewNo}'
-            //var loginUser='${session.loginUser}' //세션으로 확인한 현재 로그인한 유저
-            var loginUser='frog123'
+            var loginUser='${sessionScope.loginUser}' //세션으로 확인한 현재 로그인한 유저
+            //var loginUser='frog123'
+            //alert("로그인 유저 아이디:"+loginUser)
 
             //전체 댓글 검색
         	function selectAllReply(){
@@ -183,7 +184,7 @@ pageEncoding="UTF-8"%>
                         str+=`</div>`;
                         str+=`<div class="reply-content">`;
                             str+=`<span class="reply-content-text">\${reply.replyContent}</span>`
-                            str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-update-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}>수정</a></span>`
+                            //str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-update-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}>수정</a></span>`
                             str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-delete-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}">삭제</a></span>`
                         str+=`</div>`;
                     })
@@ -200,7 +201,14 @@ pageEncoding="UTF-8"%>
         	
             $("#reply-insert-btn").click(function(){
                 let status =true;
+                alert(loginUser)
                 //댓글 유효성체크
+                if(loginUser){
+                    alert("댓글 기능은 회원만 가능합니다.")
+                    status=false;
+                    return;
+                }
+
                 if($("#exampleFormControlTextarea1").val()==""){
                     alert("댓글을 입력해 주십시오.")
                     $(this).focus();
@@ -267,10 +275,36 @@ pageEncoding="UTF-8"%>
                     alert("댓글은 자신이 단 댓글만 삭제 가능합니다.")
                 }
             })
-            
+            $(document).on("click","#delete-btn",function(){
+                var reivewId = $(this).attr("name")
+                //alert(reivewId)
+                if(loginUser!=reivewId|| loginUser){
+                    alert("게시물은 자신이 작성한 게시물만 삭제 가능합니다.")
+                }else{
+                    let url = `${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}`
+        			location.replace(url);
+                }
+            })
+
+            $(document).on("click","#update-btn",function(){
+                var reivewId = $(this).attr("name")
+                if(loginUser!=reivewId|| loginUser){
+                    alert("게시물은 자신이 작성한 게시물만 수정 가능합니다.")
+                }else{
+                    let url = `${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}`
+        			location.replace(url);
+                }
+            })
+
+            $(document).on("click","#back-list-btn",function(){
+                
+                let url = `${path}/front?key=review&methodName=selectAll&pageNum=${pageNum}`
+        		location.replace(url);
+            })
 
             selectAllReply();
         })
+        
         	
         </script>
         
@@ -320,7 +354,7 @@ pageEncoding="UTF-8"%>
                             </c:choose>
                         </div>
                         <div>
-                            <strong class="userName">${reviewDetail.userDTO.userName}</strong>
+                            <strong class="userName">${reviewDetail.userId.substring(0,4)}****</strong>
                             <span>${reviewDetail.reviewRegdate}</span>
                         </div>
                     </div>
@@ -339,14 +373,12 @@ pageEncoding="UTF-8"%>
                     </div>
                 </div>
             </div>
-            <!-- <리뷰 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
+            <!-- 리뷰 정보 하단-->
             <div class="base-btn">
-                <span class="bLeft"><a href="javascript:void(0);" onclick="backList()" id="back-list-btn">목록으로 돌아가기</a></span>
-                <span class="bRight"><a href="${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}" id="delete-btn">삭제</a></span>
-                <span class="bRight"><a href="${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}" id="update-btn" >수정</a></span>
-            </div>
-            <div class="review-reply">
-                
+                <span class="bLeft"><a href="#" id="back-list-btn">목록으로 돌아가기</a></span>
+                <span class="bRight"><a href="#" id="delete-btn" name="${reviewDetail.userId}">삭제</a></span>
+                <span class="bRight"><a href="#" id="update-btn" name="${reviewDetail.userId}">수정</a></span>
+            </div> 
                 <!--댓글 등록하기-->
                 <div class="card">
                     <div class="card-body">
@@ -354,8 +386,8 @@ pageEncoding="UTF-8"%>
                             <div class="form-inline mb-2">
                                 <label for="replyId"><img src="${path}/img/ui/user.png" class="reply-user-icon"><img></label>
                                 <span><strong>현재 로그인한 유저 아이디</strong></span>
-                                <input type="hidden" name="reply_id" value="frog123"><!-- 나중에 세션으로 아이디 받기 -->
-                                <input type="hidden" name="reply_manager_id" value="">
+                                <input type="hidden" name="reply_id" value="${sessionScope.loginUser}"><!-- 나중에 세션으로 아이디 받기 -->
+                                <input type="hidden" name="reply_manager_id" value="${sessionScope.loginManager}">
                             </div>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reply_content"></textarea>
                             <input type="hidden" name="key" value="reviewreply">

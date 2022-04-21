@@ -124,11 +124,16 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>별점</th>
                             <td>
-                                <input type="radio" name="rate" value="1">★ 
-                                <input type="radio" name="rate" value="2">★★ 
-                                <input type="radio" name="rate" value="3">★★★
-                                <input type="radio" name="rate" value="4">★★★★ 
-                                <input type="radio" name="rate" value="5">★★★★★ 
+                                <input type="radio" name="rate" value="1">
+                                <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="2">
+                                <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="3">
+                                <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="4">
+                                <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
+                                <input type="radio" name="rate" value="5">
+                                <img src="${path}/img/ui/starRate5.jpg" class="starRateImg"> 
                             </td>
                         </tr>
                         <tr>

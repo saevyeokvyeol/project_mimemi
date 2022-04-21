@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import mimemi.mvc.dto.GoodsDTO;
 import mimemi.mvc.dto.ReviewDTO;
 import mimemi.mvc.dto.ReviewReplyDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.paging.PageCnt;
 import mimemi.mvc.util.DbUtil;
 import oracle.jdbc.proxy.annotation.Pre;
@@ -19,6 +21,8 @@ import oracle.jdbc.proxy.annotation.Pre;
 public class ReviewDAOImpl implements ReviewDAO {
 	private Properties proFile = new Properties();
 	private ReviewReplyDAO reviewReplyDAO = new ReviewReplyDAOImpl();
+	private UserDAO userDAO = new UserDAOImpl();
+	private GoodsDAO goodsDAO = new GoodsDAOImpl();
 
 	@Override
 	public int insertReview(ReviewDTO reviewDTO) throws SQLException {
@@ -195,8 +199,9 @@ public class ReviewDAOImpl implements ReviewDAO {
 						rs.getString(9),
 						rs.getInt(10)
 						);
-				review.getGoodsDTO().setGoodsName("상품이름");
-				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
+				//상품이름 가져오기
+				GoodsDTO goods =goodsDAO.goodsSelectByGoodsId(review.getGoodsId());
+				review.getGoodsDTO().setGoodsName(goods.getGoodsName());
 				list.add(review);
 				//System.out.println(review.getReviewRegdate());
 			}
@@ -287,8 +292,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 						rs.getString(9),
 						rs.getInt(10)
 						);
-				review.getGoodsDTO().setGoodsName("상품이름");
-				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
+				
+				//상품이름 가져오기
+				GoodsDTO goods =goodsDAO.goodsSelectByGoodsId(review.getGoodsId());
+				review.getGoodsDTO().setGoodsName(goods.getGoodsName());
+				//작성자 이름 가져오기
+				//UserDTO user = userDAO.selectByID(review.getUserId());
+				//review.getUserDTO().setUserName(user.getUserName());//홍*동처럼 보안처리나중에 하기
 				
 				list.add(review);
 				//System.out.println(review.getReviewRegdate());
@@ -363,9 +373,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 						rs.getString(9),
 						rs.getInt(10)
 						);
-				reviewDetail.getGoodsDTO().setGoodsName("리뷰 상세보기:상품이름");
-				reviewDetail.getGoodsDTO().setGoodsThumbnail("상품 썸네일이미지");
-				reviewDetail.getUserDTO().setUserName("리뷰상세보기:작성자 이름"); //홍*동처럼 보안처리나중에 하기
+				//상품이름 가져오기
+				GoodsDTO goods =goodsDAO.goodsSelectByGoodsId(reviewDetail.getGoodsId());
+				reviewDetail.getGoodsDTO().setGoodsName(goods.getGoodsName());
+				reviewDetail.getGoodsDTO().setGoodsThumbnail(goods.getGoodsThumbnail());
+				//작성자 이름 가져오기
+				//UserDTO user = userDAO.selectByID(reviewDetail.getUserId());
+				//reviewDetail.getUserDTO().setUserName(user.getUserName());//홍*동처럼 보안처리나중에 하기
 				System.out.println("상세보기 할 리뷰번호:"+reviewDetail.getReviewNo());
 			}
 		}finally {
