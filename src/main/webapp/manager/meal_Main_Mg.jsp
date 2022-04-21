@@ -7,7 +7,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
+        <title>도시락관리 페이지</title>
+		<jsp:include page="../common/sidebar.jsp"/>
         <!-- 부트스트랩 CSS CDN -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -20,7 +21,6 @@
 
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 
-        <title>도시락관리 페이지</title>
 
         <style>
             .wrap {
@@ -36,8 +36,8 @@
 
         <script type="text/javascript">
             function fillUpdateModal(mealId, goodsId, mealName, mealWeight, mealKcal, mealCarbo, mealProtein, mealFat, mealImg, mealSale) {
-            	$('#updateMealId').text(mealId)
-            	$('#updateMealIdHidden').val(mealId)
+                $('#updateMealId').text(mealId)
+                $('#updateMealIdHidden').val(mealId)
                 $('#updateGoodsIdHidden').val(goodsId)
                 $('#updateMealName').val(mealName)
                 $('#updateMealWeight').val(mealWeight)
@@ -87,30 +87,30 @@
             function mealInsert() {
                 /* mealID, goodsId, mealName, mealWeight, mealKcal, mealCarbo, mealProtein, mealFat, mealImg, mealSale */
                 let mealId = $("#mealId").val()
-	                goodsId = $("#goodsId").val()
-	                mealName = $("#mealName").val()
-	                mealWeight = $("#mealWeight").val()
-	                mealKcal = $("#mealKcal").val()
-	                mealCarbo = $("#mealCarbo").val()
-	                mealProtein = $("#mealProtein").val()
-	                mealFat = $("#mealFat").val()
-	                mealImg = $("#mealImg").val()
-	                mealSale = $("#mealSale").val()
-	                
-	            let data = {
-                        key: "meal",
-                        methodName: "getMealInsert",
-                        mealId: mealId,
-                        goodsId: goodsId,
-                        mealName: mealName,
-                        mealWeight: mealWeight,
-                        mealKcal: mealKcal,
-                        mealCarbo: mealCarbo,
-                        mealProtein: mealProtein,
-                        mealFat: mealFat,
-                        mealImg: mealImg,
-                        mealSale: mealSale
-                    }
+                goodsId = $("#goodsId").val()
+                mealName = $("#mealName").val()
+                mealWeight = $("#mealWeight").val()
+                mealKcal = $("#mealKcal").val()
+                mealCarbo = $("#mealCarbo").val()
+                mealProtein = $("#mealProtein").val()
+                mealFat = $("#mealFat").val()
+                mealImg = $("#mealImg").val()
+                mealSale = $("#mealSale").val()
+
+                let data = {
+                    key: "meal",
+                    methodName: "getMealInsert",
+                    mealId: mealId,
+                    goodsId: goodsId,
+                    mealName: mealName,
+                    mealWeight: mealWeight,
+                    mealKcal: mealKcal,
+                    mealCarbo: mealCarbo,
+                    mealProtein: mealProtein,
+                    mealFat: mealFat,
+                    mealImg: mealImg,
+                    mealSale: mealSale
+                }
                 $.ajax({
                     url: "${path}/ajax",
                     type: "post",
@@ -124,15 +124,15 @@
             /*상품 수정하기*/
             function mealUpdate() {
                 let mealId = $("#updateMealIdHidden").val()
-	                goodsId = $("#updateGoodsIdHidden").val()
-	                mealName = $("#updateMealName").val()
-	                mealWeight = $("#updateMealWeight").val()
-	                mealKcal = $("#updateMealKcal").val()
-	                mealCarbo = $("#updateMealCarbo").val()
-	                mealProtein = $("#updateMealProtein").val()
-	                mealFat = $("#updateMealFat").val()
-	                mealImg = $("#updateMealImg").val()
-	                mealSale = $("#updateMealSale").val()
+                goodsId = $("#updateGoodsIdHidden").val()
+                mealName = $("#updateMealName").val()
+                mealWeight = $("#updateMealWeight").val()
+                mealKcal = $("#updateMealKcal").val()
+                mealCarbo = $("#updateMealCarbo").val()
+                mealProtein = $("#updateMealProtein").val()
+                mealFat = $("#updateMealFat").val()
+                mealImg = $("#updateMealImg").val()
+                mealSale = $("#updateMealSale").val()
                 $.ajax({
                     url: "${path}/ajax",
                     type: "post",
@@ -204,255 +204,258 @@
     </head>
 
     <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="row container-fluid">
-                    <div class="col-9 text-center">
-                        <h2>도시락관리 페이지</h2>
+        <div style="width: 100%; padding: 100px 50px 100px 250px;">
+            <div class="container-fluid overflow-scroll">
+                <div class="row">
+                    <div class="row container-fluid">
+                        <div class="col-9 text-center">
+                            <h2>도시락관리 페이지</h2>
+                        </div>
+                        <div class="col-3">
+                            <!-- select box -->
+                            <select class="selectpicker" id="mealSelectByForSale">
+                                <option>전체조회</option>
+                                <option>판매중</option>
+                            </select>
+                            <button type="button" class="btn btn-primary" onclick="mealSelectByForSale()">조회</button>
+                        </div>
+                        <div>
+                            <input type="text" class="spiner-text" id="searchkeyword" value="도시락 검색">
+                            <button type="button" class="btn btn-primary" onclick="mealSelectByKeyword()">검색</button>
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <!-- select box -->
-                        <select class="selectpicker" id="mealSelectByForSale">
-                            <option>전체조회</option>
-                            <option>판매중</option>
-                        </select>
-                        <button type="button" class="btn btn-primary" onclick="mealSelectByForSale()">조회</button>
-                    </div>
-                    <div>
-                        <input type="text" class="spiner-text" id="searchkeyword" value="도시락 검색">
-                        <button type="button" class="btn btn-primary" onclick="mealSelectByKeyword()">검색</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm" id="mealTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">도시락ID</th>
+                                    <th scope="col">상품ID</th>
+                                    <th scope="col">도시락이름</th>
+                                    <th scope="col">도시락_무게</th>
+                                    <th scope="col">도시락_칼로리</th>
+                                    <th scope="col">도시락_탄수화물</th>
+                                    <th scope="col">도시락_단백질</th>
+                                    <th scope="col">도시락_지방</th>
+                                    <th scope="col">도시락_사진</th>
+                                    <th scope="col">도시락_판매여부</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm" id="mealTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">도시락ID</th>
-                                <th scope="col">상품ID</th>
-                                <th scope="col">도시락이름</th>
-                                <th scope="col">도시락_무게</th>
-                                <th scope="col">도시락_칼로리</th>
-                                <th scope="col">도시락_탄수화물</th>
-                                <th scope="col">도시락_단백질</th>
-                                <th scope="col">도시락_지방</th>
-                                <th scope="col">도시락_사진</th>
-                                <th scope="col">도시락_판매여부</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-2 float-right">
+                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#addMealModal">+</button>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-2 float-right">
-                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#addMealModal">+</button>
+
+            <div class="modal fade" id="addMealModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">상품 추가하기</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 ID</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealId" value="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>상품 카테고리</p>
+                                </div>
+                                <div class="col-8">
+                                    <!-- select box -->
+
+                                    <select class="selectpicker" id="goodsId">
+                                        <option value="JUNG01">정성한상</option>
+                                        <option value="VEGAN01">비건 식단</option>
+                                        <option value="SIG01">시그니처</option>
+                                        <option value="RICE01">300 덮밥</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <p>도시락이름</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealName" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 무게</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealWeight" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 칼로리</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealKcal" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 탄수화물</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealCarbo" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 단백질</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealProtein" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 지방</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="mealFat" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 사진 등록</p>
+                                </div>
+                                <div class="col-8">
+
+                                    <button type="button" class="btn btn-primary" id="mealThumbnail">이미지 선택하기</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 판매여부</p>
+                                </div>
+                                <div class="col-8">
+                                    <select class="selectpicker" id="mealSale">
+                                        <option>Y</option>
+                                        <option>N</option>
+                                    </select>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="mealInsert"
+                                        onclick="mealInsert()">등록</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="addMealModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">상품 추가하기</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 ID</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealId" value="1">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>상품 카테고리</p>
-                            </div>
-                            <div class="col-8">
-                                <!-- select box -->
 
-                                <select class="selectpicker" id="goodsId">
-                                    <option value="JUNG01">정성한상</option>
-                                    <option value="VEGAN01">비건 식단</option>
-                                    <option value="SIG01">시그니처</option>
-                                    <option value="RICE01">300 덮밥</option>
-                                </select>
-                            </div>
-                            <div class="col-4">
-                                <p>도시락이름</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealName" value="">
-                            </div>
+            <!-- 수정 모달 -->
+            <div id="updateMealModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">도시 수정하기</h4>
                         </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 무게</p>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락ID</p>
+                                </div>
+                                <div class="col-8">
+                                    <p id="updateMealId"></p>
+                                    <input type="hidden" class="spiner-text" id="updateMealIdHidden" value="">
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealWeight" value="">
+                            <input type="hidden" class="spiner-text" id="updateGoodsIdHidden" value="">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 이름</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="updateMealName" value="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 칼로리</p>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 무게</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="updateMealWeight" value="1일/1식">
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealKcal" value="">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 칼로리</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="updateMealKcal" value="1일/1식">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 탄수화물</p>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 탄수화물</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="updateMealCarbo" value="1일/1식">
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealCarbo" value="">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 단백질</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealProtein" value="">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 지방</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="mealFat" value="">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 사진 등록</p>
-                            </div>
-                            <div class="col-8">
-
-                                <button type="button" class="btn btn-primary" id="mealThumbnail">이미지 선택하기</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 판매여부</p>
-                            </div>
-                            <div class="col-8">
-                                <select class="selectpicker" id="mealSale">
-                                    <option>Y</option>
-                                    <option>N</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 단백질</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="updateMealProtein" value="1일/1식">
+                                </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 지방</p>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="spiner-text" id="updateMealFat" value="1일/1식">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 사진 수정</p>
+                                </div>
+                                <div class="col-8">
+                                    <button type="button" class="btn btn-default" id="updateMealImg">이미지
+                                        선택하기</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>도시락 판매여부</p>
+                                </div>
+                                <div class="col-8">
+                                    <select class="selectpicker" id="updateMealSale">
+                                        <option>Y</option>
+                                        <option>N</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" id="mealInsert" onclick="mealInsert()">등록</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-primary" onclick="mealUpdate()">등록</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button>
                             </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- 수정 모달 -->
-        <div id="updateMealModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">도시 수정하기</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락ID</p>
-                            </div>
-                            <div class="col-8">
-                                <p id="updateMealId"></p>
-                                <input type="hidden" class="spiner-text" id="updateMealIdHidden" value="">
-                            </div>
-                        </div>
-                        <input type="hidden" class="spiner-text" id="updateGoodsIdHidden" value="">
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 이름</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="updateMealName" value="">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 무게</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="updateMealWeight" value="1일/1식">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 칼로리</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="updateMealKcal" value="1일/1식">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 탄수화물</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="updateMealCarbo" value="1일/1식">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 단백질</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="updateMealProtein" value="1일/1식">
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 지방</p>
-                            </div>
-                            <div class="col-8">
-                                <input type="text" class="spiner-text" id="updateMealFat" value="1일/1식">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 사진 수정</p>
-                            </div>
-                            <div class="col-8">
-                                <button type="button" class="btn btn-default" id="updateMealImg">이미지
-                                    선택하기</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <p>도시락 판매여부</p>
-                            </div>
-                            <div class="col-8">
-                                <select class="selectpicker" id="updateMealSale">
-                                    <option>Y</option>
-                                    <option>N</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="mealUpdate()">등록</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button>
                         </div>
                     </div>
                 </div>

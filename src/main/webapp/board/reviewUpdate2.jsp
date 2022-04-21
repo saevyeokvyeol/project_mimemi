@@ -6,64 +6,42 @@ pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
+        <title>후기 :: 미미미</title>
         <jsp:include page="../common/header.jsp"/>
         <style>
-            div{
-                width: 1000px;
-                margin: auto;
+            .review-insertform {
+                width: 900px;
+                margin: auto; padding: 50px 0;
             }
-            table {
-                width: 1000px;
-                margin-left: auto;
-                margin-right: auto;
-                border-collapse: collapse;
-            }
-            table th{
-                width: 200px;
-                text-align: center;
-                background-color: gainsboro;
-                font-weight: bold;
-            }
-            div.review-updateForm{
-                text-align: left;
-            }
+            
+            .review-insertform h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            
+            .review-table th {width: 120px; padding: 15px 30px;}
+            .review-table td {vertical-align: middle;}
+            
+            .stars {margin-right: 15px;}
+            
             img.starRateImg{
-            	box-sizing: border-box;
-                width:90px;
-                height: auto;
-                padding-bottom: 5px;                
+                width: 90px; padding-bottom: 7px;    
             }
-            div.review-image-insert-area{
-            	width: 500px;
-            	margin: 0px
-            }
+            
             div.review-image-preview{
                 box-sizing: border-box;
                 width: 450px;
                 text-align: left;
                 margin: 0px;
-
             }
+            
             #review-image-output{
                 width: 100px;
                 height: auto;
             }
+            
             div.review-submit-button{
                 text-align: center;
             }
-            div.review-update-foot-area{
-                text-align: right;
-            }
             
         </style>
-        <!--부트스트랩 CSS CDN-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-                
-        <!--부트스트랩 JS CDN-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        
-        
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         <script>
             function checkValid(){
@@ -95,26 +73,25 @@ pageEncoding="UTF-8"%>
         </script>
     </head>
     <body>
-        <div class="container">
+        <div class="review-insertform">
             <div class="review-title">
                 <h1>후기 게시판 수정</h1>
-                <hr>
             </div>
             <div class="review-writeForm">
                 <form name="updateReview2" method="post" action="${path}/front?key=review&methodName=update"
                 onSubmit='return checkValid()' enctype="multipart/form-data">
                 <input type="hidden" name="reviewNo" value="${review.reviewNo}">
-                    <table>
+                    <table class="table table-borderless review-table">
                         <tr>
                             <th>제목</th>
                             <td>
-                            	<span><input type="text" name="review_title" placeholder="제목" maxlength='16' value="${review.reviewTitle}"></span>
+                            	<span><input type="text" class="form-control" name="review_title" placeholder="제목" maxlength='16' value="${review.reviewTitle}"></span>
                             </td>
                         </tr>
                         <tr>
                             <th>상품</th>
                             <td>
-                                <select name="review_select_goods" id="review_select_goods">
+                                <select class="form-select" name="review_select_goods" id="review_select_goods">
                                 	<option name="reivew_goods" value="">--상품 이름--</option>
                                 	<option name="reivew_goods" value="JUNG01">정성한상</option>
                                     <option name="reivew_goods" value="VEGAN01">비건 식단</option>
@@ -125,29 +102,39 @@ pageEncoding="UTF-8"%>
                         <tr>
                             <th>별점</th>
                             <td>
-                                <input type="radio" name="rate" value="1">
-                                <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
-                                <input type="radio" name="rate" value="2">
-                                <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
-                                <input type="radio" name="rate" value="3">
-                                <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
-                                <input type="radio" name="rate" value="4">
-                                <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
-                                <input type="radio" name="rate" value="5">
-                                <img src="${path}/img/ui/starRate5.jpg" class="starRateImg"> 
+                            	<span class="stars">
+	                                <input type="radio" name="rate" value="1">
+	                                <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
+                                </span>
+                            	<span class="stars">
+	                                <input type="radio" name="rate" value="2">
+	                                <img src="${path}/img/ui/starRate2.jpg" class="starRateImg">
+                                </span>
+                            	<span class="stars">
+	                                <input type="radio" name="rate" value="3">
+	                                <img src="${path}/img/ui/starRate3.jpg" class="starRateImg">
+                                </span>
+                            	<span class="stars">
+	                                <input type="radio" name="rate" value="4">
+	                                <img src="${path}/img/ui/starRate4.jpg" class="starRateImg">
+                                </span>
+                            	<span class="stars">
+	                                <input type="radio" name="rate" value="5">
+	                                <img src="${path}/img/ui/starRate5.jpg" class="starRateImg"> 
+                                </span>
                             </td>
                         </tr>
                         <tr>
                             <th>내용</th>
                             <td>
-                                <textarea name="review_contents" cols="50" rows="10" maxlength='333' placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다.">${review.reviewContent}</textarea>
+                                <textarea class="form-control" name="review_contents" cols="50" rows="10" maxlength='333' placeholder="정성스러운 리뷰를 추첨하여 경품을 드립니다.">${review.reviewContent}</textarea>
                             </td>
                         </tr>
                         <tr>
                             <th>첨부파일</th>
                             <td>
                                 <div class="review-image-insert-area">
-                                	<input type="file" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
+                                	<input type="file" class="form-control" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
                                 	<p id="file-status">${review.reviewAttach}</p>
                                     <div class="review-image-preview">
                                         <img id="review-image-output" src="${path}/img/save/${review.reviewAttach}">
@@ -179,13 +166,10 @@ pageEncoding="UTF-8"%>
                         </tr>
                     </table>
 					<div class="review-submit-button">
-                		<input type="submit" value="후기 등록하기">
+						<a class="back-review-list btn btn-outline-dark" href="${path}/front?key=review&methodName=selectAll">목록으로 돌아가기</a>
+                		<input type="submit" class="btn btn-outline-dark" value="후기 등록하기">
             		</div>
                 </form>
-            </div>
-           
-            <div class="review-write-foot-area">
-                <span class="back-review-list"><a href="${path}/front?key=review&methodName=selectAll">목록으로 돌아가기</a></span>
             </div>
         </div>
     </body>

@@ -75,7 +75,7 @@ pageEncoding="UTF-8"%>
     <body>
         <div class="review-insertform">
             <div class="review-title">
-                <h1>후기 게시판 등록</h1>
+                <h1>후기 :: 미미미</h1>
             </div>
             <div class="review-writeForm">
                 <form name="writeReview" method="post" action="${path}/front?key=review&methodName=insert"
@@ -133,7 +133,7 @@ pageEncoding="UTF-8"%>
                             <th>첨부파일</th>
                             <td>
                                 <div class="review-image-insert-area">
-                                	<input type="file" class="form-control"  id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
+                                	<input type="file" class="form-control" id="review-image-selector" name="review_image" accept=".jpg, .jpeg, .png">
                                 	<p id="file-status"></p>
                                     <div class="review-image-preview">
                                         <img id="review-image-output">
@@ -166,7 +166,7 @@ pageEncoding="UTF-8"%>
                     </table>
 					<div class="review-submit-button">
 						<a class="back-review-list btn btn-outline-dark" href="${path}/front?key=review&methodName=selectAll">목록으로 돌아가기</a>
-                		<input type="submit" class="btn btn-outline-dark"  value="후기 등록하기">
+                		<input type="submit" class="btn btn-outline-dark" value="후기 등록하기">
             		</div>
                 </form>
             </div>
