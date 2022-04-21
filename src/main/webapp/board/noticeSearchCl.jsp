@@ -7,97 +7,97 @@
 <html>
  <head>
  <meta charset="UTF-8">
- <title>공지사항</title>
+ <title>공지사항 - 미미미</title>
  <jsp:include page="../common/header.jsp"/>
-	</head>
-	<style type="text/css">
-	.left side {width : 300px;
-	            margin:auto;}
-	.body {width : 900px;
-	       margin:auto;}
-	.search{background-color:#eeeeee; 
-	        height : 50px; 
-	        text-align:center;
-	        vertical-align:middle;}
-	 
-	
-	table {width:1200px;}
-	th, td {border : 1px solid white;}
-	</style>
+
+  	
+	<!-- CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
+	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<body>
-	<table>
-	<tr>	
-	<td>
-	<!-- left side -->
-	<div class="left side"> 
-		<div class="title">고객센터</div><hr width="100px">
-		<ul class="menu">
-			<li><a href="${path}/front?key=notice&methodName=selectAll">공지사항</a></li>
-			<li class="">
-				<a href="${path}/front?key=faq&methodName=selectAll">FAQ</a>
-				<ul>
-					<li class=""><a href="">교환/환불</a></li>
-					<li class=""><a href="">회원관련</a></li>
-					<li class=""><a href="">주문/결제</a></li>
-					<li class=""><a href="">배송관련</a></li>
-					<li class=""><a href="">기타</a></li>
-				</ul>
-			</li>
-			<li><a href="ask.jsp">1:1문의</a></li>
-		</ul>
-	</div>
-	</td>
-	<td>
-	<!-- body -->
-	<div class="body"> 
-		<div><h1>공지사항</h1></div>
-		<!-- 검색하기 -->	
-		    <nav class="navbar navbar-light bg-light">
-			 <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeywordClient" method="post">
-			  <div class="search">
-				  <select name="field" id="notice_search_sort_keyWordCl">
-					<option name="notice_search_sort_keyWordCl" value="title">제목</option>
-					<option name="notice_search_sort_keyWordCl" value="content">내용</option>
-			      </select>
-				 <input class="notice-keyWord-search" name="keyword" type="text" placeholder="Search" aria-label="Search">
-				<button type="submit" class="btn-keyWordCl-submit">검색</button>
-			  </div>
-			 </form>
-			</nav>	
-		<hr>
-		
-	  <table class="table" style="text-align:center" id="noticeList">
-	    <thead>
-	      <tr>
-	       <th>순서</th> 
-	       <th>제목</th>
-	       <th>날짜</th>
-	      </tr>
-	    </thead>
-        <tbody>
- 	      <c:choose>
-				<c:when test="${empty requestScope.list}">
-					<tr>
-						<td colspan="6">공지사항이 없습니다.</td>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<c:forEach items="${requestScope.list}" var="notice">
-					<tr>
-						<td>${notice.noticeNo}</td>
-						<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
-						<td>${notice.noticeRegdate}</td>
-					</tr>
-					</c:forEach>
-				</c:otherwise>
-		  </c:choose>
-		</tbody>
-	  </table>
-	</div>
-	</table>
-	</body>
+	  
+
+	<style type="text/css">
+		.Notice-view {width: 1200px; margin: 50px auto;}
+        .Notice-sideview {width: 200px; margin-right: 50px; z-index: 0;}
+        .Notice-sideview h3 {margin: 0 0 20px 10px;}
+		.Notice-mainview {width: 950px;}
+ 		.search{background-color:#eeeeee; 
+			height : 50px; 
+			text-align:center;
+			vertical-align:middle;}
+		.side-minibar {padding: 0;}
+ 		.side-minibar > a {font-size: 14px; padding-left: 40px;}		
+	</style>
+
+</head>
+<body>
+	<section class="Notice-view d-flex p-2 bd-highlight">
+		<!-- left side -->
+		<aside class="Notice-sideview">
+			<h3>고객센터</h3>
+			<div class="list-group">
+				<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action active">
+					공지사항</a>
+				<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					FAQ</a>
+				<div class="side-minibar">
+					<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=op" class="list-group-item list-group-item-action" id="op">주문/결제</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
+				</div>
+				<a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action">1:1문의</a>
+			</div>
+		</aside>
+		<!-- body -->
+		<div class="Notice-mainview"> 
+			<div><h1>공지사항</h1></div>
+			<!--검색하기-->
+			<nav class="navbar navbar-light bg-light">
+				<div class="container-fluid">
+					<span></span>
+					<form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeywordClient"method="post">
+						<select name="field" id="notice_search_sort_keyWord" >
+							<option name="notice_search_sort" value="title">제목</option>
+							<option name="notice_search_sort" value="content">내용</option>
+						</select>
+						<input class="notice-search-keyWord" name="keyword" type="text" placeholder="Search" aria-label="Search">
+						<button class="btn btn-success" type="submit">검색하기</button>
+					</form>
+				</div>
+			</nav>
+			<!--목록-->
+			<table class="table" style="text-align:center" id="noticeList">
+				<thead>
+				<tr>
+				<th>순서</th> 
+				<th>제목</th>
+				<th>날짜</th>
+				</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${empty requestScope.list}">
+							<tr>
+								<td colspan="6">공지사항이 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${requestScope.list}" var="notice">
+							<tr>
+								<td>${notice.noticeNo}</td>
+								<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></span></td>
+								<td>${notice.noticeRegdate}</td>
+							</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+			<!--페이징처리-->
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>
@@ -120,6 +120,8 @@
 					</c:if>
 				</ul>
 			</nav>
-	</body>
-	<jsp:include page="../common/footer.jsp"/>
+		</div>
+	</section>
+</body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

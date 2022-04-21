@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="../common/sidebar.jsp"/>
 </head>
 <style type="text/css">
 body {

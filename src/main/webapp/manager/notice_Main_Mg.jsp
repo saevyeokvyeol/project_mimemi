@@ -8,6 +8,7 @@
   <head>
         <meta charset="UTF-8">
 		<title>공지사항 관리 - 미미미</title>
+		<jsp:include page="../common/sidebar.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
@@ -83,7 +84,7 @@
 			<!-- 작성하기/검색하기 -->
 		<nav class="navbar navbar-light bg-light">
 			<div style="float:right;">
-				 <span class="write-bnt"> <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a></span>
+				 <span class="write-bnt"> <a href="${path}/manager/notice_Insert.jsp" class="btn btn-primary pull-right">작성하기</a></span>
 		    </div>
 		    <div>
               <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeyword" method="post">

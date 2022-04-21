@@ -20,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService {
 			if(noticeDTO.getNoticeAttach()!=null) {
 				new java.io.File(path+"/"+noticeDTO.getNoticeAttach()).delete(); //경로확인하기
 			}
-			throw new SQLException("후기가 등록되지 않았습니다.");
+			throw new SQLException("공지사항이 등록되지 않았습니다.");
 		}
 
 	}
@@ -29,7 +29,7 @@ public class NoticeServiceImpl implements NoticeService {
 	public void updateNotice(NoticeDTO noticeDTO, String path) throws SQLException {
 		NoticeDTO dbnotice = noticeDao.selectByNoticeNo(noticeDTO.getNoticeNo());
 		if(dbnotice==null) {
-			throw new SQLException("공지사항을 찾을수 없습니다.");
+			throw new SQLException("공지사항을 찾을 수 없습니다.");
 		}
 		//db저장한 기존 리뷰의 첨부파일명을 미리 구한다.
          String dbAttach = dbnotice.getNoticeAttach();
