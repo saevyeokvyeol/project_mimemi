@@ -79,7 +79,7 @@ public class OrderController implements Controller {
 		
 		request.setAttribute("orderList", orderList);
 		request.setAttribute("pageNum", pageNum); // 뷰에서 사용하기 위해 저장
-		ModelAndView mv = new ModelAndView("manager/ask_Main_Mg.jsp");
+		ModelAndView mv = new ModelAndView("manager/order_Main_Mg.jsp");
 		
 		return mv;
 	}

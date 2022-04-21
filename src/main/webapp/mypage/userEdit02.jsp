@@ -225,12 +225,14 @@ $(function(){
 		}
 		isValidPhone();
 		
+		return true;
 	})
 	/*
 	비밀번호 형식 체크
 	*/
 	$("#updatePwdBtn").submit(function(){
 		isValidPwd();
+		alert("회원정보가 수정되었습니다.");
 	})
 })
 	
