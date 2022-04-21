@@ -61,6 +61,13 @@
         .goodDetail {
         	font-size:1.5em;
         }
+        
+        .form-control {
+        	width:150px;
+        
+        }
+        
+        
     </style>
     
     <script type = "text/javascript">
@@ -207,7 +214,7 @@
 	                    </div>
 	                    <div class="order-box row">
 	                    	<div class="col-3">
-	                        	<label for="exampleInputPassword1">첫 배송일</label>
+	                        	<label for="exampleInputPassword1" class="date">첫 배송일</label>
 	                        </div>
 	                        <div class="col-9">
 	                        	<input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
@@ -224,8 +231,8 @@
 							<a class="goodstotalprice" id="goodstotalprice"></a>
 							<label for="exampleInputPassword1">원</label>
 	                    </div>
-	                    <button type="button" class="btn btn-primary" id="cart">장바구니 담기</button>
-	                    <button type="submit" class="btn btn-primary" id="order">주문하기</button>
+	                    <button type="button" class="btn btn-light" id="cart">장바구니 담기</button>
+	                    <button type="submit" class="btn btn-dark" id="order">주문하기</button>
 	                </div>
                 </form>
             </div>

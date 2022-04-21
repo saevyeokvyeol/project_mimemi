@@ -10,16 +10,25 @@
 		<title>주문/결제 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
-			.order-view {width: 800px; margin: auto; padding: 50px 0;}
-			.order-view h1 {padding: }
-			table {width: 100%; caption-side: top;}
+			.order-view {width: 1200px; margin: auto; padding: 50px 0;}
+			.order-view .orderForm-cartTable {margin: 30px 0 70px;}
+			.order-view .orderForm-cartTable th,
+			.order-view .orderForm-cartTable td {text-align: center;}
+			.order-view .orderForm-cartTable td:first-child {text-align: left;}
+			.order-view .orderForm-cartTable h5 {text-align: right;}
+			.order-view .orderForm-cartTable img {width: 100px; border-radius: 5px; margin: 0 20px;}
+			.order-view .order-table {width: 900px; caption-side: top; margin: auto;}
 			form > table td:nth-child(1) {width: 170px; padding: 30px;}
 			#oldAddrBox {padding: 5px 0;}
 			#oldAddrBox > * {vertical-align: middle;}
 			#oldAddrBox > select {display:inline; width: 50%;}
 			td {vertical-align: middle;}
-			.card-pay {width: 23%}
+			.card-pay {width: 75px; margin-top: 7px; display: inline;}
 			.btn-box {padding: 30px 0 0; text-align: center;}
+			
+			#sample6_postcode {display: inline; width: 83%;}
+			#sample6_detailAddress, #sample6_extraAddress {display: inline; width: 49.7%; margin-top: 7px;}
+			#zipcode-btn {margin: 0 0 7px 7px;}
 		</style>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
@@ -104,7 +113,7 @@
 								$("select[name=oldAddrList]").removeAttr("disabled");
 							}, // 성공 메소드
 							error : function(err) {
-								alert(err + "\n장바구니를 불러올 수 없습니다.");
+								alert(err + "\n배송지 정보를 불러올 수 없습니다.");
 							} // 에러 메소드
 						}) // ajax 종료
 					} else if($("input[name=addrNum]:checked").val() == 'newAddr'){
@@ -189,26 +198,30 @@
 						success: function(result) {
 							let text = "";
 							let count = 0;
-							$.each(result, function(index, item) {
-								if(item.usercouUsable == "N"){
-									alert
-									if(item.livecouId == ""){
-										text = `<option value="\${item.userCouId}" class="\${item.rgcouId}"></option>`;
-									} else {
-										text = `<option value="\${item.userCouId}" class="\${item.livecouId}"></option>`;
+							if (JSON.stringify(result) == "[]") {
+								text = `<option>사용가능한 쿠폰이 없습니다</option>`;
+								$("#couponList").append(text);
+							} else {
+								$.each(result, function(index, item) {
+									if(item.usercouUsable == "N"){
+										if(item.livecouId == ""){
+											text = `<option value="\${item.userCouId}" class="\${item.rgcouId}"></option>`;
+										} else {
+											text = `<option value="\${item.userCouId}" class="\${item.livecouId}"></option>`;
+										}
+										
+										count++;
+										
+										$("#couponList").append(text);
+										
+										if(item.livecouId == ""){
+											selectCouByCouId(item.rgcouId);
+										} else {
+											selectCouByCouId(item.livecouId);
+										}
 									}
-									
-									count++;
-									
-									$("#couponList").append(text);
-									
-									if(item.livecouId == ""){
-										selectCouByCouId(item.rgcouId);
-									} else {
-										selectCouByCouId(item.livecouId);
-									}
-								}
-							})
+								})
+							}
 							if(count == 0){
 								text += '<option value="0">사용 가능한 쿠폰이 없습니다.</option>';
 							}
@@ -241,6 +254,14 @@
 					})
 				}
 				
+				$("input[name=payPoint]").keyup(function() {
+					if($(this).val() > ${loginUser.userPoint}){
+						alert("소지한 적립금 금액을 초과했습니다.");
+						$(this).val("");
+					}
+				})
+				
+				
 				selectCpByUserId();
 			})
 		</script>
@@ -254,7 +275,7 @@
 					$(".orderForm-cartTable > tbody").children().each(function() {
 						totalPrice += parseInt($(this).children(".goodsPrice").text());
 					})
-					$("#totalPrice").text("₩" + totalPrice);
+					$("#totalPrice > h5").text("₩" + totalPrice);
 					$("input[name=totalPrice]").val(totalPrice);
 				} // calTotalPrice() 종료
 				
@@ -351,7 +372,7 @@
 						<c:if test="${!empty cartList}">
 							<c:forEach items="${cartList}" var="cart">
 								<tr>
-									<td>${cart.goodsId}</td>
+									<td><img alt="" src="${cart.goods.goodsThumbnail}">${cart.goods.goodsName}</td>
 									<td>
 										<c:choose>
 											<c:when test="${cart.cartWeekday == 'T'}">
@@ -394,14 +415,14 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="7" id="totalPrice"></td>
+							<td colspan="7" id="totalPrice"><h5>₩</h5></td>
 						</tr>
 					</tfoot>
 				</table>
 				<form action="${path}/front?key=order&methodName=insertOrder" id="orderForm" method="post">
 				<input type="hidden" name="totalPrice" value="">
-					<table class="table">
-						<caption>배송 정보 입력</caption>
+					<table class="table order-table" >
+						<caption><h4>배송 정보 입력</h4></caption>
 						<tr>
 							<td>배송지 선택</td>
 							<td>
@@ -427,12 +448,10 @@
 						<tr>
 							<td>배송지 주소</td>
 							<td>
-								<input type="text" class="form-control" id="sample6_postcode" name="zipcode" readonly="readonly"><input type="button" value="우편번호" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none"><p>
-								<input type="text" class="form-control" id="sample6_address" name="addrAddr" readonly="readonly"><br>
-								<div>
-									<input type="text" class="form-control" id="sample6_detailAddress" name="addrDetailAddr">
-									<input type="text" class="form-control" id="sample6_extraAddress" name="addrRefAddr" readonly="readonly">
-								</div>
+								<input type="text" class="form-control" id="sample6_postcode" name="zipcode" readonly="readonly"><input type="button" value="우편번호" id="zipcode-btn" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none">
+								<input type="text" class="form-control" id="sample6_address" name="addrAddr" readonly="readonly">
+								<input type="text" class="form-control" id="sample6_detailAddress" name="addrDetailAddr">
+								<input type="text" class="form-control" id="sample6_extraAddress" name="addrRefAddr" readonly="readonly">
 								<input type="hidden" name="addrId" value="">
 							</td>
 						</tr>
@@ -453,8 +472,8 @@
 							<td><textarea name="orderMemo" class="form-control" id=""></textarea></td>
 						</tr>
 					</table>
-					<table class="table">
-						<caption>쿠폰 및 적립금 사용</caption>
+					<table class="table order-table">
+						<caption><h4>쿠폰 및 적립금 사용</h4></caption>
 						<tr>
 							<td>쿠폰</td>
 							<td>
@@ -468,8 +487,8 @@
 							<td><input type="text" class="form-control" name="payPoint" id=""></td>
 						</tr>
 					</table>
-					<table class="table">
-						<caption>결제 수단</caption>
+					<table class="table order-table">
+						<caption><h4>결제 수단</h4></caption>
 						<tr>
 							<td>
 								<div class="accordion" id="accordionExample">
@@ -492,10 +511,7 @@
 													<option>하나카드</option>
 													<option>NH농협카드</option>
 													<option>한국씨티은행</option>
-													<input type="text" class="card-pay form-control" id="cardNum1">-
-													<input type="text" class="card-pay form-control" id="cardNum2">-
-													<input type="text" class="card-pay form-control" id="cardNum3">-
-													<input type="text" class="card-pay form-control" id="cardNum4">
+													<input type="text" class="card-pay form-control" id="cardNum1"> - <input type="text" class="card-pay form-control" id="cardNum2"> - <input type="text" class="card-pay form-control" id="cardNum3"> - <input type="text" class="card-pay form-control" id="cardNum4">
 												</select>
 											</div>
 										</div>

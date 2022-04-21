@@ -83,7 +83,7 @@ public class FaqController implements Controller {
 		request.setAttribute("FaqList", faqList);
 		request.setAttribute("pageNum", pageNum); 
 		request.setAttribute("field", field);
-		ModelAndView mv = new ModelAndView("manager/selectFaqAll.jsp");
+		ModelAndView mv = new ModelAndView("manager/faq_Main_Mg.jsp");
 		
 		return mv;
 	}
@@ -156,7 +156,7 @@ public class FaqController implements Controller {
 		String faqNo = request.getParameter("faqNo");
 		FaqDTO faq = faqService.selectByFaqNo(Integer.parseInt(faqNo));
 		request.setAttribute("faq", faq);
-		return new ModelAndView("manager/faqUpdate.jsp");
+		return new ModelAndView("manager/faq_Update.jsp");
 	}
 	
 	/**

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 import mimemi.mvc.dto.CartDTO;
+import mimemi.mvc.dto.GoodsDTO;
 import mimemi.mvc.util.DbUtil;
 
 public class CartDAOImpl implements CartDAO {
@@ -237,7 +238,10 @@ public class CartDAOImpl implements CartDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				CartDTO cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7));
+				CartDTO cart = new CartDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
+				cart.setGoods(new GoodsDTO());
+				cart.getGoods().setGoodsName(rs.getString(9));
+				cart.getGoods().setGoodsThumbnail(rs.getString(10));
 				list.add(cart);
 			}
 		} finally {

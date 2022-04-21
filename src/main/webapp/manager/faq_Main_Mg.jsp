@@ -10,7 +10,7 @@
 		<meta charset="UTF-8">
 		<title>FAQ게시판 관리  - 미미미</title>
 		<style type="text/css">
-			section {width: 1200px; margin: auto;}
+			section {width: 1100px; margin: auto;}
 			table {width: 1200px;}
 			th, td {border: 1px solid black;}
 		</style>
@@ -21,10 +21,11 @@
 		
 		<!-- JavaScript Bundle with Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	  	
 	  		<style>
-			.orderList-main {width: 1200px; margin: auto;}
+			.faqList-main {width: 1200px; margin: auto;}
 			table {width: 100%;}
-			.order_sort{text-align: right;}
+			.faq_sort{text-align: right;}
 			
 		   
 		</style>
@@ -94,7 +95,7 @@
 				</tbody>
 		</table>
 			<div style="float:right;">
-				 <a href="${path}/manager/insertFaq.jsp" class="btn btn-primary pull-right">작성하기</a>
+				 <a href="${path}/manager/faq_Insert.jsp" class="btn btn-primary pull-right">작성하기</a>
 		    </div>
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.FaqListPageCnt" id="p"/> 

@@ -20,7 +20,7 @@ public class FaqServiceImpl implements FaqService {
 			if(faqDTO.getFaqAttach()!=null) {
 				new java.io.File(path+"/"+faqDTO.getFaqAttach()).delete(); //경로확인하기
 			}
-			throw new SQLException("후기가 등록되지 않았습니다.");
+			throw new SQLException("FAQ가 등록되지 않았습니다.");
 		}
 
 	}
