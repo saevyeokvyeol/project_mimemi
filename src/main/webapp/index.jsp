@@ -32,7 +32,7 @@
 	    	    			text += "src=\"" + item.goodsThumbnail + "\""
 	    	    			text += "alt=\"Card image cap\">"
 	    	    			text += "<div class=\"card-body\">"
-	    	    			text += "<h5 class=\"card-title\">" + item.goodsName + "</h5>"
+	    	    			text += "<h4 class=\"card-title\">" + item.goodsName + "</h4>"
 	    	    			text += "<p class=\"card-text\">1일 1식/ 1주 (월~금, 총 5회)</p>"
 	    	    			text += "<span>" + item.goodsPrice + "</span> 원"
 	    	    			text += "</div>"
