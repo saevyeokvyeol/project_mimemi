@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.CartDTO;
+import mimemi.mvc.dto.MealDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.paging.OrderListPageCnt;
@@ -620,6 +621,8 @@ public class OrderDAOImpl implements OrderDAO {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				OrderDeliDTO od = new OrderDeliDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+				od.setMeal(new MealDTO());
+				od.getMeal().setMealName(rs.getString(5));
 				list.add(od);
 			}
 		} finally {

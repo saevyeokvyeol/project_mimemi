@@ -48,7 +48,7 @@
 							<li><a href="${path}/user/login.jsp">로그인</a></li>
 						</c:when>
 						<c:when test="${sessionScope.manager == null}">
-							<li><a href="${path}/mypage/mypageMain.jsp">마이페이지</a></li>
+							<li><a href="${path}/mypage/orderList.jsp">마이페이지</a></li>
 							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>
@@ -93,7 +93,7 @@
 							<ul>
 								<li><a href="${path}/mypage/orderList.jsp">나의 주문 내역</a></li>
 								<li><a href="${path}/mypage/calendar.jsp">나의 배송 캘린더</a></li>
-								<li><a href="${path}/board/ask2.jsp">1:1 문의 내역</a></li>
+								<li><a href="${path}/front?key=ask&methodName=selectAll">1:1 문의 내역</a></li>
 							</ul>
 						</li>
 						<li>

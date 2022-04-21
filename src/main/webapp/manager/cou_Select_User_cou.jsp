@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>관리자 사용자쿠폰전체조회  - 미미미</title>
-		<jsp:include page="../common/header.jsp"/>
+		
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
@@ -73,7 +73,7 @@
 				
 				<table class="table" id="couponTalbe">
 					<thead>
-						<tr>
+						<tr class="thead-dark">
 							<th>사용자쿠폰ID</th>
 							<th>사용자ID</th>
 							<th>쿠폰번호</th>

@@ -191,9 +191,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="row container-fluid">
-                <div class="col-9 text-center">
-                    <h2>상품관리 페이지</h2>
-                </div>
+                
                 <div class="col-3">
                     <!-- select box -->
 

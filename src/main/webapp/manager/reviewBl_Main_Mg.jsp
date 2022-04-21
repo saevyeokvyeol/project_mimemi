@@ -40,6 +40,7 @@ pageEncoding="UTF-8"%>
 		
         <script>
         	$(function(){
+        	        		
         		$("#review_sort_select").change(function(){
         			if($(this).val() != "0"){
         				let url =`${path}/front?key=review&methodName=selectAllManager&field=` + $(this).val();
@@ -75,7 +76,7 @@ pageEncoding="UTF-8"%>
     </head>
     <body>
     	<section class="reviewList-main">
-                <h1><a href>후기 게시판 관리</a></h1>
+                <h1><a href="${path}/front?key=review&methodName=selectAllManager">후기 게시판 관리</a></h1>
                 <section class="review_sort">
                 <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
                 <select name="review_sort_select" id="review_sort_select">
@@ -156,7 +157,7 @@ pageEncoding="UTF-8"%>
                         </c:choose>
                     </tbody>
                 </table>
-            <nav class="navbar navbar-light bg-light">
+            <nav class="navbar">
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색하기</button>

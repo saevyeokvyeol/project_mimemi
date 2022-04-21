@@ -290,6 +290,7 @@
 
     <body>
         <section>
+        	
             <div class="list-group list-group-horizontal" id="goodsListGroup" style="margin:50px">
             </div>
 
