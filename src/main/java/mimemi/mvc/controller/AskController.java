@@ -124,6 +124,8 @@ public class AskController implements Controller {
 		UserDTO reviewUser = (UserDTO)session.getAttribute("loginUser");
 		String userid = reviewUser.getUserId();
 		
+		System.out.println("userId-------"+userid);
+	
 		System.out.println(askTitle);
 		AskDTO askDto = new AskDTO(userid, askTitle, askContent,askCategory);
 		
@@ -142,7 +144,9 @@ public class AskController implements Controller {
 		askService.insertAsk(askDto);
 		
 		
+		//return new ModelAndView("front?key=ask&methodName=selectAll", true);
 		return new ModelAndView("front?key=ask&methodName=selectAll", true);
+	
 	}
 	
 	/**

@@ -47,6 +47,10 @@
 							<li><a href="${path}/user/join03.jsp">회원가입</a></li>
 							<li><a href="${path}/user/login.jsp">로그인</a></li>
 						</c:when>
+						<c:when test="${sessionScope.manager == null}">
+							<li><a href="${path}/mypage/mypageMain.jsp">마이페이지</a></li>
+							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
+						</c:when>
 						<c:otherwise>
 							<li><a href="${path}/mypage/mypageMain.jsp">마이페이지</a></li>
 							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
@@ -78,10 +82,11 @@
 						<li>
 							<h5>미미미 정기배송</h5>
 							<ul>
-								<li><a>상품1</a></li>
-								<li><a>상품2</a></li>
-								<li><a>상품3</a></li>
-								<li><a>상품</a></li>
+								<li><a href="${path}/front?key=goods&methodName=goodsView&goodsId=JUNG01">정성한상</a></li>
+								<li><a href="${path}/front?key=goods&methodName=goodsView&goodsId=LUNCH01">런치박스</a></li>
+								<li><a href="${path}/front?key=goods&methodName=goodsView&goodsId=DEN01">든든한상</a></li>
+								<li><a href="${path}/front?key=goods&methodName=goodsView&goodsId=KAL01">칼로리식단</a></li>
+								<li><a href="${path}/front?key=goods&methodName=goodsView&goodsId=DANG01">당뇨식단</a></li>
 							</ul>
 						</li>
 						<li>

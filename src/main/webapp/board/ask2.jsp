@@ -24,19 +24,7 @@
 			</style>
 			
 			
-		<script type="text/javascript">
-			/*$(function(){
-				$("select").change(function(){
-					if($(this).val() != "0"){
-						let url = `${path}/front?key=ask&methodName=selectAll&field=` + $(this).val();
-						location.replace(url);
-					}
-					
-				})
-			})	
-		*/
-		</script>
-     	
+	 	
      	<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
@@ -50,6 +38,11 @@
                 text-align: center;
             }
 		</style>
+    
+    	<script type="text/javascript">
+			
+    	
+		</script>
      	
 </head>
 <body>
@@ -121,9 +114,18 @@
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
-					<div align=right>
-					<span>&lt;<a href="${path}/board/write.jsp">문의하기</a>&gt;</span>
-					</div>
+					
+					<form name=updateForm  method=post action="${path}/board/write.jsp"  
+					onSubmit='return checkValid()' enctype="multipart/form-data">
+						<div align="right">
+							<span>
+								<input type="submit" id="write-btn" value="문의하기" >
+								
+							</span>
+						</div>
+					</form>
+					
+					
 		    </tbody>
 		</table>
 		

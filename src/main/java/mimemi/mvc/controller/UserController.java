@@ -134,7 +134,7 @@ public class UserController implements Controller {
 		
 		request.setAttribute("userDTO", userDTO);
 		
-		return new ModelAndView("mypage/userEdit.jsp");
+		return new ModelAndView("mypage/userEdit01.jsp");
 	}
 	/**
 	 * 회원정보 수정 기능
