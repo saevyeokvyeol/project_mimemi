@@ -101,6 +101,31 @@ public class DayMealDAOImpl implements DayMealDAO {
 	}
 	
 	/**
+	 * 월간 식단 전체 조회
+	 * @return: List<MealDTO>
+	 * */
+	public List<DayMealDTO> dayMealSelectAll() throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<DayMealDTO> list = new ArrayList<DayMealDTO>();
+		String sql = proFile.getProperty("daymeal.selectAll");
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				DayMealDTO daymeal = new DayMealDTO(rs.getInt(1), rs.getString(2), rs.getString(3), dateFormat.format(rs.getDate(4)));
+				list.add(daymeal);
+			}
+		} finally {
+			DbUtil.dbClose(ps, con);
+			
+		}
+		return list;
+	}
+	
+	/**
 	 * 이달의 월간 식단 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌
 	 * @return: List<MealDTO>(goodsSale이 true인 상품)

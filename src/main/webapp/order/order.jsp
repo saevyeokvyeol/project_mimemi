@@ -11,6 +11,7 @@
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			.order-view {width: 800px; margin: auto; padding: 50px 0;}
+			.order-view h1 {padding: }
 			table {width: 100%; caption-side: top;}
 			form > table td:nth-child(1) {width: 170px; padding: 30px;}
 			#oldAddrBox {padding: 5px 0;}

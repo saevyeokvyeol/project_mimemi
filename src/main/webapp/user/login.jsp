@@ -22,7 +22,7 @@
 			var id = $("#userId").val();
 		
 			if(id.substr(0,5) == "admin"){
-				$("form").attr("action", "${path}/front?key=manager&methodName=loginManager");
+				$("#form").attr("action", "${path}/front?key=manager&methodName=loginManager");
 			}
 		})
 	})
@@ -32,7 +32,7 @@
 <section class="login-view">
 	<h1>로그인</h1>
 	<div class="login-form">
-		<form class="inner" method="post" action="${path}/front?key=user&methodName=loginUser">
+		<form class="inner" id="form" method="post" action="${path}/front?key=user&methodName=loginUser">
 			<input type="hidden" name="key" value = "user"/>
 			<input type="hidden" name="methodName" value="loginUser"/>
 			<div class="loginForm">
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div id="btn_box">
-				<button type="button" class="loginBtn btn btn-outline-dark shadow-none btn-lg" id="login">회원가입</button>
+				<button type="button" class="loginBtn btn btn-outline-dark shadow-none btn-lg" id="join">회원가입</button>
 				<button type="submit" class="loginBtn btn btn-outline-dark shadow-none btn-lg" id="login">로그인</button>
 			</div>
 		</form>
