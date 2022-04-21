@@ -129,11 +129,11 @@
 					
 				});
 				
-				$("#live").click(function() {
+				$("#live_btn").click(function() {
 					location.href = '${path}/manager/cou_Insert_Live.jsp';
 				})
 				
-				$("#rg").click(function() {
+				$("#rg_btn").click(function() {
 					location.href = '${path}/manager/cou_Insert_Regular.jsp';
 				})
 				
@@ -174,10 +174,13 @@
 					</tfoot>
 					
 				</table>
+				<hr>
 			</div>
+			
+			
 			<div style="text-align: right;">
-					<input  class=" "  type="button" id="live" value="실시간쿠폰등록">
-					<input  class=""   type="button" id="rg" value="정기쿠폰등록">
+					<a href="#" id="live_btn" class="btn btn-outline-dark shadow-none">실시간쿠폰등록</a>
+					<a href="#" id="rg_btn" class="btn btn-outline-dark shadow-none">정기쿠폰등록</a>
 			</div>
 				<p>
 				
