@@ -44,12 +44,10 @@
 	<aside class="FAQ-sideview">
 		<h3>고객센터</h3>
 		<div class="list-group">
-		  <a href="#" class="list-group-item list-group-item-action">
-		    공지사항
-		  </a>
-			<a href="#" class="list-group-item list-group-item-action active" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			FAQ
-			</a>
+			<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action">
+				공지사항</a>
+			<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action active" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				FAQ</a>
 			<div class="side-minibar">
 				<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
 				<a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>

@@ -10,7 +10,6 @@
 <style>
   table {border: double 5px gray; width:500px}
   td,th{border:1px black solid ;  padding:10px}
-
   input{border:solid 1px gray;}
   tr td:first-child{width:100px; text-align: center;}
   div{text-align:left;}
