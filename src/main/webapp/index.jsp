@@ -90,13 +90,13 @@
 		  </div>
 		  <div class="carousel-inner">
 		    <div class="carousel-item active">
-		      <img src="img/ui/b.png" class="d-block w-100" alt="...">
+		      <img src="img/ui/main-banner1.png" class="d-block w-100" alt="...">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="img/ui/p.png" class="d-block w-100" alt="...">
+		      <img src="img/ui/main-banner2.png" class="d-block w-100" alt="...">
 		    </div>
 		    <div class="carousel-item">
-		      <img src="img/ui/g.png" class="d-block w-100" alt="...">
+		      <img src="img/ui/main-banner3.png" class="d-block w-100" alt="...">
 		    </div>
 		  </div>
 		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

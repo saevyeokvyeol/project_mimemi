@@ -6,9 +6,9 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
-       
+      
         <style>
-            
+        
             
         </style>
        <!-- Bootstrap CSS -->
@@ -76,4 +76,5 @@ pageEncoding="UTF-8"%>
 
         </section>    
     </body>
+    <jsp:include page="../common/footer.jsp"/>
 </html>

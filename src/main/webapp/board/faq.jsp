@@ -10,6 +10,8 @@
 <jsp:include page="../common/header.jsp"/>
 
 <style type="text/css">
+
+
 .FAQ-view {width: 1200px; margin: 50px auto;}
 .FAQ-sideview {width: 200px; margin-right: 50px; z-index: 0;}
 .FAQ-sideview h3 {margin: 0 0 20px 10px;}
@@ -24,6 +26,12 @@
  .list-group {}
  .side-minibar {padding: 0;}
  .side-minibar > a {font-size: 14px; padding-left: 40px;}
+ 
+  
+    
+ 
+ 
+ 
 </style>
 
 <script type="text/javascript">
@@ -55,39 +63,30 @@
 				<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
 				<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
 			</div>
-		  <a href="#" class="list-group-item list-group-item-action">1:1문의</a>
+		  <a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action">1:1문의</a>
 		</div>
 	</aside>
 		<div class="FAQ-mainview">
 		<div><h1>FAQ</h1></div>
-			<form>
-			<div class="search">
-				<select>
-					<option value="TITLE">제목</option>
-					<option value="CONTENT">내용</option>
-				</select>
-				<input type="text" class="ipt" name="keyword" maxlength="30" value=""/>
-				<button type="submit" class="btn btn-success">검색</button>
-			</div>
-			</form>
-		<hr>
+
 		  <section class="faqList-main">
 		  <c:choose>
 				<c:when test="${empty FaqList}">
 					 <tr>
-						<td colspan="6">공지사항이 없습니다.</td>
+						<td colspan="6" ><center><h2>등록된 FAQ가 없습니다.</h2></center></td>
 					 </tr>
 				 </c:when>
 				 <c:otherwise>
 				 	<c:forEach items="${FaqList}" var="faq">
-					    <h2 class="" id="">
+					    <h4 class="" id="">
 					      <button class="faq-title" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
 					        Q . ${faq.faqTitle}
 					      </button>
-					    </h2>
+					    </h4>
 					    <div id="flush-collapseOne${faq.faqNo}" class="faq-content" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-					       <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
-					    </div>			  
+					        <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
+					        <br><br><img src="${path}/img/${faq.faqAttach}">
+					    </div>							     
 		  			</c:forEach>
 		  		</c:otherwise>
 			</c:choose>
