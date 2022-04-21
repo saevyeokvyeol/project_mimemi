@@ -33,7 +33,7 @@ public class ManagerController implements Controller {
 		session.setAttribute("loginManager", dbDTO);
 		session.setAttribute("loginName", dbDTO.getManagerName());
 		
-		return new ModelAndView("manager/managerIndex.jsp", true);
+		return new ModelAndView("manager/Manager_Index.jsp", true);
 	}
 
 }
