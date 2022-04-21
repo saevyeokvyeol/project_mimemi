@@ -32,42 +32,30 @@ pageEncoding="UTF-8"%>
         	
         </script>
         <style>
-           div{
-                width: 1000px;
-                margin: auto;
+           .review-view{
+                width: 1200px; margin: auto; padding: 50px 0;
             }
-           #review-list-img-preview{
-                width: 50px;
-                height: 50px;
-                object-fit:cover;
-            }
-            table th{
+            
+            .review-table th {
                 text-align: center;
             }
+            
+            .review-table th:first-child {width: 50px;}
+            .review-table th:nth-child(2),
+            .review-table th:nth-child(4),
+            .review-table th:nth-child(5),
+            .review-table th:nth-child(6) {width: 150px;}
+            
+            .review-table td{
+                vertical-align: middle;
+            }
+            
+            .review-table svg {padding-bottom: 3px;}
+            
             img.starRateImg{
-                width:70px;
-                height: auto; 
+                width:70px; padding-bottom: 10px;
             }
-            #write-btn{
-                background-color: cornflowerblue;
-                border: 1px solid cornflowerblue;
-                border-radius: 15px;
-                color: white;
-                padding: 10px 20px;
-                text-align: center;
-                text-decoration: none;
-                font-weight: bold;
-                float:right;
-            }
-            #write-btn:hover{
-                background-color: rgb(76, 132, 236);
-                border: 1px solid rgb(76, 132, 236);
-                color: white;
-            }
-            .review-search-box{
-                display: inline-block;
-                text-align: center;
-            }
+            
             select{
                 width: 130px;
                 height: 35px;
@@ -114,29 +102,24 @@ pageEncoding="UTF-8"%>
         
     </head>
     <body>
-        <div class="container">
-            <div class="review-title">
-                <h3>후기 게시판</h3>
-            </div>
+        <div class="review-view">
+            <h1>후기 게시판</h1>
             <!--정렬 카테고리-->
-            <nav class="navbar navbar-light bg-light">
-                <div class="review-sort-area">
-                    <select name="review_sort_select" id="review_sort_select">
-                        <option name="review_sort" value="0" selected='selected'>정렬방식</option>
-                        <option name="review_sort" value="reg">등록순</option>
-                        <option name="review_sort" value="higirate">별점 높은순</option>
-                        <option name="review_sort" value="rowrate">별점 낮은순</option>
-                        <option name="review_sort" value="view">조회순</option>
-                    </select>
-                </div>
+            <nav class="navbar">
+	            <select name="review_sort_select" id="review_sort_select">
+	                <option name="review_sort" value="0" selected='selected'>정렬방식</option>
+	                <option name="review_sort" value="reg">등록순</option>
+	                <option name="review_sort" value="higirate">별점 높은순</option>
+	                <option name="review_sort" value="rowrate">별점 낮은순</option>
+	                <option name="review_sort" value="view">조회순</option>
+	            </select>
             </nav>
             <!--후기 리스트-->
             <div class="review-list">
-                <table class="table">
+                <table class="table review-table">
                     <thead class="thead-dark">
                         <tr>
-                        <th scope="col">게시글번호</th>
-                        <th scope="col">리뷰이미지</th>
+                        <th scope="col"></th>
                         <th scope="col">상품</th>
                         <th scope="col">제목</th>
                         <th scope="col">작성자</th>
@@ -157,15 +140,16 @@ pageEncoding="UTF-8"%>
                                 <c:forEach items="${requestScope.list}" var="review">
                                     <tr>
                                         <th><span>${review.reviewNo}</span></th>
-                                        <th>
-                                            <c:if test="${not empty review.reviewAttach}">
-                                                <span class="review-list-img-preview-area">
-                                                    <img src="${path}/img/save/${review.reviewAttach}" alt="후기 이미지입니다." id="review-list-img-preview"></span>
-                                            </c:if>
-                                            <span class="review-list-img-preview-empty-area"></span>
-                                        </th>
                                         <th><span>${review.goodsDTO.goodsName}</span></th>
-                                        <td><span class="review-list-content-link"><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></span></td>
+                                        <td>
+                                        	<a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a>
+                                            <c:if test="${not empty review.reviewAttach}">
+	                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+												  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+												  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+												</svg>
+                                           </c:if>
+                                     	</td>
                                         <th><span>${review.userId.substring(0,4)}****</span></th>
                                         <th><span>${review.reviewRegdate}</span></th>
                                         <th>
