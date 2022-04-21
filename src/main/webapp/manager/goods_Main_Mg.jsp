@@ -53,7 +53,7 @@
 				text+='<td>' + item.goodsPrice + '</td>';
 				text+='<td>' + item.goodsSale + '</td>';
 				text+='<td>' + item.goodsDetail + '</td>';
-				text+="<td><button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateGoodsModal\" onclick=\"fillUpdateModal(\'" + item.goodsId + "\', \'" + item.goodsName + "\', \'" + item.goodsThumbnail + "\', " + item.goodsPrice + ", \'" + item.goodsSale + "\', \'" + item.goodsDetail + "\')\">수정</button></td>";
+				text+="<td><button type=\"button\" class=\"btn btn-secondary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#updateGoodsModal\" onclick=\"fillUpdateModal(\'" + item.goodsId + "\', \'" + item.goodsName + "\', \'" + item.goodsThumbnail + "\', " + item.goodsPrice + ", \'" + item.goodsSale + "\', \'" + item.goodsDetail + "\')\">수정</button></td>";
 				text+='</tr>';
 			});
 			$("#goodsTable tr:gt(0)").remove();
@@ -201,11 +201,11 @@
                         <option>전체조회</option>
                         <option>판매중</option>
                     </select>
-                    <button type="button" class="btn btn-primary"onclick="goodsSelectByForSale()">조회</button>
+                    <button type="button" class="btn btn-secondary btn-sm"onclick="goodsSelectByForSale()">조회</button>
                 </div>
                 <div>
                     <input type="text" class="spiner-text" id="searchkeyword" value="상품이름 검색">
-                    <button type="button" class="btn btn-primary" id="goodsSelectByKeyword" onclick="goodsSelectByKeyword()">검색</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="goodsSelectByKeyword" onclick="goodsSelectByKeyword()">검색</button>
                 </div>
             </div>
             <div class="table-responsive">
@@ -237,7 +237,7 @@
             <!-- 페이지네이션 -->
             <div class="col-2">
 
-                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#addGoodsModal">+</button>
             </div>
             <!-- 추가 모달 -->
@@ -307,15 +307,6 @@
                     </div>
                     <div class="row">
                         <div class="col-4">
-                            <p>상품 썸네일 등록</p>
-                        </div>
-                        <div class="col-8">
-
-                            <button type="button" class="btn btn-default" id="goodsThumbnail">이미지 선택하기</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
                             <p>상품 판매여부</p>
                         </div>
                         <div class="col-8">
@@ -327,8 +318,8 @@
       			</div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="goodsInsert" onclick="goodsInsert()">등록</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="goodsInsert" onclick="goodsInsert()">등록</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                         </div>
                     </div>
 
@@ -394,8 +385,8 @@
       			</div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="goodsUpdate()">등록</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="goodsUpdate()">등록</button>
+                            <!-- button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button> -->
                         </div>
                     </div>
 

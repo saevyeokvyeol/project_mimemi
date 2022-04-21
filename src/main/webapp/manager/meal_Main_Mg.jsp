@@ -63,7 +63,7 @@
                     text += '<td>' + item.mealFat + '</td>';
                     text += '<td> <img src=\"' + item.mealImg + "\"></td>";
                     text += '<td>' + item.mealSale + '</td>';
-                    text += "<td><button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateMealModal\" onclick=\"fillUpdateModal(\'" + item.mealId + "\', \'" + item.goodsId + "\', \'" + item.mealName + "\', " + item.mealWeight + ", " + item.mealKcal + ", " + item.mealCarbo + ", " + item.mealProtein + ", " + item.mealFat + ", \'" + item.mealImg + "\', \'" + item.mealSale + "\')\">수정</button></td>";
+                    text += "<td><button type=\"button\" class=\"btn btn-secondary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#updateMealModal\" onclick=\"fillUpdateModal(\'" + item.mealId + "\', \'" + item.goodsId + "\', \'" + item.mealName + "\', " + item.mealWeight + ", " + item.mealKcal + ", " + item.mealCarbo + ", " + item.mealProtein + ", " + item.mealFat + ", \'" + item.mealImg + "\', \'" + item.mealSale + "\')\">수정</button></td>";
                     text += '</tr>';
                 });
                 $("#mealTable tr:gt(0)").remove();
@@ -207,21 +207,19 @@
         <div style="width: 100%; padding: 100px 50px 100px 250px;">
             <div class="container-fluid overflow-scroll">
                 <div class="row">
-                    <div class="row container-fluid">
-                        <div class="col-9 text-center">
-                            <h2>도시락관리 페이지</h2>
-                        </div>
                         <div class="col-3">
                             <!-- select box -->
                             <select class="selectpicker" id="mealSelectByForSale">
                                 <option>전체조회</option>
                                 <option>판매중</option>
                             </select>
-                            <button type="button" class="btn btn-primary" onclick="mealSelectByForSale()">조회</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="mealSelectByForSale()">조회</button>
                         </div>
                         <div>
-                            <input type="text" class="spiner-text" id="searchkeyword" value="도시락 검색">
-                            <button type="button" class="btn btn-primary" onclick="mealSelectByKeyword()">검색</button>
+                     
+                            <input type="text" class="spiner-text" id="searchkeyword" value="도시락ID 검색">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="mealSelectByKeyword()">검색</button>
+      
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -231,13 +229,13 @@
                                     <th scope="col">도시락ID</th>
                                     <th scope="col">상품ID</th>
                                     <th scope="col">도시락이름</th>
-                                    <th scope="col">도시락_무게</th>
-                                    <th scope="col">도시락_칼로리</th>
-                                    <th scope="col">도시락_탄수화물</th>
-                                    <th scope="col">도시락_단백질</th>
-                                    <th scope="col">도시락_지방</th>
-                                    <th scope="col">도시락_사진</th>
-                                    <th scope="col">도시락_판매여부</th>
+                                    <th scope="col">무게</th>
+                                    <th scope="col">칼로리</th>
+                                    <th scope="col">탄수화물</th>
+                                    <th scope="col">단백질</th>
+                                    <th scope="col">지방</th>
+                                    <th scope="col">사진</th>
+                                    <th scope="col">판매여부</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -248,7 +246,7 @@
                 </div>
                 <div class="row">
                     <div class="col-2 float-right">
-                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addMealModal">+</button>
                     </div>
                 </div>
@@ -333,15 +331,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    <p>도시락 사진 등록</p>
-                                </div>
-                                <div class="col-8">
-
-                                    <button type="button" class="btn btn-primary" id="mealThumbnail">이미지 선택하기</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
                                     <p>도시락 판매여부</p>
                                 </div>
                                 <div class="col-8">
@@ -352,9 +341,9 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="mealInsert"
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="mealInsert"
                                         onclick="mealInsert()">등록</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                                 </div>
                             </div>
 
@@ -370,7 +359,7 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">도시 수정하기</h4>
+                            <h4 class="modal-title">도시락 수정하기</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -423,22 +412,12 @@
                                     <input type="text" class="spiner-text" id="updateMealProtein" value="1일/1식">
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-4">
                                     <p>도시락 지방</p>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" class="spiner-text" id="updateMealFat" value="1일/1식">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <p>도시락 사진 수정</p>
-                                </div>
-                                <div class="col-8">
-                                    <button type="button" class="btn btn-default" id="updateMealImg">이미지
-                                        선택하기</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -453,8 +432,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="mealUpdate()">등록</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="mealUpdate()">등록</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
