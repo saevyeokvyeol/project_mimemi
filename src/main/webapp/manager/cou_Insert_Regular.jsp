@@ -29,6 +29,8 @@
   tr td:first-child{width:100px; text-align: center;}
   div{text-align:left;}
   a{text-decoration: none}
+  .insert-RgCp{width: 500px;
+                margin: auto; padding: 50px 0;}
   
 </style>
 <script type="text/javascript">
@@ -61,36 +63,37 @@ $(function() {
 </head>
 <body>
 
+<div class="insert-RgCp">
 <form name="inForm" method="post" id="inForm" action="${path}/front?key=coupon&methodName=insertRgCp">
-<caption><h2> 정기쿠폰등록 Form</h2></caption>
+<h2> 정기쿠폰등록 Form</h2>
 <table>
    
   <tr>
 	<td>쿠폰번호</td>
-	<td><input type="text" name="id" id="id"/></td>
+	<td><input type="text" class="form-control" name="id" id="id"/></td>
   </tr>
   <tr>
 	<td>쿠폰명</td>
-	<td><input type="text" name="name" id="name"/></td>
+	<td><input type="text" class="form-control" name="name" id="name"/></td>
   </tr>
   <tr>
 	<td>쿠폰금액</td>
-	<td><input type="text" name="price" id="price"/></td>
+	<td><input type="text" class="form-control" name="price" id="price"/></td>
   </tr>
   <tr>
 	<td>쿠폰발행일</td>
-	<td><input type="text" name="pubDate" readonly="readonly" id="pubDate"/></td>
+	<td><input type="text" class="form-control" name="pubDate" readonly="readonly" id="pubDate"/></td>
   </tr>
   <tr>
 	<td>쿠폰만료일</td>
-	<td><input type="text" name="endDate" readonly="readonly" id="endDate"/></td>
+	<td><input type="text" class="form-control" name="endDate" readonly="readonly" id="endDate"/></td>
   </tr>
   <tr>
 	<td colspan="2" >
 	<input type="hidden" name="key" value="coupon">
 	<input type="hidden" name="methodName" value="insertRgCp">
-	<input type="submit" value="등록" id="btn"/>
-	<input type="reset" value="취소" />
+	<input type="submit" class="btn btn-outline-dark" value="등록" id="btn"/>
+	<input type="reset" class="btn btn-outline-dark" value="취소" />
 	</td>
 	
   </tr>
@@ -99,9 +102,9 @@ $(function() {
 
 <p>
 <div>
-	<a href="cou_Main_Mg.jsp">&lt;리스트로 돌아가기&gt;</a>
+	<a href="cou_Main_Mg.jsp" class="btn btn-outline-dark shadow-none" >리스트로 돌아가기</a>
 </div>
-
+</div>
 
 </body>
 </html>

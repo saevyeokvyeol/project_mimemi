@@ -66,7 +66,7 @@
 								text += `<td>\${item.livecouPubdate.substr(0,8)}\${parseInt(item.livecouPubdate.substr(8,2)) + item.livecouUseperiod}</td>`;
 								text +=
 									`<td>
-										<input type='button' value='수정LC' name='\${item.livecouId}' onclick="${path}/front?key=coupon&methodName=updateLiveCpForm&id=livecouId&name=livecouName&price=livecouPrice&pubDate=livecouPubdate&endDate=livecouUseperiod" />
+										<input type='button' value='수정LC' name='\${item.livecouId}' class="btn btn-primary" />
 									</td>`;
 								text += "</tr>";
 								
@@ -107,7 +107,7 @@
 								text += `<td>\${item.rgcouPrice}</td>`;
 								text += `<td>\${item.rgcouPubdate.substr(0,10)}</td>`;
 								text += `<td>\${item.rgcouEnddate.substr(0,10)}</td>`;
-								text +=`<td><input type='button' value='수정RC' name='\${item.rgcouId}' /></td>`;
+								text +=`<td><input type='button' value='수정RC' name='\${item.rgcouId}' class="btn btn-primary"/></td>`;
 								text += "</tr>";
 								
 							});//each함수 끝
@@ -187,5 +187,5 @@
 			
 		
 	</body>
-	<jsp:include page="../common/footer.jsp"/>
+	
 </html>
