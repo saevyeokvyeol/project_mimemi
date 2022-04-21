@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
 			
 			rs=ps.executeQuery();
 			if(rs.next()) {
-				userDTO= new UserDTO(rs.getString(1), rs.getString(2));
+				userDTO= new UserDTO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8));
 			}
 		}finally {
 			DbUtil.dbClose(rs, ps, con);

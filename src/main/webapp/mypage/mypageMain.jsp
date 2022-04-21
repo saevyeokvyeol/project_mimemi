@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	iframe{border-style:none; width:100%; height:100%; }
 </style>
 
 <script type="text/javascript">
