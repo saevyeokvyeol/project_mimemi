@@ -83,7 +83,7 @@
 			<!-- 작성하기/검색하기 -->
 		<nav class="navbar navbar-light bg-light">
 			<div style="float:right;">
-				 <span class="write-bnt"> <a href="${path}/manager/insertNotice.jsp" class="btn btn-primary pull-right">작성하기</a></span>
+				 <span class="write-bnt"> <a href="${path}/manager/notice_Insert.jsp" class="btn btn-primary pull-right">작성하기</a></span>
 		    </div>
 		    <div>
               <form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeyword" method="post">

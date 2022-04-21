@@ -103,7 +103,7 @@ public class NoticeController implements Controller {
 		
 		request.setAttribute("NoticeList", noticeList);
 		request.setAttribute("pageNum", pageNum); 
-		ModelAndView mv = new ModelAndView("manager/selectNoticeAll.jsp");
+		ModelAndView mv = new ModelAndView("manager/notice_Main_Mg.jsp");
 		
 		return mv;
 	}
