@@ -40,8 +40,8 @@ public class ReviewReplyController implements Controller {
 		String userId = request.getParameter("reply_id");
 		String managerId = request.getParameter("reply_manager_id");
 		String content=request.getParameter("reply_content");
-		//LocalDate now = LocalDate.now();
-		//String regDate = now;
+		
+		System.out.println("댓글다는 아이디: "+userId+","+managerId);
 		ReviewReplyDTO reply = new ReviewReplyDTO(Integer.parseInt(reviewNo), userId, managerId, content);
 		int result =replyService.insertReviewReply(reply);
 		System.out.println(result);

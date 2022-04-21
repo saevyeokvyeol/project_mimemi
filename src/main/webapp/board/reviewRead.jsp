@@ -8,9 +8,7 @@ pageEncoding="UTF-8"%>
         <title>Document</title>
        <jsp:include page="../common/header.jsp"/>
         <style>
-            section{
-                
-            }
+            
             .container{
                 width: 1000px;
                 margin: auto;
@@ -161,7 +159,8 @@ pageEncoding="UTF-8"%>
         <script>
         $(function(){
             var target ='${reviewDetail.reviewNo}'
-            var loginUser='${sessionScope.loginUser}' //세션으로 확인한 현재 로그인한 유저
+            var loginUser='${sessionScope.loginUser.userId}' //세션으로 확인한 현재 로그인한 유저
+            var loginManager='${sessionScope.loginManager.managerId}'
             //var loginUser='frog123'
             //alert("로그인 유저 아이디:"+loginUser)
 
@@ -201,9 +200,9 @@ pageEncoding="UTF-8"%>
         	
             $("#reply-insert-btn").click(function(){
                 let status =true;
-                alert(loginUser)
+                //alert(loginUser)
                 //댓글 유효성체크
-                if(loginUser){
+                if(!loginUser){
                     alert("댓글 기능은 회원만 가능합니다.")
                     status=false;
                     return;
@@ -245,12 +244,12 @@ pageEncoding="UTF-8"%>
             $(document).on("click","#reply-delete-bnt",function(){
                 
                 var replyId = $(this).attr("name")
-                alert("댓글유저아이디~~"+replyId)
+                //alert("댓글유저아이디~~"+replyId)
                 var replyNo =$(this).attr("reply_No")
                 //alert(replyNo)
 
                 //세션에서 로그인한 유저와 댓글 작성자 id가 일치하는지 확인
-                if(loginUser==replyId){
+                if(loginUser==replyId||loginManager==replyId){
                     $.ajax({
                         url: "${path}/ajax" , //서버요청주소
                         type: "post" , //요청방식 (get,post...)
@@ -278,7 +277,7 @@ pageEncoding="UTF-8"%>
             $(document).on("click","#delete-btn",function(){
                 var reivewId = $(this).attr("name")
                 //alert(reivewId)
-                if(loginUser!=reivewId|| loginUser){
+                if(loginUser!=reivewId|| !loginUser){
                     alert("게시물은 자신이 작성한 게시물만 삭제 가능합니다.")
                 }else{
                     let url = `${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}`
@@ -288,7 +287,7 @@ pageEncoding="UTF-8"%>
 
             $(document).on("click","#update-btn",function(){
                 var reivewId = $(this).attr("name")
-                if(loginUser!=reivewId|| loginUser){
+                if(loginUser!=reivewId|| !loginUser){
                     alert("게시물은 자신이 작성한 게시물만 수정 가능합니다.")
                 }else{
                     let url = `${path}/front?key=review&methodName=updateForm&reviewNo=${reviewDetail.reviewNo}`
@@ -385,9 +384,10 @@ pageEncoding="UTF-8"%>
                     	<form name="reply-loginUser-insert" method="post" id="reply-loginUser-insert">
                             <div class="form-inline mb-2">
                                 <label for="replyId"><img src="${path}/img/ui/user.png" class="reply-user-icon"><img></label>
-                                <span><strong>현재 로그인한 유저 아이디</strong></span>
-                                <input type="hidden" name="reply_id" value="${sessionScope.loginUser}"><!-- 나중에 세션으로 아이디 받기 -->
-                                <input type="hidden" name="reply_manager_id" value="${sessionScope.loginManager}">
+                                <span><strong>${sessionScope.loginUser.userId}</strong></span>
+                                <span><strong>${sessionScope.loginManager.managerId}</strong></span>
+                                <input type="hidden" name="reply_id" value="${sessionScope.loginUser.userId}"><!-- 나중에 세션으로 아이디 받기 -->
+                                <input type="hidden" name="reply_manager_id" value="${sessionScope.loginManager.managerId}">
                             </div>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reply_content"></textarea>
                             <input type="hidden" name="key" value="reviewreply">
