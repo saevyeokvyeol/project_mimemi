@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>FAQ</title>
 <jsp:include page="../common/header.jsp"/>
+
 <style type="text/css">
 .FAQ-view {width: 1200px; margin: 50px auto;}
 .FAQ-sideview {width: 200px; margin-right: 50px; z-index: 0;}
@@ -24,6 +25,7 @@
  .side-minibar {padding: 0;}
  .side-minibar > a {font-size: 14px; padding-left: 40px;}
 </style>
+
 <script type="text/javascript">
 	$(function() {
 		function menuActive() {
@@ -91,6 +93,8 @@
 		  			</c:forEach>
 		  		</c:otherwise>
 			</c:choose>
+			
+			<!-- 페이징처리입니다 -->
 				<nav aria-label="Page navigation example">
 					<jsp:useBean class="mimemi.mvc.paging.FaqListPageCnt" id="p"/> 
 					<c:set var="isLoop" value="false"/>
