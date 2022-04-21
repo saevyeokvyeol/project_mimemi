@@ -39,12 +39,6 @@ pageEncoding="UTF-8"%>
                 height: auto;
                 padding-bottom: 5px;                
             }
-            .review-contentTitle{
-                box-sizing: border-box;
-                height: 40px;
-                font-size: large;
-                font-weight: bold;
-            }
             
             .review-goods{
                 box-sizing: border-box;
@@ -110,7 +104,6 @@ pageEncoding="UTF-8"%>
                 padding-bottom: 5px;
             }
             .reply-content-text{
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 width: fit-content;
                 padding: 10px;
                 border-radius: 15px;
@@ -259,7 +252,7 @@ pageEncoding="UTF-8"%>
             $(document).on("click","#delete-btn",function(){
                 var reivewId = $(this).attr("name")
                 //alert(reivewId)
-                if(loginUser!=reivewId|| !loginUser){
+                if(loginUser!=reivewId || !loginUser){
                     alert("게시물은 자신이 작성한 게시물만 삭제 가능합니다.")
                 }else{
                     let url = `${path}/front?key=review&methodName=delete&reviewNo=${reviewDetail.reviewNo}`
