@@ -21,18 +21,25 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	  	
 	  	<style>
-			.orderList-main {width: 1200px; margin: auto;}
-			table {width: 100%;}
-			.order_sort{text-align: right;}
-			span{font-size:14pt; text-align: right;}
-			</style>
+			.Ask-view {width: 1200px; margin: 50px auto;}
+			.Ask-sideview {width: 200px; margin-right: 50px; z-index: 0;}
+			.Ask-sideview h3 {margin: 0 0 20px 10px;}
+			.Ask-mainview {width: 950px;}
+			.search{background-color:#eeeeee; 
+				height : 50px; 
+				text-align:center;
+				vertical-align:middle;}
+			.side-minibar {padding: 0;}
+			.side-minibar > a {font-size: 14px; padding-left: 40px;}
+			
+		</style>
 			
 			
 		<script type="text/javascript">
 			$(function(){
 				$("select").change(function(){
 					if($(this).val() != "0"){
-						let url = `${path}/front?key=ask&methodName=selectAll&field=` + $(this).val();
+						let url = `${path}/front?key=ask&methodName=selectAllManager&field=` + $(this).val();
 						location.replace(url);
 					}
 					
@@ -44,39 +51,57 @@
      	
 </head>
 <body>
-<section class="askList-main">
-	<h1><a href="${path}/front?key=ask&methodName=selectAllManager">1 : 1 문의 목록(관리자페이지)</a></h1>
+<section class="Ask-view d-flex p-2 bd-highlight">
 	
-		<table class="table table-hover" id="askList" >
-			<thead>
-			<tr bgcolor="">
-	 			  <th>글 번호</th>
-	  			  <th>작성자 ID</th>
-			      <th>제목</th>
-			      <th>내용</th>
-				  <th>첨부파일명</th>
-				  <th>작성날짜</th>	
-				  <th>카테고리명</th>
-				  <th>답변완료</th>
-		    </tr>
-		    </thead>
-		    <tbody>
-		    	<c:choose>
+		<!-- left side -->
+		
+		<aside class="Ask-sideview">
+			<h3>고객센터</h3>
+			<div class="list-group">
+				<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action">
+					공지사항</a>
+				<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					FAQ</a>
+				<div class="side-minibar">
+					<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=op" class="list-group-item list-group-item-action" id="op">주문/결제</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
+				</div>
+				<a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action active">1:1문의</a>
+			</div>
+		</aside>
+		
+		<!-- body -->
+		<div class=""Ask-mainview"">
+			<div><h1>1:1 문의 목록</h1></div>
+			<!-- 목록 -->
+			<table class="table table-hover" id="askList" >
+				<thead>
+					<tr bgcolor="">
+	 					  <th>글 번호</th>
+	  					  <th>작성자 ID</th>
+					      <th>제목</th>
+					      <th>내용</th>
+						  <th>첨부파일명</th>
+						  <th>작성날짜</th>	
+						  <th>카테고리명</th>
+						  <th>답변완료</th>
+		   			 </tr>
+		  		  </thead>
+		   		 <tbody>
+		    		<c:choose>
 						<c:when test="${empty askList}">
 							<tr>
-								<td colspan="5">구매 내역이 없습니다.</td>
+								<td colspan="8">구매 내역이 없습니다.</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${askList}" var="ask">
 							<tr>
 								<td>
-								<span>
-								<a href="${path}/front?key=ask&methodName=selectByAskNoManager&askNo=${ask.askNo}">
-							
-								${ask.askNo}
-								</a>
-								</span>
+								<span><a href="${path}/front?key=ask&methodName=selectByAskNoManager&askNo=${ask.askNo}">${ask.askNo}</a></span>
 								</td>
 								<td>${ask.userId}</td>
 								<td>${ask.askTitle}</td>
@@ -98,7 +123,28 @@
 					
 		    </tbody>
 		</table>
-		<nav aria-label="Page navigation example">
+		
+		<!-- 검색하기  -->
+		<nav class="navbar navbar-light bg-light">
+				<div class="Ask-search-box">
+					<form class="form-inline" action="${path}/front?key=ask&methodName=selectByKeywordManager" method="post">
+						<select name="field" id="review_search_sort_select">
+							<option name="review_search_sort" value="title">제목</option>
+							<option name="review_search_sort" value="content">내용</option>
+						</select>
+						<input class="ipt" name="keyWord" type="text" placeholder="Search" aria-label="Search">
+						<button class="btn btn-success" type="submit" >검색하기</button>
+					</form>
+				</div>
+				
+			</nav>	
+		
+		
+			
+			<!--페이징처리-->
+			<nav aria-label="Page navigation example">
+		
+			
 				<jsp:useBean class="mimemi.mvc.paging.AskListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>
 				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
@@ -120,8 +166,8 @@
 					</c:if>
 				</ul>
 			</nav>
-		
-</section>
+		</div>
+	</section>
 
 </body>
 <jsp:include page="../common/footer.jsp"/>

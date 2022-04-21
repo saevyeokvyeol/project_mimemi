@@ -10,7 +10,38 @@
 	<title>Insert title here</title>
 	<jsp:include page="../common/header.jsp"/>
 <style type="text/css">
-	span{font-size:9pt;}
+	 .review-insertform {
+                width: 900px;
+                margin: auto; padding: 50px 0;
+            }
+            
+            .review-insertform h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            
+            .review-table th {width: 120px; padding: 15px 30px;}
+            .review-table td {vertical-align: middle;}
+            
+            .stars {margin-right: 15px;}
+            
+            img.starRateImg{
+                width: 90px; padding-bottom: 7px;    
+            }
+            
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+            }
+            
+            #review-image-output{
+                width: 100px;
+                height: auto;
+            }
+            
+            div.review-submit-button{
+                text-align: center;
+            }
+            
 
 </style>
  		<!--부트스트랩 CSS CDN-->
@@ -108,71 +139,62 @@ function checkValid() {
 </script>
 </head>
 <body>
-<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
-
-<form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
-onSubmit='return checkValid()' enctype="multipart/form-data">
-    <input type="hidden" name="askNo" value="${askDto.askNo}" >
-   <div>
-   <table align="center" cellpadding="5" cellspacing="1" width="600" border="1">
-    <tr>
-        <td width="1220" height="20" colspan="2">
-            <p align="center"><font size="3"><b>  게시물 수정하기</b></font></p>
-        </td>
-    </tr>
-    <tr>
-        <td width="150" height="20">
-            <span >제목</span>
-           
-        </td>
-        <td>
-         <textarea class="form-control" rows="1" name="askTitle" id="title" >${askDto.askTitle}</textarea>
-        </td>
-       
-    </tr>
-    
-    <tr>
-        <td width="150" height="20" >
-            <b><span >내 용</span></b>
-        </td>
-        <td>
-        <textarea class="form-control" rows="5" name="askContent" id="content" >${askDto.askContent}</textarea>
-    	</td>
-    </tr>
-    <tr>
-    	<td width="150" height="20" >
-    		<span>
-    			첨부파일
-    		</span>
-    	</td>
-    	<td>	
-    		<input type="file" name="askAttach" size="30">
-			<p id="file-status">${askDto.askAttach}</p>
-    	</td>
-    
-    </tr>
-    
-    
-    <tr>
-        <td width="450" height="20" colspan="2" align="center"><b><span>
-		<input type="submit" id="update-btn" name="${askDto.userId}" value="수정하기" askno="${askDto.askNo}"> <input type="reset" value="다시쓰기"></span></b></td>
-    </tr>
-</table>
-</div>
-	
-</form>
+	<div class="review-insertform">
+		<div class="review-title">
+			<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
+		</div>
+		<div class="review-writeForm">
+			<form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
+			onSubmit='return checkValid()' enctype="multipart/form-data">
+  				<table class="table table-borderless review-table">
+    				<input type="hidden" name="askNo" value="${askDto.askNo}" >
+   
+   						 <tr>
+							<th>제목</th>	        
+        					<td>
+        						<span><input type="text" class="form-control" name="askTitle" id="title" maxlength='16'></span>
+        					</td>
+        
+    					</tr>
+  						<tr>
+  							<th>내용</th>
+  							<td>
+  								<textarea class="form-control" rows="5" name="askContent" id="content" >${askDto.askContent}</textarea>
+  							</td>
+  						</tr>
+    					<tr>
+    						<th>첨부파일</th>
+    						<td>
+    							<input type="file" name="askAttach" size="30">
+							 	<p id="file-status">${askDto.askAttach}</p>
+    						</td>
+    					</tr>
+    				</table>
+   					<div class="review-submit-button">
+   							<input type="submit" id="update-btn" name="${askDto.userId}" value="수정하기" askno="${askDto.askNo}">
+   							<input type="reset" value="다시쓰기">
+   						
+   					</div>	
+		</form>
 	<h3>댓글 정보</h3>
 	
 <!-- 댓글창 조회 -->
-<div>
-	<div>
-		<div id="askReplyOutPut">
+				<div>
+					<div>
+						<div id="askReplyOutPut">
 			
+						</div>
+					</div>
+				</div>			
+				<hr>		
+				<div class="review-submit-button">
+						<a class="back-review-list btn btn-outline-dark" href="${path}/board/ask2.jsp">리스트로 돌아가기</a>
+                		
+            	</div>
+			
+	
 		</div>
 	</div>
-</div>
-<hr>
-<div align=right><span >&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>
