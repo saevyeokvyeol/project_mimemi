@@ -89,13 +89,13 @@
 		    </thead>
 		    <tbody>
 		    	<c:choose>
-						<c:when test="${empty askList}">
+						<c:when test="${empty list}">
 							<tr>
-								<td colspan="8">구매 내역이 없습니다.</td>
+								<td colspan="8">문의 내역이 없습니다.</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${askList}" var="ask">
+							<c:forEach items="${list}" var="ask">
 							<tr>
 								<td>
 								<span>

@@ -51,7 +51,7 @@ function checkValid() {
 			
 				<div class="mb-3">
 					<label for="title">회원 ID</label>
-					<input type="text" class="form-control" name="user_id" id="title" placeholder="회원의 ID를 입력해주세요">
+					
 				</div>
 				<div class="mb-3">
 					<label for="title">제목</label>

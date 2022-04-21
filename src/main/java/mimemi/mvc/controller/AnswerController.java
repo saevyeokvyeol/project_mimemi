@@ -40,7 +40,7 @@ public class AnswerController implements Controller {
 		
 		answerService.insertAnswerReply(answerDto);
 		
-		return new ModelAndView("/manager/ask_Main_Mg.jsp");
+		return new ModelAndView("front?key=ask&methodName=selectAllManager",true);
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class AnswerController implements Controller {
 		answerService.deleteAnswerReply(Integer.parseInt(askNo));
 		
 		
-		return new ModelAndView("/manager/ask_Main_Mg.jsp");
+		return new ModelAndView("front?key=ask&methodName=selectAllManager",true);
 	}
 	
 }

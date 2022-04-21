@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import mimemi.mvc.dto.AskDTO;
+import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AskService;
 import mimemi.mvc.service.AskServiceImpl;
 
@@ -86,6 +88,8 @@ public class AskController implements Controller {
 		System.out.println("field ="+field);
 		
 		String keyWord= request.getParameter("keyWord");
+		
+		System.out.println("keyword:"+keyWord);
 		List<AskDTO> list=askService.selectByKeyword(keyWord, field, Integer.parseInt(pageNum));
 		
 		request.setAttribute("list", list);
@@ -94,7 +98,7 @@ public class AskController implements Controller {
 		request.setAttribute("keyword", keyWord);
 		
 		
-		return new ModelAndView("front?key=ask&methodName=selectAll", true);
+		return new ModelAndView("/board/askSearch.jsp");
 	}
 	
 	
@@ -111,13 +115,17 @@ public class AskController implements Controller {
 		MultipartRequest m = 
 			new MultipartRequest(request, saveDir,maxSize,encoding , new DefaultFileRenamePolicy());
 		
-		String userId ="happy01";
+		
 		String askTitle=m.getParameter("ask_title");
 		String askContent=m.getParameter("ask_content");
 		String askCategory=m.getParameter("ask_category");
 		
+		HttpSession session = request.getSession();
+		UserDTO reviewUser = (UserDTO)session.getAttribute("loginUser");
+		String userid = reviewUser.getUserId();
+		
 		System.out.println(askTitle);
-		AskDTO askDto = new AskDTO(userId, askTitle, askContent,askCategory);
+		AskDTO askDto = new AskDTO(userid, askTitle, askContent,askCategory);
 		
 		//파일첨부가 되었다면..
 		if(m.getFilesystemName("notice_attach") != null) {
