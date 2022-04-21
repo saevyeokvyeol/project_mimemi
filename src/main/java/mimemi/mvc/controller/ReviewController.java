@@ -252,7 +252,7 @@ public class ReviewController implements Controller {
 
 		request.setAttribute("list", reviewList);
 		request.setAttribute("pageNum", curPageNo);
-		return new ModelAndView("/manager/reviewListBlind.jsp");
+		return new ModelAndView("/manager/reviewBl_Main_Mg.jsp");
 	}
 	/**
 	 * 관리자용 - 게시글 블라인드 처리

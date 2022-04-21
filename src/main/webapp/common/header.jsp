@@ -44,7 +44,7 @@
 				<ul>
 					<c:choose>
 						<c:when test="${sessionScope.loginUser == null}">
-							<li><a href="${path}/user/join01.jsp">회원가입</a></li>
+							<li><a href="${path}/user/join03.jsp">회원가입</a></li>
 							<li><a href="${path}/user/login.jsp">로그인</a></li>
 						</c:when>
 						<c:otherwise>

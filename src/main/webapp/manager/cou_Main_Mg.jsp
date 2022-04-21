@@ -56,7 +56,7 @@
 							$("#couponTalbe thead tr:eq(0)").after(text);
 							
 						}, // 성공 메소드
-						error : function(result) {
+						error : function(err) {
 							alert(err + " 에러 발생!");
 						} // 에러 메소드
 					}); // ajax 종료
@@ -96,7 +96,7 @@
 							$("#couponTalbe thead tr:eq(0)").after(text);
 							
 						}, // 성공 메소드
-						error : function(result) {
+						error : function(err) {
 							alert(err + " 에러 발생!");
 						} // 에러 메소드
 					}); // ajax 종료
@@ -109,6 +109,13 @@
 					
 				});
 				
+				$("#live").click(function() {
+					location.href = '${path}/manager/cou_Insert_Live.jsp';
+				})
+				
+				$("#rg").click(function() {
+					location.href = '${path}/manager/cou_Insert_Regular.jsp';
+				})
 				
 			}); //ready 끝
 			
@@ -149,8 +156,8 @@
 				</table>
 				
 				<div style="text-align: right;">
-					<input type="submit" onclick="location.href='couponInsert.jsp'" value="실시간쿠폰등록">
-					<input type="submit" onclick="location.href='couponInsert2.jsp'" value="정기쿠폰등록">
+					<input type="button" id="live" value="실시간쿠폰등록">
+					<input type="button" id="rg" value="정기쿠폰등록">
 				</div>
 				
 				<p>

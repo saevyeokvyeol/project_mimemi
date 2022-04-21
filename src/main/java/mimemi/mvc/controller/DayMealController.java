@@ -20,7 +20,7 @@ public class DayMealController implements Controller {
 	private MealService mealService = new MealServiceImpl();
 	
 	public ModelAndView getDayMealList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mv = new ModelAndView("manager/dayMeal.jsp");
+		ModelAndView mv = new ModelAndView("manager/monthly_Meal_Mg.jsp");
 		return mv;
 	}
 	
