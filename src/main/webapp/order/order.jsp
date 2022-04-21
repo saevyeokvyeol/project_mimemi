@@ -425,7 +425,7 @@
 						<tr>
 							<td>배송지 주소</td>
 							<td>
-								<input type="text" class="form-control" id="sample6_postcode" name="zipcode" readonly="readonly"><input type="button" value="우편번호" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark"><p>
+								<input type="text" class="form-control" id="sample6_postcode" name="zipcode" readonly="readonly"><input type="button" value="우편번호" onclick="sample6_execDaumPostcode()" class="btn btn-outline-dark shadow-none"><p>
 								<input type="text" class="form-control" id="sample6_address" name="addrAddr" readonly="readonly"><br>
 								<div>
 									<input type="text" class="form-control" id="sample6_detailAddress" name="addrDetailAddr">
