@@ -63,7 +63,7 @@ public class UserController implements Controller {
 		String userPwd = request.getParameter("userPwd");
 		
 		UserDTO dbDTO = userService.loginUser(userId,userPwd);
-		System.out.println(dbDTO.getUserName());
+//		System.out.println(dbDTO.getUserName());
 		System.out.println(dbDTO.getUserId());
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", dbDTO);
@@ -82,7 +82,7 @@ public class UserController implements Controller {
 		
 		String userId= user.getUserId();
 		String userPwd = request.getParameter("inputPwd");
-		System.out.println(userId);
+//		System.out.println(userId);
 		
 		userService.loginUser(userId,userPwd);
 		
