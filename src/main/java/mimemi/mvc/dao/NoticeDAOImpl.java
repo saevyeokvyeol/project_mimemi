@@ -47,8 +47,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 			ps.setString(3, noticeDTO.getNoticeAttach());
 
 			result = ps.executeUpdate();
-		}catch(SQLException e) {
-			e.printStackTrace();
+//		}catch(SQLException e) {
+//			e.printStackTrace();
 		}finally {
 			DbUtil.dbClose(ps, con);
 		}
