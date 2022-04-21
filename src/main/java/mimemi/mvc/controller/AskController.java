@@ -107,7 +107,7 @@ public class AskController implements Controller {
 	 * */
 	public ModelAndView insertAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-		String saveDir= request.getServletContext().getRealPath("/save");
+		String saveDir= request.getServletContext().getRealPath("/img/save");
 		int maxSize =1024*1024*100;//100M
 	    String encoding="UTF-8";
 		System.out.println(saveDir);
@@ -170,7 +170,7 @@ public class AskController implements Controller {
 	 * */
 	public ModelAndView updateAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String saveDir = request.getServletContext().getRealPath("/img");
+		String saveDir = request.getServletContext().getRealPath("/img/save");
     	int maxSize = 1024*1024*100;
 		String encoding= "UTF-8";
 		
