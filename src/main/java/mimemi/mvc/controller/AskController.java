@@ -98,9 +98,35 @@ public class AskController implements Controller {
 		request.setAttribute("keyword", keyWord);
 		
 		
-		return new ModelAndView("/board/askSearch.jsp");
+		return new ModelAndView("board/askSearch.jsp");
 	}
 	
+	/**
+	 * 검색기능(관리자)
+	 * */
+	public ModelAndView selectByKeywordManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		String pageNum= request.getParameter("pageNum");
+		if(pageNum==null||pageNum.equals("")) {
+			pageNum="1";
+		}
+		String field=request.getParameter("field");//옵션-제목,내용
+		
+		System.out.println("field ="+field);
+		
+		String keyWord= request.getParameter("keyWord");
+		
+		System.out.println("keyword:"+keyWord);
+		List<AskDTO> list=askService.selectByKeyword(keyWord, field, Integer.parseInt(pageNum));
+		
+		request.setAttribute("list", list);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("filed", field);
+		request.setAttribute("keyword", keyWord);
+		
+		
+		return new ModelAndView("manager/ask_Main_Mg.jsp");
+	}
 	
 	/**
 	 * 1:1 문의 등록

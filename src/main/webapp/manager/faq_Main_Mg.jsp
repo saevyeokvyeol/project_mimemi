@@ -12,7 +12,7 @@
 		<jsp:include page="../common/sidebar.jsp"/>
 		<style type="text/css">
 			section {width: 1100px; margin: auto;}
-			table {width: 1200px;}
+			table {width: 2000px;}
 			th, td {border: 1px solid black;}
 		</style>
 		
@@ -25,9 +25,13 @@
 	  	
 	  		<style>
 			.faqList-main {width: 1200px; margin: auto;}
-			table {width: 100%;}
+			   table {width: 100%;}
 			.faq_sort{text-align: right;}
-			
+		   
+		
+
+
+출처: https://webclub.tistory.com/235 [Web Club]
 		   
 		</style>
 		  
@@ -47,7 +51,7 @@
 	<section class="faqList-main">
 			<h1><a href="${path}/front?key=faq&methodName=selectAllFaq">FAQ 관리</a></h1>
 			<section class="faq_sort">
-				<select name="faq_sort" id="faq_categry_select" >
+				<select name="faq_sort" id="faq_categry_select" class="form-select" style="width: 200px;">
 					<option value="0">--정렬방식--</option>
 					<option name="faq_category" value="cr">교환환불</option>
 					<option name="faq_category" value="us">회원관련</option>
@@ -60,13 +64,13 @@
 			<table class="table table-hover" id="faqList">
 				<thead>
 					<tr>
-							<th>글번호</th>
+							<th style="text-align: center;">글번호</th>
 							<th>제목</th>
 							<th>내용</th>
 							<th>첨부파일명</th>
 							<th>작성날짜</th>
 							<th>수정날짜</th>
-							<th>카테고리</th>
+							<th style="text-align: center;">카테고리</th>
 							<th>관리<th>
 							
 						</tr>
@@ -81,13 +85,13 @@
 						<c:otherwise>
 							<c:forEach items="${FaqList}" var="faq">
 							<tr>
-								<td>${faq.faqNo}</td>
-								<td>${faq.faqTitle}</td>
-								<td><a href="${path}/front?key=faq&methodName=selectAll">${faq.faqContent}</a></td>
-								<td>${faq.faqAttach}</td>
-								<td>${faq.faqRegdate}</td>
-								<td>${faq.faqModidate}</td>
-								<td>${faq.faqCategory}</td>
+								<td style="text-align: center;"><Strong>${faq.faqNo}</Strong></td>
+								<td width='250px'>${faq.faqTitle}</td>
+								<td width='250px'><font size="2"><a href="${path}/front?key=faq&methodName=selectAll">${faq.faqContent}</a></font></td>
+								<td><font size="2">${faq.faqAttach}</font></td>
+								<td width='100px'><font size="2">${faq.faqRegdate}</font></td>
+								<td width='100px'><font size="2">${faq.faqModidate}</font></td>
+								<td style="text-align: center;">${faq.faqCategory}</td>
 								<th><a href="${path}/front?key=faq&methodName=updateForm&faqNo=${faq.faqNo}" >관리</a><th>
 							</tr>
 							</c:forEach>

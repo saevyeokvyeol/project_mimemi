@@ -6,9 +6,38 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="../common/header.jsp"/>
-<style type="text/css">
-	span{font-size: 9pt; }
-	body { padding-top: 70px;padding-bottom: 30px;}
+		<style>
+		.review-writeForm {
+                width: 900px;
+                margin: auto; padding: 50px 0;
+            }
+            
+            .review-writeForm h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            
+            .review-table th {width: 120px; padding: 15px 30px;}
+            .review-table td {vertical-align: middle;}
+            
+            .stars {margin-right: 15px;}
+            
+            img.starRateImg{
+                width: 90px; padding-bottom: 7px;    
+            }
+            
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+            }
+            
+            #review-image-output{
+                width: 100px;
+                height: auto;
+            }
+            
+            div.review-submit-button{
+                text-align: center;
+            }
 
 </style>
 
@@ -90,47 +119,75 @@ $(function(){
 </script>
 </head>
 <body>
-<h1>문의하기페이지입니다.</h1>
-   
- <form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=insertAsk"
-        enctype="multipart/form-data">
-		<div class="container" role="main">
-			
+		<div class="review-writeForm">
+   			<div class="review-title">
+                <h1>문의하기</h1>
+            </div>
+            
+		 		<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=insertAsk"
+        		enctype="multipart/form-data">
+		
+			<table class="table table-borderless review-table">	
 				<div class="mb-3">
-					<label for="title">회원 ID</label>
+				<tr>
+					<th>회원 ID</th>
+					<th>${ask.userId}</th>
+				</tr>
+				</div>
+				<tr>
+					<th>제목</th>
+					<td>
+			        	 <select name="ask_title" id = "ask_select_category"> 
+			          		<option name="ask_title" value="">제목 카테고리</option>
+			          		<option name="ask_title" value="로그인문의">로그인문의</option>
+			           		<option name="ask_title" value="배송문의">상품교체문의</option>
+			       		    <option name="ask_title" value="쿠폰문의">쿠폰문의</option>
+			          		<option name="ask_title" value="탈퇴문의">탈퇴문의</option>
+			          		<option name="ask_title" value="상품문의">상품문의</option>
+			   		  		<option name="ask_title" value="회원문의">회원문의</option>
+			         	 </select>
+			         </td>
+				</tr>	
 					
-				</div>
-				<div class="mb-3">
-					<label for="title">제목</label>
-					<input type="text" class="form-control" name="ask_title" id="title" placeholder="제목을 입력해 주세요">
-				</div>
-				<div class="mb-3">
-					<label for="content">문의 내용</label>
-					<textarea class="form-control" rows="5" name="ask_content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
-				</div>
-				<div class="mb-3">
-					<label for="attach">첨부파일</label>
-				 <input type="file" name="notice_attach" maxlength="" size="40">
-				</div>
-				<div class="mb-3">
-			         <label for="title">카테고리</label>
-			        
-			         <select name="ask_category" id = "ask_select_category"> 
-			          <option name="ask_category" value="">FAQ카테고리</option>
-			          <option name="ask_category" value="구매관련">구매관련</option>
-			           <option name="ask_category" value="구독관련">구독관련</option>
-			          <option name="ask_category" value="기타">기타</option>
-			        
-			         </select>
-			    </div>
+				<tr>
+					<th>문의내용</th>
+					<td>
+				 			<textarea class="form-control" rows="5" name="ask_content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+						<td>
+						 	<div class="review-image-insert-area">
+						 		<input type="file" name="notice_attach" maxlength="" size="40">
+						 	</div>
+						</td>
+				</tr>
+				<tr>
+			        <th>카테고리</th>
+			        <td>
+			         	<select name="ask_category" id = "ask_select_category"> 
+			          		<option name="ask_category" value="">문의 카테고리</option>
+			         	    <option name="ask_category" value="회원관련문의">회원관련문의</option>
+			           		<option name="ask_category" value="배송문의">배송문의</option>
+			                <option name="ask_category" value="쿠폰문의">쿠폰문의</option>
+			          		<option name="ask_category" value="상품문의">상품문의</option>
+			          		<option name="ask_category" value="회원문의">회원문의</option>
+			         	</select>
+			         </td>
+			    </tr>
+		</table>
 			    
-     			<div>
-     				<input type="submit" id="wirte-btn" value="문의하기" />
-				    <input type="button" value="목록보기" onclick="location.href='ask2.jsp'"/>
+     			<div class="review-submit-button">
+     				<a class="back-review-list btn btn-outline-dark" href="${path}/front?key=ask&methodName=selectAll">목록으로 돌아가기</a>
+     				<input type="submit" class="btn btn-outline-dark"  value="문의하기">
+     		
+				  
 				</div>
 			
-		</div>
-</form>
+		
+	</form>
+</div>
 <hr>
 <div align=right><span style="font-size:9pt;">&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>

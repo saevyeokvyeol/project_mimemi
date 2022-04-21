@@ -8,12 +8,7 @@
 <head>
 <meta charset="UTF-8">
 	<title>1 : 1문의 - 미미미</title>
-	 <jsp:include page="../common/header.jsp"/>
-		<style type="text/css">
-			section {width: 1200px; margin: auto;}
-			table {width: 1200px;}
-			th, td {border: 1px solid black;}
-		</style> 	
+		<jsp:include page="../common/sidebar.jsp"/>	
 		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
@@ -21,18 +16,37 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	  	
 	  	<style>
-			.orderList-main {width: 1200px; margin: auto;}
-			table {width: 100%;}
-			.order_sort{text-align: right;}
-			span{font-size:14pt; text-align: right;}
-			</style>
+	  	
+	  		
+			
+	  	
+			.Ask-view {width: 1000px; margin: 50px auto;}
+			.Ask-sideview {width: 200px; margin-rightx: 50p; z-index: 0;}
+			.Ask-sideview h3 {margin: 0 0 20px 10px;}
+			.Ask-mainview {width: 950px;}
+			.search{background-color:#eeeeee; 
+				height : 50px; 
+				text-align:center;
+				vertical-align:middle;}
+			.side-minibar {padding: 0;}
+			.side-minibar > a {font-size: 14px; padding-left: 40px;}
+			
+			.Ask-mainview {
+                width: 900px;
+                margin: auto; padding: 50px 0;
+            }
+             .Ask-mainview h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+			
+			.ask-table th {width: 120px; padding: 15px 30px;}
+            .ask-table td {vertical-align: middle;}
+		</style>
 			
 			
 		<script type="text/javascript">
 			$(function(){
 				$("select").change(function(){
 					if($(this).val() != "0"){
-						let url = `${path}/front?key=ask&methodName=selectAll&field=` + $(this).val();
+						let url = `${path}/front?key=ask&methodName=selectAllManager&field=` + $(this).val();
 						location.replace(url);
 					}
 					
@@ -44,39 +58,38 @@
      	
 </head>
 <body>
-<section class="askList-main">
-	<h1><a href="${path}/front?key=ask&methodName=selectAllManager">1 : 1 문의 목록(관리자페이지)</a></h1>
+<section class="Ask-view d-flex p-2 bd-highlight">
 	
-		<table class="table table-hover" id="askList" >
-			<thead>
-			<tr bgcolor="">
-	 			  <th>글 번호</th>
-	  			  <th>작성자 ID</th>
-			      <th>제목</th>
-			      <th>내용</th>
-				  <th>첨부파일명</th>
-				  <th>작성날짜</th>	
-				  <th>카테고리명</th>
-				  <th>답변완료</th>
-		    </tr>
-		    </thead>
-		    <tbody>
-		    	<c:choose>
+		
+		<!-- body -->
+		<div class=""Ask-mainview"">
+			<div><h1>1:1 문의 목록</h1></div>
+			<!-- 목록 -->
+			<table class="table table-hover ask-table" id="askList" >
+				<thead>
+					<tr bgcolor="">
+	 					  <th>글 번호</th>
+	  					  <th>작성자 ID</th>
+					      <th>제목</th>
+					      <th>내용</th>
+						  <th>첨부파일명</th>
+						  <th>작성날짜</th>	
+						  <th>카테고리명</th>
+						  <th>답변완료</th>
+		   			 </tr>
+		  		  </thead>
+		   		 <tbody>
+		    		<c:choose>
 						<c:when test="${empty askList}">
 							<tr>
-								<td colspan="5">구매 내역이 없습니다.</td>
+								<td colspan="8">구매 내역이 없습니다.</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${askList}" var="ask">
 							<tr>
 								<td>
-								<span>
-								<a href="${path}/front?key=ask&methodName=selectByAskNoManager&askNo=${ask.askNo}">
-							
-								${ask.askNo}
-								</a>
-								</span>
+								<span><a href="${path}/front?key=ask&methodName=selectByAskNoManager&askNo=${ask.askNo}">${ask.askNo}</a></span>
 								</td>
 								<td>${ask.userId}</td>
 								<td>${ask.askTitle}</td>
@@ -98,7 +111,28 @@
 					
 		    </tbody>
 		</table>
-		<nav aria-label="Page navigation example">
+		
+		<!-- 검색하기  -->
+		<nav class="navbar navbar-light bg-light">
+				<div class="Ask-search-box">
+					<form class="form-inline" action="${path}/front?key=ask&methodName=selectByKeywordManager" method="post">
+						<select name="field" id="review_search_sort_select">
+							<option name="review_search_sort" value="title">제목</option>
+							<option name="review_search_sort" value="content">내용</option>
+						</select>
+						<input class="ipt" name="keyWord" type="text" placeholder="Search" aria-label="Search">
+						<button class="btn btn-success" type="submit" >검색하기</button>
+					</form>
+				</div>
+				
+			</nav>	
+		
+		
+			
+			<!--페이징처리-->
+			<nav aria-label="Page navigation example">
+		
+			
 				<jsp:useBean class="mimemi.mvc.paging.AskListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>
 				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
@@ -120,9 +154,9 @@
 					</c:if>
 				</ul>
 			</nav>
-		
-</section>
+		</div>
+	</section>
 
 </body>
-<jsp:include page="../common/footer.jsp"/>
+
 </html>
