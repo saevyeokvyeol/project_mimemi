@@ -10,6 +10,43 @@
 	<title>1 : 1문의 - 미미미</title>
 	<jsp:include page="../common/header.jsp"/>
 
+<<<<<<< HEAD
+<style type="text/css">
+	 .review-insertform {
+                width: 900px;
+                margin: auto; padding: 50px 0;
+            }
+            
+            .review-insertform h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            
+            .review-table th {width: 120px; padding: 15px 30px;}
+            .review-table td {vertical-align: middle;}
+            
+            .stars {margin-right: 15px;}
+            
+            img.starRateImg{
+                width: 90px; padding-bottom: 7px;    
+            }
+            
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+            }
+            
+            #review-image-output{
+                width: 100px;
+                height: auto;
+            }
+            
+            div.review-submit-button{
+                text-align: center;
+            }
+            
+
+=======
+>>>>>>> 2626a9dd0d16a280691fd802f2a380d6b691a6c6
 	<style type="text/css">
 		.ask-inserform{
 			width: 900px;
@@ -22,7 +59,10 @@
 		div.ask-submit-button{
 			text-align: center;
 		}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 2626a9dd0d16a280691fd802f2a380d6b691a6c6
 
 	</style>
  		<!--부트스트랩 CSS CDN-->
@@ -104,6 +144,67 @@
 	</script>
 </head>
 <body>
+<<<<<<< HEAD
+
+	<div class="review-insertform">
+		<div class="review-title">
+			<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
+		</div>
+		<div class="review-writeForm">
+			<form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
+			onSubmit='return checkValid()' enctype="multipart/form-data">
+  				<table class="table table-borderless review-table">
+    				<input type="hidden" name="askNo" value="${askDto.askNo}" >
+   
+   						 <tr>
+							<th>제목</th>	        
+        					<td>
+        						<span><input type="text" class="form-control" name="askTitle" id="title" maxlength='16'></span>
+        					</td>
+        
+    					</tr>
+  						<tr>
+  							<th>내용</th>
+  							<td>
+  								<textarea class="form-control" rows="5" name="askContent" id="content" >${askDto.askContent}</textarea>
+  							</td>
+  						</tr>
+    					<tr>
+    						<th>첨부파일</th>
+    						<td>
+    							<input type="file" name="askAttach" size="30">
+							 	<p id="file-status">${askDto.askAttach}</p>
+    						</td>
+    					</tr>
+    				</table>
+   					<div class="review-submit-button">
+   							<input type="submit" id="update-btn" name="${askDto.userId}" value="수정하기" askno="${askDto.askNo}">
+   							<input type="reset" value="다시쓰기">
+   						
+   					</div>	
+		</form>
+	<h3>댓글 정보</h3>
+	
+<!-- 댓글창 조회 -->
+				<div>
+					<div>
+						<div id="askReplyOutPut">
+			
+						</div>
+					</div>
+				</div>			
+				<hr>		
+				<div class="review-submit-button">
+						<a class="back-review-list btn btn-outline-dark" href="${path}/board/ask2.jsp">리스트로 돌아가기</a>
+                		
+            	</div>
+			
+	
+		</div>
+	</div>
+
+
+=======
 	<section class="ask-inserform">
 		<div class="ask-title">
 			<h1>1:1 문의 상세보기 및 수정하기</h1>
@@ -153,6 +254,7 @@
 			<span ><a href="${path}/board/ask2.jsp" class="back-review-list btn btn-outline-dark">목록으로 돌아가기</a></span>
 		</div>
 	</section>
+>>>>>>> 2626a9dd0d16a280691fd802f2a380d6b691a6c6
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>

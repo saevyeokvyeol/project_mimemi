@@ -8,12 +8,7 @@
 <head>
 <meta charset="UTF-8">
 	<title>1 : 1문의 - 미미미</title>
-	 <jsp:include page="../common/header.jsp"/>
-		<style type="text/css">
-			section {width: 1200px; margin: auto;}
-			table {width: 1200px;}
-			th, td {border: 1px solid black;}
-		</style> 	
+		<jsp:include page="../common/sidebar.jsp"/>	
 		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
@@ -21,8 +16,12 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	  	
 	  	<style>
-			.Ask-view {width: 1200px; margin: 50px auto;}
-			.Ask-sideview {width: 200px; margin-right: 50px; z-index: 0;}
+	  	
+	  		
+			
+	  	
+			.Ask-view {width: 1000px; margin: 50px auto;}
+			.Ask-sideview {width: 200px; margin-rightx: 50p; z-index: 0;}
 			.Ask-sideview h3 {margin: 0 0 20px 10px;}
 			.Ask-mainview {width: 950px;}
 			.search{background-color:#eeeeee; 
@@ -32,6 +31,14 @@
 			.side-minibar {padding: 0;}
 			.side-minibar > a {font-size: 14px; padding-left: 40px;}
 			
+			.Ask-mainview {
+                width: 900px;
+                margin: auto; padding: 50px 0;
+            }
+             .Ask-mainview h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+			
+			.ask-table th {width: 120px; padding: 15px 30px;}
+            .ask-table td {vertical-align: middle;}
 		</style>
 			
 			
@@ -53,31 +60,12 @@
 <body>
 <section class="Ask-view d-flex p-2 bd-highlight">
 	
-		<!-- left side -->
-		
-		<aside class="Ask-sideview">
-			<h3>고객센터</h3>
-			<div class="list-group">
-				<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action">
-					공지사항</a>
-				<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					FAQ</a>
-				<div class="side-minibar">
-					<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
-					<a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>
-					<a href="${path}/front?key=faq&methodName=selectAll&field=op" class="list-group-item list-group-item-action" id="op">주문/결제</a>
-					<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
-					<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
-				</div>
-				<a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action active">1:1문의</a>
-			</div>
-		</aside>
 		
 		<!-- body -->
 		<div class=""Ask-mainview"">
 			<div><h1>1:1 문의 목록</h1></div>
 			<!-- 목록 -->
-			<table class="table table-hover" id="askList" >
+			<table class="table table-hover ask-table" id="askList" >
 				<thead>
 					<tr bgcolor="">
 	 					  <th>글 번호</th>
@@ -170,5 +158,5 @@
 	</section>
 
 </body>
-<jsp:include page="../common/footer.jsp"/>
+
 </html>
