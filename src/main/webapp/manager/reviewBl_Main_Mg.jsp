@@ -7,6 +7,8 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
+        <!-- jQuery --> 
+        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
         
          <!-- Bootstrap CSS -->
@@ -17,26 +19,23 @@ pageEncoding="UTF-8"%>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
 		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         
-        <!-- jQuery -->        
-        <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
-        
        <style>
-           div{
-                width: 1000px;
-                margin: auto;
-            }
-           #review-list-img-preview{
-                width: 50px;
-                height: 50px;
-                object-fit:cover;
-            }
-            table th{
-                text-align: center;
-            }
-            img.starRateImg{
-                width:70px;
-                height: auto; 
-            }
+       		section{width: 1200px; margin: auto;}
+       		table{width: 100%;}
+/*        		th, td{border: 1px solid black;} */
+
+          #review-list-img-preview{ 
+                 width: 50px; 
+                 height: 50px; 
+                 object-fit:cover; 
+             } 
+             table th{ 
+                 text-align: center; 
+             } 
+             img.starRateImg{
+                 width:70px;
+                 height: auto;
+             } 
        </style>
 		
         <script>
@@ -75,12 +74,9 @@ pageEncoding="UTF-8"%>
         
     </head>
     <body>
-        <div class="container">
-            <div class="review-title">
-                <h3>후기 게시판 관리</h3>
-            </div>
-
-            <div class="review-sort-area">
+    	<section class="reviewList-main">
+                <h1><a href>후기 게시판 관리</a></h1>
+                <section class="review_sort">
                 <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
                 <select name="review_sort_select" id="review_sort_select">
                     <option name="review_sort" value="0">--정렬방식--</option>
@@ -89,57 +85,44 @@ pageEncoding="UTF-8"%>
                     <option name="review_sort" value="rowrate">별점 낮은순</option>
                     <option name="review_sort" value="view">조회순</option>
                 </select>
-            </div>
-            <div class="review-list">
-                <table class="table">
-                    <thead class="thead-dark">
+                </section>
+                <table class="table table-hover" id="reviewList">
+                    <thead>
                         <tr>
-                        <th scope="col">게시글번호</th>
-                        <th scope="col">리뷰이미지</th>
-                        <th scope="col">상품</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">날짜</th>
-                        <th scope="col">별점</th>
-                        <th scope="col">블라인드</th>
+	                        <th>게시글번호</th>
+	                        <th>리뷰이미지</th>
+	                        <th>상품</th>
+	                        <th>제목</th>
+	                        <th>작성자</th>
+	                        <th>날짜</th>
+	                        <th>별점</th>
+	                        <th>블라인드</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:choose>
                             <c:when test ="${empty requestScope.list}">
                                 <tr>
-                                    <th colspan="8">
-                                        <span class="review-result-empty"> 등록된 후기가 없습니다.</span>
-                                    </th>
+                                    <td colspan="8">후기가 없습니다.</td>
                                 </tr>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach items="${requestScope.list}" var="review">
                                     <tr>
-                                        <th>
-                                            <span>${review.reviewNo}</span>
-                                        </th>
-                                        <th>
-                                            <c:if test="${not empty review.reviewAttach}">
-                                                <span class="review-list-img-preview-area">
-                                                    <img src="${path}/img/save/${review.reviewAttach}" alt="후기 이미지입니다." id="review-list-img-preview"></span>
-                                            </c:if>
-                                            <span class="review-list-img-preview-empty-area"></span>
-                                        </th>
-                                        <th>
-                                            <span>${review.goodsDTO.goodsName}</span>
-                                        </th>
+                                        <td>${review.reviewNo}</td>
                                         <td>
-                                            <span><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></span>
+                                        	<c:if test="${not empty review.reviewAttach}">
+                                        		<span class="review-list-img-preview-area">
+                                                <img src="${path}/img/save/${review.reviewAttach}" alt="후기 이미지입니다." id="review-list-img-preview"></span>
+                                        	</c:if>
+                                        	<span class="review-list-img-preview-empty-area"></span>
                                         </td>
-                                        <th>
-                                            <span>${review.userDTO.userName}</span>
-                                        </th>
-                                        <th>
-                                            <span>${review.reviewRegdate}</span>
-                                        </th>
-                                        <th>
-                                            <c:choose>
+                                        <td>${review.goodsDTO.goodsName}</td>
+                                        <td><a href="${path}/front?key=review&methodName=selectByReviewNo&reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
+                                        <td>${review.userDTO.userName}</td>
+                                        <td>${review.reviewRegdate}</td>
+                                        <td>
+                                        	<c:choose>
                                                 <c:when test="${review.reviewRate eq 1}">
                                                     <img src="${path}/img/ui/starRate1.jpg" class="starRateImg">
                                                 </c:when>
@@ -156,9 +139,9 @@ pageEncoding="UTF-8"%>
                                                     <img src="${path}/img/ui/starRate5.jpg" class="starRateImg">
                                                 </c:when>
                                             </c:choose>
-                                        </th>
-                                        <th>
-                                            <c:choose>
+                                        </td>
+                                        <td>
+                                        	<c:choose>
                                                 <c:when test="${review.reviewBlind eq 'F'}">
                                                     <button type="button" class="btn btn-danger" name="${review.reviewNo}" value="F">게시글 숨기기</button>
                                                 </c:when>
@@ -166,18 +149,17 @@ pageEncoding="UTF-8"%>
                                                     <button type="button" class="btn btn-secondary" name="${review.reviewNo}" value="T">블라인드 처리됨</button>
                                                 </c:when>
                                             </c:choose>
-                                        </th>
-                                    </tr>
+                                        </td>
+                                    </tr>   
                                 </c:forEach>
                             </c:otherwise>
                         </c:choose>
                     </tbody>
                 </table>
-            </div>
             <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색하기</button>
             </form>
             </nav>
                 <!-- 페이징 처리 -->
@@ -204,7 +186,8 @@ pageEncoding="UTF-8"%>
                     </c:if>
                 </ul>
             </nav>
-        </div>
+
+        </section>
     </body>
 
 </html>
