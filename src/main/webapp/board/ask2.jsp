@@ -17,120 +17,114 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	  	
 	  	<style>
-			.orderList-main {width: 1200px; margin: auto;}
-			table {width: 100%;}
-			.order_sort{text-align: right;}
-			span{font-size:14pt; text-align: right;}
-			</style>
+			.Ask-view {width: 1200px; margin: 50px auto;}
+			.Ask-sideview {width: 200px; margin-right: 50px; z-index: 0;}
+			.Ask-sideview h3 {margin: 0 0 20px 10px;}
+			.Ask-mainview {width: 950px;}
+			.search{background-color:#eeeeee; 
+				height : 50px; 
+				text-align:center;
+				vertical-align:middle;}
+			.side-minibar {padding: 0;}
+			.side-minibar > a {font-size: 14px; padding-left: 40px;}
 			
-			
-	 	
-     	<style type="text/css">
-			section {width: 1200px; margin: auto;}
-			table {width: 1200px;}
-			th, td {border: 1px solid black;}
-			
-			table th{
-                text-align: center;
-            }
-            
-			table td{
-                text-align: center;
-            }
 		</style>
-    
-    	<script type="text/javascript">
-			
-    	
-		</script>
      	
 </head>
 <body>
-<section class="askList-main">
-	<h1><a href="${path}/front?key=ask&methodName=selectAll">1 : 1 문의 목록</a></h1>
-			
-		<div>
-			 <nav class="navbar navbar-light bg-light">
-
-                <div class="review-search-box">
-                    <form class="form-inline" action="${path}/front?key=ask&methodName=selectByKeyword" method="post">
-                        <select name="field" id="review_search_sort_select">
-                            <option name="review_search_sort" value="title">제목</option>
-                            <option name="review_search_sort" value="content">내용</option>
-                        </select>
-                        <input class="review-search-keyword" name="keyWord" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn-search-submit" type="submit" >검색하기</button>
-                    </form>
-                </div>
-            </nav>
-		
-		</div>
-			
-			
-		<table class="table table-hover" id="askList" >
-			<thead>
-			<tr bgcolor="">
-	 			  <th>글 번호</th>
-	  			  <th>작성자 ID</th>
-			      <th>제목</th>
-			      <th>내용</th>
-				  <th>첨부파일명</th>
-				  <th>작성날짜</th>	
-				  <th>카테고리명</th>
-				  <th>답변완료</th> 
-		    </tr>
-		    </thead>
-		    <tbody>
-		    	<c:choose>
+	<section class="Ask-view d-flex p-2 bd-highlight" >
+		<!--left side-->
+		<aside class="Ask-sideview">
+			<h3>고객센터</h3>
+			<div class="list-group">
+				<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action">
+					공지사항</a>
+				<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					FAQ</a>
+				<div class="side-minibar">
+					<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=op" class="list-group-item list-group-item-action" id="op">주문/결제</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
+					<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
+				</div>
+				<a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action active">1:1문의</a>
+			</div>
+		</aside>
+		<!--body-->	
+		<div class="Ask-mainview">
+			<div><h1>1:1 문의 목록</h1></div>
+			<!--목록-->
+			<table class="table table-hover" id="askList" >
+				<thead>
+					<tr>
+						<th>글 번호</th>
+						<th>작성자 ID</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>첨부파일명</th>
+						<th>작성날짜</th>	
+						<th>카테고리명</th>
+						<th>답변완료</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
 						<c:when test="${empty askList}">
 							<tr>
-								<td colspan="8">구매 내역이 없습니다.</td>
+								<th colspan="8">문의 내역이 없습니다.</th>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${askList}" var="ask">
-							<tr>
-								<td>
-								<span>
-								<a href="${path}/front?key=ask&methodName=selectByAskNo&askNo=${ask.askNo}">
-								${ask.askNo}
-								</a>
-								</span>
-								</td>
-								<td>${ask.userId}</td>
-								<td>${ask.askTitle}</td>
-								<td>${ask.askContent}</td>
-								<td>${ask.askAttach}</td>
-								<td>${ask.askRegdate}</td>
-								<td>${ask.askCategory}</td>
-								<td>
-								<c:choose>
-									<c:when test="${ask.askComplete eq 'F'}">답변 미완료</c:when>
-									<c:when test="${ask.askComplete eq 'T'}">답변 완료</c:when>
-								</c:choose>
-								</td>
-							</tr>
-							
+								<tr>
+									<td>
+										<span><a href="${path}/front?key=ask&methodName=selectByAskNo&askNo=${ask.askNo}">${ask.askNo}</a></span>
+									</td>
+									<td>${ask.userId}</td>
+									<td>${ask.askTitle}</td>
+									<td>${ask.askContent}</td>
+									<td>${ask.askAttach}</td>
+									<td>${ask.askRegdate}</td>
+									<td>${ask.askCategory}</td>
+									<td>
+									<c:choose>
+										<c:when test="${ask.askComplete eq 'F'}">답변 미완료</c:when>
+										<c:when test="${ask.askComplete eq 'T'}">답변 완료</c:when>
+									</c:choose>
+									</td>
+								</tr>
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
-					
+					<!--70번째줄에 a태그로 문의하기 버튼 만들었음! 작동확인하기-->
 					<form name=updateForm  method=post action="${path}/board/write.jsp"  
 					onSubmit='return checkValid()' enctype="multipart/form-data">
-						<div align="right">
-							<span>
-								<input type="submit" id="write-btn" value="문의하기" >
-								
-							</span>
+						<div>
+							<span><input type="submit" id="write-btn" value="문의하기" ></span>
 						</div>
 					</form>
-					
-					
-		    </tbody>
-		</table>
-		
-		
-		<nav aria-label="Page navigation example">
+				</tbody>
+			</table>
+			<!--검색하기-->
+			<nav class="navbar navbar-light bg-light">
+				<div class="Ask-search-box">
+					<form class="form-inline" action="${path}/front?key=ask&methodName=selectByKeyword" method="post">
+						<select name="field" id="review_search_sort_select">
+							<option name="review_search_sort" value="title">제목</option>
+							<option name="review_search_sort" value="content">내용</option>
+						</select>
+						<input class="ipt" name="keyWord" type="text" placeholder="Search" aria-label="Search">
+						<button class="btn btn-success" type="submit" >검색하기</button>
+					</form>
+				</div>
+				<div>
+					<span><a href="${path}//board/write.jsp" id="write-btn2"  class="btn btn-outline-dark shadow-none">문의하기</a></span>
+				</div>
+			</nav>	
+			
+			<!--페이징처리-->
+			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.AskListPageCnt" id="p"/> 
 				<c:set var="isLoop" value="false"/>
 				<c:set var="temp" value="${(pageNum - 1) % p.blockcount}"/>
@@ -152,9 +146,8 @@
 					</c:if>
 				</ul>
 			</nav>
-		
-</section>
-
+		</div>
+	</section>
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>

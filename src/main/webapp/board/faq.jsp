@@ -55,11 +55,26 @@
 				<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
 				<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
 			</div>
-		  <a href="#" class="list-group-item list-group-item-action">1:1문의</a>
+		  <a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action">1:1문의</a>
 		</div>
 	</aside>
 		<div class="FAQ-mainview">
 		<div><h1>FAQ</h1></div>
+		<!-- 검색하기 -->
+		<nav class="navbar navbar-light bg-light">
+			<div class="container-fluid">
+				<span></span>
+				<form class="form-inline" action="${path}/front?key=notice&methodName=selectByKeywordClient"method="post">
+					<select name="field" id="notice_search_sort_keyWord" >
+						<option name="notice_search_sort" value="TITLE">제목</option>
+						<option name="notice_search_sort" value="CONTENT">내용</option>
+					</select>
+					<input class="notice-search-keyWord" name="keyword" type="text" placeholder="Search" aria-label="Search">
+					<button class="btn btn-success" type="submit">검색하기</button>
+				</form>
+			</div>
+		</nav>
+		<!--검색하기 기존-->
 			<form>
 			<div class="search">
 				<select>
