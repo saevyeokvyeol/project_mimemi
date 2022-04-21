@@ -24,17 +24,16 @@
 				//alert(1);
 				// USERCOUPON id로 전체 검색
 				function selectCpByUserId(){
-					//alert(1);
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "json",
-						data: {key: "coupon", methodName: "selectCpByUserId", userId: "happy01"},
+						data: {key: "coupon", methodName: "selectCpByUserId"},
 						success: function(result) {
 							//alert(result);
 								let text = "";
 								$.each(result, function(index, item) {
-									
+									//alert(123);
 									if(item.livecouId==null || item.livecouId==""){
 										text += "<tr>";
 										text += `<td>\${item.userCouId}</td>`;
@@ -54,7 +53,7 @@
 									}
 									
 								});
-								$("#couponTalbe thead tr:eq(0)").after(text);
+								$("#couponTalbe tbody tr:eq(0)").append(text);
 							
 							
 							//$("#couponTalbe thead tr:gt(0)").remove(); //0번지 보다 큰거는 지우고 뿌려주기

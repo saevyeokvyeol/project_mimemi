@@ -135,7 +135,7 @@ public class CouponController implements Controller {
 		couponService.updateLiveCp(liveCoupon);
 		
 		//return new ModelAndView("front?key=coupon&methodName=selectAllLiveCp", true);
-		return new ModelAndView("manager/cou_Main_Mg.jsp");
+		return new ModelAndView("manager/cou_Main_Mg.jsp",true);
 	}
 	
 	/**½Ç½Ã°£ÄíÆù ¼öÁ¤Æû*/
