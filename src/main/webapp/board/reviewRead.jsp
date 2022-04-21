@@ -21,18 +21,13 @@ pageEncoding="UTF-8"%>
             .review-content-title > div > span > span:last-child {margin-left: 30px;}
             
 			.review-contentview {
-				width: 1000px; margin: 50px auto;
+				margin: 50px auto; padding: 0 25px;
 			}
 			
 			.review-Image {
 				max-width: 100%;
 			}
 
-            .reivew-writer{
-                box-sizing: border-box;
-                height: 60px;
-            }
-			
             img.starRateImg{
             	box-sizing: border-box;
                 width:130px;
@@ -40,69 +35,46 @@ pageEncoding="UTF-8"%>
                 padding-bottom: 5px;                
             }
             
-            .review-goods{
-                box-sizing: border-box;
-                height: auto;
-            }
+            .base-btn {display: flex; justify-content: space-between; padding: 25px;}
+            
+            .reply-each {padding: 10px 0;}
+            
+            .reply-num { border-top: 1px #eeeeee solid; border-bottom: 1px #eeeeee solid; padding: 25px;}
+            
             #goodsImg{
                 width: 20px;
                 height: auto;
             }
-            .bLeft{
-                float: left;
-            }
-            .bRight{
-                float: right;
-            }
             
-            .base-btn{
-                width: 800px;
-                height: 20px;
-                margin: 20px 0px 50px;
-            }
-            #back-list-btn, #delete-btn, #update-btn{
-                background-color: rgb(248, 249, 250);
-                color: gray;
-                border: 2px solid gray;
-                border-radius: 15px;
-                padding: 10px 20px;
-                text-align: center;
-                text-decoration: none;
-                font-weight: bold;
-            }
-            #back-list-btn:hover{
-                background-color: cornflowerblue;
-                border: 2px solid cornflowerblue;
-                color: white;
-            }
-            #delete-btn:hover, #update-btn:hover{
-                background-color: rgb(207, 207, 207);
-                border: 2px solid rgb(207, 207, 207);
-                color: white
-            }
-
             .review-reply{
                 width: 800px;
             }
+            
             .user-write-wrap{
                 width: 800px;
                 padding: 10px;
                 border: 1px solid gray;
             }
+            
             .review_reply_wrap{
-                width: 800px;
+            	background-color: #eeeeee;
                 padding: 20px 30px 20px 30px;
             }
+            
             img.reply-user-icon{
             	width: 30px;
             	margin-right: 10px;
             }
-            pre{
+            
+            pre {
             	white-space: pre-wrap;
+            	font-family: 'Noto Sans KR', sans-serif;
             }
+            
             .reply-user-info{
                 padding-bottom: 5px;
             }
+            
             .reply-content-text{
                 width: fit-content;
                 padding: 10px;
@@ -110,9 +82,11 @@ pageEncoding="UTF-8"%>
                 background-color: rgb(248, 249, 250);
                 border: 1px solid rgb(196, 196, 196);
             }
+            
             .reply-content{
             	padding:10px 10px 10px 0px;
             }
+            
             #reply-delete-bnt{
             	color:gray;
             }
@@ -150,20 +124,32 @@ pageEncoding="UTF-8"%>
 				success: function(result){
 					//alert("검색성공~")
 					let str="";
-					$.each(result,function(index,reply){
-                        str+=`<div class="reply-user-info">`;
-                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.userId}</span>&nbsp;`
-                           	str+=`<span class="badge rounded-pill bg-primary">\${reply.managerId}</span>`
-                            str+=`<span class="badge rounded-pill bg-light text-dark">\${reply.replyRegdate}</span>`
+					count = 0;
+					if(JSON.stringify(result) == "[]"){
+
+						str += "<div class='reply-each'>"
+                        str+=`<span class="reply-content-text">댓글이 없습니다</span>`;
                         str+=`</div>`;
-                        str+=`<div class="reply-content">`;
-                            str+=`<span class="reply-content-text">\${reply.replyContent}</span>`
-                            //str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-update-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}>수정</a></span>`
-                            str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-delete-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}">삭제</a></span>`
-                        str+=`</div>`;
-                    })
-                   	$("#review_reply_output").html(review_reply_output)
-                   	$("#review_reply_output").append(str)
+					} else {
+						$.each(result,function(index,reply){
+							str += "<div class='reply-each'>"
+	                        str+=`<div class="reply-user-info">`;
+	                            str+=`<span class="badge rounded-pill text-dark">\${reply.userId}</span>&nbsp;`
+	                           	str+=`<span class="badge rounded-pill bg-primary">\${reply.managerId}</span>`
+	                            str+=`<span class="badge rounded-pill text-dark">\${reply.replyRegdate}</span>`
+	                        str+=`</div>`;
+	                        str+=`<div class="reply-content">`;
+	                            str+=`<span class="reply-content-text">\${reply.replyContent}</span>`
+	                            //str+=`<span class="badge rounded-pill bg-light text-dark"><a href="javascript:void(0);" id="reply-update-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}>수정</a></span>`
+	                            str+=`<span class="badge rounded-pill text-dark"><a href="javascript:void(0);" id="reply-delete-bnt" name=${'${reply.userId}'} reply_No="${'${reply.replyNo}'}">삭제</a></span>`
+	                        str+=`</div>`;
+	        				str += "</div>"
+	        				count++;
+						})
+                    }
+                   	$("#review_reply_output").html(review_reply_output);
+                   	$("#review_reply_output").append(str);
+                   	$(".reply-num-count").text(count);
 				},
 
 				error: function(err){//실패했을 때 콜백함수
@@ -330,15 +316,29 @@ pageEncoding="UTF-8"%>
 			</div>
 			<divDSADSDF class="review-userInfo">
 				<div class="review-content">
-					<pre>${reviewDetail.reviewContent}</pre>
+					<pre class="">${reviewDetail.reviewContent}</pre>
 				</div>
 			</div>
             <!-- <리뷰 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
             <div class="base-btn">
-                <span class="bLeft"><a href="#" id="back-list-btn">목록으로 돌아가기</a></span>
-                <span class="bRight"><a href="#" id="delete-btn" name="${reviewDetail.userId}">삭제</a></span>
-                <span class="bRight"><a href="#" id="update-btn" name="${reviewDetail.userId}">수정</a></span>
+                <a href="#" id="back-list-btn" class="btn btn-outline-dark shadow-none">목록으로 돌아가기</a>
+                <span>
+	                <a href="#" id="delete-btn"  class="btn btn-outline-dark shadow-none" name="${reviewDetail.userId}">삭제</a>
+	                <a href="#" id="update-btn"  class="btn btn-outline-dark shadow-none" name="${reviewDetail.userId}">수정</a>
+                </span>
             </div> 
+                <!--댓글 조회하기 -->
+                <div class="reply-num">
+                	댓글 수: <span class="reply-num-count"></span>개
+                </div>
+                <div class="review_reply_wrap">
+                    <div class="review_reply_area">
+                       	<div id="review_reply_output"></div>
+                    </div>
+                </div>
+                
+            </div>
+
                 <!--댓글 등록하기-->
                 <div class="card">
                     <div class="card-body">
@@ -358,23 +358,6 @@ pageEncoding="UTF-8"%>
                     	</form>
                     </div>
                 </div>
-                <!--댓글 조회하기 -->
-                <div class="card-header bg-light">
-	                <i class="fa fa-comment fa"></i> 
-                </div>
-                <div class="review_reply_wrap">
-                    <div class="review_reply_area">
-                       	<div id="review_reply_output"></div>
-                    </div>
-                </div>
-                <!--댓글 조회창 하단-->
-                <div class="card-header bg-light">
-	                <i class="fa fa-comment fa"></i> 
-                    
-                </div>
-                
-            </div>
-
         </section>
     </body>
     <jsp:include page="../common/footer.jsp"/>

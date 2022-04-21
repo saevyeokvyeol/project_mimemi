@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>goodsList</title>
-
-<%-- <jsp:include page="../common/header.jsp"/> --%>
+<jsp:include page="../common/header.jsp"/>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -38,7 +37,6 @@
     
     
     <script>
-
 	function showDetail(goodsId) {
 		window.location.href='${path}/front?key=goods&methodName=goodsView&goodsId=' + goodsId;
 	}
@@ -84,7 +82,6 @@
     	function initialize() {
     		selectGoodsList()
     	}
-
 		/* if (!window.location.href.endsWith('index.jsp') && window.location.href.endsWith('.jsp')) {
 			window.location.href='${path}/front?key=goods&methodName=goodsList';	
 		} */

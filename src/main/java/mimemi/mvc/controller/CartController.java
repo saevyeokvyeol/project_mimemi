@@ -29,9 +29,16 @@ public class CartController implements Controller {
 	 * */
 	public void insertCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession();
 		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		
+		if(loginUser == null) {
+			out.print("로그인 후 이용해주세요.");
+			return;
+		}
+		
 		String userId = loginUser.getUserId();
 		
 		String goodsId = request.getParameter("goodsId");
@@ -44,7 +51,6 @@ public class CartController implements Controller {
 		CartDTO cart = new CartDTO(userId, goodsId, Integer.parseInt(cartQty), cartWeekDay, cartPeriod, cartStart, Integer.parseInt(goodsPrice));
 		cartService.insert(cart);
 		
-		PrintWriter out = response.getWriter();
 		out.print("상품이 장바구니에 담겼습니다.");
 	}
 	

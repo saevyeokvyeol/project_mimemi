@@ -8,14 +8,18 @@
 <meta charset="UTF-8">
 <title>error</title>
 <script type="text/javascript">
-alert("${errorMsg}");
-history.go(-1);
+$(function() {
+	function start() {
+		alert('${errorMsg}');
+		history.go(-1);
+	}
+	start();
+})
+
+
 </script>
 </head>
 <body>
-<h3>error.jsp 페이지 입니다.</h3>
-
 </body>
 </html>
-
 <jsp:include page="../common/footer.jsp"/>
