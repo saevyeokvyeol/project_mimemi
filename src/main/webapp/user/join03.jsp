@@ -122,7 +122,7 @@ $(function() {
 					
 					if (data == "true") {
 						alert("이미 존재하는 아이디 입니다.");
-						$(".userId_input").focus();
+						
 					} else {
 						alert("사용가능한 아이디 입니다.");
 						isIdChecked = true;
@@ -160,7 +160,6 @@ $(function() {
 				success : function(data) {
 					if (data == "true") {
 						alert("이미 가입한 이력이 있는 번호입니다.<br>아이디 찾기를 이용해주세요");
-						$(".userPhone_input").focus();
 						return;
 					} else {
 						alert("사용가능한 번호입니다.");
@@ -187,7 +186,6 @@ $(function() {
 			
 			if(!validNum.test(userPhone)){
 				$("#blankPhone").css("display","inline-block");
-				$(".userPhone_input").focus();
 				return false;
 			}
 			return true;
@@ -218,19 +216,15 @@ $(function() {
 			
 			if(id.length<6 || id.length>15){	//길이체크
 				$("#notValidId").css("display", "inline-block");
-				$("#userId").focus();
 				return false;			
 			}else if(id.search(/\s/) != -1){	//공백체크
 				$("#notValidId").css("display", "inline-block");
-				$("#userId").focus();
 				return false;
 			}else if(isNum<0 || isLower<0){		//문자,숫자 포함 체크
 				$("#notValidId").css("display", "inline-block");
-				$("#userId").focus();
 				return false;
 			}else if(id.substr(0,5)=="admin"){	//admin으로 시작하는 아이디 방지
 				$("#adminId").css("display", "inline-block");
-				$("#userId").focus();
 				return false;
 			}else{
 				$("#notValidId").css("display", "none");
@@ -251,15 +245,12 @@ $(function() {
 			
 			if(pwd.length<8 || pwd.length>20){		//길이체크
 				$("#notValidPwd").css("display","inline-block");
-				$(".userPwd_input").focus();
 				return false;
 			}else if(pwd.search(/\s/) != -1 ){		//공백체크
 				$("#notValidPwd").css("display","inline-block");
-				$(".userPwd_input").focus();
 				return false;
 			}else if(isNum<0 || isLower<0 || isUpper<0){	//영대,소문자 숫자 체크
-				$("#notValidPwd").css("display","inline-block");
-				$(".userPwd_input").focus();	
+				$("#notValidPwd").css("display","inline-block");	
 				return false;
 			}else{
 				$("#notValidPwd").css("display","none");
