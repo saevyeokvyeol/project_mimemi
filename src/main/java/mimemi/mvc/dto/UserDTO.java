@@ -7,7 +7,7 @@ public class UserDTO {
 	private String userPhone;
 	private int userPoint;
 	private String userRegdate;
-	private boolean userQuit;
+	private String userQuit;
 	private String userBirth;
 	
 	public UserDTO() {}
@@ -25,7 +25,7 @@ public class UserDTO {
 		this.userPhone = userPhone;
 	}
 	public UserDTO(String userId, String userName, String userPwd, String userPhone, int userPoint, String userRegdate,
-		boolean userQuit, String userBirth) {
+			String userQuit, String userBirth) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -85,11 +85,11 @@ public class UserDTO {
 		this.userRegdate = userRegdate;
 	}
 
-	public boolean isUserQuit() {
+	public String isUserQuit() {
 		return userQuit;
 	}
 
-	public void setUserQuit(boolean userQuit) {
+	public void setUserQuit(String userQuit) {
 		this.userQuit = userQuit;
 	}
 

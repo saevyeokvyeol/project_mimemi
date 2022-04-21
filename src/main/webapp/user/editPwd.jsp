@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
-<jsp:include page="../common/header.jsp" />
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 재설정하기</title>
+<jsp:include page="../common/header.jsp" />
 <style type="text/css">
 	section{width: 1200px; margin: auto;}
 	
@@ -117,4 +118,5 @@
 	</form>
 </section>
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

@@ -84,7 +84,7 @@
     	}
     	
     	function dayMealSelectAll() {
-			let month = '4'
+			let month = '4' // TODO: 수정 필요
 			$.ajax({
 				url: "${path}/ajax",
 				type: "get",

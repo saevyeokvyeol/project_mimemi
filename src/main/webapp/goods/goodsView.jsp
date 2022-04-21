@@ -89,6 +89,7 @@
    						$("#goodsdetail").text(item.goodsDetail);
    						$("#goodsprice").text(item.goodsPrice);
    						$("input[name=goodsPrice]").val(item.goodsPrice);
+   						$("#goodsThumbnailImage").attr("src", item.goodsThumbnail);
    						calcTotalPrice();
     				}
     			})
@@ -157,7 +158,7 @@
         <div class="row">
             <div class="col">
                 <div class="goodsthumbnail">
-                    <img src="/Users/egg/kosta/Project2/img/1.png">
+                    <img id="goodsThumbnailImage">
                 </div>
             </div>
             <div class="col">
