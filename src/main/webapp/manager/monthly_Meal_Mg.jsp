@@ -77,7 +77,7 @@
                     text += '<td>' + item.mealId + '</td>'
                     text += '<td>' + getMealNameByMealId(item.mealId) + '</td>'
                     text += '<td>' + item.dayMenuDate + '</td>';
-                    text += "<td><button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateDayMealModal\" onclick=\"fillUpdateModal(" + item.dayMenuId + ", \'" + item.goodsId + "\', \'" + item.mealId + "\', \'" + item.dayMenuDate + "\')\">수정</button></td>";
+                    text += "<td><button type=\"button\" class=\"btn btn-secondary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#updateDayMealModal\" onclick=\"fillUpdateModal(" + item.dayMenuId + ", \'" + item.goodsId + "\', \'" + item.mealId + "\', \'" + item.dayMenuDate + "\')\">수정</button></td>";
                     text += '</tr>';
                 });
                 $("#dayMealTable tr:gt(0)").remove();
@@ -200,7 +200,7 @@
                     <div class="col-3"></div>
                     <!-- 페이지네이션 -->
                     <div class="col-2">
-                        <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addDayMealModal">+</button>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal"
                                     onclick="dayMealUpdate()">등록</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
                             </div>
                         </div>
 
@@ -317,7 +317,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal"
                                     onclick="dayMealInsert()">등록</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
                             </div>
                         </div>
 
