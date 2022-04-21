@@ -31,8 +31,6 @@
   a{text-decoration: none}
   
 </style>
-<script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
-
 <script type="text/javascript">
 function checkValid() {
    
@@ -43,6 +41,7 @@ $(function() {
 
 	$("#pubDate").datepicker();
 	$("#endDate").datepicker();
+	
 	$.datepicker.setDefaults({
 		dateFormat: 'yy-mm-dd',
 		prevText: '이전 달',
@@ -100,7 +99,7 @@ $(function() {
 
 <p>
 <div>
-	<a href="selectCouponAll.jsp">&lt;리스트로 돌아가기&gt;</a>
+	<a href="cou_Main_Mg.jsp">&lt;리스트로 돌아가기&gt;</a>
 </div>
 
 
