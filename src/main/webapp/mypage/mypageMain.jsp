@@ -12,8 +12,10 @@
 
 <script type="text/javascript">
  $(function(){
-	alert("${loginUser.userId}");
-})
+	 alert("${loginName}");
+	alert("${loginUser}");
+	alert("${loginUser.userId.userCouId}");
+});
 
 </script>
 </head>
@@ -21,7 +23,7 @@
 <div class="topBox">
 	<div class="firstBox">
 	  <div class="txt1"><strong>${loginName}</strong>님 반갑습니다.</div>
-	  <div class="txt2">미미미와 함께하신지 일 되었습니다.</div>
+	  <div class="txt2">미미미와 함께하신지 ${loginUser.Regdate}일 되었습니다.</div>
 	</div>
 	<div class="secondBox">
       <div class="point">가용 적립금</div>
@@ -29,7 +31,7 @@
     </div>
     <div class="thirdBox">
       <div class="coupon">사용 가능한 쿠폰</div>
-      <a href="couponList.jsp">${loginUser.userId.userCouId}.length</a>장
+      <a href="couponList.jsp">${loginUser.userId.userCouId}</a>장
     </div>
 </div>
 <div class="middleBox">

@@ -155,7 +155,7 @@ public class AskDAOImpl implements AskDAO {
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		
-		String sql = proFile.getProperty("ask.selectAll");
+		String sql = proFile.getProperty("ask.selectAlll");
 		
 		List<AskDTO> askList = new ArrayList<AskDTO>();
 		
@@ -273,9 +273,8 @@ public class AskDAOImpl implements AskDAO {
 			ps.setString(1, askDto.getAskComplete());
 			ps.setInt(2, askDto.getAskNo());
 			
-			
 			result=ps.executeUpdate();
-			
+			System.out.println(askDto.getAskNo());
 		}finally {
 			
 			DbUtil.dbClose(ps, con);

@@ -8,8 +8,12 @@
 <style type="text/css">
 	textarea { width: 500px; height:100px; resize:none;}
 </style>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
+
 <h1> 회원탈퇴 </h1>
 	<div>
 	  불편하셨던 점이나 불만사항을 알려주시면 적극적으로 반영하도록 하겠습니다.<p>
@@ -17,6 +21,7 @@
 	</div><br>
 	
 <h3>무엇이 불편하셨나요?</h3>
+<form name="deleteForm" method="post" id="deleteForm" action="${path}/front?key=user&methodName=deleteUser">
 	<div>
 		<input type="radio"	class="" name="inconvenient" value="상품 불만족"/>상품 불만족
 		<input type="radio"	class="" name="inconvenient" value="혜택 부족"/>혜택 부족
@@ -27,7 +32,8 @@
 	  <textarea placeholder="기타"></textarea>
 	</div><br>
 	<div>
-	  <button class="" id="deleteUser">회원탈퇴</button>
+	  <button type="submit" class="" id="deleteUser">회원탈퇴</button>
 	</div>
+</form>
 </body>
 </html>

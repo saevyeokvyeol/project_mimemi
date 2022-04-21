@@ -1,6 +1,7 @@
 package mimemi.mvc.controller;
 
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class UserController implements Controller {
 		String addrDetailAddr = request.getParameter("addrDetailAddr");
 		String addrRefAddr = request.getParameter("addrRefAddr");
 		
-		UserDTO user = new UserDTO(userId, userName, userPwd, userPhone, 0, userId, false, userBirth);
+		UserDTO user = new UserDTO(userId, userName, userPwd, userPhone, 0, userId, "F", userBirth);
 		AddrDTO addr = new AddrDTO(userId, addrName, Integer.parseInt(zipcode) , addrAddr, addrDetailAddr, addrRefAddr, userName, userPhone);
 		
 		userService.insertUser(user, addr);
@@ -62,7 +63,7 @@ public class UserController implements Controller {
 		String userPwd = request.getParameter("userPwd");
 		
 		UserDTO dbDTO = userService.loginUser(userId,userPwd);
-		System.out.println(dbDTO.getUserName());
+//		System.out.println(dbDTO.getUserName());
 		System.out.println(dbDTO.getUserId());
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", dbDTO);
@@ -70,20 +71,27 @@ public class UserController implements Controller {
 		
 		return new ModelAndView("index.jsp", true);
 	}
-//	public void loginUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
-//		response.setContentType("text/html;charset=UTF-8");
-//		
-//		//userId, userPwd 받기
-//		String userId= request.getParameter("userId");
-//		String userPwd = request.getParameter("userPwd");
-//		
-//		UserDTO dbDTO = userService.loginUser(new UserDTO(userId,userPwd));
-//		
+	
+	
+	public ModelAndView pwdCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		
+		//userId, userPwd 받기
+		HttpSession session = request.getSession();
+		UserDTO user= (UserDTO)session.getAttribute("loginUser");
+		
+		String userId= user.getUserId();
+		String userPwd = request.getParameter("inputPwd");
+//		System.out.println(userId);
+		
+		userService.loginUser(userId,userPwd);
+		
+		return new ModelAndView("mypage/userLeave02.jsp", true);
 //		JSONArray arr = JSONArray.fromObject(dbDTO);
 //		
 //		PrintWriter out = response.getWriter();
 //		out.print(arr);
-//	}
+	}
 	/**
 	 * 로그아웃 기능
 	 * */
@@ -198,15 +206,20 @@ public class UserController implements Controller {
 	}
 	
 	/**
-	 * 탈퇴하기 기능
+	 * 탈퇴하기 기능 
 	 * */
 	public ModelAndView deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
+		HttpSession session = request.getSession();
+		UserDTO user= (UserDTO)session.getAttribute("loginUser");
 		
-		userService.deleteUser(userId, userPwd);
+		String userId = user.getUserId();
 		
-		return new ModelAndView("index.jsp", true);
+		System.out.println(userId);
+		System.out.println(user);
+		
+		userService.deleteUser(userId);
+		
+		return logoutUser(request, response); //return을 안주고 logoutUser 호출만하면 
 	}
 
 

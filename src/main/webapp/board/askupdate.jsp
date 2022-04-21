@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+	<title>Insert title here</title>
+	<jsp:include page="../common/header.jsp"/>
 <style type="text/css">
 	span{font-size:9pt;}
 
@@ -84,7 +85,7 @@ function checkValid() {
 </script>
 </head>
 <body>
-<h1>게시물 수정하기 페이지입니다.</h1>
+<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
 
 <form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
 onSubmit='return checkValid()' enctype="multipart/form-data">
@@ -150,4 +151,5 @@ onSubmit='return checkValid()' enctype="multipart/form-data">
 <hr>
 <div align=right><span >&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

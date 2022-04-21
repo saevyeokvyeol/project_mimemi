@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="../common/header.jsp"/>
 <style type="text/css">
 	span{font-size: 9pt; }
 	body { padding-top: 70px;padding-bottom: 30px;}
@@ -84,4 +85,5 @@ function checkValid() {
 <hr>
 <div align=right><span style="font-size:9pt;">&lt;<a href="${path}/board/ask2.jsp">리스트로 돌아가기</a>&gt;</span></div>
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

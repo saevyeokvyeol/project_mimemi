@@ -228,19 +228,19 @@ public class AskController implements Controller {
 	 * */
 	public ModelAndView updateState(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-
-		response.setContentType("text/html;charset=UTF-8"); 
+		
 		
 		String askNo=request.getParameter("askNo");
 		String askComplete=request.getParameter("ask_complete");
 		
 		AskDTO ask = new AskDTO(Integer.parseInt(askNo), askComplete);
-		
+		System.out.println("askNo:"+askNo);
+		System.out.println("askComplete:"+askComplete);
 		askService.updateState(ask);
 		
 		
 		
-		return new ModelAndView("/manager/managerAsk.jsp");
+		return new ModelAndView("front?key=ask&methodName=selectAllManager",true);
 	}
 }//AskController End
 

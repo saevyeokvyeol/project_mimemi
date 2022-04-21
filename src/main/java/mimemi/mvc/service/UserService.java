@@ -84,7 +84,7 @@ public interface UserService {
 	 * 회원 탈퇴
 	 * : userPwd를 입력받아 DB와 일치하면 1을 리턴하고, DB에 있는 탈퇴여부 바뀜.
 	 * */
-	void deleteUser(String userId, String userPwd) throws SQLException;
+	void deleteUser(String userId) throws SQLException;
 	
 	/**
 	 * 아이디 중복 체크

@@ -93,7 +93,11 @@ $(function() {
 		  아이디 중복체크
 		*/
 		$("#idCheck").click(function() {
-
+			if(!isValidId()){
+				alert("사용할 수 없는 ID입니다.");
+				return;
+			}
+			
 			if ($(".userId_input").val() == '') {
 				alert("아이디를 입력해주세요.")
 				return;
@@ -122,22 +126,6 @@ $(function() {
 		   		}
 			})//ajax 끝
 		}) //function 끝
-		
-		
-		/*
-		핸드폰 번호 형식 체크
-		*/
-		$("#userPhone").focusout(function(){
-			var userPhone = $(this).val();
-			var isValidPhone = /^010?([0-9]{8})$/;
-			
-			if(!isValidPhone.test(userPhone)){
-				$("#blankPhone").css("display","inline-block");
-				return false;
-				$(".userPhone_input").focus();
-			}
-		})//휴대폰 번호 형식 체크 끝
-		
 		
 		/*
 		핸드폰 번호 중복 체크
@@ -178,6 +166,27 @@ $(function() {
 			})//ajax 끝
 		}) //번호 중복 체크 끝
 		
+		
+		/*
+		핸드폰 번호 형식 체크
+		*/
+		$("#userPhone").focusout(function(){isValidPhone();
+		})//휴대폰 번호 형식 체크 끝
+		
+		function isValidPhone(){
+			var userPhone = $("#userPhone").val();
+			var validNum = /^010?([0-9]{8})$/;
+			
+			if(!validNum.test(userPhone)){
+				$("#blankPhone").css("display","inline-block");
+				$(".userPhone_input").focus();
+				return false;
+			}
+			return true;
+		}
+		
+		
+		
 		/*
 		id, phone 값 변경하면 중복체크 다시
 		*/
@@ -191,7 +200,9 @@ $(function() {
 		/*
 		아이디 형식 체크
 		*/
-		$("#userId").focusout(function(){
+		$("#userId").focusout(function(){isValidId();
+		})
+		function isValidId(){ 
 			var id = $("#userId").val();
 			
 			var isNum = id.search(/[0-9]/g);	//g는 대소문자 가려서 전역비교, ig는 대소문자 가리지 않고 전역비교
@@ -199,25 +210,31 @@ $(function() {
 			
 			if(id.length<6 || id.length>15){	//길이체크
 				$("#notValidId").css("display", "inline-block");
-				return false;			
 				$("#userId").focus();
+				return false;			
 			}else if(id.search(/\s/) != -1){	//공백체크
 				$("#notValidId").css("display", "inline-block");
-				return false;
 				$("#userId").focus();
+				return false;
 			}else if(isNum<0 || isLower<0){		//문자,숫자 포함 체크
 				$("#notValidId").css("display", "inline-block");
-				return false;
 				$("#userId").focus();
+				return false;
+			}else if(id.substr(0,5)=="admin"){	//admin으로 시작하는 아이디 방지
+				$("#adminId").css("display", "inline-block");
+				$("#userId").focus();
+				return false;
 			}else{
 				$("#notValidId").css("display", "none");
 				return true;
 			}
-		})
+		}
 		/*
 		비밀번호 형식 체크
 		*/
-		$("#userPwd").focusout(function(){
+		$("#userPwd").focusout(function(){ isValidPwd();
+		})
+		function isValidPwd(){
 			var pwd = $("#userPwd").val();
 			
 			var isNum = pwd.search(/[0-9]/g);
@@ -226,23 +243,22 @@ $(function() {
 			
 			if(pwd.length<8 || pwd.length>20){		//길이체크
 				$("#notValidPwd").css("display","inline-block");
-				return false;
 				$(".userPwd_input").focus();
+				return false;
 			}else if(pwd.search(/\s/) != -1 ){		//공백체크
 				$("#notValidPwd").css("display","inline-block");
-				return false;
 				$(".userPwd_input").focus();
+				return false;
 			}else if(isNum<0 || isLower<0 || isUpper<0){	//영대,소문자 숫자 체크
 				$("#notValidPwd").css("display","inline-block");
+				$(".userPwd_input").focus();	
 				return false;
-				$(".userPwd_input").focus();
 			}else{
 				$("#notValidPwd").css("display","none");
 				return true;
 			}
-		})
-		
-	})
+		}
+})
 </script>
 <script type="text/javascript">
 
@@ -253,8 +269,6 @@ $(function(){
 	$("#userPwd2").focusout(function() {
 		let pwd1 = $("#userPwd").val();
 		let pwd2 = $("#userPwd2").val();
-		
-// 		alert("")
 		
 		if(pwd1 != "" && pwd2 ==""){
 			null;
@@ -274,7 +288,7 @@ $(function(){
 <script type="text/javascript">
 $(function(){
 	$("#joinForm").submit(function(){
-// 		console.log(1);
+
 		/*
 		아이디, 핸드폰번호 중복체크 여부 확인 기능
 		*/
@@ -282,8 +296,11 @@ $(function(){
 			alert("id와 핸드폰번호 중복체크를 진행해주세요.");
 			return false;
 		}
-		return true;
+		isValidPhone();
+		isValidId();
+		isValidPwd();
 		
+		return true;
 	})
 	
 
@@ -298,7 +315,8 @@ $(function(){
 			<th>아이디</th>
 			<td colspan="3"><input type="text" id="userId" class="userId_input" name="userId" placeholder="영문자와 숫자를 조합하여 최소 6자리 이상 입력해주세요" required />
 			<button type="button" class="id_overlap_button" id="idCheck" >중복검사</button>
-			<span id="notValidId">아이디는 공백 없이 영소문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요</span></td>
+			<span id="notValidId">아이디는 공백 없이 영소문자와 숫자를 조합하여 6자리 이상 15자리 이하로 입력해주세요</span>
+			<span id="adminId">admin으로 시작하는 아이디는 관리자용 아이디입니다. 다른 아이디로 재시도해주세요</span></td>
 		</tr>
 		<tr>
 			<th>비밀번호</th>

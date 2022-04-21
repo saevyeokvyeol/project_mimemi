@@ -79,6 +79,12 @@
             tfoot {
                 text-align: right;
             }
+            
+            /* img {
+            	width: 300px;
+            	height: 300px;
+        	} */
+        
         </style>
 
         <script type="text/javascript">
@@ -140,7 +146,7 @@
 
             function fillModal(mealId) {
                 meal = getMealByMealId(mealId)
-                /* $('#mealImg').src(meal.mealImg) */
+                $('#mealImage').attr("src", meal.mealImg)
                 $('#mealName').text(meal.mealName)
                 $('#mealWeight').text(meal.mealWeight)
                 $('#mealKcal').text(meal.mealKcal)
@@ -312,7 +318,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-6">
-                                <img id="mealImage">
+                                <img class="img-fluid" id="mealImage">
                                 <!-- 썸네일 이미지 -->
                             </div>
                             <div class="col-6">

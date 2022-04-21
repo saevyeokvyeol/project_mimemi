@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 	<title>1 : 1문의 - 미미미</title>
+	<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
@@ -45,13 +46,7 @@
 <body>
 <section class="askList-main">
 	<h1><a href="${path}/front?key=ask&methodName=selectAll">1 : 1 문의 목록</a></h1>
-	<section name="ask_sort" id="">
-			<select name="ask_sort" id="">
-					<option value="0">--정렬방식--</option>
-					<option value="order_id">제목</option>
-					<option value="user_id">내용</option>
-			</select>		
-	</section>
+	
 		<table class="table table-hover" id="askList" >
 			<thead>
 			<tr bgcolor="">
@@ -125,4 +120,5 @@
 </section>
 
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

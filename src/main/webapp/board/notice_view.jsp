@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 <head>
 <meta charset="UTF-8">
 <title>공지사항 상세페이지</title>
+<jsp:include page="../common/header.jsp"/>
 </head>
 <style type="text/css">
  .left side {width : 300px;
@@ -37,15 +38,15 @@ pageEncoding="UTF-8"%>
 <div class="left side"> 
 	<div class="title">고객센터</div><hr width="100px">
 	<ul class="menu">
-		<li><a href="${path}/front?key=notice&methodName=selectAllNotice">공지사항</a></li>
+		<li><a href="${path}/front?key=notice&methodName=selectAll">공지사항</a></li>
 		<li class="">
-			<a href="faq.jsp">FAQ</a>
+			<a href="${path}/front?key=faq&methodName=selectAll">FAQ</a>
 			<ul>
-				<li class=""><a href="">교환/환불</a></li>
-				<li class=""><a href="">회원관련</a></li>
-				<li class=""><a href="">주문/결제</a></li>
-				<li class=""><a href="">배송관련</a></li>
-				<li class=""><a href="">기타</a></li>
+				<li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=cr">교환/환불</a></li>
+            <li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=us">회원관련</a></li>
+            <li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=op">주문/결제</a></li>
+            <li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=de">배송관련</a></li>
+            <li class=""><a href="${path}/front?key=faq&methodName=selectAll&field=ec">기타</a></li>
 			</ul>
 		</li>
 		<li><a href="ask.jsp">1:1문의</a></li>
@@ -66,7 +67,7 @@ pageEncoding="UTF-8"%>
     <div class="notice-view">
            <div class=" notice-Info">
                     <div class="notice-img">
-                    <img src="${path}/img/noticeimg/${noticeDetail.noticeAttach}">
+                    <img src="${path}/img/${noticeDetail.noticeAttach}">
                     </div>
                     <div class="notice-content">
                         <strong class ="noticeContent">${noticeDetail.noticeContent}</strong>
@@ -91,4 +92,5 @@ pageEncoding="UTF-8"%>
 </tr>
 </table>
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

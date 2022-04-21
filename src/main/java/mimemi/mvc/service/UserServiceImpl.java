@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 		UserDTO userDTO = userDAO.loginUser(userId, userPwd);
 		if(userDTO == null) {
 			
-			throw new AuthenticationException("아이디와 비밀번호를 확인해주세요");
+			throw new AuthenticationException("입력한 정보를 다시 확인해주세요");
 		}
 		return userDTO;
 	}
@@ -107,8 +107,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String userId, String userPwd) throws SQLException {
-		int result = userDAO.deleteUser(userId, userPwd);
+	public void deleteUser(String userId) throws SQLException {
+		int result = userDAO.deleteUser(userId);
 		if(result != 1)
 			throw new SQLException(userId + "님의 회원탈퇴에 실패했습니다.");
 	}
