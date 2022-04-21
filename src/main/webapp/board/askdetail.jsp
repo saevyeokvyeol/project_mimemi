@@ -165,7 +165,7 @@
 			       		<input type=hidden name="askNo" value="${askDto.askNo}">
 						<input type=hidden name="key" value="ask">
 				
-						<a href="${path}/manager/askAnswer2.jsp?key=answer&methodName=updateAnswerReply&askNo=${askDto.askNo}">답글달기</a>
+						<a href="${path}/manager/ask_Answer.jsp?key=answer&methodName=updateAnswerReply&askNo=${askDto.askNo}">답글달기</a>
 				
 		 
 			        </div>

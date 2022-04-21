@@ -100,7 +100,11 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void insertUserCp(UserCouponDTO userCoupon, String couponType) throws SQLException {
-		// TODO Auto-generated method stub
+		int result = couponDAO.insertUserCp(userCoupon, couponType);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 
 	}
 
@@ -110,7 +114,11 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void updateCpState(int usercouId, String state) throws SQLException {
-		// TODO Auto-generated method stub
+		int result = couponDAO.updateCpState(usercouId, state);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
 
 	}
 
@@ -122,8 +130,9 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public List<UserCouponDTO> selectAllUserCp(String field) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserCouponDTO> userCouponList = couponDAO.selectAllUserCp(field);
+		
+		return userCouponList;
 	}
 
 	/**

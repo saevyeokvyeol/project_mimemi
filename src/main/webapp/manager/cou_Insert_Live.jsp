@@ -52,6 +52,8 @@ $(function() {
 		showMonthAfterYear: true,
 		yearSuffix: '년'
 	});
+	
+
 })
 
 </script>
@@ -96,7 +98,7 @@ $(function() {
 
 <p>
 <div>
-	<a href="selectCouponAll.jsp">&lt;리스트로 돌아가기&gt;</a>
+	<a href="cou_Main_Mg.jsp">&lt;리스트로 돌아가기&gt;</a>
 </div>
 
 

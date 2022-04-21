@@ -40,7 +40,7 @@ public class AnswerController implements Controller {
 		
 		answerService.insertAnswerReply(answerDto);
 		
-		return new ModelAndView("/manager/managerAsk.jsp");
+		return new ModelAndView("front?key=ask&methodName=selectAllManager",true);
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class AnswerController implements Controller {
 		AnswerDTO answerDto=answerService.selectByAskNo(Integer.parseInt(askNo));
 		request.setAttribute("answerDto", answerDto);
 		
-		return new ModelAndView("/manager/askAnswer2.jsp");
+		return new ModelAndView("/manager/ask_Answer.jsp");
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class AnswerController implements Controller {
 	
 		answerService.updateAnswerReply(answerDto);
 		
-		return new ModelAndView("/manager/managerAsk.jsp");
+		return new ModelAndView("/manager/ask_Main_Mg.jsp");
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class AnswerController implements Controller {
 		answerService.deleteAnswerReply(Integer.parseInt(askNo));
 		
 		
-		return new ModelAndView("/manager/managerAsk.jsp");
+		return new ModelAndView("front?key=ask&methodName=selectAllManager",true);
 	}
 	
 }

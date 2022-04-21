@@ -10,7 +10,7 @@
 		<title>주문/결제 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
-			section {width: 800px; margin: auto;}
+			.order-view {width: 800px; margin: auto; padding: 50px 0;}
 			table {width: 100%; caption-side: top;}
 			form > table td:nth-child(1) {width: 170px; padding: 30px;}
 			#oldAddrBox {padding: 5px 0;}
@@ -18,6 +18,7 @@
 			#oldAddrBox > select {display:inline; width: 50%;}
 			td {vertical-align: middle;}
 			.card-pay {width: 23%}
+			.btn-box {padding: 30px 0 0; text-align: center;}
 		</style>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script>
@@ -330,7 +331,7 @@
 		</script>
 	</head>
 	<body>
-		<section>
+		<section class="order-view">
 			<h1>주문/결제</h1>
 			<div>
 				<table class="table table-border orderForm-cartTable">
@@ -533,10 +534,13 @@
 							<input type="hidden" name="mode" value="">
 						</tr>
 					</table>
-					<input type="button" class="btn btn-outline-dark" value="주문 취소">
-					<input type="submit" class="btn btn-dark" value="주문하기">
+					<div class="btn-box">
+						<input type="button" class="btn btn-lg btn-outline-dark" value="주문 취소">
+						<input type="submit" class="btn btn-lg btn-outline-dark" value="주문하기">
+					</div>
 				</form>
 			</div>
 		</section>
 	</body>
+<jsp:include page="../common/footer.jsp"/>
 </html>
