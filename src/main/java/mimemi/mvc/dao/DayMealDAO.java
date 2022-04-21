@@ -19,6 +19,13 @@ public interface DayMealDAO {
 	 * @return: int(수정된 데이터 수)
 	 * */
 	int dayMealUpdate(DayMealDTO dayMeal) throws SQLException;
+		
+	/**
+	 * 월간 신단 전체 조회 
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DayMealDTO> dayMealSelectAll() throws SQLException;
 	
 	/**
 	 * 이달의 월간 식단 조회
