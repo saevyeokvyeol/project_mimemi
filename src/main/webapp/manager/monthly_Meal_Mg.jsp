@@ -176,8 +176,8 @@
                 <div class="col-9 text-center">
                     <h2>월간식단 관리</h2>
                 </div>
-                <div class="col-3">
-                    <!-- select box -->
+                <!-- <div class="col-3">
+                    select box
 
                     <select class="selectpicker">
                         <option>상품 카테고리 순</option>
@@ -185,7 +185,7 @@
                     </select>
                     <button type="button" class="btn btn-primary" onclick="()">조회</button>
                     
-                </div>
+                </div> -->
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm" id="dayMealTable">

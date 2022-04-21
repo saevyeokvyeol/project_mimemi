@@ -26,7 +26,7 @@ public class GoodsController implements Controller {
 	 * @throws Exception
 	 */
 	public ModelAndView goodsSelectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mv = new ModelAndView("manager/goodsSelectAll.jsp");
+		ModelAndView mv = new ModelAndView("manager/goods_Main_Mg.jsp");
 		return mv;
 	}
 	
@@ -38,7 +38,7 @@ public class GoodsController implements Controller {
 	 * @throws Exception
 	 */
 	public ModelAndView goodsInsert(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mv = new ModelAndView("manager/goodsSelectAll.jsp");
+		ModelAndView mv = new ModelAndView("manager/goods_Main_Mg.jsp");
 		return mv;
 	}
 	/**

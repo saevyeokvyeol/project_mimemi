@@ -18,7 +18,7 @@ public class MealController implements Controller {
 	
 	// VIEW를 반환하는 Controller (Controller)
 	public ModelAndView mealSelectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mv = new ModelAndView("manager/mealAll.jsp");
+		ModelAndView mv = new ModelAndView("manager/meal_Main_Mg.jsp");
 		return mv;
 	}
 	
