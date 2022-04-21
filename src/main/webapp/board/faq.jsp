@@ -27,30 +27,7 @@
  .side-minibar {padding: 0;}
  .side-minibar > a {font-size: 14px; padding-left: 40px;}
  
-        .review-search-box{
-                display: inline-block;
-                text-align: center;
-            }
- 
-    .review-search-keyword{
-                border-radius: 4px;
-                padding: 5px;
-                width: 150px;
-                height: 35px;
-                border: 2px solid gray;
-                color: gray;
-                margin: 0px 5px 0px 10px;
-            }     
- 
-    .btn-search-submit{
-                width: 50px;
-                height: 35px;
-                background-color: cornflowerblue;
-                padding: 5px;
-                border-radius: 4px;
-                border: 2px solid cornflowerblue;
-                color: white;
-            }
+  
     
  
  
@@ -86,28 +63,12 @@
 				<a href="${path}/front?key=faq&methodName=selectAll&field=de" class="list-group-item list-group-item-action" id="de">배송 관련</a>
 				<a href="${path}/front?key=faq&methodName=selectAll&field=ec" class="list-group-item list-group-item-action" id="ec">기타</a>
 			</div>
-		  <a href="#" class="list-group-item list-group-item-action">1:1문의</a>
+		  <a href="${path}/front?key=ask&methodName=selectAll" class="list-group-item list-group-item-action">1:1문의</a>
 		</div>
 	</aside>
 		<div class="FAQ-mainview">
 		<div><h1>FAQ</h1></div>
-		
-		  <!-- 검색하기 -->
-		  
-		 <nav class="navbar navbar-light bg-light" >
-			<form>
-			<div class="review-search-box">
-				<select name="field" id="review_search_sort_select">
-					<option name="review_search_sort" value="title">제목</option>
-                    <option name="review_search_sort" value="content">내용</option>
-				</select>
-				<input class="review-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
-				<button class="btn-search-submit" type="submit" >검색하기</button>
-			</div>
-			</form>
-		  </nav>	
-		<hr>
-		
+
 		  <section class="faqList-main">
 		  <c:choose>
 				<c:when test="${empty FaqList}">

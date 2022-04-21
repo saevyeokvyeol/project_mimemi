@@ -49,14 +49,13 @@
 
         }
 
-
-        img {
+        .goods-thumbnail-image {
             width: 500px;
             height: 500px;
         }
         
         .goodsname {
-        	font-size:4em;
+        	font-size:4.5em;
         }
         
         .goodDetail {
@@ -155,51 +154,66 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col">
+        <div class="row" style="padding: 30px">
+            <div class="col-sm-6">
                 <div class="goodsthumbnail">
-                    <img id="goodsThumbnailImage">
+                    <img id="goodsThumbnailImage" class="goods-thumbnail-image top-image">
                 </div>
             </div>
-            <div class="col">
+            <div class="col-sm-6">
                 <div class="goodsinformation">
-                    <a class="goodsname" id="goodsname"></a>
+                    <p class="goodsname" id="goodsname"></p>
                     <p class="goodsdetail" id="goodsdetail"></p>
                 </div>
                 <form action="${path}/front?key=cart&methodName=viewOrderForm&mode=D" method="post">
 	                <div class="order-box">
-	                    <div class="form-group">
-	                        <label for="exampleInputEmail1">배송요일</label>
-	                        <select class="selectpicker" name="cartWeekDay">
-	                            <option value="F">주 5회 (월~금)</option>
-	                            <option value="T">주 3회 (월/수/금)</option>
-	                        </select>
-	                    </div>
-	                    <div class="order-box">
-	                        <label for="exampleInputPassword1">배송기간</label>
-	                        <select class="selectpicker" name="cartPeriod">
-	                            <option value="1W">1주</option>
-	                            <option value="2W">2주</option>
-	                            <option value="4W">4주</option>
-	                            <option value="8W">8주</option>
-	                        </select>
-	                    </div>
-	                    <div class="order-box">
-	                        <label for="exampleInputPassword1">수량</label>
-	
-	                        <div class="spiner-form-container clearfix">
-	                            <td>
-	                            	<button type="button" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
-	                            	<input type="number" name="cartQty" min="1" max="9999" step="1" value="1" readonly="readonly">
-	                            	<button type="button" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
-	                            </td>
+	                    <div class="form-group row">
+	                    	<div class="col-3">
+	                        	<label for="exampleInputEmail1">배송요일</label>
+	                        </div>
+	                        <div class="col-9">
+		                        <select class="selectpicker" name="cartWeekDay">
+		                            <option value="F">주 5회 (월~금)</option>
+		                            <option value="T">주 3회 (월/수/금)</option>
+		                        </select>
 	                        </div>
 	                    </div>
-	                    <div class="order-box">
-	                        <label for="exampleInputPassword1">첫 배송일</label>
-	                        <input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
+	                    <div class="order-box row">
+	                    	<div class="col-3">
+	                        	<label for="exampleInputPassword1">배송기간</label>
+	                        </div>
+	                        <div class="col-9">
+		                        <select class="selectpicker" name="cartPeriod">
+		                            <option value="1W">1주</option>
+		                            <option value="2W">2주</option>
+		                            <option value="4W">4주</option>
+		                            <option value="8W">8주</option>
+		                        </select>
+	                        </div>
 	                    </div>
-	                    <div>
+	                    <div class="order-box row">
+	                    	<div class="col-3">
+	                       		<label for="exampleInputPassword1">수량</label>
+	                        </div>
+	                        <div class="col-9">
+		                        <div class="spiner-form-container clearfix">
+		                            <td>
+		                            	<button type="button" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>
+		                            	<input type="number" name="cartQty" min="1" max="9999" step="1" value="1" readonly="readonly">
+		                            	<button type="button" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button>
+		                            </td>
+		                        </div>
+	                        </div>
+	                    </div>
+	                    <div class="order-box row">
+	                    	<div class="col-3">
+	                        	<label for="exampleInputPassword1">첫 배송일</label>
+	                        </div>
+	                        <div class="col-9">
+	                        	<input type="text" id="datePicker" name="cartStart" class="form-control" placeholder="" readonly="readonly" required>
+	                        </div>
+	                    </div>
+	                    <div class="container-fluid">
 	                    	<input type="hidden" name="goodsId" value="">
 	                    	<input type="hidden" name="mode" value="D">
 	                    	<input type="hidden" name="goodsPrice" value="">

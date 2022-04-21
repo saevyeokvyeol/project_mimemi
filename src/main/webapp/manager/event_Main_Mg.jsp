@@ -34,7 +34,7 @@
 				});
 				
 				$(document).on("click","#insert-btn",function(){   
-	                 location.replace('manager/insertEvent.jsp');
+	                 location.replace('manager/Event_Insert.jsp');
 	                
 	            })
 				

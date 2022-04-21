@@ -28,11 +28,14 @@ public class DayMealServiceImpl implements DayMealService {
 	}
 
 	@Override
+	public List<DayMealDTO> selectAll() throws SQLException {
+		List<DayMealDTO> list = dayMealDAO.dayMealSelectAll();
+		return list;
+	}
+	
+	@Override
 	public List<DayMealDTO> selectByMonth(String date) throws SQLException {
 		List<DayMealDTO> list = dayMealDAO.selectByMonth(date);
-		if(list.size() == 0 || list.isEmpty()) {
-			throw new SQLException("도시락의 정보가 없어 검색할 수 없습니다.");
-		}
 		return list;
 	}
 
@@ -41,5 +44,4 @@ public class DayMealServiceImpl implements DayMealService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

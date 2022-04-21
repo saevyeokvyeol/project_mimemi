@@ -59,6 +59,7 @@
 			$("#goodsTable tbody").append(text);    	
     	}
     
+    
 		function goodsSelectAll(){
 			$.ajax({
 				url: "${path}/ajax",
