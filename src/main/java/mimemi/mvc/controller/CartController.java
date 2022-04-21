@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mimemi.mvc.dto.CartDTO;
+import mimemi.mvc.dto.GoodsDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.CartService;
 import mimemi.mvc.service.CartServiceImpl;
@@ -85,14 +86,12 @@ public class CartController implements Controller {
 			String cartPeriod = request.getParameter("cartPeriod");
 			String cartStart = request.getParameter("cartStart");
 			String goodsPrice = request.getParameter("goodsPrice");
-			System.out.println(userId);
-			System.out.println(goodsId);
-			System.out.println(cartQty);
-			System.out.println(cartWeekDay);
-			System.out.println(cartPeriod);
-			System.out.println(cartStart);
-			System.out.println(goodsPrice);
+			String goodsThumbnailImage = request.getParameter("goodsThumbnailImage");
+			String goodsName = request.getParameter("goodsName");
 			CartDTO cart = new CartDTO(userId, goodsId, Integer.parseInt(cartQty), cartWeekDay, cartPeriod, cartStart, Integer.parseInt(goodsPrice));
+			cart.setGoods(new GoodsDTO());
+			cart.getGoods().setGoodsName(goodsName);
+			cart.getGoods().setGoodsThumbnail(goodsThumbnailImage);
 			cartList.add(cart);
 		}
 		

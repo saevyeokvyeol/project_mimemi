@@ -87,8 +87,10 @@ public class OrderController implements Controller {
 	// 특정 유저가 구매한 내역 가져오기
 	public void selectByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
-		
-		String userId = request.getParameter("userId");
+
+		HttpSession session = request.getSession();
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		List<OrderDTO> orderList = orderService.selectByUserId(userId);
 		
 		JSONArray orderArr = JSONArray.fromObject(orderList);
@@ -139,6 +141,7 @@ public class OrderController implements Controller {
 	}
 	
 	public void selectMlyDeli(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
 
 		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
