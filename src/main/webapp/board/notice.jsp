@@ -6,7 +6,7 @@
 <!DOCTYPE html>
  <head>
 	<meta charset="UTF-8">
-	<title>공지사항</title>
+	<title>공지사항 - 미미미</title>
 	<jsp:include page="../common/header.jsp"/>
 
 	<!-- CSS only -->
@@ -78,18 +78,6 @@
 					</form>
 				</div>
 			</nav>
-			  <!--검색하기 기존-->
-			<form action="${path}/front?key=notice&methodName=selectByKeywordClient" method="post">
-				<div class="search">
-					<select name="field" id="notice_search_sort_keyWordCl">
-						<option name="notice_search_sort_keyWordCl" value="title">제목</option>
-						<option name="notice_search_sort_keyWordCl" value="content">내용</option>
-					</select>
-					<input class="notice-keyWord-search" name="keyword" type="text" placeholder="Search" aria-label="Search">
-					<button type="submit" class="btn btn-success">검색</button>
-				</div>
-			</form>
-			<hr>
 			<!--목록-->		
 			<table class="table" style="text-align:center" id="noticeList">
 				<thead>
