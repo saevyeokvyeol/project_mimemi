@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>이벤트수정 - 미미미</title>
+	<jsp:include page="../common/sidebar.jsp"/>
 <style>
 	.review-writeForm {
                 width: 900px;
@@ -43,9 +44,7 @@
 </head>
 <body>
 	<div class="review-writeForm">
-		<div class="review-title">
-                <h1>이벤트 수정</h1>
-        </div>
+		
 			<form name="writeForm" method="post" action="${path}/front?key=event&methodName=insert" 
  			 onSubmit='return checkValid()' enctype="multipart/form-data">
 				<input type="hidden" name="key" value="event" >

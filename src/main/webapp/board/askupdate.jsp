@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 	<title>1 : 1문의 - 미미미</title>
 	<jsp:include page="../common/header.jsp"/>
+
 <<<<<<< HEAD
 <style type="text/css">
 	 .review-insertform {
@@ -43,7 +44,9 @@
                 text-align: center;
             }
             
+
 =======
+>>>>>>> 2626a9dd0d16a280691fd802f2a380d6b691a6c6
 	<style type="text/css">
 		.ask-inserform{
 			width: 900px;
@@ -56,7 +59,10 @@
 		div.ask-submit-button{
 			text-align: center;
 		}
->>>>>>> 3b5d6f39ee8d63d8e626cf2541e24e8beac96b48
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2626a9dd0d16a280691fd802f2a380d6b691a6c6
 
 	</style>
  		<!--부트스트랩 CSS CDN-->
@@ -139,6 +145,7 @@
 </head>
 <body>
 <<<<<<< HEAD
+
 	<div class="review-insertform">
 		<div class="review-title">
 			<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
@@ -195,6 +202,8 @@
 	
 		</div>
 	</div>
+
+
 =======
 	<section class="ask-inserform">
 		<div class="ask-title">
@@ -245,7 +254,7 @@
 			<span ><a href="${path}/board/ask2.jsp" class="back-review-list btn btn-outline-dark">목록으로 돌아가기</a></span>
 		</div>
 	</section>
->>>>>>> 3b5d6f39ee8d63d8e626cf2541e24e8beac96b48
+>>>>>>> 2626a9dd0d16a280691fd802f2a380d6b691a6c6
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>
