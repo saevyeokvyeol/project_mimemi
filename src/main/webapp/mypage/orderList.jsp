@@ -30,8 +30,8 @@
 							$("#orderTable > tbody").children().remove();
 							if(JSON.stringify(result) == "[]"){
 								text += `<tr>`;
-								text += `<td class="cart-main-empty" colspan="8">아직 주문한 상품이 없습니다.`;
-								text += `<br><button type="button" id="" class="btn btn-outline-dark btn-lg shadow-none">미미미가 준비한 맛있는 도시락 주문하러 가기</button></td>`;
+								text += `<td class="cart-main-empty" style='text-align: center; padding: 40px;' colspan="8">아직 주문한 상품이 없습니다.`;
+								text += `<br><button type="button" id="home" style='text-align: center; margin: 30px 0 0;' class="btn btn-outline-dark btn-lg shadow-none">미미미가 준비한 맛있는 도시락 주문하러 가기</button></td>`;
 								text += "</tr>";
 								$("#orderTable > tbody").append(text);
 							} else {
@@ -107,6 +107,10 @@
 						$(this).attr("aria-expanded", true);
 					}
 					
+				})
+				
+				$(document).on("click", "#home", function() {
+					location.href = "${path}/index.jsp";
 				})
 				
 				selectOrderByUserId();
