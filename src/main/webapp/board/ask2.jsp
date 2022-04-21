@@ -55,7 +55,7 @@
 		<div class="Ask-mainview">
 			<div><h1>1:1 문의 목록</h1></div>
 			<!--목록-->
-			<table class="table table-hover" id="askList" >
+			<table class="table table-hover" style="text-align:center" id="askList" >
 				<thead>
 					<tr>
 						<th>글 번호</th>
@@ -72,7 +72,7 @@
 					<c:choose>
 						<c:when test="${empty askList}">
 							<tr>
-								<th colspan="8">문의 내역이 없습니다.</th>
+								<td colspan="8">문의 내역이 없습니다.</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -97,13 +97,13 @@
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
-					<!--70번째줄에 a태그로 문의하기 버튼 만들었음! 작동확인하기-->
-					<form name=updateForm  method=post action="${path}/board/write.jsp"  
+					<!--기존문의하기 버튼(118번째줄에 새로 만들었음 잘 되는지 확인하기)-->
+				<!--	<form name=updateForm  method=post action="${path}/board/write.jsp"  
 					onSubmit='return checkValid()' enctype="multipart/form-data">
 						<div>
 							<span><input type="submit" id="write-btn" value="문의하기" ></span>
 						</div>
-					</form>
+					</form>-->
 				</tbody>
 			</table>
 			<!--검색하기-->
