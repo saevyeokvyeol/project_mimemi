@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>이벤트 : 미미미</title>
-		<jsp:include page="../common/header.jsp"/>
+	<jsp:include page="../common/sidebar.jsp"/>
 		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<!-- jQuery -->
@@ -27,6 +27,8 @@
 			.event-each > ul > li > a {width: 100px; clear: both;}
 			.event-each > ul > li > a > img {width: 585px; border-radius: 20px;}
 			.event-each .event-each-content {padding: 25px 15px;}
+			
+			.event-view {width: 1000px; margin: 50px auto;}
 		</style>
 		<script type="text/javascript">
 			$(function(){
@@ -38,14 +40,17 @@
 		</script>
 	</head>
 	<body>
+	
 		<section class="event-view">
-			<h1>이벤트</h1>
+			<div><h1>이벤트</h1></div>
+			<table class="table table-hover ask-table" id="askList">
+		
 			<div class="btn-group btn-group-lg" role="group" aria-label="Basic outlined example">
 			  <button type="button" class="btn btn-outline-primary evtbtn" value="preEvent">진행 예정</button>
 			  <button type="button" class="btn btn-outline-primary evtbtn" value="Eventing">진행중</button>
 			  <button type="button" class="btn btn-outline-primary evtbtn" value="afterEvent">진행 완료</button>
 			</div>
-		<div>
+		
 		<div class="event-each">
 			<ul>
 				<c:forEach items="${requestScope.eventList}" var="event">
@@ -65,7 +70,10 @@
 			  </div> --%>
 				</c:forEach>
 			</ul>
+		
 		</div>
+		</table>
+	
 		
 		<!-- 페이징 처리 -->
             <nav aria-label="Page navigation example">
@@ -92,5 +100,5 @@
 			</nav>
 		</section>
 	</body>
-<jsp:include page="../common/footer.jsp"/>
+
 </html>

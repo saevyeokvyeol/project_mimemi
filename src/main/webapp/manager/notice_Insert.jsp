@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 작성 :: 미미미</title>
+<jsp:include page="../common/sidebar.jsp"/>
 </head>
 <style type="text/css">
 	.notice-writeform{

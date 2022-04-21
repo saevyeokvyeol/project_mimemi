@@ -5,15 +5,41 @@
 <head>
 <meta charset="UTF-8">
 <title>이벤트등록 - 미미미</title>
+<jsp:include page="../common/sidebar.jsp"/>
 <style>
-  table {border: double 5px gray; width:500px}
-  td,th{border:1px black solid ;  padding:10px}
-
-  input{border:solid 1px gray;}
-  tr td:first-child{width:100px; text-align: center;}
-  div{text-align:left;}
-  a{text-decoration: none}
-   
+  	
+  	.review-writeForm {
+                width: 1000px;
+                margin: auto; padding: 50px 0;
+            }
+            
+            .review-writeForm h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            
+            .review-table th {width: 120px; padding: 15px 30px;}
+            .review-table td {vertical-align: middle;}
+            
+            .stars {margin-right: 15px;}
+            
+            img.starRateImg{
+                width: 90px; padding-bottom: 7px;    
+            }
+            
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+            }
+            
+            #review-image-output{
+                width: 100px;
+                height: auto;
+            }
+            
+            div.review-submit-button{
+                text-align: center;
+            }
+            
 </style>
 <script type="text/javascript">
 	function checkValid(){
@@ -32,36 +58,37 @@
 	<input type="hidden" name="methodName" value = "insert" />  
 
  -->
-<div class="review-writeForm">
-	<form name="writeReview" method="post" action="${path}/front?key=event&methodName=insert"
-     onSubmit='return checkValid()' enctype="multipart/form-data">
-		<table>
+ 
+	<div class="review-writeForm">
+		<div class="review-title">
+                <h1>이벤트 등록</h1>
+        </div>
+			<form name="writeReview" method="post" action="${path}/front?key=event&methodName=insert"
+     		onSubmit='return checkValid()' enctype="multipart/form-data">
+		<table class="table table-borderless review-table">
 		
+		    
 		    <tr>
-		        <td colspan="2">
-		            <p><font><b> 이벤트 등록 </b></font></p>
-		        </td>
+		        <th>제목</th>
+		        <td>
+		        	<span>
+					<input type=text name="eventTitle" size="50">
+					</span>
+				</td>
 		    </tr>
 		    <tr>
+		    	<th>내용</th>
 		        <td>
-		            <p><b><span>제목</span></b></p>
-		        </td>
-		        <td><b><span>
-				<input type=text name="eventTitle" size="50"></span></b></td>
+		        	<span>
+						<textarea name="eventContent" cols="50" rows="10"></textarea>
+		    		</span>
+		    	</td>	
 		    </tr>
 		    <tr>
+		        <th>
+		        	<span>*첨부파일</span>
 		        <td>
-		            <p><b><span>내용</span></b></p>
-		        </td>
-		        <td><b><span>
-				<textarea name="eventContent" cols="50" rows="10"></textarea></span></b></td>
-		    </tr>
-		    <tr>
-		        <td>
-		            <p><b><span>*첨부파일</span></b></p>
-		        </td>
-		        <td>
-		        <div class="event-attach-insert-area">
+		        	<div class="event-attach-insert-area">
                                 	<input type="file" id="event-attach-selector" name="eventAttach" accept=".jpg, .jpeg, .png">
                                 	<p id="file-status-attach">${event.eventAttach}</p>
                                     <div class="event-attach-preview">
@@ -89,13 +116,12 @@
                                             })
                                         }
                                     </script>
-                                </div>
+                      </div>
 				</td>
 		    </tr>
 		    <tr>
-		        <td>
-		            <p><b><span>썸네일이미지</span></b></p>
-		        </td>
+		    	<th>썸네일 이미지</th>
+		        
 		        <td>
 		        <div class="event-image-insert-area">
                                 	<input type="file" id="event-image-selector" name="eventImg" accept=".jpg, .jpeg, .png">
@@ -130,28 +156,29 @@
 				</td>
 		    </tr>
 		    <tr>
+		    	<th>이벤트 시작일</th>
 		        <td>
-		            <p><b><span>이벤트 시작일</span></b></p>
-		        </td>
-		        <td><b><span>
-				<input type=text name="eventStartdate" size="50"></span></b></td>
+		        	<span>
+						<input type=text name="eventStartdate" size="50">
+					</span>
+				</td>
 		    </tr>
 		    
 		     <tr>
+		        <th>이벤트 종료일</th>
 		        <td>
-		            <p><b><span>이벤트 종료일</span></b></p>
-		        </td>
-		        <td>
-		        	<b><span>
+		        	<span>
 		        		 <input type=text name="eventEnddate" size="50">
-		        	   </span></b>
+		        	</span>
 		        </td>
-		    </tr>
-		    <tr>
-		        <td colspan="2"><b><span><input type=submit value=등록하기> 
-		        <input type=reset value=취소하기></span></b></td>
 		    </tr>
 		</table>
+		    <div class="review-submit-button">
+		 
+		       <input type=submit class="btn btn-outline-dark" value=등록하기> 
+		        <input type=reset class="btn btn-outline-dark" value=취소하기>
+		    </div>
+		
 	</form>
 </div>
 <p>

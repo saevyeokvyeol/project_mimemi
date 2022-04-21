@@ -368,11 +368,11 @@
                         </div>
 
 
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal"
                                 onclick="dayMealInsert()">등록</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>

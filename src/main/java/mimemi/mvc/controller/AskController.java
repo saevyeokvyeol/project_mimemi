@@ -98,16 +98,42 @@ public class AskController implements Controller {
 		request.setAttribute("keyword", keyWord);
 		
 		
-		return new ModelAndView("/board/askSearch.jsp");
+		return new ModelAndView("board/askSearch.jsp");
 	}
 	
+	/**
+	 * 검색기능(관리자)
+	 * */
+	public ModelAndView selectByKeywordManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		String pageNum= request.getParameter("pageNum");
+		if(pageNum==null||pageNum.equals("")) {
+			pageNum="1";
+		}
+		String field=request.getParameter("field");//옵션-제목,내용
+		
+		System.out.println("field ="+field);
+		
+		String keyWord= request.getParameter("keyWord");
+		
+		System.out.println("keyword:"+keyWord);
+		List<AskDTO> list=askService.selectByKeyword(keyWord, field, Integer.parseInt(pageNum));
+		
+		request.setAttribute("list", list);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("filed", field);
+		request.setAttribute("keyword", keyWord);
+		
+		
+		return new ModelAndView("manager/ask_Main_Mg.jsp");
+	}
 	
 	/**
 	 * 1:1 문의 등록
 	 * */
 	public ModelAndView insertAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-		String saveDir= request.getServletContext().getRealPath("/save");
+		String saveDir= request.getServletContext().getRealPath("/img/save");
 		int maxSize =1024*1024*100;//100M
 	    String encoding="UTF-8";
 		System.out.println(saveDir);
@@ -170,7 +196,7 @@ public class AskController implements Controller {
 	 * */
 	public ModelAndView updateAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String saveDir = request.getServletContext().getRealPath("/img");
+		String saveDir = request.getServletContext().getRealPath("/img/save");
     	int maxSize = 1024*1024*100;
 		String encoding= "UTF-8";
 		
