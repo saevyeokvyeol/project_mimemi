@@ -20,6 +20,14 @@ public interface DayMealService {
 	 * */
 	void dayMealUpdate(DayMealDTO dayMeal) throws SQLException;
 	
+	
+	/**
+	 * 월간 식단 전체 조회
+	 * @return
+	 * @throws SQLException
+	 */
+	List<DayMealDTO> selectAll() throws SQLException;
+	
 	/**
 	 * 이달의 월간 식단 조회
 	 * @param: 정렬 방식을 인수로 받아 쿼리문의 order by에 변화를 줌

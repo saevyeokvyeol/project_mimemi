@@ -91,6 +91,9 @@
         	var goods
             var meals
             var daymeals
+            var today
+            var year
+            var month
             
             function goodsSelectAll() {
         		$.ajax({
@@ -103,6 +106,7 @@
         			},
         			success: function (result) {
         				goods = result
+                        fillListGroups()
         				mealSelectAll()
         			}
         		})
@@ -122,21 +126,21 @@
             }
 
             function dayMealSelectAll() {
-                let month = '4' // TODO: 수정 필요
+            	console.log(month)
                 $.ajax({
                     url: "${path}/ajax",
                     type: "get",
                     dataType: "json",
-                    data: { key: "daymeal", methodName: "dayMealSelectByMonth", month: month },
+                    data: { key: "daymeal", methodName: "dayMealSelectByMonth", month: month + 1},
                     success: function (result) {
                         daymeals = result
-                        fillListGroups()
                         fillCalendar()
                     }
                 })
             }
             
             function fillListGroups() {
+            	$('#goodsListGroup').empty()
             	for (var idx  in goods) {
             		item = goods[idx]
             		text = "<button type=\"button\" class=\"list-group-item list-group-item-action text-center\" aria-current=\"true\" onclick=\"fillCalendar(\'" + item.goodsId + "\')\">" + item.goodsName + "</button>"
@@ -188,12 +192,7 @@
                 }
             }
             
-            function printCalendar() {
-                // 날짜, 연도, 월 구하기
-                let today = new Date();
-                let year = today.getFullYear();
-                let month = today.getMonth();
-                
+            function printCalendar() {                
                 // 월 시작요일 구하기
                 startDay = new Date(year, month, 1).getDay();
 
@@ -249,6 +248,10 @@
             }
 
             $(function () {
+                today = new Date();
+                year = today.getFullYear();
+                month = today.getMonth();
+                
                 // 이전 달로 이동
                 $(document).on("click", "#prevMonth", function () {
                     if (month == 0) {
@@ -257,8 +260,9 @@
                     } else {
                         month -= 1;
                     }
+                    
                     printCalendar();
-                    printDeli();
+                    dayMealSelectAll();
                 })
 
                 // 다음 달로 이동
@@ -270,7 +274,7 @@
                         month += 1;
                     }
                     printCalendar();
-                    printDeli();
+                    dayMealSelectAll();
                 })
 
                 printCalendar();
@@ -286,9 +290,7 @@
 
     <body>
         <section>
-            <h1>이달의 식단</h1>
-
-            <div class="list-group list-group-horizontal" id="goodsListGroup">
+            <div class="list-group list-group-horizontal" id="goodsListGroup" style="margin:50px">
             </div>
 
             <table class="table table-bordered caption-top" id="deliCalendar">
