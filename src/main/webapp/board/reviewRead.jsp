@@ -18,8 +18,14 @@ pageEncoding="UTF-8"%>
 
 			.review-content-title > div {margin: 20px 0 0; display: flex; justify-content: space-between;}
             
+            .review-content-title > div > span > span:last-child {margin-left: 30px;}
+            
 			.review-contentview {
 				width: 1000px; margin: 50px auto;
+			}
+			
+			.review-Image {
+				max-width: 100%;
 			}
 
             .reivew-writer{
@@ -310,7 +316,7 @@ pageEncoding="UTF-8"%>
 					</span>
 				</span>
 				<span>
-					<span>조회수</span><span>${reviewDetail.reviewViews}</span>
+					<span>조회수</span> <span>${reviewDetail.reviewViews}</span>
 					<span>${reviewDetail.reviewRegdate}</span>
 				</span>
 				
