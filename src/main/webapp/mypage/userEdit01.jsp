@@ -13,8 +13,8 @@
 <script type="text/javascript">
 	$(function(){
 		$("#leaveBtn").click(function(){
-			if("#inputPwd".val() != ${userPwd}){
-				alert("비밀번호가 다릅니다.")
+			if("#inputPwd".val() != ${loginUser.userPwd} ) {
+				alert("비밀번호가 다릅니다.");
 				return false;
 			}
 		})
