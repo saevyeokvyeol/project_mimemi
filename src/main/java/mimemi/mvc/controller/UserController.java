@@ -72,8 +72,30 @@ public class UserController implements Controller {
 		return new ModelAndView("index.jsp", true);
 	}
 	
+	/**
+	 * 회원정보 수정 비밀버호 체크
+	 * */
+	public ModelAndView pwdCheckForEdit(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		
+		//userId, userPwd 받기
+		HttpSession session = request.getSession();
+		UserDTO user= (UserDTO)session.getAttribute("loginUser");
+		
+		String userId= user.getUserId();
+		String userPwd = request.getParameter("inputPwd");
+//		System.out.println(userId);
+		
+		userService.loginUser(userId,userPwd);
+		
+		return new ModelAndView("mypage/userEdit02.jsp", true);
+
+	}
 	
-	public ModelAndView pwdCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	/**
+	 * 회원탈퇴 비밀버호 체크
+	 * */
+	public ModelAndView pwdCheckForLeave(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		response.setContentType("text/html;charset=UTF-8");
 		
 		//userId, userPwd 받기

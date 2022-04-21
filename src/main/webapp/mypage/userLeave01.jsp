@@ -22,7 +22,7 @@
 </head>
 <body>
 <h2>회원 탈퇴</h2>
-<form action="${path}/front?key=user&methodName=pwdCheck" method="post">
+<form action="${path}/front?key=user&methodName=pwdCheckForLeave" method="post">
 	<input type="password" name="inputPwd" id="inputPwd" placeholder="본인확인을 위해 비밀번호를 입력해주세요"><p>
 	<button type="submit" id="leaveBtn">확인</button>
 	
