@@ -7,11 +7,42 @@
 <head>
 <meta charset="UTF-8">
 	<title>Insert title here</title>
-	<jsp:include page="../common/header.jsp"/>
+	<jsp:include page="../common/sidebar.jsp"/>	
 <style type="text/css">
 
-	span{font-size:9pt;}
-	 a{}
+	.review-writeForm {
+                width: 1000px;
+                margin: auto; padding: 50px 0;
+            }
+            
+            .review-writeForm h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            
+            .review-table th {width: 120px; padding: 15px 30px;}
+            .review-table td {vertical-align: middle;}
+            
+            .stars {margin-right: 15px;}
+            
+            img.starRateImg{
+                width: 90px; padding-bottom: 7px;    
+            }
+            
+            div.review-image-preview{
+                box-sizing: border-box;
+                width: 450px;
+                text-align: left;
+                margin: 0px;
+            }
+            
+            #review-image-output{
+                width: 100px;
+                height: auto;
+            }
+            
+            div.review-submit-button{
+                text-align: center;
+            }
+            
+            div.abc{ text-align: right;}
 
 </style>
 	<!--부트스트랩 CSS CDN-->
@@ -73,82 +104,65 @@
 </script>
 </head>
 <body>
-<h1>상세보기 페이지입니다.</h1>
 
-<table align="center" cellpadding="5" cellspacing="2" width="600" border='1'>
-    <tr>
-        <td width="1220" height="20" colspan="4" >
-            <size="3"><b>
-             상세 보기</b></font>
-        </td>
-    </tr>
-    <tr>
-        <td width="100" height="20" >
-            <b><span>글번호</span></b>
-        </td>
-        <td width="450" height="20" colspan="3">
-        	<div><b>${askDto.askNo}</b></div>
-        </td>
-    </tr>
-    <tr>
-        <td width="100" height="20" >
-            <b><span>회원 ID</span></b>
-        </td>
-        <td width="300" height="20">
-        	<span ><b>${askDto.userId}</b></span>
-        </td>
-        
-    </tr>
+<div class="review-writeForm">
+	<div class="review-title">
+		<h1>상세보기</h1>
+	</div>
+	<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=updateState">
+		<table class="table table-borderless review-table">
+   			 <tr>
+        		<th>글 번호</th>
+        		<td>
+        			<div>${askDto.askNo}</div>
+        		</td>
+            
+    		</tr>
     
-    <tr>
-		<td width="100" height="20" valign="top">
-            <b><span>제목</span></b>
-        </td>
-		<!-- 브라우저에 글 내용을 뿌려줄 때는 개행문자(\n)가 <br>태그로 변환된 문자열을 보여줘야 한다. -->
-        <td width="300" height="20">
-        	<span ><b>${askDto.askTitle}</b></span>
-        </td>
-   	
-    </tr>
+    		<tr>
+        		<th>회원 ID</th>
+ 				<td>
+ 					<span ><b>${askDto.userId}</b></span>
+ 				</td>       
+            </tr>
+    
+    		<tr>
+				<th>제목</th>
+				<td>
+					<span ><b>${askDto.askTitle}</b></span>
+				</td>
+		    </tr>
     
       
-       <tr>
-        <td width="100" height="20">
-            <b><span>내용</span></b>
-        </td>
-        <td width="450" height="200" colspan="3">
-        <span><b>${askDto.askContent}</b></span>
-        </td>
-        
-        
-    </tr>
-    <tr>
-    	<td><span>첨부파일</span></td>
-    	<td><span>${askDto.askAttach}</span></td>
+       		<tr>
+       			<th>내용</th>
+       			<td>
+       				<span><b>${askDto.askContent}</b></span>
+       			</td>        
+    		</tr>
+    		<tr>
+    			<th>첨부파일</th>
+    			<td>
+    				<span>${askDto.askAttach}</span>
+    			</td>
+   			 </tr>
     
-    </tr>
-    
-     <h3>댓글 정보</h3>
-	<div>
-		<div>
-			<div id="askReplyOutPut">
+     		<h3>댓글 정보</h3>
+				<div>
+					<div>
+						<div id="askReplyOutPut">
 				
-			</div>
-		</div>
-	</div>
+						</div>
+					</div>
+				</div>
 	
-	<form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=updateState">
 	<div class="mb-3">
 		<table>
 			<tr>
 				<td>
 					<input type=hidden name="askNo" value="${askDto.askNo}">
 				
-						<div>
-				<hr>
-							<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">삭제하기</a>
-							<a href="${path}/front?key=ask&methodName=selectAllManager">돌아가기</a>
-						</div>
+						
 			      
 			        	<div class="mb-3">
 			        		 <select name="ask_complete" id = "ask_select_category"> 
@@ -158,8 +172,8 @@
 			        
 			         		</select>
 			            </div>
-			         <div>
-			         	<input type="submit" value="답변변경하기" />
+			         <div class="review-submit-button">
+			         	<input type="submit" class="btn btn-outline-dark" value="답변변경하기" />
 			        </div>
 			        <div>
 			       		<input type=hidden name="askNo" value="${askDto.askNo}">
@@ -171,24 +185,18 @@
 			        </div>
 			      </td>
 			  </tr>
-		</table>	        
+			</table>
+		       
 	</div>
+
+
 	</form>
-	      
-   
-   
-    <form name="requestForm" method=post action="${path}/front">
- 
-    
-    	
-    </form>
-    <hr>
-    <!-- 댓글창 조회 -->
-    
-			
-		
-   
-</table>
+						<div class="abc">
+				
+							<a href="${path}/front?key=answer&methodName=deleteAnswerReply&askNo=${askDto.askNo}">답글 삭제하기</a>
+							<a href="${path}/front?key=ask&methodName=selectAllManager">리스트로 돌아가기</a>
+						</div>
+</div>
 </body>
-<jsp:include page="../common/footer.jsp"/>
+
 </html>

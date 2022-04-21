@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 	<title>1 : 1문의 - 미미미</title>
 	<jsp:include page="../common/header.jsp"/>
-<<<<<<< HEAD
+
 <style type="text/css">
 	 .review-insertform {
                 width: 900px;
@@ -43,7 +43,7 @@
                 text-align: center;
             }
             
-=======
+
 	<style type="text/css">
 		.ask-inserform{
 			width: 900px;
@@ -56,7 +56,6 @@
 		div.ask-submit-button{
 			text-align: center;
 		}
->>>>>>> 3b5d6f39ee8d63d8e626cf2541e24e8beac96b48
 
 	</style>
  		<!--부트스트랩 CSS CDN-->
@@ -138,7 +137,7 @@
 	</script>
 </head>
 <body>
-<<<<<<< HEAD
+
 	<div class="review-insertform">
 		<div class="review-title">
 			<h1>게시물 상세보기 및 수정하기 페이지입니다.</h1>
@@ -195,57 +194,8 @@
 	
 		</div>
 	</div>
-=======
-	<section class="ask-inserform">
-		<div class="ask-title">
-			<h1>1:1 문의 상세보기 및 수정하기</h1>
-		</div>
-		<div class="ask-writeForm">
-			<form name=updateForm method=post action="${path}/front?key=ask&methodName=updateAsk"  
-			onSubmit='return checkValid()' enctype="multipart/form-data">
-				<input type="hidden" name="askNo" value="${askDto.askNo}" >
-				<table class="table table-borderless ask-table" >
-					<tr>
-						<td colspan="2">
-							<p ><b>문의 수정하기</b></p>
-						</td>
-					</tr>
-					<tr>
-						<th><span >제목</span></th>
-						<td><textarea class="form-control" rows="1" name="askTitle" id="title" >${askDto.askTitle}</textarea></td>
-					</tr>
-					<tr>
-						<th><b><span >내 용</span></b></th>
-						<td><textarea class="form-control" rows="5" name="askContent" id="content" >${askDto.askContent}</textarea></td>
-					</tr>
-					<tr>
-						<th><span>첨부파일</span></th>
-						<td><input type="file" name="askAttach" size="30"><p id="file-status">${askDto.askAttach}</p></td>
-					</tr>
-				</table>
-				<div class="ask-submit-button">
-					<input type="submit" id="update-btn" name="${askDto.userId}" value="수정하기" askno="${askDto.askNo}"class="btn btn-outline-dark">
-					<input type="reset" value="다시쓰기" class="btn btn-outline-dark">
-				</div>
-			</form>
-		</div>
-		<!-- 댓글창 조회 -->
-		<div class="ask-reply-wrap"></div>
-			<div class="ask-reply-title">
-				<h3>답변</h3>
-				
-			</div>
-			<div class="ask-reply-area">
-				<div id="askReplyOutPut"></div>
-			</div>
-		</div>
-		<!--1:1문의 하단-->
-		<div class="base-btn">
-			<hr>
-			<span ><a href="${path}/board/ask2.jsp" class="back-review-list btn btn-outline-dark">목록으로 돌아가기</a></span>
-		</div>
-	</section>
->>>>>>> 3b5d6f39ee8d63d8e626cf2541e24e8beac96b48
+
+
 </body>
 <jsp:include page="../common/footer.jsp"/>
 </html>

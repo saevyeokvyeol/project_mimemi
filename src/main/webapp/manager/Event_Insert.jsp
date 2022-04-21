@@ -9,7 +9,7 @@
 <style>
   	
   	.review-writeForm {
-                width: 900px;
+                width: 1000px;
                 margin: auto; padding: 50px 0;
             }
             
