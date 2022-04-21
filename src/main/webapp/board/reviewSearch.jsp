@@ -117,7 +117,7 @@ pageEncoding="UTF-8"%>
     <body>
         <div class="container">
             <div class="review-title">
-                <h3>후기 게시판</h3>
+                <h1>후기 게시판</h1>
             </div>
             <!--정렬 카테고리-->
             <nav class="navbar navbar-light bg-light">
