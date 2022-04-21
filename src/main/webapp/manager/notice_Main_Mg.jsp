@@ -38,7 +38,7 @@
 		</script>
   </head>
    <body>
-	<section class="noticeList-main d-flex p-2 bd-highlight">
+	<section class="noticeList-main">
 			<h1><a href="${path}/front?key=notice&methodName=selectAllNotice">공지사항 관리</a></h1>
 			<section class="notice_sort">
 				<select name="notice_sort" id="">
@@ -70,7 +70,7 @@
 							<tr>
 								<td>${notice.noticeNo}</td>
 								<td>${notice.noticeTitle}</td>
-								<td> <span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeContent}</a></span></td>
+								<td><span><a href="${path}/front?key=notice&methodName=selectByNoticeNo&noticeNo=${notice.noticeNo}">${notice.noticeContent}</a></span></td>
 								<td>${notice.noticeAttach}</td>
 								<td>${notice.noticeRegdate}</td>
 							</tr>
