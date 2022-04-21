@@ -32,8 +32,8 @@ public class UserDAOImpl implements UserDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		String sql = proFile.getProperty("user.loginUser"); //select * from users where user_id=? and user_pwd=? and user_quit='U'
 				
-		String sql = "select * from users where user_id=? and user_pwd=?";
 		UserDTO userDTO = null;
 		try {
 			con = DbUtil.getConnection();

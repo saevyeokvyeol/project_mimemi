@@ -20,11 +20,8 @@
 		
 			if(id.substr(0,5) == "admin"){
 				$("form").attr("action", "${path}/front?key=manager&methodName=loginManager");
-		})
-		
-		
-		
-		
+		}
+	})
 	})
 </script>
 </head>
