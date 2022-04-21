@@ -21,7 +21,8 @@
 			
 			var id = $("#userId").val();
 		
-			if(id.substr(0,5) == "admin"){
+			if($()useruserId.substr(0,5) == "admin"){
+				alert()
 				$("form").attr("action", "${path}/front?key=manager&methodName=loginManager");
 			}
 		})
