@@ -65,11 +65,10 @@
 				<ul>
 					<li><a href="#" id="allCategory">전체 카테고리</a></li>
 					<li><a href="${path}/goods/goodsList.jsp">도시락 정기배송</a></li>
-					<li><a href="#">이달의 식단</a></li>
+					<li><a href="${path}/goods/dayMenuCalendar.jsp">이달의 식단</a></li>
 					<li><a href="${path}/front?key=event&methodName=selectAll&field=Eventing">이벤트</a></li>
 				</ul>
 				<ul>
-					<li><a href="#">검색</a></li>
 					<li><a href="#">배달가능지역</a></li>
 					<li><a href="${path}/order/cart.jsp">카트</a></li>
 				</ul>

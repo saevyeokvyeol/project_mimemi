@@ -36,6 +36,15 @@ public class DayMealController implements Controller {
 		return mv;
 	}
 
+	public void dayMealSelectAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		List<DayMealDTO> dayMealList = dayMealService.selectAll();
+		JSONArray dayMealArr = JSONArray.fromObject(dayMealList);
+		PrintWriter out = response.getWriter();		
+		out.print(dayMealArr);
+	}
+	
+	
 	public void dayMealSelectByMonth(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		String month = request.getParameter("month");

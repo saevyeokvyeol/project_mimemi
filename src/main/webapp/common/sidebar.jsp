@@ -14,7 +14,7 @@
     	<link rel="stylesheet" href="${path}/css/styles.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
-    <body class="sb-nav-fixed"><nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="${path}/index.jsp">MIMEMI</a>
@@ -71,7 +71,11 @@
                             <div class="collapse" id="collapsePages4" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="${path}/front?key=notice&methodName=selectAllNotice">공지사항</a>
+
                                     <a class="nav-link" href="${path}/manager/faq_Main_Mg.jsp">FAQ</a>
+
+                                    <a class="nav-link" href="${path}/front?key=faq&methodName=selectAllFaq"">FAQ</a>
+
                                     <a class="nav-link" href="${path}/manager/event_Main_Mg.jsp">이벤트</a>
                                     <a class="nav-link" href="${path}/front?key=ask&methodName=selectAllManager">1:1문의</a>
                                     <a class="nav-link" href="${path}/manager/reviewBl_Main_Mg.jsp">후기 게시판</a>

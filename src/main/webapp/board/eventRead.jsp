@@ -6,8 +6,25 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
-       
+      <jsp:include page="../common/header.jsp"/>
         <style>
+        .event-view{
+             width: 1200px; margin: auto; padding: 50px 0;
+         }
+		.event-Front-Image-area {
+				padding: 25px 30px; margin: 20px 0; border-top: 2px black solid; border-bottom: 1px grey solid;
+			}
+
+		.event-Front-Image-area > div {margin: 20px 0 0; display: flex; justify-content: space-between;}
+            
+        .event-Front-Image-area > div > span > span:last-child {margin-left: 30px;}
+		.event-content-area {
+				margin: 50px auto; padding: 0 25px;
+			}
+		.event-Attach-area {
+				max-width: 100%;
+			}
+		
             
             
         </style>
@@ -27,19 +44,18 @@ pageEncoding="UTF-8"%>
 
     </head>
     <body>
-        <section>
+        <section class="event-view">
+        	<h1>이벤트 상세 보기 </h1>
             <div class="event-container">
-                <div class="event-title">
-                    <h4>이벤트 상세 보기 </h4>
-                    <hr>
-                </div>
-                <div class="event-view">
+                
+                
                     <!--이벤트 썸네일-->
                     <div class="event-Front-Image-area">
                         <c:choose>
                             <c:when test ="${not empty eventDetail.eventImg}">
                                 <span>
-                                    <img src="${path}/img/save/${eventDetail.eventImg}" alt="이벤트 썸네일입니다." name="eventImg" id="eventImg">
+                                    <img src="${path}/img/save/${eventDetail.eventImg}" alt="이벤트 썸네일입니다." name="eventImg" id="eventImg" class="img-thumbnail">
+                                    
                                 </span>
                             </c:when>
                             <c:otherwise>
@@ -48,32 +64,38 @@ pageEncoding="UTF-8"%>
                                 </span>
                             </c:otherwise>
                         </c:choose>
+                         <div class="event-title">
+                            <h3>${eventDetail.eventTitle}</h3>
+                        </div>
+                        <div class="event-date-info">
+                        <span></span>
+                        <span>
+                            <span>이벤트 진행기간</span>
+                            <span>${eventDetail.eventStartdate} ~ ${eventDetail.eventEnddate}</span>
+                        </span>
+                        </div>
                     </div>
                     <!--이벤트 내용-->
                     <div class="event-content-area">
-                        <div class="event-title">
-                            <p>${eventDetail.eventTitle}</p>
-                        </div>
-                        <div class="event-date-info">
-                            <span>이벤트 진행기간</span>
-                            <span>${eventDetail.eventStartdate} ~ ${eventDetail.eventEnddate}</span>
-                        </div>
+                       
                         <div class="event-content">
                             <pre>${eventDetail.eventContent}</pre>
                         </div>
+                         <!--이벤트 첨부파일 이미지-->
+	                    <div class="event-Attach-area">
+	                        <span><img src="${path}/img/save/${eventDetail.eventAttach}" alt="이벤트 상세 정보 이미지입니다." name="eventAttach" id="eventAttach"></span>
+	                    </div>
                     </div>
-                    <!--이벤트 첨부파일 이미지-->
-                    <div class="event-Attach-area">
-                        <span><img src="${path}/img/save/${eventDetail.eventAttach}" alt="이벤트 상세 정보 이미지입니다." name="eventAttach" id="eventAttach"></span>
-                    </div>
-                </div>
+                   
+                
             </div>
-        
+        	<hr>
             <!--이벤트 정보 하단 -->
             <div class="base-btn">
-                <span class="bLeft"><a href="${path}/front?key=event&methodName=selectAll&pageNum=${pageNum}" id="back-list-btn">목록으로 돌아가기</a></span>
+                <span class="bLeft"><a href="${path}/front?key=event&methodName=selectAll&pageNum=${pageNum}" id="back-list-btn" class="btn btn-outline-dark shadow-none">목록으로 돌아가기</a></span>
             </div>
 
         </section>    
     </body>
+    <jsp:include page="../common/footer.jsp"/>
 </html>

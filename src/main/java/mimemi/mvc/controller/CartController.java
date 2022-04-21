@@ -108,8 +108,10 @@ public class CartController implements Controller {
 	 * */
 	public void selectCartByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
+		HttpSession session = request.getSession();
 		
-		String userId = request.getParameter("userId");
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
 		List<CartDTO> list = cartService.selectCartByUserId(userId);
 		
 		JSONArray cartArr = JSONArray.fromObject(list);

@@ -7,9 +7,16 @@
 		<title>장바구니 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
-			.cart-main {width: 1200px; margin: auto;}
-			table {width: 1200px;}
-			th, td {border: 1px solid black;}
+			.cart-main {width: 1200px; margin: auto; padding: 50px 0;}
+			.cart-main h1 {padding-bottom: 20px;}
+			#cartTable th, #cartTable tbody td {text-align: center; vertical-align: middle;}
+			#cartTable td:nth-child(2) {width: 300px; text-align: left;}
+			#cartTable td:nth-child(3),
+			#cartTable td:nth-child(4),
+			#cartTable td:nth-child(6) {width: 130px;}
+			#cartTable td img {width: 100px; border-radius: 5px; margin-right: 20px;}
+			#cartTable .num {display: inline; width: 50px; text-align: center; padding: 6px 0 0 10px;}
+			.cartStart {text-align: center;}
 			tfoot {text-align: right;}
 			.cart-main-bottom {display: flex; justify-content: space-between;}
 		</style>
@@ -22,7 +29,7 @@
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "json",
-						data: {key: "cart", methodName: "selectCartByUserId", userId: "happy01"},
+						data: {key: "cart", methodName: "selectCartByUserId"},
 						success: function(result) {
 							let text = "";
 							$("#cartTable > tbody").children().remove();
@@ -35,15 +42,15 @@
 								$.each(result, function(index, item) {
 									text = "";
 									text += `<tr name="\${item.cartId}">`;
-									text += `<td><input type="checkbox" name="cartSelect" value="\${item.cartId}"></td>`;
-									text += `<td name="goodsId">\${item.goodsId}</td>`;
-									text += `<td><select name="cartWeekday" id="\${index}Weekday"><option value="T">주 3회</option><option value="F">주 5회</option></select></td>`;
-									text += `<td><select name="cartPeriod" id="\${index}Period"><option value="1W">1주</option><option value="2W">2주</option><option value="4W">4주</option><option value="8W">8주</option></select></td>`;
-									text += `<td><button type="button" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button><input type="number" name="cartQty" min="1" max="9999" step="1" value="\${item.cartQty}" readonly="readonly"><button type="button" name="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button></td>`;
+									text += `<td><input class="form-check-input shadow-none" type="checkbox" name="cartSelect" value="\${item.cartId}"></td>`;
+									text += `<td name="goodsId"><img alt="" src="\${item.goods.goodsThumbnail}">\${item.goods.goodsName}</td>`;
+									text += `<td><select class="form-select" name="cartWeekday" id="\${index}Weekday"><option value="T">주 3회</option><option value="F">주 5회</option></select></td>`;
+									text += `<td><select class="form-select" name="cartPeriod" id="\${index}Period"><option value="1W">1주</option><option value="2W">2주</option><option value="4W">4주</option><option value="8W">8주</option></select></td>`;
+									text += `<td><button type="button" class="btn btn-outline-dark shadow-none btn-sm" name="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16"><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button><input type="number" class="form-control-plaintext num" name="cartQty" min="1" max="9999" step="1" value="\${item.cartQty}" readonly="readonly"><button type="button" name="plus" class="btn btn-outline-dark shadow-none btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg></button></td>`;
 									
-									text += "<td><input type='text' name='cartStart' value='" + item.cartStart.substr(0, 10) + "' readonly='readonly'>"
+									text += "<td><input type='text' name='cartStart' class='form-control cartStart' value='" + item.cartStart.substr(0, 10) + "' readonly='readonly'>"
 									
-									text += `<td name="goodsPrice">\${item.cartQty}</td>`;
+									text += `<td name="goodsPrice">\${item.goodsPrice}</td>`;
 									text += `<td name="goodsTotalPrice"></td>`;
 									text += "</tr>";
 									$("#cartTable > tbody").append(text);
@@ -89,7 +96,7 @@
 					$("#cartTable > tbody").children().each(function() {
 						totalPrice += parseInt($(this).find("td[name=goodsTotalPrice]").text());
 					})
-					$("#totalPrice").text("₩" + totalPrice);
+					$("#totalPrice > h5").text("₩" + totalPrice);
 				} // calTotalPrice() 메소드 종료
 				
 				// 배송 요일 변경 시 DB 업데이트
@@ -287,13 +294,14 @@
 				<table class="table" id="cartTable">
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="checkAll"></th>
+							<th><input type="checkbox" class="form-check-input shadow-none" id="checkAll"></th>
 							<th>상품명</th>
 							<th>배송요일</th>
 							<th>배송기간</th>
 							<th>수량</th>
 							<th>첫배송일</th>
 							<th>가격</th>
+							
 							<th>상품 총 가격</th>
 						</tr>
 					</thead>
@@ -301,7 +309,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="8" id="totalPrice">₩0</td>
+							<td colspan="8" id="totalPrice"><h5>₩0</h5></td>
 						</tr>
 					</tfoot>
 				</table>
@@ -318,4 +326,5 @@
 			</form>
 		</section>
 	</body>
+	<jsp:include page="../common/footer.jsp"/>
 </html>

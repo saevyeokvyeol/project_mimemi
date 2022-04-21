@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="../common/sidebar.jsp"/>
 </head>
 <body>
 <h2>관리자 답글 페이지</h2>

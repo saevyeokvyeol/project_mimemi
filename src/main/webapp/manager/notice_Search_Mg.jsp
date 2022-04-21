@@ -8,6 +8,7 @@
   <head>
         <meta charset="UTF-8">
 		<title>공지사항 관리 - 미미미</title>
+		<jsp:include page="../common/sidebar.jsp"/>
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}

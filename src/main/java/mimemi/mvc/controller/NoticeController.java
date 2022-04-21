@@ -173,7 +173,7 @@ public class NoticeController implements Controller {
 		String noticeNo = request.getParameter("noticeNo");
 		NoticeDTO notice = noticeService.selectByNoticeNo(Integer.parseInt(noticeNo));
 		request.setAttribute("notice", notice);
-		return new ModelAndView("manager/noticeUpdate.jsp");
+		return new ModelAndView("manager/notice_Update.jsp");
 	}
 	
 	/**
@@ -257,7 +257,7 @@ public class NoticeController implements Controller {
 		request.setAttribute("field", field);
 		request.setAttribute("keyword", keyword);
 		System.out.println(keyword+" = 페이지번호: "+curPageNo);
-		return new ModelAndView("/manager/noticeSearchMg.jsp");
+		return new ModelAndView("/manager/notice_Search_Mg.jsp");
 	}
      
      /**
