@@ -101,7 +101,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 	/*공지사항 게시글 수정할 때, 이미지만 수정하는 메소드*/
 	public int updateNoticeImgCon(Connection con,int noticeNo, String noticeAttach) throws SQLException {
 		PreparedStatement ps =null;
-		String sql = proFile.getProperty("notice.updateNoticeImgCon");
+		String sql = proFile.getProperty("notice.updateFaqImgCon");
 		int result =0;
 		
 		try {
