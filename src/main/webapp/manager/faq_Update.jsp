@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>FAQ 수정</title>
+<jsp:include page="../common/sidebar.jsp"/>
 </head>
 <style type="text/css">
 

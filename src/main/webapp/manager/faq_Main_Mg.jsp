@@ -9,6 +9,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>FAQ게시판 관리  - 미미미</title>
+		<jsp:include page="../common/sidebar.jsp"/>
 		<style type="text/css">
 			section {width: 1100px; margin: auto;}
 			table {width: 1200px;}
