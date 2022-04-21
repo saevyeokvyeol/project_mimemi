@@ -25,9 +25,9 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">administration</div>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="${path}/common/sidebar.jsp">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                대시보드
+                                관리자페이지
                             </a>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages1" aria-expanded="false" aria-controls="collapsePages1">
                                 <div class="sb-nav-link-icon"><i class="fas fa-archive"></i></div>
@@ -36,9 +36,9 @@
                             </a>
                             <div class="collapse" id="collapsePages1" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">전체 상품 조회</a>
-                                    <a class="nav-link" href="#">판매 도시락 조회</a>
-                                    <a class="nav-link" href="#">월간 식단 조회</a>
+                                    <a class="nav-link" href="${path}/front?key=goods&methodName=goodsSelectAll">전체 상품 조회</a>
+                                    <a class="nav-link" href="${path}/front?key=meal&methodName=mealSelectAll">판매 도시락 조회</a>
+                                    <a class="nav-link" href="${path}/front?key=daymeal&methodName=getDayMealList">월간 식단 조회</a>
                                 </nav>
                             </div>
 							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">
@@ -48,8 +48,8 @@
                             </a>
                             <div class="collapse" id="collapsePages2" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">전체 회원 조회</a>
-                                    <a class="nav-link" href="#">쿠폰 조회</a>
+                                    <a class="nav-link" href="${path}/manager/user_Main_Mg.jsp">전체 회원 조회</a>
+                                    <a class="nav-link" href="${path}/manager/cou_Main_Mg.jsp">쿠폰 조회</a>
                                 </nav>
                             </div>
 							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">
@@ -59,8 +59,8 @@
                             </a>
                             <div class="collapse" id="collapsePages3" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">전체 주문 조회</a>
-                                    <a class="nav-link" href="#">배송 일정 조회</a>
+                                    <a class="nav-link" href="${path}/manager/order_Main_Mg.jsp">전체 주문 조회</a>
+                                    <%-- <a class="nav-link" href="${path}/">배송 일정 조회</a> --%>
                                 </nav>
                             </div>
 							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages4" aria-expanded="false" aria-controls="collapsePages4">
@@ -70,11 +70,11 @@
                             </a>
                             <div class="collapse" id="collapsePages4" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">공지사항</a>
-                                    <a class="nav-link" href="#">FAQ</a>
-                                    <a class="nav-link" href="#">이벤트</a>
-                                    <a class="nav-link" href="#">1:1문의</a>
-                                    <a class="nav-link" href="#">후기 게시판</a>
+                                    <a class="nav-link" href="${path}/manager/notice_Main_Mg.jsp">공지사항</a>
+                                    <a class="nav-link" href="${path}/manager/faq_Main_Mg.jsp">FAQ</a>
+                                    <a class="nav-link" href="${path}/manager/event_Main_Mg.jsp">이벤트</a>
+                                    <a class="nav-link" href="${path}/front?key=ask&methodName=selectAllManager">1:1문의</a>
+                                    <a class="nav-link" href="${path}/manager/reviewBl_Main_Mg.jsp">후기 게시판</a>
                                 </nav>
                             </div>
                         </div>

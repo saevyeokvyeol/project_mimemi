@@ -20,33 +20,80 @@
 
 <script type="text/javascript">
 
-function checkValid() {
-	
-	var f = window.document.writeForm;
-	
-	if ( f.model_num.value == "") {
-	    alert( "제목을 입력해주세요." );
-	    f.model_num.focus();
-		return false;
-    }
-	
-	if ( f.description.value == "") {
-	    alert( "내용을 입력해주세요." );
-	    f.description.focus();
-		return false;
-    }
-	
 
 	
-    return true;
-}
+
+$(function(){
+	//var loginUser='${sessionScope.loginUser.userId}' //세션으로 확인한 현재 로그인한 유저
+    /*
+	 $(document).on("click","#write-btn",function(){
+          // var reivewId = $(this).attr("name")
+           //alert(reivewId)
+           if(!loginUser){
+               alert("로그인 후 이용가능합니다!!")
+           }else{
+               let url = `${path}/front?key=ask&methodName=insertAsk`
+   			location.replace(url);
+           }
+       })
+   
+    
+       
+            $("#write-btn").click(function(){
+                //let status =true;
+                //alert(loginUser)
+                //댓글 유효성체크
+                if(!loginUser){
+                    alert("댓글 기능은 회원만 가능합니다.")
+                  //  status=false;
+                    return;
+                }
+    */
+    	
+    $("form[name=writeNotice]").submit(function(){
+  			  
+    	
+        	
+        	if ( $("#title").val()=="" ) {
+        	    alert( "제목을 입력해주세요." );
+        	    f.model_num.focus();
+        		return false;
+            }
+        	
+        	if ( $("#content").val()=="") {
+        	    alert( "내용을 입력해주세요." );
+        	    f.description.focus();
+        		return false;
+            }
+        	
+        	
+            return true;
+
+        
+    
+    })
+    
+
+    
+    
+    
+    
+    
+})
+   
+  	
+    	
+
+    
+
 
 </script>
 </head>
 <body>
 <h1>문의하기페이지입니다.</h1>
+   
  <form name="writeNotice" method="post" action="${path}/front?key=ask&methodName=insertAsk"
-       onsubmit='return checkValid()' enctype="multipart/form-data">
+        enctype="multipart/form-data">
 		<div class="container" role="main">
 			
 				<div class="mb-3">
@@ -76,10 +123,12 @@ function checkValid() {
 			        
 			         </select>
 			    </div>
-     			<div >
-     				<input type="submit" value="문의하기" />
+			    
+     			<div>
+     				<input type="submit" id="wirte-btn" value="문의하기" />
 				    <input type="button" value="목록보기" onclick="location.href='ask2.jsp'"/>
-			</div>
+				</div>
+			
 		</div>
 </form>
 <hr>

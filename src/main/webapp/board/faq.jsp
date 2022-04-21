@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>FAQ</title>
 <jsp:include page="../common/header.jsp"/>
+
 <style type="text/css">
 .FAQ-view {width: 1200px; margin: 50px auto;}
 .FAQ-sideview {width: 200px; margin-right: 50px; z-index: 0;}
@@ -24,6 +25,7 @@
  .side-minibar {padding: 0;}
  .side-minibar > a {font-size: 14px; padding-left: 40px;}
 </style>
+
 <script type="text/javascript">
 	$(function() {
 		function menuActive() {
@@ -42,12 +44,10 @@
 	<aside class="FAQ-sideview">
 		<h3>고객센터</h3>
 		<div class="list-group">
-		  <a href="#" class="list-group-item list-group-item-action">
-		    공지사항
-		  </a>
-			<a href="#" class="list-group-item list-group-item-action active" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			FAQ
-			</a>
+			<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action">
+				공지사항</a>
+			<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action active" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				FAQ</a>
 			<div class="side-minibar">
 				<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>
 				<a href="${path}/front?key=faq&methodName=selectAll&field=us" class="list-group-item list-group-item-action" id="us">회원 관련</a>
@@ -91,6 +91,8 @@
 		  			</c:forEach>
 		  		</c:otherwise>
 			</c:choose>
+			
+			<!-- 페이징처리입니다 -->
 				<nav aria-label="Page navigation example">
 					<jsp:useBean class="mimemi.mvc.paging.FaqListPageCnt" id="p"/> 
 					<c:set var="isLoop" value="false"/>
