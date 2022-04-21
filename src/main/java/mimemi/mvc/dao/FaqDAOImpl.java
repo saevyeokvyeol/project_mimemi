@@ -216,15 +216,12 @@ public class FaqDAOImpl implements FaqDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		//select count(*) from faq
-		String sql="";
+		String sql = "select count(*) from faq";
 		//String sql = proFile.getProperty("faq.getTotalCount");
 		int totalCount = 0;
 		
 		if(field !=null) {
-			 if(field.equals("selectAll")) {
-				sql = "select count(*) from faq";
-				//sql = sql=proFile=proFile.getProperty("");	
-			}else if (field.equals("cr")) { //교환/환불
+			 if (field.equals("cr")) { //교환/환불
 				sql = "select count(*) from faq where faq_category = 'CR'";
 				//sql = sql=proFile=proFile.getProperty("");				
 			}else if (field.equals("us")) {//회원관련

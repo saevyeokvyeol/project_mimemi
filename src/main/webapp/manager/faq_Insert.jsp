@@ -56,7 +56,7 @@ body {
 				</div>
 			<div >
 				<input type="submit" value="작성" />
-			    <input type="button" value="목록보기" onclick="location.href='selectFaqAll.jsp'"/>
+			    <input type="button" value="목록보기" onclick="location.href='faq_Main_Mg.jsp'"/>
 			</div>
 		</div>
 	</form>

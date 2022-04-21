@@ -94,7 +94,7 @@
 				</tbody>
 		</table>
 			<div style="float:right;">
-				 <a href="${path}/manager/insertFaq.jsp" class="btn btn-primary pull-right">작성하기</a>
+				 <a href="${path}/manager/faq_Insert.jsp" class="btn btn-primary pull-right">작성하기</a>
 		    </div>
 			<nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.FaqListPageCnt" id="p"/> 

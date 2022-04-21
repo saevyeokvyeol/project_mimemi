@@ -80,11 +80,11 @@
 				 </c:when>
 				 <c:otherwise>
 				 	<c:forEach items="${FaqList}" var="faq">
-					    <h2 class="" id="">
+					    <h4 class="" id="">
 					      <button class="faq-title" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne${faq.faqNo}" aria-expanded="false" aria-controls="flush-collapseOne">
 					        Q . ${faq.faqTitle}
 					      </button>
-					    </h2>
+					    </h4>
 					    <div id="flush-collapseOne${faq.faqNo}" class="faq-content" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 					       <h3 style="display: inline"><strong>A.</strong></h3>&nbsp;&nbsp;  ${faq.faqContent}
 					    </div>			  
