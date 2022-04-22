@@ -7,6 +7,10 @@ pageEncoding="UTF-8"%>
         <meta charset="UTF-8">
         <title>Document</title>
        <jsp:include page="../common/header.jsp"/>
+       <!-- 폰트 링크 -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
         <style>
             .review-view{
                 width: 1200px; margin: auto; padding: 50px 0;
@@ -22,11 +26,27 @@ pageEncoding="UTF-8"%>
             
 			.review-contentview {
 				margin: 50px auto; padding: 0 25px;
+                
 			}
 			
 			.review-Image {
-				max-width: 100%;
+				box-sizing: border-box;
+                width: 800px;
+                height: 100%;
+                
 			}
+            #reviewImg, #reveiwImg-when-empty{
+                box-sizing: border-box;
+                width: 800px;
+                height: 100%;
+                object-fit: contain;
+                background-color: rgb(241, 241, 241);
+                
+            }
+            .review-content-area{
+                padding: 20px 0px 20px;
+            }
+           
 
             img.starRateImg{
             	box-sizing: border-box;
@@ -66,9 +86,9 @@ pageEncoding="UTF-8"%>
             	margin-right: 10px;
             }
             
-            pre {
+            pre{
             	white-space: pre-wrap;
-            	font-family: 'Noto Sans KR', sans-serif;
+            	font-family: 'Nanum Gothic', sans-serif;
             }
             
             .reply-user-info{
@@ -314,12 +334,12 @@ pageEncoding="UTF-8"%>
 					</c:otherwise>
 				</c:choose>
 			</div>
-			<divDSADSDF class="review-userInfo">
+			<div class="review-content-area">
 				<div class="review-content">
 					<pre class="">${reviewDetail.reviewContent}</pre>
 				</div>
 			</div>
-            <!-- <리뷰 정보 하단 onclick만들어야 함!!!!!!!!!!!!!-->
+            <!--리뷰 정보 하단-->
             <div class="base-btn">
                 <a href="#" id="back-list-btn" class="btn btn-outline-dark shadow-none">목록으로 돌아가기</a>
                 <span>
