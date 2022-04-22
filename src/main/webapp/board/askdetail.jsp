@@ -173,7 +173,7 @@
 			         		</select>
 			            </div>
 			         <div class="review-submit-button">
-			         	<input type="submit" class="btn btn-outline-dark" value="답변변경하기" />
+			         	<input type="submit" class="btn btn-outline-dark" value="답변유무 변경하기" />
 			        </div>
 			        <div>
 			       		<input type=hidden name="askNo" value="${askDto.askNo}">
