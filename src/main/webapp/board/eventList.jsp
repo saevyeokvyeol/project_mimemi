@@ -59,7 +59,7 @@
 			<ul>
 				<c:forEach items="${requestScope.eventList}" var="event">
 					<li>
-						<a href="${path}/front?key=event&methodName=selectByEventNo&eventNo=${event.eventNo}"><img src="${path}/img/save/${event.eventImg}" class="card-img-top" alt="..."></a>
+						<a href="${path}/front?key=event&methodName=selectByEventNo&eventNo=${event.eventNo}"><p><img src="${path}/img/save/${event.eventImg}" class="card-img-top" alt="..."></a>
 						<div class="event-each-content">
 							<h5>${event.eventTitle}</h5>
 							<span>이벤트 기간 : ${event.eventStartdate} ~ ${event.eventEnddate}</span>
