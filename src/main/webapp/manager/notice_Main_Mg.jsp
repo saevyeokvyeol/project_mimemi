@@ -10,7 +10,7 @@
 		<title>공지사항 관리 - 미미미</title>
 		<jsp:include page="../common/sidebar.jsp"/>
 		<style type="text/css">
-			section {width: 1200px; margin: auto;}
+			section {width: 900px; margin: auto;}
 			table {width: 1200px;}
 			th, td {border: 1px solid black;}
 		</style> 			
@@ -21,7 +21,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	  	
 	  		<style>
-			.noticeList-main {width: 1200px; margin: auto;}
+			.noticeList-main {width: 900px; margin: auto; height: 500px;}
 			table {width: 100%;}
 			.notice_sort{text-align: right;}
 		</style>

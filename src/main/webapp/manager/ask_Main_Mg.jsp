@@ -62,10 +62,10 @@
 	
 		
 		<!-- body -->
-		<div class=""Ask-mainview"">
+		<div class="Ask-mainview">
 			<div><h1>1:1 문의 목록</h1></div>
 			<!-- 목록 -->
-			<table class="table table-hover ask-table" id="askList" >
+			<table class="table table-hover ask-table" style="text-align:center" id="askList" >
 				<thead>
 					<tr bgcolor="">
 	 					  <th>글 번호</th>
