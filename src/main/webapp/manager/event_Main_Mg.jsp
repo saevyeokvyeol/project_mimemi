@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>이벤트 전체 리스트 - 미미미</title>
-		<jsp:include page="../common/header.jsp"/>
+		<jsp:include page="../common/sidebar.jsp"/>
 		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<!-- jQuery -->

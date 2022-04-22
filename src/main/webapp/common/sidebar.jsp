@@ -74,7 +74,7 @@
 
                                     <a class="nav-link" href="${path}/front?key=faq&methodName=selectAllFaq"">FAQ</a>
 
-                                    <a class="nav-link" href="${path}/front?key=event&methodName=selectAll&field=Eventing">이벤트</a>
+                                    <a class="nav-link" href="${path}/front?key=event&methodName=selectAllManager">이벤트</a>
                                     <a class="nav-link" href="${path}/front?key=ask&methodName=selectAllManager">1:1문의</a>
                                     <a class="nav-link" href="${path}/manager/reviewBl_Main_Mg.jsp">후기 게시판</a>
                                 </nav>
