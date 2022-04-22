@@ -66,7 +66,7 @@
 					<li><a href="#" id="allCategory">전체 카테고리</a></li>
 					<li><a href="${path}/goods/goodsList.jsp">도시락 정기배송</a></li>
 					<li><a href="${path}/goods/dayMenuCalendar.jsp">이달의 식단</a></li>
-					<li><a href="${path}/manager/event_Main_Mg.jsp">이벤트</a></li>
+					<li><a href="${path}/front?key=event&methodName=selectAll&field=Eventing">이벤트</a></li>
 				</ul>
 				<ul>
 					<li><a href="#">배달가능지역</a></li>
@@ -103,7 +103,7 @@
 							<h5><a href="${path}/front?key=event&methodName=selectAll&field=Eventing">이벤트</a></h5>
 						</li>
 						<li>
-							<h5><a href="${path}//board/faq.jsp">FAQ</a></h5>
+							<h5><a href="${path}/front?key=faq&methodName=selectAll">FAQ</a></h5>
 						</li>
 						<li>
 							<h5><a href="${path}/front?key=review&methodName=selectAll">후기 게시판</a></h5>

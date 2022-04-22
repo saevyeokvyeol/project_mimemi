@@ -154,7 +154,7 @@ public class EventController implements Controller {
 		request.setAttribute("pageNum", curPageNo);
 		request.setAttribute("field", field);
 		
-		return new ModelAndView("manager/eventAllListManager.jsp");
+		return new ModelAndView("manager/event_Main_Mg.jsp");
 	}
 	/**
 	 * ªË¡¶ 
