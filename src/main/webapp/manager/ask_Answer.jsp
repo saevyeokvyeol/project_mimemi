@@ -10,9 +10,10 @@
 	.review-writeForm {
                 width: 900px;
                 margin: auto; padding: 50px 0;
+                text-align: right;
             }
             
-            .review-writeForm h1 {padding-bottom: 10px; margin-bottom: 10px; border: }
+            .review-writeForm h1 {padding-bottom: 100px; margin-bottom: 10px; border: }
             
             .review-table th {width: 120px; padding: 15px 30px;}
             .review-table td {vertical-align: middle;}
@@ -45,7 +46,7 @@
 	<body>
 		<div class="review-writeForm">
 			<div class="review-title">
-                <h1>관리자 답글 페이지</h1>
+                <h1></h1>
             </div>
 		
 

@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
+        <jsp:include page="../common/sidebar.jsp"/>
         <!-- jQuery --> 
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
@@ -20,7 +21,7 @@ pageEncoding="UTF-8"%>
 		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         
        <style>
-       		section{width: 1200px; margin: auto;}
+       		.reviewList-main{width: 1000px; margin: 50px auto; text-align: center;}
        		table{width: 100%;}
 /*        		th, td{border: 1px solid black;} */
 
