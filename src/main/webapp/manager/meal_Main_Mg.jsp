@@ -27,7 +27,6 @@
                 width: 900px;
                 margin: 10px auto;
             }
-
             img {
                 width: 70px;
                 height: 70px;
@@ -48,7 +47,6 @@
                 $('#updateMealImg').val(mealImg)
                 $('#updateMealSale').val(mealSale)
             }
-
             function fillTable(result) {
                 let text = "";
                 $.each(result, function (index, item) {
@@ -61,7 +59,7 @@
                     text += '<td>' + item.mealCarbo + '</td>';
                     text += '<td>' + item.mealProtein + '</td>';
                     text += '<td>' + item.mealFat + '</td>';
-                    text += '<td> <img src=\"' + item.mealImg + "\"></td>";
+                    text += '<td><img src=\"' + item.mealImg + '\"></td>';
                     text += '<td>' + item.mealSale + '</td>';
                     text += "<td><button type=\"button\" class=\"btn btn-secondary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#updateMealModal\" onclick=\"fillUpdateModal(\'" + item.mealId + "\', \'" + item.goodsId + "\', \'" + item.mealName + "\', " + item.mealWeight + ", " + item.mealKcal + ", " + item.mealCarbo + ", " + item.mealProtein + ", " + item.mealFat + ", \'" + item.mealImg + "\', \'" + item.mealSale + "\')\">수정</button></td>";
                     text += '</tr>';
@@ -69,7 +67,6 @@
                 $("#mealTable tr:gt(0)").remove();
                 $("#mealTable tbody").append(text);
             }
-
             /*도시락 가져오기*/
             function mealSelectAll() {
                 $.ajax({
@@ -82,7 +79,6 @@
                     }
                 })
             }
-
             /* 상품추가 */
             function mealInsert() {
                 /* mealID, goodsId, mealName, mealWeight, mealKcal, mealCarbo, mealProtein, mealFat, mealImg, mealSale */
@@ -96,7 +92,6 @@
                 mealFat = $("#mealFat").val()
                 mealImg = $("#mealImg").val()
                 mealSale = $("#mealSale").val()
-
                 let data = {
                     key: "meal",
                     methodName: "getMealInsert",
@@ -120,7 +115,6 @@
                     }
                 })
             }
-
             /*상품 수정하기*/
             function mealUpdate() {
                 let mealId = $("#updateMealIdHidden").val()
@@ -156,7 +150,6 @@
                     }
                 })
             }
-
             /*판매중인것들만 조회*/
             function mealSelectByForSale() {
                 let sale = $("#mealSelectByForSale").val()
@@ -166,7 +159,6 @@
                 } else {
                     methodName = 'getMealSelectForSale'
                 }
-
                 $.ajax({
                     url: "${path}/ajax",
                     type: "get",
@@ -177,7 +169,6 @@
                     }
                 })
             }
-
             /*상품이름으로 검색하기*/
             function mealSelectByKeyword() {
                 let keyword = $("#searchkeyword").val()
@@ -186,13 +177,11 @@
                     type: "get",
                     dataType: "json",
                     data: { key: "meal", methodName: "mealSelectByMealId", keyword: keyword },
-
                     success: function (result) {
                         fillTable(result)
                     }
                 })
             }
-
             $(function () {
                 if (window.location.href.endsWith('.jsp')) {
                     window.location.href = '${path}/front?key=meal&methodName=mealSelectAll';
