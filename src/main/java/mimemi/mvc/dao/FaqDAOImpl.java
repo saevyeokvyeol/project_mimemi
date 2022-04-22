@@ -236,7 +236,7 @@ public class FaqDAOImpl implements FaqDAO {
 			} else if (field.equals("ec")) {//기타
 				sql = "select count(*) from faq where faq_category = 'EC'";	
 			  	//sql = sql=proFile=proFile.getProperty("");	
-			} else if (field.equals("selectAll")) {//기타
+			} else if (field.equals("selectAll")||field.equals("no")) {//기타
 				sql = "select count(*) from faq";	
 			}  	//sql = sql=proFile=proFile.getProperty("");
 		

@@ -468,10 +468,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 						rs.getInt(10)
 						);
 				
-				review.getGoodsDTO().setGoodsName("상품이름");
-				review.getUserDTO().setUserName("작성자 이름");//홍*동처럼 보안처리나중에 하기
+				//상품이름 가져오기
+				GoodsDTO goods =goodsDAO.goodsSelectByGoodsId(review.getGoodsId());
+				review.getGoodsDTO().setGoodsName(goods.getGoodsName());
+				//작성자 이름 가져오기
+				UserDTO user = userDAO.selectByID(review.getUserId());
+				review.getUserDTO().setUserName(user.getUserName());//홍*동처럼 보안처리나중에 하기
 				list.add(review);
-				//System.out.println(review.getReviewBlind());
+				System.out.println(review.getGoodsDTO().getGoodsName());
 			}
 			
 		}finally {
