@@ -10,7 +10,7 @@
   	
   	.review-writeForm {
                 width: 1000px;
-                margin: auto; padding: 50px 0;
+                margin: 50px auto; padding: 50px 0;
             }
             
             .review-writeForm h1 {padding-bottom: 10px; margin-bottom: 10px; border: }

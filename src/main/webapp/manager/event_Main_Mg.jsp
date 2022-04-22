@@ -19,7 +19,8 @@
 		<!-- jQuery ui -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<style type="text/css">
-			section {width: 1200px; margin: auto;}
+			
+			.a{width: 900px; margin: 70px auto;}
 			table {width: 100%;}
 			td {padding: 30px;}
 			a {color: black;}
@@ -42,7 +43,7 @@
 		</script>
 	</head>
 	<body>
-		<section>
+		<section class="a">
 			<h1>이벤트 전체</h1>
 			<div>
 				<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -121,7 +122,7 @@
 					</div>
 				</tfoot>
 			</table>
-		</section>
+		
 		<!-- 페이징 처리 -->
             <nav aria-label="Page navigation example">
 				<jsp:useBean class="mimemi.mvc.paging.PageCnt" id="p"/> 
@@ -145,6 +146,6 @@
 					</c:if>
 				</ul>
 			</nav>
-		
+		</section>
 	</body>
 </html>

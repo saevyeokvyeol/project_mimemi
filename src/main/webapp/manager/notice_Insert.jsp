@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="../common/header.jsp"/>    
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 <style type="text/css">
 	.notice-writeform{
 		width: 900px;
-		margin: auto; padding: 50px 0;
+		margin: 80px auto; padding: 50px 0;
 	}
 	.notice-writeform h2 {padding-bottom: 10px; margin-bottom: 10px; border: }
 	
