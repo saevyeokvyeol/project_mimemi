@@ -94,7 +94,10 @@ pageEncoding="UTF-8"%>
                                 <select class="form-select" name="review_select_goods" id="review_select_goods">
                                 	<option name="reivew_goods" value="">--상품 이름--</option>
                                 	<option name="reivew_goods" value="JUNG01">정성한상</option>
-                                    <option name="reivew_goods" value="VEGAN01">비건 식단</option>
+                                    <option name="reivew_goods" value="LUNCH01">런치박스</option>
+                                    <option name="reivew_goods" value="DEN01">든든한상</option>
+                                    <option name="reivew_goods" value="KAL01">칼로리식단</option>
+                                    <option name="reivew_goods" value="DANG01">당뇨식단</option>
                                     <!--value="{goodslist.goodsId}" / 정성한상 >> {goodslist.goodsName}-->
                                 </select>
                             </td>
