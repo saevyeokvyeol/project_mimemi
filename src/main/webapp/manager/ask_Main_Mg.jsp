@@ -112,20 +112,7 @@
 		    </tbody>
 		</table>
 		
-		<!-- 검색하기  -->
-		<nav class="navbar navbar-light bg-light">
-				<div class="Ask-search-box">
-					<form class="form-inline" action="${path}/front?key=ask&methodName=selectByKeywordManager" method="post">
-						<select name="field" id="review_search_sort_select">
-							<option name="review_search_sort" value="title">제목</option>
-							<option name="review_search_sort" value="content">내용</option>
-						</select>
-						<input class="ipt" name="keyWord" type="text" placeholder="Search" aria-label="Search">
-						<button class="btn btn-success" type="submit" >검색하기</button>
-					</form>
-				</div>
-				
-			</nav>	
+		
 		
 		
 			
