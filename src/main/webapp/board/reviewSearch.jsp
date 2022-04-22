@@ -109,31 +109,54 @@ pageEncoding="UTF-8"%>
                 border: 2px solid cornflowerblue;
                 color: white;
             }
+            .review-view{
+                width: 1200px; margin: auto; padding: 50px 0;
+            }
+            .thead-dark th { text-align: center;}
+            
+            .review-table td:first-child {width: 50px; text-align: center;}
+            .review-table td:nth-child(2),
+            .review-table td:nth-child(4),
+            .review-table td:nth-child(5),
+            .review-table td:nth-child(6) {width: 150px; text-align: center;}
+            
+            .review-table td{
+                vertical-align: middle;
+            }
+            
+            .review-table svg {padding-bottom: 3px;}
+            
+            img.starRateImg{
+                width:70px; padding-bottom: 10px;
+            }
+            
+            .selectbar {display: flex; justify-content: space-between; padding-bottom: 15px;}
+            .selectbar h1 {display: inline;}
+            .selectbar select {width: 200px; height:38px; display: inline;}
+            
+            .form-inline .form-select {width: 100px;}
+            body > div > nav.navbar > div.review-search-box > form > input {margin: 0 5px;}
             
        </style>
         
         
     </head>
     <body>
-        <div class="container">
-            <div class="review-title">
-                <h1>후기 게시판</h1>
-            </div>
+        <div class="review-view">
             <!--정렬 카테고리-->
-            <nav class="navbar navbar-light bg-light">
-                <div class="review-sort-area">
-                    <select name="review_sort_select" id="review_sort_select">
-                        <option name="review_sort" value="0" selected='selected'>정렬방식</option>
-                        <option name="review_sort" value="reg">등록순</option>
-                        <option name="review_sort" value="higirate">별점 높은순</option>
-                        <option name="review_sort" value="rowrate">별점 낮은순</option>
-                        <option name="review_sort" value="view">조회순</option>
-                    </select>
-                </div>
+            <nav class="selectbar">
+                <h1>후기 게시판</h1>
+                <select class="form-select" name="review_sort_select" id="review_sort_select">
+                    <option name="review_sort" value="0" selected='selected'>정렬방식</option>
+                    <option name="review_sort" value="reg">등록순</option>
+                    <option name="review_sort" value="higirate">별점 높은순</option>
+                    <option name="review_sort" value="rowrate">별점 낮은순</option>
+                    <option name="review_sort" value="view">조회순</option>
+                </select>
             </nav>
             <!--후기 리스트-->
             <div class="review-list">
-                <table class="table">
+                <table class="table review-table">
                     <thead class="thead-dark">
                         <tr>
                         <th scope="col">게시글번호</th>
@@ -187,7 +210,7 @@ pageEncoding="UTF-8"%>
             </div>
             
             <!--리뷰쓰기/검색하기-->
-            <nav class="navbar navbar-light bg-light">
+            <nav class="navbart">
                 <div class="reivew-wirte-bnt">
                     <span class="write-bnt"><a href="${path}/board/reviewWrite.jsp" id="write-btn">후기 작성하기</a></span>
                 </div>
@@ -197,8 +220,8 @@ pageEncoding="UTF-8"%>
                             <option name="review_search_sort" value="title">제목</option>
                             <option name="review_search_sort" value="content">내용</option>
                         </select>
-                        <input class="review-search-keyword" name="keyword" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn-search-submit" type="submit" >검색하기</button>
+                        <input class="form-control" name="keyword" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark shadow-none" type="submit" >검색하기</button>
                     </form>
                 </div>
             </nav>

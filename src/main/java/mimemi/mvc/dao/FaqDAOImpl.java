@@ -216,7 +216,7 @@ public class FaqDAOImpl implements FaqDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		//select count(*) from faq
-		String sql = "select count(*) from faq";
+		String sql = "";
 		//String sql = proFile.getProperty("faq.getTotalCount");
 		int totalCount = 0;
 		
@@ -235,7 +235,10 @@ public class FaqDAOImpl implements FaqDAO {
 				//sql = sql=proFile=proFile.getProperty("");	
 			} else if (field.equals("ec")) {//기타
 				sql = "select count(*) from faq where faq_category = 'EC'";	
-			}  	//sql = sql=proFile=proFile.getProperty("");	
+			  	//sql = sql=proFile=proFile.getProperty("");	
+			} else if (field.equals("selectAll")) {//기타
+				sql = "select count(*) from faq";	
+			}  	//sql = sql=proFile=proFile.getProperty("");
 		
 		}
 		

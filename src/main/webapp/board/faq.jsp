@@ -52,7 +52,7 @@
 		<div class="list-group">
 			<a href="${path}/front?key=notice&methodName=selectAll"class="list-group-item list-group-item-action">
 				공지사항</a>
-			<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action active" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			<a href="${path}/front?key=faq&methodName=selectAll" class="list-group-item list-group-item-action active">
 				FAQ</a>
 			<div class="side-minibar">
 				<a href="${path}/front?key=faq&methodName=selectAll&field=cr" class="list-group-item list-group-item-action" id="cr">교환/환불</a>

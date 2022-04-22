@@ -22,7 +22,7 @@
 			var id = $("#userId").val();
 		
 			if(id.substr(0,5) == "admin"){
-				$("#form").attr("action", "${path}/front?key=manager&methodName=loginManager");
+				$("#form").attr("action", "${path}/front?key=order&methodName=selectAll");
 			}
 		})
 	})

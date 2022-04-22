@@ -5,8 +5,7 @@
 
 <!DOCTYPE html>
 <html>
-<html>
-	<head>
+  <head>
 		<meta charset="UTF-8">
 		<title>FAQ게시판 관리  - 미미미</title>
 		<jsp:include page="../common/sidebar.jsp"/>
@@ -26,12 +25,16 @@
 	  		<style>
 			.faqList-main {width: 1200px; margin: auto;}
 			   table {width: 100%;}
-			.faq_sort{text-align: right;}
+			.form-select{text-align: center;
+			             width: 150px;
+			             border-color: black; 
+			             border-width: 4px;
+			             position: fixed;
+			             right: 140px;
+			             top: 160px;
+			}
 		   
-		
-
-
-출처: https://webclub.tistory.com/235 [Web Club]
+	        .faqList-main {width: 100%; padding: 150px 50px 0 275px;}
 		   
 		</style>
 		  
@@ -51,14 +54,13 @@
 	<section class="faqList-main">
 			<h1><a href="${path}/front?key=faq&methodName=selectAllFaq">FAQ 관리</a></h1>
 			<section class="faq_sort">
-				<select name="faq_sort" id="faq_categry_select" class="form-select" style="width: 200px;">
-					<option value="0">--정렬방식--</option>
+				<select name="faq_sort" id="faq_categry_select" class="form-select">
+					<option value="no">--정렬방식--</option>
 					<option name="faq_category" value="cr">교환환불</option>
 					<option name="faq_category" value="us">회원관련</option>
 					<option name="faq_category" value="op">주문/결제</option>
 					<option name="faq_category" value="de">배송관련</option>
 					<option name="faq_category" value="ec">기타</option>
-					
 				</select>
 			</section>
 			<table class="table table-hover" id="faqList">
@@ -86,11 +88,11 @@
 							<c:forEach items="${FaqList}" var="faq">
 							<tr>
 								<td style="text-align: center;"><Strong>${faq.faqNo}</Strong></td>
-								<td width='250px'>${faq.faqTitle}</td>
-								<td width='250px'><font size="2"><a href="${path}/front?key=faq&methodName=selectAll">${faq.faqContent}</a></font></td>
-								<td><font size="2">${faq.faqAttach}</font></td>
-								<td width='100px'><font size="2">${faq.faqRegdate}</font></td>
-								<td width='100px'><font size="2">${faq.faqModidate}</font></td>
+								<td>${faq.faqTitle}</td>
+								<td width='450px'><a href="${path}/front?key=faq&methodName=selectAll">${faq.faqContent}</a></td>
+								<td>${faq.faqAttach}</td>
+								<td>${faq.faqRegdate}</td>
+								<td>${faq.faqModidate}</td>
 								<td style="text-align: center;">${faq.faqCategory}</td>
 								<th><a href="${path}/front?key=faq&methodName=updateForm&faqNo=${faq.faqNo}" >관리</a><th>
 							</tr>

@@ -103,7 +103,7 @@
 							<h5><a href="${path}/front?key=event&methodName=selectAll&field=Eventing">이벤트</a></h5>
 						</li>
 						<li>
-							<h5><a href="${path}//board/faq.jsp">FAQ</a></h5>
+							<h5><a href="${path}/front?key=faq&methodName=selectAll">FAQ</a></h5>
 						</li>
 						<li>
 							<h5><a href="${path}/front?key=review&methodName=selectAll">후기 게시판</a></h5>
