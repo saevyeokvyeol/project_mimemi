@@ -59,7 +59,7 @@
                             </a>
                             <div class="collapse" id="collapsePages3" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="${path}/manager/order_Main_Mg.jsp">전체 주문 조회</a>
+                                    <a class="nav-link" href="${path}/front?key=order&methodName=selectAll">전체 주문 조회</a>
                                     <%-- <a class="nav-link" href="${path}/">배송 일정 조회</a> --%>
                                 </nav>
                             </div>

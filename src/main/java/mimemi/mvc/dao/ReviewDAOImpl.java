@@ -475,7 +475,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 				UserDTO user = userDAO.selectByID(review.getUserId());
 				review.getUserDTO().setUserName(user.getUserName());//홍*동처럼 보안처리나중에 하기
 				list.add(review);
-				//System.out.println(review.getReviewBlind());
+				System.out.println(review.getGoodsDTO().getGoodsName());
 			}
 			
 		}finally {
