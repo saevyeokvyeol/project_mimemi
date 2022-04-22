@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
     <head>
         <meta charset="UTF-8">
         <title>Document</title>
+        <jsp:include page="../common/sidebar.jsp"/>
         <!-- jQuery --> 
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
         
@@ -20,7 +21,7 @@ pageEncoding="UTF-8"%>
 		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         
        <style>
-       		section{width: 1200px; margin: auto;}
+       		.reviewList-main{width:1000px; margin: auto; padding-top: 80px;}
        		table{width: 100%;}
 /*        		th, td{border: 1px solid black;} */
 
@@ -36,6 +37,31 @@ pageEncoding="UTF-8"%>
                  width:70px;
                  height: auto;
              } 
+             .selectbar{
+                 height: 50px;
+             }
+             select{
+                width: 130px;
+                height: 35px;
+                background-color: white;
+                padding: 5px;
+                border-radius: 4px;
+                border: 2px solid cornflowerblue;
+                color: cornflowerblue;
+            }
+            select option{
+                background-color: cornflowerblue;
+                color: white;
+                padding: 5px;
+            }
+            select icoArrow{
+                border-left: 2px solid cornflowerblue;
+                transition: .3s;
+                width: 50%;
+            }
+            #review_sort_select{
+            	float:right;
+            }
        </style>
 		
         <script>
@@ -76,17 +102,18 @@ pageEncoding="UTF-8"%>
     </head>
     <body>
     	<section class="reviewList-main">
-                <h1><a href="${path}/front?key=review&methodName=selectAllManager">후기 게시판 관리</a></h1>
-                <section class="review_sort">
-                <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
-                <select name="review_sort_select" id="review_sort_select">
-                    <option name="review_sort" value="0">--정렬방식--</option>
-                    <option name="review_sort" value="reg" selected='selected'>등록순</option>
-                    <option name="review_sort" value="higirate">별점 높은순</option>
-                    <option name="review_sort" value="rowrate">별점 낮은순</option>
-                    <option name="review_sort" value="view">조회순</option>
-                </select>
-                </section>
+                <h1>후기 게시판 관리</h1>
+                <nav class="selectbar">
+                    <!-- 조회수, 등록순, 댓글순, 별점순(낮은순+높은순)-->
+                    <select name="review_sort_select" id="review_sort_select">
+                        <option name="review_sort" value="0">--정렬방식--</option>
+                        <option name="review_sort" value="reg" selected='selected'>등록순</option>
+                        <option name="review_sort" value="higirate">별점 높은순</option>
+                        <option name="review_sort" value="rowrate">별점 낮은순</option>
+                        <option name="review_sort" value="view">조회순</option>
+                    </select>
+                </nav>
+                <div class="review-list">
                 <table class="table table-hover" id="reviewList">
                     <thead>
                         <tr>
@@ -157,6 +184,7 @@ pageEncoding="UTF-8"%>
                         </c:choose>
                     </tbody>
                 </table>
+            </div>
             <nav class="navbar">
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

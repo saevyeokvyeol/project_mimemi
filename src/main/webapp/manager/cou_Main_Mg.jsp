@@ -6,12 +6,10 @@
 	<head>
 		<meta charset="UTF-8">
 
-		<title>Document</title>
-
 		<title>관리자 쿠폰조회  - 미미미</title>
+		<jsp:include page="../common/sidebar.jsp"/>
 		
-		
-	 <!-- Bootstrap CSS -->
+	 	<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
 		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         
@@ -23,15 +21,13 @@
         <script type="text/javascript" src="${path}/util/js/jquery-3.6.0.min.js"></script>
 		
 		<style>
-           div{
-                width: 1000px;
-                margin: auto;
-            }
+           .couList-main{
+			width: 900px; margin: auto;
+			padding: 100px 0px 0px 0px;
+		   }
+		   table{width: 100%;}
             table th,td{
                 text-align: center;
-            }
-            nav{
-            	text-align: right;
             }
             
        </style>
@@ -145,16 +141,13 @@
 		
 	</head>
 	<body>
-		
+		<section class="couList-main">
 		<div class="container">
         	<div class="">
 				<h3>쿠폰조회 </h3>
 			</div>
-				
-				<p>
-				
 				<table class="table" id="couponTalbe">
-					<thead class="thead-dark">
+					<thead>
 						<tr>
 							<th>쿠폰번호</th>
 							<th>쿠폰명</th>
@@ -176,16 +169,10 @@
 				</table>
 				<hr>
 			</div>
-			
-			
 			<div style="text-align: right;">
-					<a href="#" id="live_btn" class="btn btn-outline-dark shadow-none">실시간쿠폰등록</a>
-					<a href="#" id="rg_btn" class="btn btn-outline-dark shadow-none">정기쿠폰등록</a>
+				<a href="#" id="live_btn" class="btn btn-outline-dark shadow-none">실시간쿠폰등록</a>
+				<a href="#" id="rg_btn" class="btn btn-outline-dark shadow-none">정기쿠폰등록</a>
 			</div>
-				<p>
-				
-			
-		
+		</section>		
 	</body>
-	
 </html>
