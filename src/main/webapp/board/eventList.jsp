@@ -32,7 +32,6 @@
 			.event-each > ul > li > a > img {width: 585px; border-radius: 20px;}
 			.event-each .event-each-content {padding: 25px 15px;}
 			
-			.event-view {width: 1000px; margin: 50px auto;}
 		</style>
 		<script type="text/javascript">
 			$(function(){

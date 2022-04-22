@@ -43,13 +43,13 @@
 			<div class="main-header-top-right">
 				<ul>
 					<c:choose>
+						<c:when test="${sessionScope.loginManager != null}">
+							<li><a href="${path}/front?key=order&methodName=selectAll">관리자 페이지</a></li>
+							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
+						</c:when>
 						<c:when test="${sessionScope.loginUser == null}">
 							<li><a href="${path}/user/join03.jsp">회원가입</a></li>
 							<li><a href="${path}/user/login.jsp">로그인</a></li>
-						</c:when>
-						<c:when test="${sessionScope.manager == null}">
-							<li><a href="${path}/mypage/orderList.jsp">마이페이지</a></li>
-							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><a href="${path}/mypage/mypageMain.jsp">마이페이지</a></li>
