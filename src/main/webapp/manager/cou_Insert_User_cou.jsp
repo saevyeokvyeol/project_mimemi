@@ -84,6 +84,8 @@ $(function() {
 	})
 	selectCouponType();
 	
+	
+	
 });//ready 끝
    
 
@@ -141,7 +143,7 @@ $(function() {
 
 <p>
 <div>
-	<a href="selectCouponAll.jsp">&lt;리스트로 돌아가기&gt;</a>
+	<a href="${path}/front?key=coupon&methodName=selectAllUserCp">&lt;리스트로 돌아가기&gt;</a>
 </div>
 
 
