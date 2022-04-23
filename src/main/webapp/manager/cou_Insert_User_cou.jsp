@@ -126,7 +126,7 @@ $(function() {
   </tr>
   <tr>
 	<td>쿠폰만료일</td>
-	<td><input type="text" name="usercouPubdate" id="usercouPubdate"/></td>
+	<td><input type="text" name="usercouEnddate" id="usercouEnddate"/></td>
   </tr>
   <tr>
 	<td colspan="2" >

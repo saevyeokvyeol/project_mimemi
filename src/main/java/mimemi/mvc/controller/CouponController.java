@@ -196,7 +196,7 @@ public class CouponController implements Controller {
 		String selectCoupon = request.getParameter("select_Coupon");
 		String usercouUsable = request.getParameter("usercouUsable");
 		String usercouPubdate = request.getParameter("usercouPubdate");
-		String usercouEnddate = request.getParameter("usercouPubdate");
+		String usercouEnddate = request.getParameter("usercouEnddate");
 		
 		UserCouponDTO userCouponDTO=null;
 		
@@ -208,7 +208,7 @@ public class CouponController implements Controller {
 		
 		couponService.insertUserCp(userCouponDTO, selectCouponType);
 		
-		return new ModelAndView("manager/cou_Select_User_cou.jsp", true);
+		return new ModelAndView("front?key=coupon&methodName=selectAllUserCp", true);
 		
 	}
 	
