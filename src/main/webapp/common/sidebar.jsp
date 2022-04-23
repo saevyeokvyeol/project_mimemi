@@ -50,6 +50,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                  <!--    <a class="nav-link" href="{path}/manager/user_Main_Mg.jsp">전체 회원 조회</a>--> 
                                     <a class="nav-link" href="${path}/manager/cou_Main_Mg.jsp">쿠폰 조회</a>
+                                    <a class="nav-link" href="${path}/manager/cou_Main_Mg.jsp">유저 쿠폰 등록</a>
                                 </nav>
                             </div>
 							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">
@@ -71,9 +72,7 @@
                             <div class="collapse" id="collapsePages4" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="${path}/front?key=notice&methodName=selectAllNotice">공지사항</a>
-
                                     <a class="nav-link" href="${path}/front?key=faq&methodName=selectAllFaq">FAQ</a>
-
                                     <a class="nav-link" href="${path}/front?key=event&methodName=selectAllManager">이벤트</a>
                                     <a class="nav-link" href="${path}/front?key=ask&methodName=selectAllManager">1:1문의</a>
                                     <a class="nav-link" href="${path}/front?key=review&methodName=selectAllManager">후기 게시판</a>
