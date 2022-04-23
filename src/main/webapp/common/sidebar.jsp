@@ -50,7 +50,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                  <!--    <a class="nav-link" href="{path}/manager/user_Main_Mg.jsp">전체 회원 조회</a>--> 
                                     <a class="nav-link" href="${path}/manager/cou_Main_Mg.jsp">쿠폰 조회</a>
-                                    <a class="nav-link" href="${path}/manager/cou_Select_User_cou.jsp">유저 쿠폰 조회</a>
+                                    <a class="nav-link" href="${path}/front?key=coupon&methodName=selectAllUserCp">유저 쿠폰 조회</a>
                                 </nav>
                             </div>
 							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">
