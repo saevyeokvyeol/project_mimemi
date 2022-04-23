@@ -7,7 +7,7 @@
 		<title>장바구니 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
-			.cart-main {width: 1200px; margin: auto; padding: 50px 0;}
+			.cart-main {width: 1200px; margin: auto; padding: 50px 0; position: relative;}
 			.cart-main h1 {padding-bottom: 20px;}
 			#cartTable th, #cartTable tbody td {text-align: center; vertical-align: middle;}
 			#cartTable td:nth-child(2) {width: 300px; text-align: left;}
@@ -19,6 +19,7 @@
 			.cartStart {text-align: center;}
 			tfoot {text-align: right;}
 			.cart-main-bottom {display: flex; justify-content: space-between;}
+			#cartToast {position: absolute; top: 10px; right: -15px;}
 		</style>
     	<link rel="stylesheet" href="../css/datepicker.css">
 		<script type="text/javascript">
@@ -58,6 +59,7 @@
 									$(`#\${index}Weekday`).val(item.cartWeekday);
 									$(`#\${index}Period`).val(item.cartPeriod);
 									$("input[name=cartStart]").datepicker();
+									cartCount();
 								})
 								calGoodsTotalPrice();
 								calTotalPrice();
@@ -213,6 +215,9 @@
 						data: {key: "cart", methodName: "deleteSelectedCart", cartId: arr},
 						success: function(result) {
 							selectCartByUserId();
+							var toast = new bootstrap.Toast($("#cartToast"));
+							cartCount();
+							toast.show();
 						},
 						error: function(err) {
 							alert(err + "\n장바구니를 불러올 수 없습니다.");
@@ -226,8 +231,11 @@
 						url: "${path}/ajax",
 						type: "post",
 						dataType : "text",
-						data: {key: "cart", methodName: "deleteAllCart", userId: 'happy01'},
+						data: {key: "cart", methodName: "deleteAllCart"},
 						success: function(result) {
+							var toast = new bootstrap.Toast($("#cartToast"));
+							cartCount();
+							toast.show();
 							selectCartByUserId();
 						},
 						error: function(err) {
@@ -287,7 +295,14 @@
 		</script>
 	</head>
 	<body>
-		<section class="cart-main">
+		<section class="cart-main"><div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="cartToast">
+			  <div class="d-flex">
+			    <div class="toast-body">
+			    장바구니가 삭제되었습니다.
+			   </div>
+			    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			  </div>
+			</div>
 			<form action="${path}/front?key=cart&methodName=viewOrderForm&mode=S" name="cartForm" method="post">
         		<input type="hidden" name="" id="">
 				<h1>장바구니</h1>

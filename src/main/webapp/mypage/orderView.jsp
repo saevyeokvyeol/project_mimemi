@@ -43,17 +43,15 @@
 				
 				// 상품 취소 버튼 클릭
 				$(document).on("click", "#orderLinecancel", function() {
-					alert($(this).parent().parent().attr("id"));
 					
 					if(confirm("해당 상품을 취소하시겠습니까?")) {
 						$.ajax({
 							url: "${path}/ajax",
 							type: "post",
 							dataType: "text",
-							data: {key: "order", methodName: "deleteOrder"},
+							data: {key: "order", methodName: "deleteOrderLine", orderLineId: $(this).parent().parent().attr("id")},
 							success: function(result) {
-								alert("취소가 완료되었습니다.");
-								$("#order-line-table").find(".orderLineCancelState").text("취소된 상품입니다.");
+								$(this).text("취소된 상품입니다.");
 							}, // 성공 메소드
 							error : function(err) {
 								alert(err);
@@ -76,20 +74,7 @@
 	</head>
 	<body>
 		<section class="view d-flex p-2 bd-highlight">
-			
-			<aside class="orderlist-sideview">
-				<h3>마이페이지</h3>
-				<div class="list-group">
-					<a href="${path}/mypage/orderList.jsp" class="list-group-item list-group-item-action active" aria-current="true">
-						나의 주문 내역
-					</a>
-					<a href="${path}/mypage/calendar.jsp" class="list-group-item list-group-item-action">나의 배송 캘린더</a>
-					<a href="#" class="list-group-item list-group-item-action">쿠폰 조회</a>
-					<a href="#" class="list-group-item list-group-item-action">1:1 문의 내역</a>
-					<a href="${path}/mypage/userEdit01.jsp" class="list-group-item list-group-item-action">회원 정보 수정</a>
-					<a href="${path}/mypage/userLeave01.jsp" class="list-group-item list-group-item-action">회원 탈퇴</a>
-				</div>
-			</aside>
+			<jsp:include page="../common/mypageSideBar.jsp"/>
 			<div class="orderview-mainview">
 				<h1>주문/배송 조회</h1>
 					<h5>
@@ -121,7 +106,7 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${orderLineList}" var="ol">
-							<tr id="${ol.goodsId}">
+							<tr id="${ol.orderLineId}">
 								<td>${ol.goodsId}</td>
 								<td>${fn:substring(ol.deliStart,0,10)}</td>
 								<td>${ol.orderQty}</td>

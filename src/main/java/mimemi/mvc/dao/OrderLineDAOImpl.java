@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import mimemi.mvc.dto.GoodsDTO;
 import mimemi.mvc.dto.OrderLineDTO;
 import mimemi.mvc.util.DbUtil;
 
@@ -47,6 +48,8 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 			
 			while(rs.next()) {
 				OrderLineDTO ol = new OrderLineDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+				ol.setGoods(new GoodsDTO());
+				ol.getGoods().setGoodsName(rs.getString(10));
 				orderLineList.add(ol);
 			}
 		} finally {

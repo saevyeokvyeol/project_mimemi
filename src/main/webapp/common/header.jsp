@@ -36,6 +36,33 @@
 					$(".all-nav").css("display", "none");
 				})
 			})
+			
+			function cartCount() {
+				$.ajax({
+					url: "${path}/ajax",
+					type: "post",
+					dataType: "json",
+					data: {key: "cart", methodName: "selectCartByUserId"},
+					success: function(result) {
+						count = 0
+						if(JSON.stringify(result) == "[]"){
+							count = 0
+						} else {
+							$.each(result, function(index, item) {
+								count++;
+							});
+						}
+						if(count != 0){
+							$("#cartC").text(count);
+						}
+					}, // 성공 메소드
+					error : function(err) {
+						0;
+					} // 에러 메소드
+				})
+			}
+			
+			cartCount();
     	</script>
 	</head>
 	<body>
@@ -52,7 +79,7 @@
 							<li><a href="${path}/user/login.jsp">로그인</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="${path}/mypage/mypageMain.jsp">마이페이지</a></li>
+							<li><a href="${path}/mypage/orderList.jsp">마이페이지</a></li>
 							<li><a href="${path}/front?key=user&methodName=logoutUser">로그아웃</a></li>
 						</c:otherwise>
 					</c:choose>
@@ -70,7 +97,12 @@
 				</ul>
 				<ul>
 					<li><a href="#">배달가능지역</a></li>
-					<li><a href="${path}/order/cart.jsp">카트</a></li>
+					<li>
+						<a href="${path}/order/cart.jsp" class="position-relative">
+							카트
+							<span id="cartC" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary"></span>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>

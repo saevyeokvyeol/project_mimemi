@@ -23,6 +23,7 @@
     <style>
 
         .goods-view {
+        	position: relative;
             margin: auto;
             width: 1200px;
         }
@@ -64,6 +65,8 @@
         .option-table .num {display: inline; width: 50px; text-align: center; padding: 6px 0 0 10px;}
         .btn-box {text-align: center; display: flex; justify-content: space-between;}
         .btn-box > * {display: inline; width: 49%;}
+        
+        #cartToast {position: absolute; top: 10px; right: -15px;}
     </style>
     
     <script type = "text/javascript">
@@ -143,6 +146,10 @@
     		
 			// 장바구니에 담기
 			$("#cart").click(function() {
+				if($("#datePicker").val() == ""){
+					alert("배송 시작일을 선택해주세요.");
+					return;
+				}
 				$.ajax({
 					url: "${path}/ajax",
 					type: "post",
@@ -152,7 +159,9 @@
 						cartPeriod: $("select[name=cartPeriod]").val(), cartStart: $("input[name=cartStart]").val(),
 						goodsPrice:$("input[name=goodsPrice]").val()},
 					success: function(result) {
-						alert(result);
+						var toast = new bootstrap.Toast($("#cartToast"));
+						cartCount();
+						toast.show();
 					},
 					error: function(err) {
 						alert(err + "\n장바구니를 불러올 수 없습니다.");
@@ -171,8 +180,16 @@
 
 <body>
     <div class="goods-view">
-        <div class="row" style="padding: 30px">
-            <div class="col-sm-6">
+    	<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="cartToast">
+			  <div class="d-flex">
+			    <div class="toast-body">
+			    장바구니에 상품이 담겼습니다.
+			   </div>
+			    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			  </div>
+			</div>
+        	<div class="row" style="padding: 30px">
+    	<div class="col-sm-6">
                 <div class="goodsthumbnail">
                     <img id="goodsThumbnailImage" class="goods-thumbnail-image top-image">
                 </div>

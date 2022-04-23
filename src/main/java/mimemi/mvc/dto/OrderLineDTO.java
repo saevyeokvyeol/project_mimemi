@@ -11,6 +11,8 @@ public class OrderLineDTO {
 	private String deliStart;
 	private String lineCalcel;
 	
+	private GoodsDTO goods;
+	
 	public OrderLineDTO() {}
 
 	public OrderLineDTO(int orderLineId, int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
@@ -98,5 +100,12 @@ public class OrderLineDTO {
 	public void setLineCalcel(String lineCalcel) {
 		this.lineCalcel = lineCalcel;
 	}
-	
+
+	public GoodsDTO getGoods() {
+		return goods;
+	}
+
+	public void setGoods(GoodsDTO goods) {
+		this.goods = goods;
+	}
 }

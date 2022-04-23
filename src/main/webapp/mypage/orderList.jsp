@@ -24,7 +24,7 @@
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "json",
-						data: {key: "order", methodName: "selectByUserId", userId: "happy01"},
+						data: {key: "order", methodName: "selectByUserId"},
 						success: function(result) {
 							let text = "";
 							$("#orderTable > tbody").children().remove();
@@ -68,7 +68,7 @@
 							let text = "";
 							$("#" + orderId).children("#orderList").children().remove();
 							$.each(result, function(index, item) {
-								text += "<div>" + item.goodsId + " X" + item.orderQty + "</div>";
+								text += "<div>" + item.goods.goodsName + " X" + item.orderQty + "</div>";
 							})
 							$("#" + orderId).children("#orderList").append(text);
 						}, // 성공 메소드
@@ -119,19 +119,7 @@
 	</head>
 	<body>
 		<section class="orderlist-view d-flex p-2 bd-highlight">
-			<aside class="orderlist-sideview">
-				<h3>마이페이지</h3>
-				<div class="list-group">
-					<a href="${path}/mypage/orderList.jsp" class="list-group-item list-group-item-action active" aria-current="true">
-						나의 주문 내역
-					</a>
-					<a href="${path}/mypage/calendar.jsp" class="list-group-item list-group-item-action">나의 배송 캘린더</a>
-					<a href="#" class="list-group-item list-group-item-action">쿠폰 조회</a>
-					<a href="#" class="list-group-item list-group-item-action">1:1 문의 내역</a>
-					<a href="${path}/mypage/userEdit01.jsp" class="list-group-item list-group-item-action">회원 정보 수정</a>
-					<a href="${path}/mypage/userLeave01.jsp" class="list-group-item list-group-item-action">회원 탈퇴</a>
-				</div>
-			</aside>
+			<jsp:include page="../common/mypageSideBar.jsp"/>
 			<div class="orderlist-mainview">
 				<h1>주문/배송 조회</h1>
 				<table class="table table-hover" id="orderTable">

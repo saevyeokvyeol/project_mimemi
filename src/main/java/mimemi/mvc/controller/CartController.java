@@ -176,7 +176,12 @@ public class CartController implements Controller {
 	 * 장바구니 전체 삭제
 	 */
 	public void deleteAllCart(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		String userId = request.getParameter("userId");
+		response.setContentType("text/html;charset=UTF-8");
+		
+		HttpSession session = request.getSession();
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
 		
 		cartService.deleteAllCart(userId);
 	}

@@ -25,7 +25,7 @@
 			td {vertical-align: middle;}
 			.card-pay {width: 75px; margin-top: 7px; display: inline;}
 			.btn-box {padding: 30px 0 0; text-align: center;}
-			
+			#point {margin-bottom: 10px;}
 			#sample6_postcode {display: inline; width: 83%;}
 			#sample6_detailAddress, #sample6_extraAddress {display: inline; width: 49.7%; margin-top: 7px;}
 			#zipcode-btn {margin: 0 0 7px 7px;}
@@ -205,9 +205,9 @@
 								$.each(result, function(index, item) {
 									if(item.usercouUsable == "N"){
 										if(item.livecouId == ""){
-											text = `<option value="\${item.userCouId}" class="\${item.rgcouId}"></option>`;
+											text = `<option value="\${item.userCouId}" price="" class="\${item.rgcouId}"></option>`;
 										} else {
-											text = `<option value="\${item.userCouId}" class="\${item.livecouId}"></option>`;
+											text = `<option value="\${item.userCouId}" price="" class="\${item.livecouId}"></option>`;
 										}
 										
 										count++;
@@ -243,8 +243,10 @@
 							$.each(result, function(index, item) {
 								if(item.rgcouName == undefined) {
 									$("." + CouId).text(`\${item.livecouName}`);
+									$("." + CouId).attr("price", item.livecouPrice)
 								} else {
 									$("." + CouId).text(`\${item.rgcouName}`);
+									$("." + CouId).attr("price", item.rgcouPrice)
 								}
 							})
 						}, // 성공 메소드
@@ -254,13 +256,36 @@
 					})
 				}
 				
+				$("#couponList").change(function() {
+					calDiscount();
+				})
+				
 				$("input[name=payPoint]").keyup(function() {
 					if($(this).val() > ${loginUser.userPoint}){
 						alert("소지한 적립금 금액을 초과했습니다.");
-						$(this).val("");
+						$(this).val(${loginUser.userPoint});
 					}
+					calDiscount();
 				})
 				
+				function calDiscount() {
+					couVal = $("#couponList").val();
+					
+					let couponPrice = 0
+					if(couVal != 0){
+						couponPrice = parseInt($("#couponList option[value=" + couVal + "]").attr("price"));
+					}
+					let pointPrice = 0;
+					if($("input[name=payPoint]").val() != ""){
+						pointPrice = $("input[name=payPoint]").val();
+					}
+					console.log(couponPrice)
+					
+					console.log(pointPrice)
+					let discountPrice = parseInt(couponPrice) + parseInt(pointPrice);
+
+					$("#discount").text(discountPrice)
+				}
 				
 				selectCpByUserId();
 			})
@@ -292,8 +317,6 @@
 					$("input[name=payMethod]").val(methodCode);
 				}) // 결제 방법 선택 종료
 				
-				
-
 				calTotalPrice();
 			}) // jQuery 종료
 		</script>
@@ -484,7 +507,16 @@
 						</tr>
 						<tr>
 							<td>적립금</td>
-							<td><input type="text" class="form-control" name="payPoint" id=""></td>
+							<td>
+								<div id="point">현재 적립금: ${loginUser.userPoint}원</div>
+								<input type="number" class="form-control" name="payPoint" id="">
+							</td>
+						</tr>
+						<tr>
+							<td>총 할인 금액</td>
+							<td>
+								<span id="discount">0</span>원
+							</td>
 						</tr>
 					</table>
 					<table class="table order-table">
