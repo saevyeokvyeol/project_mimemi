@@ -30,7 +30,20 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	/**
-	 * 주문 취소
+	 * 주문 상세 취소
+	 * : 주문 번호를 이용해 해당 주문 상세를 취소함
+	 * @param int orderLineId
+	 */
+	@Override
+	public void deleteOrderLine(int orderLineId) throws SQLException {
+		int result = orderDao.deleteOrderLine(orderLineId);
+		if(result == 0) {
+			throw new SQLException();
+		}
+	}
+
+	/**
+	 * 주문 상세 취소
 	 * : 주문 번호를 이용해 해당 주문 건에 연관된 모든 배송 스케줄을 취소 처리함
 	 * @param int orderId
 	 */
@@ -62,6 +75,18 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderDTO> selectByUserId(String userId) throws SQLException {
 		List<OrderDTO> orderList = orderDao.selectByUserId(userId);
+		
+		return orderList;
+	}
+	
+	/**
+	 * 유저 아이디로 주문 조회
+	 * @param int orderId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	@Override
+	public List<OrderDTO> selectCancelByUserId(String userId) throws SQLException {
+		List<OrderDTO> orderList = orderDao.selectCancelByUserId(userId);
 		
 		return orderList;
 	}

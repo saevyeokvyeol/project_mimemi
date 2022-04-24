@@ -196,8 +196,9 @@
 					<a href="${path}/mypage/orderList.jsp" class="list-group-item list-group-item-action" aria-current="true">
 						나의 주문 내역
 					</a>
+					<a href="${path}/mypage/orderCancelList.jsp" class="list-group-item list-group-item-action">취소 주문 내역</a>
 					<a href="${path}/mypage/calendar.jsp" class="list-group-item list-group-item-action active">나의 배송 캘린더</a>
-					<a href="#" class="list-group-item list-group-item-action">쿠폰 조회</a>
+					<a href="${path}/mypage/couponList.jsp" class="list-group-item list-group-item-action">쿠폰 조회</a>
 					<a href="#" class="list-group-item list-group-item-action">1:1 문의 내역</a>
 					<a href="${path}/mypage/userEdit01.jsp" class="list-group-item list-group-item-action">회원 정보 수정</a>
 					<a href="${path}/mypage/userLeave01.jsp" class="list-group-item list-group-item-action">회원 탈퇴</a>

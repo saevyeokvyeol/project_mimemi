@@ -98,6 +98,21 @@ public class OrderController implements Controller {
 		PrintWriter out = response.getWriter();
 		out.print(orderArr);
 	}
+	
+	// 특정 유저가 구매한 내역 가져오기
+	public void selectCancelByUserId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+
+		HttpSession session = request.getSession();
+		UserDTO loginUser = (UserDTO)session.getAttribute("loginUser");
+		String userId = loginUser.getUserId();
+		List<OrderDTO> orderList = orderService.selectCancelByUserId(userId);
+		
+		JSONArray orderArr = JSONArray.fromObject(orderList);
+		
+		PrintWriter out = response.getWriter();
+		out.print(orderArr);
+	}
 
 	// 주문아이디로 상세 주문 내역 가져오기
 	public void selectLineByOrderId(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -132,6 +147,12 @@ public class OrderController implements Controller {
 		String orderId = request.getParameter("orderId");
 
 		orderService.deleteOrder(Integer.parseInt(orderId));
+	}
+
+	public void deleteOrderLine(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderLineId = request.getParameter("orderLineId");
+
+		orderService.deleteOrderLine(Integer.parseInt(orderLineId));
 	}
 	
 	public void viewOrderCalendar(HttpServletRequest request, HttpServletResponse response) throws Exception {

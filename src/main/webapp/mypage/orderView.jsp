@@ -7,11 +7,11 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<title>주문/배송 조회 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
-		<title>Insert title here</title>
 		<style type="text/css">
-			.view {width: 1200px; margin: auto; padding: 50px 0;}
-			.view table {width: 100%; caption-side: top;}
+			.view {width: 1200px; margin: 50px auto;}
+			.view table {width: 100%; caption-side: top; text-align: center;}
 			.order_no {padding: 50px 80px; border: 1px solid black; display: flex; justify-content: space-between;}
 			.view td {padding: 10px;}
 			.view tfoot {text-align: right;}
@@ -51,7 +51,7 @@
 							dataType: "text",
 							data: {key: "order", methodName: "deleteOrderLine", orderLineId: $(this).parent().parent().attr("id")},
 							success: function(result) {
-								$(this).text("취소된 상품입니다.");
+								$(this).parent().text("취소된 상품입니다");
 							}, // 성공 메소드
 							error : function(err) {
 								alert(err);
@@ -76,7 +76,7 @@
 		<section class="view d-flex p-2 bd-highlight">
 			<jsp:include page="../common/mypageSideBar.jsp"/>
 			<div class="orderview-mainview">
-				<h1>주문/배송 조회</h1>
+				<h1 id="order">주문/배송 조회</h1>
 					<h5>
 						<div class="order_no">
 							<span>주문 번호 ${order.orderId}</span>
@@ -107,14 +107,14 @@
 					<tbody>
 						<c:forEach items="${orderLineList}" var="ol">
 							<tr id="${ol.orderLineId}">
-								<td>${ol.goodsId}</td>
+								<td>${ol.goods.goodsName}</td>
 								<td>${fn:substring(ol.deliStart,0,10)}</td>
 								<td>${ol.orderQty}</td>
 								<td><fmt:formatNumber type="number" pattern="###" value="${ol.priceQty / ol.orderQty}" /></td>
 								<td>${ol.priceQty}</td>
 								<td class="orderLineCancelState">
 									<c:choose>
-										<c:when test="${ol.lineCalcel == 'T'}">
+										<c:when test="${ol.lineCancel == 'T'}">
 											취소된 상품입니다
 										</c:when>
 										<c:otherwise>

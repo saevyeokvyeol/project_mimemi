@@ -436,6 +436,31 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 	
 	/**
+	 * 주문 상세 취소
+	 * : 주문 번호를 이용해 해당 주문 상세를 취소함
+	 * @param int orderLineId
+	 */
+	@Override
+	public int deleteOrderLine(int orderLineId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("order.deleteOrderLine");
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, orderLineId);
+			
+			result = ps.executeUpdate();
+		} finally {
+			DbUtil.dbClose(ps, null);
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * 배송 정보까지 취소
 	 * */
 	public int[] deleteOrderDeil(Connection con, int orderId) throws SQLException {
@@ -546,6 +571,38 @@ public class OrderDAOImpl implements OrderDAO {
 		ResultSet rs = null;
 		
 		String sql = proFile.getProperty("order.selectByUserId");
+		List<OrderDTO> list = new ArrayList<OrderDTO>();
+		
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, userId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				OrderDTO order = new OrderDTO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5),
+						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getInt(11),
+						rs.getString(12));
+				list.add(order);
+			}
+		} finally {
+			DbUtil.dbClose(rs, ps, con);
+		}
+		
+		return list;
+	}
+
+	/**
+	 * 유저 아이디로 취소한 주문 조회
+	 * @param int orderId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	@Override
+	public List<OrderDTO> selectCancelByUserId(String userId) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = proFile.getProperty("order.selectCancelByUserId");
 		List<OrderDTO> list = new ArrayList<OrderDTO>();
 		
 		try {

@@ -28,8 +28,22 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 
 	@Override
 	public int delete(int orderLineId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = proFile.getProperty("orderLine.deleteOrderLine");
+		int result = 0;
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, orderLineId);
+			
+			result = ps.executeUpdate();
+			
+		} finally {
+			DbUtil.dbClose(ps, con);
+		}
+		return result;
 	}
 
 	@Override

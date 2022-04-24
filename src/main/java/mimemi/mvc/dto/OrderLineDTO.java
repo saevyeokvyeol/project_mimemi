@@ -9,14 +9,14 @@ public class OrderLineDTO {
 	private String deliWeekday;
 	private String deliPeriod;
 	private String deliStart;
-	private String lineCalcel;
+	private String lineCancel;
 	
 	private GoodsDTO goods;
 	
 	public OrderLineDTO() {}
 
 	public OrderLineDTO(int orderLineId, int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
-			String deliPeriod, String deliStart, String lineCalcel) {
+			String deliPeriod, String deliStart, String lineCancel) {
 		super();
 		this.orderLineId = orderLineId;
 		this.orderId = orderId;
@@ -26,7 +26,7 @@ public class OrderLineDTO {
 		this.deliWeekday = deliWeekday;
 		this.deliPeriod = deliPeriod;
 		this.deliStart = deliStart;
-		this.lineCalcel = lineCalcel;
+		this.lineCancel = lineCancel;
 	}
 
 	public int getOrderLineId() {
@@ -93,12 +93,12 @@ public class OrderLineDTO {
 		this.deliStart = deliStart;
 	}
 
-	public String getLineCalcel() {
-		return lineCalcel;
+	public String getlineCancel() {
+		return lineCancel;
 	}
 
-	public void setLineCalcel(String lineCalcel) {
-		this.lineCalcel = lineCalcel;
+	public void setlineCancel(String lineCancel) {
+		this.lineCancel = lineCancel;
 	}
 
 	public GoodsDTO getGoods() {

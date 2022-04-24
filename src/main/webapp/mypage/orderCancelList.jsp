@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>주문/배송 조회 :: 미미미</title>
+		<title>취소 주문 조회 :: 미미미</title>
 		<jsp:include page="../common/header.jsp"/>
 		<style type="text/css">
 			.orderlist-view {width: 1212px; margin: 50px auto;}
@@ -18,13 +18,13 @@
 		</style>
 		<script type="text/javascript">
 			$(function(){
-				// 아이디로 주문 내역 조회
+				// 아이디로 취소한 주문 내역 조회
 				function selectOrderByUserId(){
 					$.ajax({
 						url: "${path}/ajax",
 						type: "post",
 						dataType: "json",
-						data: {key: "order", methodName: "selectByUserId"},
+						data: {key: "order", methodName: "selectCancelByUserId"},
 						success: function(result) {
 							let text = "";
 							$("#orderTable > tbody").children().remove();
@@ -42,7 +42,7 @@
 									text += "<td>" + item.orderDate.substr(0, 10) + "</td>"
 									text += '<td id="orderList"></td>';
 									text += '<td name="goodsTotalPrice">' + item.totalPrice + '</td>';
-									text += '<td><button type="button" class="btn btn-outline-danger btn-sm shadow-none" id="cancel">주문 취소</button></td>';
+									text += '<td>취소된 주문입니다</td>';
 									text += "</tr>";
 									$("#orderTable > tbody").append(text);
 									viewGoodsList(item.orderId);
@@ -117,9 +117,22 @@
 	</head>
 	<body>
 		<section class="orderlist-view d-flex p-2 bd-highlight">
-			<jsp:include page="../common/mypageSideBar.jsp"/>
+			<aside class="orderlist-sideview">
+				<h3>마이페이지</h3>
+				<div class="list-group">
+					<a href="${path}/mypage/orderList.jsp" class="list-group-item list-group-item-action" aria-current="true">
+						나의 주문 내역
+					</a>
+					<a href="${path}/mypage/orderCancelList.jsp" class="list-group-item list-group-item-action active">취소 주문 내역</a>
+					<a href="${path}/mypage/calendar.jsp" class="list-group-item list-group-item-action">나의 배송 캘린더</a>
+					<a href="${path}/mypage/couponList.jsp" class="list-group-item list-group-item-action">쿠폰 조회</a>
+					<a href="#" class="list-group-item list-group-item-action">1:1 문의 내역</a>
+					<a href="${path}/mypage/userEdit01.jsp" class="list-group-item list-group-item-action">회원 정보 수정</a>
+					<a href="${path}/mypage/userLeave01.jsp" class="list-group-item list-group-item-action">회원 탈퇴</a>
+				</div>
+			</aside>
 			<div class="orderlist-mainview">
-				<h1>주문/배송 조회</h1>
+				<h1>취소 배송 조회</h1>
 				<table class="table table-hover" id="orderTable">
 					<thead>
 						<tr>
@@ -127,7 +140,7 @@
 							<td>주문일자</td>
 							<td>상품명</td>
 							<td>결제금액</td>
-							<td>주문 취소</td>
+							<td>주문 여부</td>
 						</tr>
 					</thead>
 					<tbody>

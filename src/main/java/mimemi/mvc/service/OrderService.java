@@ -99,4 +99,18 @@ public interface OrderService {
 	 * @return OrderDeliDTO
 	 * */
 	List<OrderDeliDTO> selectMlyDeli(String goodsId, String userId, String date) throws SQLException;
+
+	/**
+	 * 유저 아이디로 주문 조회
+	 * @param int orderId(정렬 기준)
+	 * @return OrderDTO
+	 * */
+	List<OrderDTO> selectCancelByUserId(String userId) throws SQLException;
+
+	/**
+	 * 주문 상세 취소
+	 * : 주문 번호를 이용해 해당 주문 상세를 취소함
+	 * @param int orderLineId
+	 */
+	void deleteOrderLine(int orderLineId) throws SQLException;
 }
