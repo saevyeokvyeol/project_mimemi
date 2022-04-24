@@ -7,17 +7,16 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>주문/배송 조회 :: 미미미</title>
-		<jsp:include page="../common/header.jsp"/>
+		<title>주문/배송 조회 :: 관리자 페이지</title>
+		<jsp:include page="../common/sidebar.jsp"/>
 		<style type="text/css">
-			.view {width: 1200px; margin: 50px auto;}
+			.view  {width: 100%; padding: 100px 50px 50px 275px;}
 			#order-line-table {width: 100%; caption-side: top; text-align: center;}
 			.order_no {padding: 50px 80px; margin: 50px 0; border: 1px solid black; display: flex; justify-content: space-between; vertical-align: middle;}
 			.view td {padding: 10px;}
 			.view tfoot {text-align: right;}
 			.orderlist-sideview {width: 200px; margin-right: 50px; z-index: 0;}
 			.orderlist-sideview h3 {margin: 0 0 20px 10px;}
-			.orderview-mainview {width: 950px;}
 			.payment-table, .addr-table {text-align: left;  caption-side: top;}
 			.payment-table td:first-child, .addr-table td:first-child {padding: 10px 40px; width: 200px;}
 			#btn-box {margin-top: 50px; text-align: center;}
@@ -64,7 +63,7 @@
 				
 				// 주문 캘린더 이동 메소드
 				$(document).on("click", "#order-line-table > tbody > tr > td:not(:last-child)", function() {
-					location.href = "${path}/mypage/calendar.jsp?goodsId=" + $(this).parent().attr("id");
+					location.href = "${path}/front?key=order&methodName=selectByOrderLineId&orderLineId=" + $(this).parent().attr("id");
 				})
 				
 				// 돌아가기 버튼
@@ -75,8 +74,7 @@
 		</script>
 	</head>
 	<body>
-		<section class="view d-flex p-2 bd-highlight">
-			<jsp:include page="../common/mypageSideBar.jsp"/>
+		<section class="view">
 			<div class="orderview-mainview">
 				<h1 id="order">주문/배송 조회</h1>
 					<h5>
@@ -201,5 +199,4 @@
 				</div>
 		</section>
 	</body>
-	<jsp:include page="../common/footer.jsp"/>
 </html>

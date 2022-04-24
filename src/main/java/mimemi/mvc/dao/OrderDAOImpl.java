@@ -16,10 +16,12 @@ import mimemi.mvc.dto.AddrDTO;
 import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
+import mimemi.mvc.dto.OrderLineDTO;
 import mimemi.mvc.paging.OrderListPageCnt;
 import mimemi.mvc.util.DbUtil;
 
 public class OrderDAOImpl implements OrderDAO {
+	private OrderLineDAO orderLineDao = new OrderLineDAOImpl();
 	private Properties proFile = new Properties();
 	
 	/**
@@ -524,9 +526,12 @@ public class OrderDAOImpl implements OrderDAO {
 
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				orderList.add(new OrderDTO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5),
+				OrderDTO order = new OrderDTO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5),
 						rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10), rs.getInt(11),
-						rs.getString(12)));
+						rs.getString(12));
+				List<OrderLineDTO> list = orderLineDao.selectLineByOrderId(rs.getInt(1));
+				order.setOrderLineList(list);
+				orderList.add(order);
 			}
 		} finally {
 			DbUtil.dbClose(rs, ps, con);

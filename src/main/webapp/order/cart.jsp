@@ -59,10 +59,10 @@
 									$(`#\${index}Weekday`).val(item.cartWeekday);
 									$(`#\${index}Period`).val(item.cartPeriod);
 									$("input[name=cartStart]").datepicker();
-									cartCount();
 								})
 								calGoodsTotalPrice();
 								calTotalPrice();
+								cartCount();
 							}
 						}, // 성공 메소드
 						error : function(err) {
@@ -233,10 +233,10 @@
 						dataType : "text",
 						data: {key: "cart", methodName: "deleteAllCart"},
 						success: function(result) {
+							selectCartByUserId();
 							var toast = new bootstrap.Toast($("#cartToast"));
 							cartCount();
 							toast.show();
-							selectCartByUserId();
 						},
 						error: function(err) {
 							alert(err + "\n장바구니를 불러올 수 없습니다.");

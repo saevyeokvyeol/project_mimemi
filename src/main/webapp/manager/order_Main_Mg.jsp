@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Document</title>
+		<title>주문/배송 조회 :: 관리자 페이지</title>
 		<jsp:include page="../common/sidebar.jsp"/>
 		<!-- CSS only -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -22,8 +22,9 @@
 		<style type="text/css" src=""></style>
 		<style>
 			.orderList-main {width: 100%; padding: 100px 50px 0 275px;}
-			table {width: 100%;}
-			.order_sort{text-align: right;}
+			#orderList {text-align: center; vertical-align: middle;}
+			.order_sort{text-align: right; margin: 20px 0;}
+			#order-sort-select {width: 200px; margin: 0; display: inline;}
 		</style>
 		<script type="text/javascript">
 			$(function(){
@@ -32,14 +33,38 @@
 						location.href = "${path}/front?key=order&methodName=selectAll&field=" + $(this).val();
 					}
 				})
+				
+				
+				// 주문 취소
+				$(document).on("click", "#cancel", function() {
+					confirm("해당 주문이 전체 취소됩니다.\n정말 취소하시겠습니까?");
+					$.ajax({
+						url: "${path}/ajax",
+						type: "post",
+						dataType: "text",
+						data: {key: "order", methodName: "deleteOrder", orderId: $(this).parent().parent().attr("id")},
+						success: function(result) {
+							alert("취소가 완료되었습니다.");
+	                        location.reload();
+						}, // 성공 메소드
+						error : function(err) {
+							alert(err);
+						} // 에러 메소드
+					}) // ajax 종료
+				})
+				
+				// 주문 상세 이동 메소드
+				$(document).on("click", "tbody > tr > td:not(:last-child)", function() {
+					location.href = "${path}/front?key=order&methodName=selectByOrderIdMg&orderId=" + $(this).parent().attr("id");
+				})
 			})
 		</script>
 	</head>
 	<body>
 		<section class="orderList-main">
-			<h1><a href="${path}/front?key=order&methodName=selectAll">구매 내역</a></h1>
+			<h1>구매 내역</h1>
 			<section class="order_sort">
-				<select name="order_sort" id="">
+				<select name="order_sort"  class="form-select" id="order-sort-select">
 					<option value="0">--정렬방식--</option>
 					<option value="order_id">등록순</option>
 					<option value="user_id">아이디순</option>
@@ -55,6 +80,7 @@
 						<th>구매 상품</th>
 						<th>결제 방법</th>
 						<th>총 가격</th>
+						<th>주문 취소</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -66,12 +92,36 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${orderList}" var="order">
-							<tr>
+							<tr id="${order.orderId}">
 								<td>${order.orderId}</td>
 								<td>${order.userId}</td>
-								<td>${order.orderMemo}</td>
-								<td>${order.payMethod}</td>
+								<td>
+									<c:forEach items="${order.orderLineList}" var="list">
+										<div>${list.goods.goodsName} X${list.orderQty}</div>
+									</c:forEach>
+								</td>
+								<c:choose>
+									<c:when test="${order.payMethod == 'C'}">
+										<td>카드</td>
+									</c:when>
+									<c:when test="${order.payMethod == 'M'}">
+										<td>무통장 입금</td>
+									</c:when>
+									<c:otherwise>
+										<td>실시간 계좌이체</td>
+									</c:otherwise>
+								</c:choose>
 								<td>${order.totalPrice}</td>
+								<td>
+									<c:choose>
+										<c:when test="${order.orderCancel == 'F'}">
+											<button type="button" class="btn btn-outline-danger btn-sm shadow-none" id="cancel">주문 취소</button>
+										</c:when>
+										<c:otherwise>
+											취소된 주문입니다
+										</c:otherwise>
+									</c:choose>
+								</td>
 							</tr>
 							</c:forEach>
 						</c:otherwise>

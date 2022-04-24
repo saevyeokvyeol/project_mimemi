@@ -54,6 +54,8 @@
 						}
 						if(count != 0){
 							$("#cartC").text(count);
+						} else {
+							$("#cartC").text("");
 						}
 					}, // 성공 메소드
 					error : function(err) {

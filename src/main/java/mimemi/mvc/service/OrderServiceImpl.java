@@ -5,16 +5,20 @@ import java.util.List;
 
 import mimemi.mvc.dao.OrderDAO;
 import mimemi.mvc.dao.OrderDAOImpl;
+import mimemi.mvc.dao.OrderDeliDAO;
+import mimemi.mvc.dao.OrderDeliDAOImpl;
 import mimemi.mvc.dao.OrderLineDAO;
 import mimemi.mvc.dao.OrderLineDAOImpl;
 //import mimemi.mvc.dao.OrderLineDAOImpl;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
+import mimemi.mvc.dto.OrderStateDTO;
 
 public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDao = new OrderDAOImpl();
 	private OrderLineDAO orderLineDao = new OrderLineDAOImpl();
+	private OrderDeliDAO orderDeliDao = new OrderDeliDAOImpl();
 
 	/**
 	 * 주문 등록
@@ -104,27 +108,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	/**
-	 * 주문 상세 등록
-	 * @param OrderLineDTO(int orderId, String goodsId, int orderQty, int priceQty, String deliWeekday,
-			String deliPeriod, String deliStart)
-	 * @return int(등록한 레코드 수)
-	 */
-	@Override
-	public void insert(OrderLineDTO orderLine) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * 주문 상세 삭제(취소)
-	 * @param int orderLineId(오더 라인 아이디를 기준으로 배송 스케줄을 모두 취소 처리함)
-	 * @return int(수정한 레코드 수)
-	 */
-	@Override
-	public void delete(int orderLineId) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
 	 * 오더 아이디로 주문 상세 조회
 	 * @param int orderId(오더 아이디에 해당하는 주문 상세 가져오기)
 	 * @return List<OrderLineDTO>
@@ -137,45 +120,14 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	/**
-	 * 배송 스케줄 생성
-	 * @param: OrderDeliDTO(int orderDeliId, int orderLineCode, int orderStateId, String orderDeliDate)
-	 * @return: int(등록된 스케줄 수)
-	 * */
-	@Override
-	public void insertDeli(OrderDeliDTO orderDeli) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * 배송 일자 수정
-	 * @param: OrderDeliDTO(int orderDeliId, String orderDeliDate)
-	 * @return: int(수정된 스케줄 수)
-	 * */
-	@Override
-	public void updateDeliDate(OrderDeliDTO orderDeli) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
 	 * 주문 상세 코드로 배송 스케줄 조회
-	 * @param: OrderDeliDTO(int orderDeliId, int orderStateId)
-	 * @return: int(수정된 스케줄 수)
+	 * @param: OrderDeliDTO(int orderLineId)
+	 * @return: List<OrderDeliDTO>
 	 * */
-	@Override
 	public List<OrderDeliDTO> selectByOrderLineId(int orderLineId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * 개별 배송 스케줄 조회
-	 * @param: OrderDeliDTO(int orderDeliId, int orderStateId)
-	 * @return: int(수정된 스케줄 수)
-	 * */
-	@Override
-	public OrderDeliDTO selectByOrderDeliId(int orderDeliId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<OrderDeliDTO> list = orderDeliDao.selectByOrderLineId(orderLineId);
+		
+		return list;
 	}
 
 	/**
@@ -189,5 +141,43 @@ public class OrderServiceImpl implements OrderService {
 		
 		return list;
 	}
+	
+	/**
+	 * 배송 일자 수정
+	 * @param: OrderDeliDTO(int orderDeliId, String orderDeliDate)
+	 * @return: int(수정된 스케줄 수)
+	 * */
+	@Override
+	public void updateDeliDate(int orderDeliId, String orderDeliDate) throws SQLException {
+		int result = orderDeliDao.updateDeliDate(orderDeliId, orderDeliDate);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
+	}
 
+	/**
+	 * 배송 코드 수정
+	 * @param: OrderDeliDTO(int orderDeliId, String orderStateId)
+	 * @return: int(수정된 스케줄 수)
+	 * */
+	@Override
+	public void updateStateId(int orderDeliId, String orderStateId) throws SQLException {
+		int result = orderDeliDao.updateStateId(orderDeliId, orderStateId);
+		
+		if(result == 0) {
+			throw new SQLException();
+		}
+	}
+
+	/**
+	 * 주문 상태 코드 가져오기
+	 * @return: List<OrderStateDTO>
+	 * */
+	@Override
+	public List<OrderStateDTO> selectOrderState() throws SQLException{
+		List<OrderStateDTO> list = orderDeliDao.selectOrderState();
+		 
+		return list;
+	};
 }

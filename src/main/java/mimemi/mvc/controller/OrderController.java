@@ -13,6 +13,7 @@ import mimemi.mvc.dto.CartDTO;
 import mimemi.mvc.dto.OrderDTO;
 import mimemi.mvc.dto.OrderDeliDTO;
 import mimemi.mvc.dto.OrderLineDTO;
+import mimemi.mvc.dto.OrderStateDTO;
 import mimemi.mvc.dto.UserDTO;
 import mimemi.mvc.service.AddrService;
 import mimemi.mvc.service.AddrServiceImpl;
@@ -142,6 +143,36 @@ public class OrderController implements Controller {
 		
 		return mv;
 	}
+	
+	public ModelAndView selectByOrderIdMg(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderId = request.getParameter("orderId");
+		
+		OrderDTO order = orderService.selectByOrderId(Integer.parseInt(orderId));
+		List<OrderLineDTO> orderLineList = orderService.selectLineByOrderId(Integer.parseInt(orderId));
+		
+		AddrDTO addr = addrService.selectByAddrId(order.getAddrId());
+		
+		request.setAttribute("order", order);
+		request.setAttribute("orderLineList", orderLineList);
+		request.setAttribute("addr", addr);
+		ModelAndView mv = new ModelAndView("manager/order_View.jsp");
+		
+		return mv;
+	}
+	
+	public ModelAndView selectByOrderLineId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String orderLineId = request.getParameter("orderLineId");
+		
+		List<OrderDeliDTO> list = (List<OrderDeliDTO>)orderService.selectByOrderLineId(Integer.parseInt(orderLineId));
+		List<OrderStateDTO> osList = (List<OrderStateDTO>)orderService.selectOrderState();
+		
+		request.setAttribute("list", list);
+		request.setAttribute("osList", osList);
+		
+		ModelAndView mv = new ModelAndView("manager/order_deliView.jsp");
+		
+		return mv;
+	}
 
 	public void deleteOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String orderId = request.getParameter("orderId");
@@ -184,4 +215,25 @@ public class OrderController implements Controller {
 		out.print(orderDeliArr);
 	}
 
+	public void updateStateId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String orderDeliId = request.getParameter("orderDeliId");
+		String orderStateId = request.getParameter("orderStateId");
+		orderService.updateStateId(Integer.parseInt(orderDeliId), orderStateId);
+		
+		PrintWriter out = response.getWriter();
+		out.print("success");
+	}
+
+	public void updateDeliDate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String orderDeliId = request.getParameter("orderDeliId");
+		String orderDeliDate = request.getParameter("orderDeliDate");
+		orderService.updateDeliDate(Integer.parseInt(orderDeliId), orderDeliDate);
+		
+		PrintWriter out = response.getWriter();
+		out.print("success");
+	}
 }

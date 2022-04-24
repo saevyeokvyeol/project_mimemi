@@ -1,19 +1,19 @@
 package mimemi.mvc.dto;
 
 public class OrderStateDTO {
-	private int orderStateId;
+	private String orderStateId;
 	private String orderStateDetail;
 	
 	public OrderStateDTO() {}
-	public OrderStateDTO(int orderStateId, String orderStateDetail) {
+	public OrderStateDTO(String orderStateId, String orderStateDetail) {
 		super();
 		this.orderStateId = orderStateId;
 		this.orderStateDetail = orderStateDetail;
 	}
-	public int getOrderStateId() {
+	public String getOrderStateId() {
 		return orderStateId;
 	}
-	public void setOrderStateId(int orderStateId) {
+	public void setOrderStateId(String orderStateId) {
 		this.orderStateId = orderStateId;
 	}
 	public String getOrderStateDetail() {
