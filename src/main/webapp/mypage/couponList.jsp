@@ -53,11 +53,11 @@
 									}
 									
 								});
-								$("#couponTalbe tbody tr:eq(0)").append(text);
+								$("#couponTable tbody").append(text);
 							
 							
-							//$("#couponTalbe thead tr:gt(0)").remove(); //0번지 보다 큰거는 지우고 뿌려주기
-							//$("#couponTalbe thead tr:eq(0)").after(text);
+							//$("#couponTable thead tr:gt(0)").remove(); //0번지 보다 큰거는 지우고 뿌려주기
+							//$("#couponTable thead tr:eq(0)").after(text);
 							
 						}, // 성공 메소드
 						error : function(result) {
@@ -80,7 +80,7 @@
         <input type="hidden" name="" id="">
 				<h1>쿠폰조회 </h1>
 				
-				<table class="table" id="couponTalbe">
+				<table class="table" id="couponTable">
 					<thead>
 						<tr>
 							<th>쿠폰번호</th>

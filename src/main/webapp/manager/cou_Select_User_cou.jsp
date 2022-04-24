@@ -11,8 +11,7 @@
 		<style type="text/css">
 			section {width: 1200px; margin: auto;}
 			table {width: 1200px;}
-			th, td {border: 1px solid black;}
-			table tr:first-child {border: 1px solid black;}
+			tfoot{ text-align: right;}
 		</style>
 		
 		<!-- CSS only -->
@@ -45,6 +44,13 @@
 					
 				})//onchang 끝
 					
+				$(document).on("change", "#userCoupon_sort", function() {
+					if($(this).val()!= "0"){
+						location.href = "${path}/front?key=coupon&methodName=selectAllUserCp&field=" + $(this).val();
+					}
+					
+				});
+				
 				
 			}); //ready 끝
 			
@@ -118,7 +124,9 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							
+							<td colspan="6">
+								<a href="${path}/manager/cou_Insert_User_cou.jsp" class="btn">사용자쿠폰지급</a>
+							</td>
 						</tr>
 					</tfoot>
 					

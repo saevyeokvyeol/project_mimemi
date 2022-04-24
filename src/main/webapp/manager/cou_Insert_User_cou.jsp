@@ -84,6 +84,8 @@ $(function() {
 	})
 	selectCouponType();
 	
+	
+	
 });//ready 끝
    
 
@@ -126,7 +128,7 @@ $(function() {
   </tr>
   <tr>
 	<td>쿠폰만료일</td>
-	<td><input type="text" name="usercouPubdate" id="usercouPubdate"/></td>
+	<td><input type="text" name="usercouEnddate" id="usercouEnddate"/></td>
   </tr>
   <tr>
 	<td colspan="2" >
@@ -141,7 +143,7 @@ $(function() {
 
 <p>
 <div>
-	<a href="selectCouponAll.jsp">&lt;리스트로 돌아가기&gt;</a>
+	<a href="${path}/front?key=coupon&methodName=selectAllUserCp">&lt;리스트로 돌아가기&gt;</a>
 </div>
 
 

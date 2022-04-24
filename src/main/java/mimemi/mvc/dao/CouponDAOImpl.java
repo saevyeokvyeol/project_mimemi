@@ -276,7 +276,7 @@ public class CouponDAOImpl implements CouponDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		String sql = null;
+		String sql = proFile.getProperty("coupon.selectAllUserCpUserID");
 		//SELECT * FROM USERCOUPON order by USER_ID asc
 		//SELECT * FROM USERCOUPON order by USERCOU_PUBDATE asc
 		//SELECT * FROM USERCOUPON order by USERCOU_ENDDATE desc
@@ -285,9 +285,7 @@ public class CouponDAOImpl implements CouponDAO {
 		
 		
 		if(field != null) {
-			if(field.equals("UserID")) {
-				sql = proFile.getProperty("coupon.selectAllUserCpUserID");
-			}else if (field.equals("PubDate")) {
+			if (field.equals("PubDate")) {
 				sql = proFile.getProperty("coupon.selectAllUserCpPubDate");
 				
 			} else if (field.equals("EndDate")){
