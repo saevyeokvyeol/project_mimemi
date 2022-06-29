@@ -21,7 +21,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<style type="text/css" src=""></style>
 		<style>
-			.orderList-main {width: 100%; padding: 100px 50px 0 275px;}
+			.orderList-main {width: 100%; padding: 100px 50px 50px 275px;}
 			#orderList {text-align: center; vertical-align: middle;}
 			.order_sort{text-align: right; margin: 20px 0;}
 			#order-sort-select {width: 200px; margin: 0; display: inline;}
